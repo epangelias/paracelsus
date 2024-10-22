@@ -43,7 +43,9 @@ await Deno.writeTextFile(path("deno.json"), JSON.stringify(denoJSON, null, 2));
 await exec(["code", "."]);
 
 // Open Browser page
-await exec(["open", "http://0.0.0.0:8000/"]);
+if (Deno.env.get("OSTYPE") == "linux-gnu") {
+    await exec(["xdg-open", "http://0.0.0.0:8000/"]);
+} else await exec(["open", "http://0.0.0.0:8000/"]);
 
 // Run Project
 await exec([Deno.execPath(), "run", "dev.ts"]);
