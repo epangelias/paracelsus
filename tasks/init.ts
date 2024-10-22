@@ -22,7 +22,8 @@ await Deno.remove(path(".git"), { recursive: true });
 // Set Site Data
 const siteData = {
     title: projectName,
-    emojiFavicon: prompt("Enter Emoji Favicon [🤖]") || "🤖",
+    emojiFavicon: "🔥",
+    // emojiFavicon: prompt("Enter Emoji Favicon [🤖]") || "🤖",
 };
 const text = `export const siteData = ${JSON.stringify(siteData, null, 2)};`;
 Deno.writeTextFile(path("siteData.ts"), text);
