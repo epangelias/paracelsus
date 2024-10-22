@@ -14,7 +14,7 @@ const exec = async (args: string[]) =>
 await exec(["code", "."]);
 
 // Run synchronously
-exec([Deno.execPath(), "-A", "dev.ts"]);
+exec([Deno.execPath(), "-A", "tasks/dev.ts"]);
 
 // Wait to launch page in browser until loaded
 await new Promise((resolve) => setTimeout(resolve, 500));
