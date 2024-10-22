@@ -24,5 +24,11 @@
     "jsxPrecompileSkipElements": ["a", "img", "source", "body", "html", "head"]
   },
   "unstable": ["kv"],
-  "lock": false
+  "lock": false,
+  "fmt": {
+    "lineWidth": 120,
+    "semiColons": true,
+    "singleQuote": true,
+    "proseWrap": "preserve"
+  }
 }
