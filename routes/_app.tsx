@@ -1,6 +1,6 @@
 import type { PageProps } from "fresh";
 import { EmojiFavicon } from "@/components/EmojiFavicon.tsx";
-import { siteData } from "../siteData.ts";
+import { siteData } from "../lib/siteData.ts";
 
 export default function App({ Component }: PageProps) {
   return (
