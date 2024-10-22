@@ -13,5 +13,3 @@ if (!success) await exec(["git", "remote", "add", "template", "https://github.co
 await exec(["git", "fetch", "template"]);
 
 await exec(["git", "merge", "template/main", "--allow-unrelated-histories", "--no-ff", "--no-edit", "--no-commit",]);
-
-// Added this test line
