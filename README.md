@@ -3,7 +3,7 @@
 ## Install fresh-template
 
 ```bash
-deno install -Ag https://github.com/epangelias/fresh-template/edit/main/tasks/initproject.ts
+deno install -Ag https://raw.githubusercontent.com/epangelias/fresh-template/refs/heads/main/tasks/initproject.ts
 ```
 
 ## Create a new project
