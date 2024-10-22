@@ -1,3 +1,5 @@
+/// <reference lib="deno.unstable" />
+
 import { App, fsRoutes, staticFiles } from "fresh";
 import { define, type State } from "./lib/utils.ts";
 
