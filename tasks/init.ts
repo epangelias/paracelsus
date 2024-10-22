@@ -27,6 +27,9 @@ const siteData = {
 const text = `export const siteData = ${JSON.stringify(siteData, null, 2)};`;
 Deno.writeTextFile(path("siteData.ts"), text);
 
+// Remove Readme
+await Deno.remove(path("README.md"));
+
 // Remove Tasks
 await Deno.remove(path("tasks/init.ts"));
 await Deno.remove(path("tasks/initproject.ts"));
