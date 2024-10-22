@@ -15,7 +15,7 @@ const siteData = {
     title: projectName,
     emojiFavicon: prompt("Enter Emoji Favicon [🤖]") || "🤖",
 };
-const text = `export const SiteData = ${JSON.stringify(siteData)};`;
+const text = `export const siteData = ${JSON.stringify(siteData, null, 2)};`;
 Deno.writeTextFile(path("siteData.ts"), text);
 
 // Remove Tasks
