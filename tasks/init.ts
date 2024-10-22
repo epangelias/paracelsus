@@ -7,6 +7,15 @@ const projectName = Deno.args[0] || prompt("Enter Project Name");
 const path = (p: string) =>
     `${import.meta.dirname?.split("/").slice(0, -1).join("/")}/${p}`;
 
+const exec = async (args: string[]) =>
+    await new Deno.Command(args[0], {
+        args: args.slice(1),
+        stdin: "inherit",
+        stdout: "inherit",
+        stderr: "inherit",
+    })
+        .output();
+
 // Remove Github Repo
 await Deno.remove(path(".git"), { recursive: true });
 
@@ -26,3 +35,8 @@ await Deno.remove(path("tasks/initproject.ts"));
 const denoJSON = JSON.parse(await Deno.readTextFile(path("deno.json")));
 delete denoJSON.tasks.init;
 await Deno.writeTextFile(path("deno.json"), JSON.stringify(denoJSON, null, 2));
+
+// Open VSCODE
+
+await exec(["code", "."]);
+await exec(["exit"]);
