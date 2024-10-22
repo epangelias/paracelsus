@@ -40,5 +40,10 @@ delete denoJSON.tasks.init;
 await Deno.writeTextFile(path("deno.json"), JSON.stringify(denoJSON, null, 2));
 
 // Open VSCODE
-
 await exec(["code", "."]);
+
+// Open Browser page
+await exec(["open", "http://0.0.0.0:8000/"]);
+
+// Run Project
+await exec([Deno.execPath(), "run", "dev.ts"]);
