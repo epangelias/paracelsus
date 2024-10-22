@@ -50,4 +50,4 @@ if (Deno.build.os == "linux") {
 }
 
 // Run Project
-await exec([Deno.execPath(), "run", "dev.ts"]);
+await exec([Deno.execPath(), "-A", "dev.ts"]);
