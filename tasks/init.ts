@@ -1,8 +1,11 @@
-#!/usr/bin/env -S deno run -A --watch=static/,routes/
+#!/usr/bin/env -S deno run -A
+
+const projectName = prompt("Enter Project Name");
 
 // Initiate the Fresh Project
 
-const path = (p: string) => import.meta.resolve("../") + p;
+const path = (p: string) =>
+    `${import.meta.dirname?.split("/").slice(0, -1).join("/")}/${p}`;
 
 // Remove Github Repo
 await Deno.remove(path(".git"), { recursive: true });
@@ -11,8 +14,6 @@ await Deno.remove(path(".git"), { recursive: true });
 await Deno.remove(path("tasks/init.ts"));
 
 // Remove task from deno.json
-let denoJSON = await Deno.readTextFile(path("deno.json"));
-denoJSON = denoJSON.split("\n").filter((line) =>
-    !line.includes("deno run -A tasks/init.ts")
-).join();
-await Deno.writeTextFile(path("deno.json"), denoJSON);
+const denoJSON = JSON.parse(await Deno.readTextFile(path("deno.json")));
+delete denoJSON.tasks.init;
+await Deno.writeTextFile(path("deno.json"), JSON.stringify(denoJSON, null, 2));
