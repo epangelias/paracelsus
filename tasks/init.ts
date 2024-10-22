@@ -26,7 +26,7 @@ const siteData = {
     // emojiFavicon: prompt("Enter Emoji Favicon [🤖]") || "🤖",
 };
 const text = `export const siteData = ${JSON.stringify(siteData, null, 2)};`;
-Deno.writeTextFile(path("siteData.ts"), text);
+Deno.writeTextFile(path("lib/siteData.ts"), text);
 
 // Remove Readme
 await Deno.remove(path("README.md"));
