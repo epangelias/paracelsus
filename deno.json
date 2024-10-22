@@ -5,7 +5,8 @@
     "build": "deno run -A dev.ts build",
     "start": "deno run -A main.ts",
     "update": "deno run -A -r jsr:@fresh/update .",
-    "init": "deno run -A tasks/init.ts"
+    "init": "deno run -A tasks/init.ts",
+    "open": "deno run -A tasks/open.ts"
   },
   "lint": { "rules": { "tags": ["fresh", "recommended"] } },
   "exclude": ["**/_fresh/*"],
