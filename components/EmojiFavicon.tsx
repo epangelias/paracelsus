@@ -1,6 +1,4 @@
-import { siteData } from "../siteData.ts";
-
-export function EmojiFavicon({ emoji = siteData.emojiFavicon }) {
+export function EmojiFavicon({ emoji = "🤖" }) {
     return (
         <link
             rel="icon"
