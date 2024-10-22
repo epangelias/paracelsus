@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run -A
 
-const projectName = prompt("Enter Project Name");
+const projectName = Deno.args[0] || prompt("Enter Project Name");
 
 // Initiate the Fresh Project
 
