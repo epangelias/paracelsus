@@ -12,6 +12,7 @@ await Deno.remove(path(".git"), { recursive: true });
 
 // Remove Init task
 await Deno.remove(path("tasks/init.ts"));
+await Deno.remove(path("tasks/initproject.ts"));
 
 // Remove task from deno.json
 const denoJSON = JSON.parse(await Deno.readTextFile(path("deno.json")));
