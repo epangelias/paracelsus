@@ -39,4 +39,3 @@ await Deno.writeTextFile(path("deno.json"), JSON.stringify(denoJSON, null, 2));
 // Open VSCODE
 
 await exec(["code", "."]);
-await exec(["exit"]);
