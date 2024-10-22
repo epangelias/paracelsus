@@ -1,19 +1,12 @@
 #!/usr/bin/env -S deno run -A
 
+import { exec, getParentDir } from '@/lib/utils.ts';
+
 const projectName = Deno.args[0] || prompt('Enter Project Name');
 
 // Initiate the Fresh Project
 
-const path = (p: string) => `${import.meta.dirname?.split('/').slice(0, -1).join('/')}/${p}`;
-
-const exec = async (args: string[]) =>
-    await new Deno.Command(args[0], {
-        args: args.slice(1),
-        stdin: 'inherit',
-        stdout: 'inherit',
-        stderr: 'inherit',
-    })
-        .output();
+const path = (p: string) => `${getParentDir(import.meta.dirname)}/${p}`;
 
 // Remove Github Repo
 await Deno.remove(path('.git'), { recursive: true });
