@@ -11,7 +11,7 @@ export default function App({ Component }: PageProps) {
         <title>{siteData.title}</title>
         <link rel="stylesheet" href="/css/main.css" />
         <meta name="color-scheme" content="light dark" />
-        <EmojiFavicon emoji="🎯" />
+        <EmojiFavicon />
       </head>
       <body>
         <main>
