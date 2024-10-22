@@ -10,7 +10,15 @@ const path = (p: string) =>
 // Remove Github Repo
 await Deno.remove(path(".git"), { recursive: true });
 
-// Remove Init task
+// Set Site Data
+const siteData = {
+    title: projectName,
+    emojiFavicon: prompt("Enter Emoji Favicon [🤖]") || "🤖",
+};
+const text = `export const SiteData = ${JSON.stringify(siteData)};`;
+Deno.writeTextFile(path("siteData.ts"), text);
+
+// Remove Tasks
 await Deno.remove(path("tasks/init.ts"));
 await Deno.remove(path("tasks/initproject.ts"));
 
