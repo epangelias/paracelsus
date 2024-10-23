@@ -20,10 +20,8 @@ export default function App({ Component }: PageProps) {
         <WebAppify themeColor={siteData.themeColor} />
       </head>
       <body>
-        <main>
-          <Component />
-          <ThemeSwitcher />
-        </main>
+        <Component />
+        <ThemeSwitcher />
       </body>
     </html>
   );
