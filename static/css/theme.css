@@ -1,0 +1,107 @@
+/* Theme */
+
+:root,
+.theme-dark,
+.theme-light {
+    --dark1: #000;
+    --dark2: #222;
+    --dark3: #333;
+    --dark4: #444;
+    --light1: #fff;
+    --light2: #ddd;
+    --light3: #bbb;
+    --light4: #aaa;
+
+    --accent: #5294eb;
+    --on-accent: #fff;
+
+    --primary: #eb9a52;
+    --on-primary: #fff;
+
+    --radius: 3px;
+    --border-color: var(--bg3);
+    --border-width: 1px;
+    --spacing: 8px;
+}
+
+.theme-light {
+    --bg1: var(--light1);
+    --bg2: var(--light2);
+    --bg3: var(--light3);
+    --bg4: var(--light4);
+    --fg1: var(--dark1);
+    --fg2: var(--dark2);
+    --fg3: var(--dark3);
+    --fg4: var(--dark4);
+}
+
+.theme-dark {
+    --bg1: var(--dark1);
+    --bg2: var(--dark2);
+    --bg3: var(--dark3);
+    --bg4: var(--dark4);
+    --fg1: var(--light1);
+    --fg2: var(--light2);
+    --fg3: var(--light3);
+    --fg4: var(--light4);
+}
+
+/* General Styles */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    height: 100%;
+    background: var(--bg1);
+    color: var(--fg2);
+    overscroll-behavior: none;
+    overflow: hidden;
+    touch-action: manipulation;
+}
+
+::selection {
+    background-color: var(--accent);
+    color: var(--on-accent);
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+    color: var(--fg1);
+    margin: .5em 0;
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -1px;
+}
+
+
+/* Buttons */
+
+button,
+input:is([type="button"], [type="reset"], [type="submit"]) {
+    background-color: var(--bg2);
+    border-radius: var(--radius);
+    border: var(--border-width) solid var(--border-color);
+    padding: calc(var(--spacing)/2) calc(var(--spacing));
+    cursor: pointer;
+    font: inherit;
+
+    &:focus-visible {
+        border-color: transparent;
+    }
+
+    &:hover {
+        background-color: var(--bg3);
+    }
+
+    &:active {
+        background-color: var(--bg4);
+        border-color: var(--bg4);
+    }
+}

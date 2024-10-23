@@ -2,6 +2,7 @@ import type { PageProps } from 'fresh';
 import { EmojiFavicon } from '@/components/EmojiFavicon.tsx';
 import { siteData } from '../lib/siteData.ts';
 import { WebAppify } from '@/components/WebAppify.tsx';
+import { ThemeSwitcher } from '@/islands/ThemeSwitcher.tsx';
 
 export default function App({ Component }: PageProps) {
   return (
@@ -21,6 +22,7 @@ export default function App({ Component }: PageProps) {
       <body>
         <main>
           <Component />
+          <ThemeSwitcher />
         </main>
       </body>
     </html>
