@@ -8,8 +8,10 @@ export default define.page(function Home() {
 
   return (
     <main>
-      <h1>{siteData.title}</h1>
-      <Counter count={count} />
+      <div>
+        <h1>{siteData.title}</h1>
+        <Counter count={count} />
+      </div>
     </main>
   );
 });
