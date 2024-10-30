@@ -1,17 +1,17 @@
 import { useSignal } from '@preact/signals';
 import { watchData } from '../lib/watch-data.ts';
-import { DataType } from '@/lib/types.ts';
+import { CounterData } from '@/lib/types.ts';
 
-export default function Counter() {
-  const data = useSignal<DataType>({ count: 0 });
+export default function Counter({ data }: { data: CounterData }) {
+  const counterData = useSignal<CounterData>(data);
 
-  watchData('/api/watch', data);
+  watchData('/api/watch', counterData);
 
   return (
     <div class='counter text-center'>
-      <button onClick={() => data.value = { count: data.value.count - 1 }}>- 1</button>{' '}
-      <button onClick={() => data.value = { count: data.value.count + 1 }}>+ 1</button>
-      <h2>{data.value.count}</h2>
+      <button onClick={() => counterData.value = { count: counterData.value.count - 1 }}>- 1</button>{' '}
+      <button onClick={() => counterData.value = { count: counterData.value.count + 1 }}>+ 1</button>
+      <h2>{counterData.value.count}</h2>
     </div>
   );
 }

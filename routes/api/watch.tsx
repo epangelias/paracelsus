@@ -3,7 +3,7 @@ import { define } from '@/lib/utils.ts';
 
 export const handler = define.handlers({
     GET(ctx) {
-        const key = ['data'];
+        const key = ['counterData'];
 
         if (ctx.req.headers.get('upgrade') != 'websocket') return new Response(null, { status: 501 });
 

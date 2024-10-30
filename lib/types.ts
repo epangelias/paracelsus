@@ -1,5 +1,5 @@
 
 
-export interface DataType {
+export interface CounterData {
     count: number;
 }
