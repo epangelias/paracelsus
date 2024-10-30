@@ -1,7 +1,6 @@
 import { FreshContext } from 'fresh';
 import { db } from '@/lib/db.ts';
 
-
 export function handleWatchData(ctx: FreshContext, key: Deno.KvKey) {
     if (ctx.req.headers.get('upgrade') != 'websocket') return new Response(null, { status: 501 });
 
