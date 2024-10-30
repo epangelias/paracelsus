@@ -1,23 +1,20 @@
 import type { Signal } from '@preact/signals';
 import { watchClient } from '../lib/watch-client.ts';
-import { useEffect } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 
-export default function Counter({ count }: { count: Signal<number> }) {
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
   useEffect(() => {
-    watchClient<{ count: number }>('/api/watch', ({ count: c }) => count && (count.value = +c));
+    const closeSocket = watchClient<{ count: number }>('/api/watch', (data) => setCount(data.count));
+    return () => closeSocket();
   }, []);
-
-  function setCount(count: number) {
-    fetch(`/api/set-count?count=${count}`);
-  }
 
   return (
     <div class='counter text-center'>
-      <button onClick={() => setCount(count.value - 1)}>- 1</button>
-      <big>
-        <code>{` ${count.value} `}</code>
-      </big>
-      <button onClick={() => setCount(count.value + 1)}>+ 1</button>
+      <button onClick={() => fetch(`/api/set-count?count=${count - 1}`)}>- 1</button>{' '}
+      <button onClick={() => fetch(`/api/set-count?count=${count + 1}`)}>+ 1</button>
+      <h2>{count}</h2>
     </div>
   );
 }

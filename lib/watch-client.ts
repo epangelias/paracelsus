@@ -9,9 +9,5 @@ export function watchClient<T>(endpoint: string, callback: (data: T) => void) {
         callback(data);
     };
 
-    return {
-        close: () => {
-            websocket.close();
-        },
-    };
+    return () => websocket.close()
 };
