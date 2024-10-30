@@ -4,7 +4,7 @@ import { useEffect } from 'preact/hooks';
 
 export default function Counter({ count }: { count: Signal<number> }) {
   useEffect(() => {
-    watchClient<{ count: number }>('/api/watch', ({ count: c }) => count && (count.value = c));
+    watchClient<{ count: number }>('/api/watch', ({ count: c }) => count && (count.value = +c));
   }, []);
 
   function setCount(count: number) {
