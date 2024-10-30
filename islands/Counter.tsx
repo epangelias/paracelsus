@@ -1,17 +1,27 @@
 import type { Signal } from '@preact/signals';
-
-function padNumber(number: number, digits: number) {
-  return '0'.repeat(digits).slice(0, -number.toString().length) + number;
-}
+import { watchClient } from '../lib/watch-client.ts';
+import { useEffect } from 'preact/hooks';
 
 export default function Counter({ count }: { count: Signal<number> }) {
+  useEffect(() => {
+    watchClient<{ count: number }>('/api/watch', countChange);
+  }, []);
+
+  function countChange(value?: { count: number }) {
+    if (value) count.value = +value.count;
+  }
+
+  function setCount(count: number) {
+    fetch(`/api/set-count?count=${count}`);
+  }
+
   return (
     <div class='counter text-center'>
-      <button onClick={() => count.value -= 1}>- 1</button>
+      <button onClick={() => setCount(count.value - 1)}>- 1</button>
       <big>
-        <code>{` ${padNumber(count.value, 2)} `}</code>
+        <code>{` ${count.value} `}</code>
       </big>
-      <button onClick={() => count.value += 1}>+ 1</button>
+      <button onClick={() => setCount(count.value + 1)}>+ 1</button>
     </div>
   );
 }
