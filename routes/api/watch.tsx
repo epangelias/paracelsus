@@ -8,10 +8,9 @@ export const handler = define.handlers({
         if (ctx.req.headers.get('upgrade') != 'websocket') return new Response(null, { status: 501 });
 
         const { socket, response } = Deno.upgradeWebSocket(ctx.req);
+        let currentData = '';
 
         socket.onopen = async () => {
-            let currentData = '';
-
             for await (const _event of db.watch([key])) {
                 const { value } = await db.get(key);
                 const json = JSON.stringify(value);
@@ -26,6 +25,7 @@ export const handler = define.handlers({
         };
 
         socket.onmessage = (event) => {
+            currentData = event.data;
             db.set(key, JSON.parse(event.data));
         };
 
