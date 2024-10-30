@@ -2,9 +2,10 @@ import type { PageProps } from 'fresh';
 import { EmojiFavicon } from '@/components/EmojiFavicon.tsx';
 import { siteData } from '../lib/siteData.ts';
 import { WebAppify } from '@/components/WebAppify.tsx';
-import { ThemeSwitcher } from '@/islands/ThemeSwitcher.tsx';
 
-export default function App({ Component }: PageProps) {
+export default async function App({ Component }: PageProps) {
+  const js = await Deno.readTextFile(import.meta.resolve('../static/src/init.js').slice(7));
+
   return (
     <html>
       <head>
@@ -21,7 +22,8 @@ export default function App({ Component }: PageProps) {
       </head>
       <body>
         <Component />
-        <ThemeSwitcher />
+
+        <script dangerouslySetInnerHTML={{ __html: js }}></script>
       </body>
     </html>
   );
