@@ -2,8 +2,8 @@ import { useSignal } from '@preact/signals';
 import { watchData } from '../lib/watch-data.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 
-export default function ChatBox() {
-  const chatData = useSignal<ChatData>({ messages: [] });
+export default function ChatBox({ data }: { data: ChatData }) {
+  const chatData = useSignal<ChatData>(data);
 
   watchData('/api/chat', chatData);
 
