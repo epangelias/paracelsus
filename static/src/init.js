@@ -6,6 +6,10 @@ if (!colorSchemeMeta) {
     document.head.appendChild(colorSchemeMeta);
 }
 
+if (localStorage.getItem('color-scheme')) {
+    colorSchemeMeta.setAttribute('content', localStorage.getItem('color-scheme'));
+}
+
 const updateTheme = () => {
     const colorScheme = localStorage.getItem('color-scheme') || colorSchemeMeta.getAttribute('content');
 
