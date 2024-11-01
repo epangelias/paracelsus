@@ -7,14 +7,14 @@ if (!colorSchemeMeta) {
 }
 
 const updateTheme = () => {
+    const colorScheme = localStorage.getItem('color-scheme') || colorSchemeMeta.getAttribute('content');
+
     const prefersDark = globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    const canDark = colorSchemeMeta.getAttribute('content').includes('dark');
-    const canLight = colorSchemeMeta.getAttribute('content').includes('light') || !canDark;
+    const canDark = colorScheme.includes('dark');
+    const canLight = colorScheme.includes('light') || !canDark;
 
     const theme = canDark && (prefersDark || !canLight) ? 'dark' : 'light';
-
-    colorSchemeMeta;
 
     document.body.classList.remove('theme-light', 'theme-dark');
     document.body.classList.add(`theme-${theme}`);
