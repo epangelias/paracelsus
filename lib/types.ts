@@ -13,3 +13,11 @@ export interface AIMessage {
 export interface ChatData {
     messages: AIMessage[];
 }
+
+export interface Trigger<T> {
+    name: string;
+    value: unknown;
+    data: T;
+    respond: (name: string, value: unknown) => void;
+    saveData: (data?: T) => Promise<void>;
+}

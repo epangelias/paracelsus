@@ -7,10 +7,13 @@ if (!colorSchemeMeta) {
 }
 
 const updateTheme = () => {
+    let colorScheme = colorSchemeMeta.getAttribute('content');
+    if (localStorage.getItem('color-scheme')) colorScheme = localStorage.getItem('color-scheme');
+
     const prefersDark = globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    const canDark = colorSchemeMeta.getAttribute('content').includes('dark');
-    const canLight = colorSchemeMeta.getAttribute('content').includes('light') || !canDark;
+    const canDark = colorScheme.includes('dark');
+    const canLight = colorScheme.includes('light') || !canDark;
 
     const theme = canDark && (prefersDark || !canLight) ? 'dark' : 'light';
 

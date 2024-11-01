@@ -16,9 +16,7 @@ const backends: Record<string, OpenAI> = {};
 export async function generateChatCompletions(
     options: OAIOptions,
     messages: ChatCompletionMessageParam[],
-): Promise<
-    { stream: Stream<ChatCompletionChunk> } | null
-> {
+) {
     const backendId = `${options.baseURL}:${options.apiKey}`;
 
     backends[backendId] = backends[backendId] || new OpenAI({
@@ -26,10 +24,9 @@ export async function generateChatCompletions(
         baseURL: options.baseURL,
     });
 
-    const stream = await backends[backendId].chat.completions.create({
+    return await backends[backendId].chat.completions.create({
         model: options.model,
         messages,
         stream: true,
     });
-    return { stream };
 }
