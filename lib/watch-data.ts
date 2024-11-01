@@ -8,7 +8,6 @@ import { Trigger } from '@/lib/types.ts';
 export function watchData<T>(endpoint: string, data: Signal<T>, triggers: Record<string, (trigger: Trigger<T>) => void> = {}) {
     triggers = {
         change(trigger) {
-            alert();
             if (JSON.stringify(data.value) === JSON.stringify(trigger.value)) return;
             if (trigger.value == null) return;
             trigger.saveData(trigger.value as T);
