@@ -1,7 +1,10 @@
 import { createDefine } from 'fresh';
+import { User } from '@/lib/types.ts';
 
 // deno-lint-ignore no-empty-interface
-export interface State { }
+export interface State {
+    user?: User;
+}
 
 export const define = createDefine<State>();
 
@@ -18,3 +21,4 @@ export const getParentDir = (path?: string) => {
     if (!path) return "";
     return path.split('/').slice(0, -1).join('/') as string;
 };
+

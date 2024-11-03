@@ -3,6 +3,10 @@ import { sendSSE, syncSSE, watchSSE } from '../lib/sse.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 import { useEffect } from 'preact/hooks';
 
+function insertLoader(html?: string) {
+  return html?.replace(/<\/([^>]+)>\n+$/, `&nbsp;&nbsp;<span class="loader"></span></$1>`);
+}
+
 const endpoint = '/api/chat';
 
 export default function ChatBox({ data }: { data: ChatData }) {
@@ -20,21 +24,29 @@ export default function ChatBox({ data }: { data: ChatData }) {
     chatData.value.messages.push({ role: 'user', content: input.value });
     chatData.value = { ...chatData.value };
     input.value = '';
+    generating.value = true;
 
     await sendSSE(endpoint, chatData.value);
+    console.log(new Date());
     generateResponse();
   }
 
   function generateResponse() {
-    const message = { role: 'assistant', content: '' };
+    const loader = '<span class="loader"></span>';
+
+    const message: AIMessage = {
+      role: 'assistant',
+      content: '',
+      html: loader,
+    };
 
     chatData.value.messages.push(message);
     generating.value = true;
 
-    watchSSE(`${endpoint}?ai=1`, (token: string) => {
-      if (token == null) return generating.value = false;
-
-      message.content += token;
+    watchSSE(`${endpoint}?ai=1`, (newMessage: AIMessage) => {
+      if (newMessage == null) return generating.value = false;
+      message.content = newMessage.content;
+      message.html = insertLoader(newMessage.html);
       chatData.value = { ...chatData.value };
     });
   }
@@ -43,7 +55,12 @@ export default function ChatBox({ data }: { data: ChatData }) {
     <div class='chat-box'>
       <div class='messages'>
         {chatData.value.messages.map((message: AIMessage) => (
-          <div data-role={message.role}>{message.content}</div>
+          <div
+            data-role={message.role}
+            dangerouslySetInnerHTML={message.html ? { __html: message.html } : undefined}
+          >
+            {message.content}
+          </div>
         ))}
       </div>
 

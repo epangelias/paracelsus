@@ -13,12 +13,6 @@ app.use(staticFiles());
 //   );
 // });
 
-// const exampleLoggerMiddleware = define.middleware((ctx) => {
-//   console.log(`${ctx.req.method} ${ctx.req.url}`);
-//   return ctx.next();
-// });
-// app.use(exampleLoggerMiddleware);
-
 await fsRoutes(app, {
   dir: "./",
   loadIsland: (path) => import(`./islands/${path}`),
