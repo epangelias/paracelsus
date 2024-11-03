@@ -27,7 +27,7 @@
   "unstable": ["kv"],
   "lock": false,
   "fmt": {
-    "lineWidth": 120,
+    "lineWidth": 100,
     "semiColons": true,
     "singleQuote": true,
     "proseWrap": "preserve"

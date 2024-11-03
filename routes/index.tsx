@@ -20,7 +20,7 @@ export default define.page<typeof handler>(function Home({ data }) {
       <div>
         <h1>{siteData.title}</h1>
         <Counter data={data.counterData} />
-        {/* <ChatBox data={data.chatData} /> */}
+        <ChatBox data={data.chatData} />
       </div>
     </main>
   );

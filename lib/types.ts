@@ -5,11 +5,17 @@ export interface CounterData {
 }
 
 export interface AIMessage {
-    id: string;
     role: string;
     content: string;
 }
 
 export interface ChatData {
     messages: AIMessage[];
+}
+
+
+export interface OAIOptions {
+    baseURL?: string;
+    apiKey: string;
+    model: string;
 }
