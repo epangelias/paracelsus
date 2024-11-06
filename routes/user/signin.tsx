@@ -1,8 +1,8 @@
 import { define } from '@/lib/utils.ts';
 import { page } from 'fresh';
-import { LoginForm } from '@/components/LoginForm.tsx';
-import { getCookies, setCookie } from 'jsr:@std/http/cookie';
-import { authorizeUser, getUserByAuth } from '@/lib/auth.ts';
+import { setCookie } from 'jsr:@std/http/cookie';
+import { authorizeUser } from '@/lib/auth.ts';
+import { SigninForm } from '@/components/SigininForm.tsx';
 
 export const handler = define.handlers({
     POST: async (ctx) => {
@@ -15,7 +15,13 @@ export const handler = define.handlers({
 
         if (authCode) {
             const res = ctx.redirect('/');
-            setCookie(res.headers, { name: 'auth', value: authCode });
+            setCookie(res.headers, {
+                name: 'auth',
+                value: authCode,
+                path: '/',
+                maxAge: 60 * 60 * 24 * 30,
+                secure: ctx.req.url.startsWith('https://'),
+            });
             return res;
         }
 
@@ -26,9 +32,10 @@ export const handler = define.handlers({
 export default define.page<typeof handler>(({ data }) => (
     <main>
         <div>
-            <h1>Login</h1>
+            <h1>Sign In</h1>
             {data?.error && <p>{data.error}</p>}
-            <LoginForm />
+            <SigninForm />
+            <a href='/user/signup'>Sign up</a>
         </div>
     </main>
 ));

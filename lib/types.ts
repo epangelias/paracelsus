@@ -25,5 +25,7 @@ export interface OAIOptions {
 export interface User {
     id: string;
     username: string;
-    password: string;
+    passwordHash: string;
+    salt: string;
+    name: string;
 }
