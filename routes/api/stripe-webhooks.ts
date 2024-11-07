@@ -38,6 +38,8 @@ export const handler = define.handlers({
 
         const { customer } = event.data.object as { customer: string };
 
+        console.log("TEST received hook: " + event.type);
+
         switch (event.type) {
             case "customer.subscription.created": {
                 const user = await getUserByStripeCustomer(customer);
