@@ -13,7 +13,7 @@ export function getStripePremiumPlanPriceId() {
     );
 }
 
-export const stripe = new Stripe(STRIPE_SECRET_KEY!, {
+export const stripe = new Stripe(STRIPE_SECRET_KEY || "x", {
     apiVersion: "2024-10-28.acacia",
     httpClient: Stripe.createFetchHttpClient(),
 });
