@@ -3,7 +3,7 @@ import { handleSSE, watchKV } from '../../lib/handle-sse.ts';
 import { db } from '@/lib/db.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 import { handleAIResponse } from '@/lib/handle-ai.ts';
-import { getUserFromContext } from '@/lib/user.ts';
+import { getUserFromContext, updateUser } from '@/lib/user.ts';
 import { HttpError } from 'fresh';
 
 export const handler = define.handlers(async (ctx) => {
@@ -16,6 +16,11 @@ export const handler = define.handlers(async (ctx) => {
         const ai = ctx.url.searchParams.get('ai');
 
         if (ai) {
+            if (!user.isSubscribed) {
+                if (user.tokens <= 0) throw new HttpError(402, 'Out of tokens');
+                await updateUser({ ...user, tokens: (user.tokens || 0) - 1 });
+            }
+
             const res = await db.get<ChatData>(path);
 
             if (res.versionstamp === null) return Response.error();

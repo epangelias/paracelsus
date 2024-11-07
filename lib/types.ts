@@ -30,4 +30,5 @@ export interface User {
     name: string;
     stripeCustomerId?: string;
     isSubscribed: boolean;
+    tokens: number;
 }
