@@ -14,6 +14,10 @@ export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, on
         let content = '';
 
         for await (const token of stream) {
+            const deltaContent = token.choices[0].delta.content;
+
+            if (typeof deltaContent == "undefined") break;
+
             content += token.choices[0].delta.content;
             const message = {
                 role: "assistant",
