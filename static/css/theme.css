@@ -104,3 +104,10 @@ input:is([type="button"], [type="reset"], [type="submit"]) {
         border-color: var(--bg4);
     }
 }
+
+
+/* Inputs */
+
+input{
+    font-size: inherit;
+}
