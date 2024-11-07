@@ -28,4 +28,6 @@ export interface User {
     passwordHash: string;
     salt: string;
     name: string;
+    stripeCustomerId?: string;
+    isSubscribed: boolean;
 }

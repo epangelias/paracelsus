@@ -6,7 +6,7 @@ import { useEffect } from 'preact/hooks';
 const endpoint = '/api/counter';
 
 export default function Counter({ data }: { data: CounterData }) {
-  const counterData = useSignal(data);
+  const counterData = useSignal(data || { count: 0 });
   const setCount = (count: number) => sendSSE(endpoint, { count });
 
   useEffect(() => syncSSE(endpoint, counterData), []);
@@ -14,7 +14,7 @@ export default function Counter({ data }: { data: CounterData }) {
   return (
     <div class='counter text-center'>
       <button onClick={() => setCount(counterData.value.count - 1)}>- 1</button>{' '}
-      <button onClick={() => setCount(counterData.value.count - 1)}>+ 1</button>
+      <button onClick={() => setCount(counterData.value.count + 1)}>+ 1</button>
       <h2>{counterData.value.count}</h2>
     </div>
   );

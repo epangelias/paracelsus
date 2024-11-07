@@ -24,6 +24,7 @@ export function handleSSE(handler: (send: (data: unknown) => void) => Promise<vo
 export function watchKV(key: Deno.KvKey) {
     return async (send: (d: unknown) => void) => {
         for await (const event of db.watch([key])) {
+            if (event[0].versionstamp === null) continue;
             send(event[0].value);
         }
     }

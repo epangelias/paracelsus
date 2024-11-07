@@ -1,7 +1,7 @@
 import { define } from '@/lib/utils.ts';
 import { page } from 'fresh';
 import { setCookie } from 'jsr:@std/http/cookie';
-import { authorizeUser, createUser } from '@/lib/auth.ts';
+import { authorizeUser, createUser } from '../../lib/user.ts';
 import { SignupForm } from '@/components/SiginupForm.tsx';
 
 export const handler = define.handlers({

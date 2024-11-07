@@ -5,7 +5,7 @@ import { db } from '@/lib/db.ts';
 import { page } from 'fresh';
 import { ChatData, CounterData } from '@/lib/types.ts';
 import ChatBox from '@/islands/ChatBox.tsx';
-import { getUserFromContext } from '@/lib/auth.ts';
+import { getUserFromContext } from '../lib/user.ts';
 
 export const handler = define.handlers({
   async GET(ctx) {
@@ -20,9 +20,9 @@ export default define.page<typeof handler>(function Home({ data }) {
   return (
     <main>
       <p>
-        User: {data.user ? 'IN ' : 'OUT '}
-        <a href='/user/signin'>Signin</a> <a href='/user/signout'>Signout</a>{' '}
-        <a href='/user/signup'>Signup</a>
+        {data.user
+          ? <a href='/user'>User{data.user.isSubscribed ? ' 🪙' : ''}</a>
+          : <a href='/user/signin'>Signin</a>}
       </p>
       <h1>{siteData.title}</h1>
       <Counter data={data.counterData} />
