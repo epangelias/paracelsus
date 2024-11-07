@@ -36,8 +36,7 @@ export const handler = define.handlers({
             throw new BadRequestError(error.message);
         }
 
-        // @ts-ignore: Property 'customer' actually does exist on type 'Object'
-        const { customer } = event.data.object;
+        const { customer } = event.data.object as { customer: string };
 
         switch (event.type) {
             case "customer.subscription.created": {
