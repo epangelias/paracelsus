@@ -8,8 +8,8 @@ import { User } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 
-// await deleteUser(await getUserIdByUsername("albert"));
-// await createUser("Albert", "albert", "134391");
+await deleteUser(await getUserIdByUsername("a@a.a"));
+await createUser("Albert", "a@a.a", "134391");
 
 export async function getUserFromContext(ctx: FreshContext<State>) {
     if (ctx.state.user) return ctx.state.user;
@@ -136,10 +136,16 @@ function validatePassword(password: string) {
     if (password.length > 100) throw new Error("Password must be less than 100 characters");
 }
 
+function validateEmail(email: string) {
+    const regex = /^[^@]+@[^@]+\.[^@]+$/;
+    return !!email.match(regex);
+}
+
 function validateUsername(username: string) {
     if (username.length < 3) throw new Error("Username must be at least 3 characters");
     if (username.length > 100) throw new Error("Username must be less than 100 characters");
-    if (!/^[a-zA-Z0-9_-]+$/.test(username)) throw new Error("Username must be alphanumeric");
+    if (!validateEmail(username)) throw new Error("Invalid email");
+    // if (!/^[a-zA-Z0-9_-]+$/.test(username)) throw new Error("Username must be alphanumeric");
 }
 
 function transformUsername(username: string) {

@@ -3,13 +3,16 @@ import { handleSSE, watchKV } from '../../lib/handle-sse.ts';
 import { db } from '@/lib/db.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 import { handleAIResponse } from '@/lib/handle-ai.ts';
+import { getUserFromContext } from '@/lib/user.ts';
+import { HttpError } from 'fresh';
 
-const path = ['chat'];
+export const handler = define.handlers(async (ctx) => {
+    const user = await getUserFromContext(ctx);
+    if (!user) throw new HttpError(401);
 
-await db.set(path, { messages: [] });
+    const path = ['chat', user.id];
 
-export const handler = define.handlers({
-    GET: async (ctx) => {
+    if (ctx.req.method == 'GET') {
         const ai = ctx.url.searchParams.get('ai');
 
         if (ai) {
@@ -17,15 +20,17 @@ export const handler = define.handlers({
 
             if (res.versionstamp === null) return Response.error();
 
-            const saveMessages = (messages: AIMessage[]) => db.set(path, { ...res.value, messages });
+            const saveMessages = (messages: AIMessage[]) =>
+                db.set(path, { ...res.value, messages });
 
             return await handleAIResponse(res.value.messages, undefined, saveMessages);
         }
 
         return handleSSE(watchKV(path));
-    },
-    POST: async (ctx) => {
+    } else if (ctx.req.method == 'POST') {
         await db.set(path, await ctx.req.json());
         return Response.json({});
-    },
+    } else {
+        throw new HttpError(405);
+    }
 });

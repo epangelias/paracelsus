@@ -21,7 +21,7 @@ export const handler = define.handlers({
 
 export default define.page<typeof handler>(({ data }) => (
     <main>
-        <h1>User {data.username}</h1>
+        <h1>User {data.name}</h1>
         <form method='POST'>
             <div>
                 <label for='name'>Name</label> <br />

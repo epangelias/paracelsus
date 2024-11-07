@@ -9,11 +9,11 @@ export const handler = define.handlers({
         try {
             const formData = await ctx.req.formData();
 
-            const name = formData.get('username') as string;
+            const name = formData.get('name') as string;
             const username = formData.get('username') as string;
             const password = formData.get('password') as string;
 
-            const _user = await createUser(name, username, password);
+            await createUser(name, username, password);
 
             return ctx.redirect('/user/signin');
         } catch (e) {
@@ -25,6 +25,9 @@ export const handler = define.handlers({
 export default define.page<typeof handler>(({ data }) => (
     <main>
         <div>
+            <p>
+                <a href='/'>Back</a>
+            </p>
             <h1>Sign Up</h1>
             {data?.error && <p>{data.error}</p>}
             <SignupForm />

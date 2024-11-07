@@ -1,5 +1,5 @@
 import { define } from '@/lib/utils.ts';
-import { handleSSE, watchKV } from '../../lib/handle-sse.ts';
+import { handleSSE, watchKV } from '../lib/handle-sse.ts';
 import { db } from '@/lib/db.ts';
 
 const path = ['counterData'];

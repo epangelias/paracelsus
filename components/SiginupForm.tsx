@@ -14,9 +14,9 @@ export function SignupForm() {
                 />
             </div>
             <div>
-                <label for='username'>Username</label> <br />
+                <label for='username'>Email</label> <br />
                 <input
-                    type='text'
+                    type='email'
                     id='username'
                     name='username'
                     minlength={3}
@@ -35,7 +35,7 @@ export function SignupForm() {
                     required
                 />
             </div>
-            <button>Login</button>
+            <button>Sign Up</button>
         </form>
     );
 }

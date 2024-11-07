@@ -1,5 +1,4 @@
 import { define } from '@/lib/utils.ts';
-import Counter from '@/islands/Counter.tsx';
 import { siteData } from '@/lib/siteData.ts';
 import { db } from '@/lib/db.ts';
 import { page } from 'fresh';
@@ -22,11 +21,10 @@ export default define.page<typeof handler>(function Home({ data }) {
       <p>
         {data.user
           ? <a href='/user'>User{data.user.isSubscribed ? ' 🪙' : ''}</a>
-          : <a href='/user/signin'>Signin</a>}
+          : <a href='/user/signin'>Sign In</a>}
       </p>
       <h1>{siteData.title}</h1>
-      <Counter data={data.counterData} />
-      <ChatBox data={data.chatData} />
+      {data.user ? <ChatBox data={data.chatData} /> : <p>Sign in to chat</p>}
     </main>
   );
 });
