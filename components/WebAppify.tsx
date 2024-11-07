@@ -6,6 +6,7 @@ export function WebAppify({ themeColor }: { themeColor?: string }) {
             <meta name='apple-mobile-web-app-capable' content='yes' />
             <meta name='msapplication-tap-highlight' content='no' />
             <meta name='theme-color' content={themeColor} />
+            <link rel='manifest' href='/manifest.json' />
         </>
     );
 }
