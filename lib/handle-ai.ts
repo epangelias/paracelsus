@@ -24,7 +24,7 @@ export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, on
                 content,
                 html: await safelyRenderMarkdown(content)
             }
-            console.log(token);
+
             send(message);
         }
 

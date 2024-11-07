@@ -16,17 +16,18 @@ export const handler = define.handlers(async (ctx) => {
         const ai = ctx.url.searchParams.get('ai');
 
         if (ai) {
-            if (!user.isSubscribed) {
-                if (user.tokens <= 0) throw new HttpError(402, 'Out of tokens');
-                await updateUser({ ...user, tokens: (user.tokens || 0) - 1 });
-            }
-
             const res = await db.get<ChatData>(path);
 
             if (res.versionstamp === null) return Response.error();
 
-            const saveMessages = (messages: AIMessage[]) =>
+            const saveMessages = async (messages: AIMessage[]) => {
                 db.set(path, { ...res.value, messages });
+
+                if (!user.isSubscribed) {
+                    if (user.tokens <= 0) throw new HttpError(402, 'Out of tokens');
+                    await updateUser({ ...user, tokens: (user.tokens || 0) - 1 });
+                }
+            };
 
             return await handleAIResponse(res.value.messages, undefined, saveMessages);
         }
