@@ -9,7 +9,11 @@ export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, on
     let stream: Stream<ChatCompletionChunk>;
 
     return handleSSE(async (send) => {
-        stream = await generateChatCompletions(options, messages);
+        try {
+            stream = await generateChatCompletions(options, messages.map(({ role, content }) => ({ role, content })));
+        } catch (e) {
+            console.error(e);
+        }
 
         let content = '';
 
@@ -27,6 +31,8 @@ export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, on
 
             send(message);
         }
+
+        stream.controller.abort();
 
         send(null);
 
