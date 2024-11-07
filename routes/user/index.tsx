@@ -1,15 +1,12 @@
 import { define } from '@/lib/utils.ts';
-import { page } from 'fresh';
+import { HttpError, page } from 'fresh';
 import { getUserFromContext } from '@/lib/user.ts';
-import { ServerCodePage } from '@/routes/_404.tsx';
 import { updateUser } from '@/lib/user.ts';
 
 export const handler = define.handlers({
     POST: async (ctx) => {
         const user = await getUserFromContext(ctx);
-        if (!user) {
-            return ctx.render(ServerCodePage({ codeDescription: 'Unauthorized', serverCode: 401 }));
-        }
+        if (!user) throw new HttpError(401);
         const formData = await ctx.req.formData();
         user.name = formData.get('name') as string;
         await updateUser(user);
@@ -17,9 +14,7 @@ export const handler = define.handlers({
     },
     GET: async (ctx) => {
         const user = await getUserFromContext(ctx);
-        if (!user) {
-            return ctx.render(ServerCodePage({ codeDescription: 'Unauthorized', serverCode: 401 }));
-        }
+        if (!user) throw new HttpError(401);
         return page({ username: user.username, isSubscribed: user.isSubscribed, name: user.name });
     },
 });
