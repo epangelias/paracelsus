@@ -100,7 +100,6 @@ export async function createUser(name: string, username: string, password: strin
         name,
         stripeCustomerId,
         isSubscribed: false,
-        tokens: 10,
     }
 
     const res = await db.atomic()

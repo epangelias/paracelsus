@@ -23,7 +23,6 @@ export default define.page<typeof handler>(function Home({ data }) {
           ? <a href='/user'>{data.user.name} {data.user.isSubscribed && '🪙'}</a>
           : <a href='/user/signin'>Sign In</a>}
       </p>
-      {data.user && <p>Tokens: {data.user.isSubscribed ? Infinity : data.user.tokens}</p>}
       <h1>{siteData.title}</h1>
       {data.user ? <ChatBox data={data.chatData} /> : <p>Sign in to chat</p>}
     </main>
