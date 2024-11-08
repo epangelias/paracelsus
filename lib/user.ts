@@ -1,6 +1,6 @@
 
 
-import { FreshContext } from 'fresh';
+import { FreshContext, PageProps } from 'fresh';
 import { getCookies } from "jsr:@std/http/cookie";
 import { State } from '@/lib/utils.ts';
 import { db } from '@/lib/db.ts';
@@ -11,10 +11,11 @@ import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 // await deleteUser(await getUserIdByUsername("a@a.a"));
 // await createUser("Albert", "a@a.a", "134391");
 
-export async function getUserFromContext(ctx: FreshContext<State>) {
+export async function getUserFromState(ctx: FreshContext<State>) {
     if (ctx.state.user) return ctx.state.user;
     const { auth } = getCookies(ctx.req.headers);
     const user = await getUserByAuth(auth);
+    if (user) ctx.state.user = user;
     return user;
 }
 
@@ -100,6 +101,7 @@ export async function createUser(name: string, username: string, password: strin
         name,
         stripeCustomerId,
         isSubscribed: false,
+        tokens: 10,
     }
 
     const res = await db.atomic()

@@ -4,11 +4,11 @@ import { db } from '@/lib/db.ts';
 import { page } from 'fresh';
 import { ChatData, CounterData } from '@/lib/types.ts';
 import ChatBox from '@/islands/ChatBox.tsx';
-import { getUserFromContext } from '../lib/user.ts';
+import { getUserFromState } from '../lib/user.ts';
 
 export const handler = define.handlers({
   async GET(ctx) {
-    const user = await getUserFromContext(ctx);
+    const user = await getUserFromState(ctx);
     const counterData = (await db.get<CounterData>(['counterData'])).value || { count: 0 };
     const chatData = (await db.get<ChatData>(['chat'])).value || { messages: [] };
     return page({ counterData, chatData, user });

@@ -1,11 +1,11 @@
 import { define } from '@/lib/utils.ts';
 import { HttpError, page } from 'fresh';
-import { getUserFromContext } from '@/lib/user.ts';
+import { getUserFromState } from '@/lib/user.ts';
 import { updateUser } from '@/lib/user.ts';
 
 export const handler = define.handlers({
     POST: async (ctx) => {
-        const user = await getUserFromContext(ctx);
+        const user = await getUserFromState(ctx);
         if (!user) throw new HttpError(401);
         const formData = await ctx.req.formData();
         user.name = formData.get('name') as string;
@@ -13,7 +13,7 @@ export const handler = define.handlers({
         return page({ username: user.username, isSubscribed: user.isSubscribed, name: user.name });
     },
     GET: async (ctx) => {
-        const user = await getUserFromContext(ctx);
+        const user = await getUserFromState(ctx);
         if (!user) throw new HttpError(401);
         return page({ username: user.username, isSubscribed: user.isSubscribed, name: user.name });
     },

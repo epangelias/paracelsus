@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils.ts';
 import { getStripePremiumPlanPriceId, isStripeEnabled, stripe } from '@/lib/stripe.ts';
-import { getUserFromContext } from '../../lib/user.ts';
+import { getUserFromState } from '../../lib/user.ts';
 import { HttpError } from 'fresh';
 
 export const handler = define.handlers(async (ctx) => {
@@ -10,7 +10,7 @@ export const handler = define.handlers(async (ctx) => {
         throw new Error('"STRIPE_PREMIUM_PLAN_PRICE_ID" environment variable not set');
     }
 
-    const user = await getUserFromContext(ctx);
+    const user = await getUserFromState(ctx);
 
     if (!user) throw new HttpError(401, 'Unauthorized');
 

@@ -30,4 +30,13 @@ export interface User {
     name: string;
     stripeCustomerId?: string;
     isSubscribed: boolean;
+    tokens: number;
+}
+
+export interface GlobalData {
+    user?: {
+        name: string;
+        tokens: number;
+        isSubscribed: boolean;
+    }
 }

@@ -1,10 +1,20 @@
-import type { PageProps } from 'fresh';
 import { EmojiFavicon } from '@/components/EmojiFavicon.tsx';
 import { siteData } from '../lib/siteData.ts';
 import { WebAppify } from '@/components/WebAppify.tsx';
+import { Global } from '../islands/Global.tsx';
+import { GlobalData } from '@/lib/types.ts';
+import { define } from '@/lib/utils.ts';
 
-export default async function App({ Component }: PageProps) {
-  const js = await Deno.readTextFile(import.meta.resolve('../static/src/init.js').slice(7));
+export default define.page((props) => {
+  const user = props.state.user;
+
+  const globalData: GlobalData = {};
+
+  if (user) {
+    globalData.user = { name: user.name, tokens: user.tokens, isSubscribed: user.isSubscribed };
+  }
+
+  const js = Deno.readTextFileSync(import.meta.resolve('../static/src/init.js').slice(7));
 
   return (
     <html>
@@ -21,10 +31,12 @@ export default async function App({ Component }: PageProps) {
         <WebAppify themeColor={siteData.themeColor} />
       </head>
       <body>
-        <Component />
+        <Global data={globalData}>
+          <props.Component />
+        </Global>
 
         <script dangerouslySetInnerHTML={{ __html: js }}></script>
       </body>
     </html>
   );
-}
+});

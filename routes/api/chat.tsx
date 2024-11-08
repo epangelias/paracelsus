@@ -3,11 +3,11 @@ import { handleSSE, watchKV } from '../../lib/handle-sse.ts';
 import { db } from '@/lib/db.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 import { handleAIResponse } from '@/lib/handle-ai.ts';
-import { getUserFromContext } from '@/lib/user.ts';
+import { getUserFromState, updateUser } from '@/lib/user.ts';
 import { HttpError } from 'fresh';
 
 export const handler = define.handlers(async (ctx) => {
-    const user = await getUserFromContext(ctx);
+    const user = await getUserFromState(ctx);
     if (!user) throw new HttpError(401);
 
     const path = ['chat', user.id];
@@ -16,12 +16,18 @@ export const handler = define.handlers(async (ctx) => {
         const ai = ctx.url.searchParams.get('ai');
 
         if (ai) {
+            if (user.tokens <= 0 && !user.isSubscribed) return await handleSSE(async () => {});
+
             const res = await db.get<ChatData>(path);
 
             if (res.versionstamp === null) return Response.error();
 
             const saveMessages = async (messages: AIMessage[]) => {
                 db.set(path, { ...res.value, messages });
+
+                const tokens = (user.tokens || 1) - 1;
+
+                await updateUser({ ...user, tokens });
             };
 
             return await handleAIResponse(res.value.messages, undefined, saveMessages);

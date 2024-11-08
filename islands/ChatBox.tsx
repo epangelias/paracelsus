@@ -2,6 +2,7 @@ import { useSignal } from '@preact/signals';
 import { sendSSE, syncSSE, watchSSE } from '../lib/sse.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 import { useEffect } from 'preact/hooks';
+import { useGlobal } from './Global.tsx';
 
 function insertLoader(html?: string) {
   return html?.replace(/<\/([^>]+)>\n+$/, `&nbsp;&nbsp;<span class="loader"></span></$1>`);
@@ -10,6 +11,7 @@ function insertLoader(html?: string) {
 const endpoint = '/api/chat';
 
 export default function ChatBox({ data }: { data: ChatData }) {
+  const global = useGlobal();
   const chatData = useSignal<ChatData>(data);
   const generating = useSignal(false);
 
@@ -18,16 +20,19 @@ export default function ChatBox({ data }: { data: ChatData }) {
   async function onSubmit(e: SubmitEvent) {
     e.preventDefault();
 
+    if (global.value.user?.tokens <= 0 && !global.value.user?.isSubscribed) {
+      return alert('Your out of tokens now pay');
+    }
+
     const form = e.target as HTMLFormElement;
     const input = form.elements.namedItem('message') as HTMLInputElement;
 
+    generating.value = true;
     chatData.value.messages.push({ role: 'user', content: input.value });
     chatData.value = { ...chatData.value };
     input.value = '';
-    generating.value = true;
 
     await sendSSE(endpoint, chatData.value);
-    console.log(new Date());
     generateResponse();
   }
 
@@ -53,6 +58,10 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
   return (
     <div class='chat-box'>
+      <small class='text-center'>
+        You have <b>{global.value.user?.isSubscribed ? Infinity : global.value.user?.tokens}</b>
+        {global.value.user?.tokens == 1 ? ' token' : ' tokens'} left.
+      </small>
       <div class='messages'>
         {chatData.value.messages.map((message: AIMessage) => (
           <div
