@@ -3,6 +3,7 @@ import { page } from 'fresh';
 import { setCookie } from 'jsr:@std/http/cookie';
 import { authorizeUser, createUser } from '../../lib/user.ts';
 import { SignupForm } from '@/components/SiginupForm.tsx';
+import { sendEmailVerification } from '@/lib/mail.ts';
 
 export const handler = define.handlers({
     POST: async (ctx) => {
@@ -13,7 +14,8 @@ export const handler = define.handlers({
             const username = formData.get('username') as string;
             const password = formData.get('password') as string;
 
-            await createUser(name, username, password);
+            const user = await createUser(name, username, password);
+            sendEmailVerification(ctx.url.origin, user);
 
             return ctx.redirect('/user/signin');
         } catch (e) {

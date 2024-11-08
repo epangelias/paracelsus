@@ -14,7 +14,5 @@ initproject my-project
 
 ## TODO
 
-- Make user username an email
 - Integrate email system
-- Add manifest for web apps, and so that links dont open popup
 - CSS Theme

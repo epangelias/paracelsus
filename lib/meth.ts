@@ -7,7 +7,7 @@ export const Meth = {
         const hashHex = hashArray.map((byte) => byte.toString(16).padStart(2, "0")).join("");
         return hashHex;
     },
-    code() {
+    code(length = 0) {
         const randomBytes = new Uint8Array(32);
         crypto.getRandomValues(randomBytes);
         let hexString = "";
@@ -15,7 +15,8 @@ export const Meth = {
             const byte = randomBytes[i].toString(16).padStart(2, "0");
             hexString += byte;
         }
-        return hexString;
+        if (!length) return hexString
+        return hexString.slice(0, length);
     },
     async copy(text: string) {
         try {

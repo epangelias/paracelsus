@@ -31,6 +31,7 @@ export interface User {
     stripeCustomerId?: string;
     isSubscribed: boolean;
     tokens: number;
+    isEmailVerified: boolean;
 }
 
 export interface GlobalData {

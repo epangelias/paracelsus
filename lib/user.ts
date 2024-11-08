@@ -1,6 +1,6 @@
 
 
-import { FreshContext, PageProps } from 'fresh';
+import { FreshContext } from 'fresh';
 import { getCookies } from "jsr:@std/http/cookie";
 import { State } from '@/lib/utils.ts';
 import { db } from '@/lib/db.ts';
@@ -102,7 +102,10 @@ export async function createUser(name: string, username: string, password: strin
         stripeCustomerId,
         isSubscribed: false,
         tokens: 10,
+        isEmailVerified: false,
     }
+
+    console.log(user);
 
     const res = await db.atomic()
         .check({ key: ["users", user.id], versionstamp: null })
@@ -115,6 +118,12 @@ export async function createUser(name: string, username: string, password: strin
     if (!res.ok) throw new Error("User already exists");
 
     return user;
+}
+
+export async function generateEmailVerification(user: User) {
+    const code = Meth.code(12);
+    await db.set(["userVerification", code], { id: user.id }, { expireIn: 1000 * 60 * 60 })
+    return code;
 }
 
 export async function deleteUser(id: string | null) {
@@ -165,4 +174,11 @@ function validateName(name: string) {
 
 export async function updateUser(user: User) {
     await db.set(["users", user.id], user);
+}
+
+export async function getUserByVerificationCode(code: string) {
+    const res = await db.get<{ id: string }>(["userVerification", code]);
+    console.log(res);
+    if (res.versionstamp == null) return null;
+    return await getUserById(res.value.id);
 }

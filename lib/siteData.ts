@@ -4,5 +4,6 @@ export const siteData = {
     title: manifest.name,
     emojiFavicon: '🎯',
     themeColor: manifest.theme_color,
-    description: "A Deno Fresh template"
+    description: "A Deno Fresh template",
+    email: "vaza@vaza.app"
 };

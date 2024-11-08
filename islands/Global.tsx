@@ -6,7 +6,7 @@ import { Signal, useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/sse.ts';
 
 export function Global({ children, data }: { children: ComponentChildren; data: GlobalData }) {
-    const signal = createGlobal(data);
+    const signal = useSignal(data);
 
     useEffect(() => syncSSE('/api/global', signal), []);
 
@@ -19,8 +19,6 @@ export function Global({ children, data }: { children: ComponentChildren; data: 
     );
 }
 
-export const createGlobal = (data: GlobalData) => useSignal(data);
-
-export const GlobalContext = createContext<Signal<GlobalData> | null>(null);
+const GlobalContext = createContext<Signal<GlobalData> | null>(null);
 
 export const useGlobal = () => useContext(GlobalContext) as Signal<GlobalData>;
