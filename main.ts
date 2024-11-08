@@ -8,8 +8,10 @@ export const app = new App<State>();
 app.use(staticFiles());
 
 app.use(define.middleware(async ctx => {
-  await getUserFromState(ctx);
-  return ctx.next();
+  const base = ctx.req.url.split("/")[3];
+  const isStatic = /$(src|_frsh|img|favicon.ico|manifest.json)^/.test(base);
+  if (!isStatic) await getUserFromState(ctx);
+  return await ctx.next();
 }))
 
 await fsRoutes(app, {

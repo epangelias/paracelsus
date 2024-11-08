@@ -15,7 +15,7 @@
     --accent: #5294eb;
     --on-accent: #fff;
 
-    --primary: #eb9a52;
+    --primary: ThemeColor;
     --on-primary: #fff;
 
     --radius: 3px;
@@ -108,6 +108,6 @@ input:is([type="button"], [type="reset"], [type="submit"]) {
 
 /* Inputs */
 
-input{
+input {
     font-size: inherit;
 }

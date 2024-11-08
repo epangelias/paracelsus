@@ -3,7 +3,6 @@ import { site } from '../lib/site.ts';
 import { createGlobalData, Global } from '../islands/Global.tsx';
 import { define } from '@/lib/utils.ts';
 import { InlineJS } from '../components/InlineJS.tsx';
-import { InlineCSS } from '@/components/InlineCSS.tsx';
 
 export default define.page(({ Component, state }) => {
   return (
@@ -22,8 +21,8 @@ export default define.page(({ Component, state }) => {
         <meta name='msapplication-tap-highlight' content='no' />
         <meta name='theme-color' content={site.themeColor} />
         <link rel='manifest' href='/manifest.json' />
+        <link rel='stylesheet' href='/css.css' />
         <Favicon icon={site.favicon} />
-        <InlineCSS />
       </head>
       <body>
         <Global data={createGlobalData(state.user)}>

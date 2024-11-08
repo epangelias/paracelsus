@@ -1,3 +1,6 @@
+import { define } from '@/lib/utils.ts';
+import { site } from '@/lib/site.ts';
+
 function resolveCssImports(filePath: string) {
     const folder = filePath.split('/').slice(0, -1).join('/');
     let css = Deno.readTextFileSync(filePath);
@@ -14,8 +17,19 @@ function resolveCssImports(filePath: string) {
     return css;
 }
 
-const css = resolveCssImports(import.meta.resolve('../static/css/main.css').slice(7));
+const css = resolveCssImports(import.meta.resolve('../static/src/main.css').slice(7))
+    .replaceAll('ThemeColor', site.themeColor);
 
 export function InlineCSS() {
     return <style dangerouslySetInnerHTML={{ __html: css }}></style>;
 }
+
+export const handler = define.handlers({
+    GET: (ctx) => {
+        return new Response(css, {
+            headers: {
+                'Content-Type': 'text/css',
+            },
+        });
+    },
+});

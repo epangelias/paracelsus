@@ -3,6 +3,7 @@
 @import "helpers.css";
 
 main {
+  border: 2px solid var(--primary);
   display: flex;
   justify-content: center;
   align-items: center;
