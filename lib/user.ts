@@ -27,7 +27,8 @@ export async function getUserByAuth(auth: string) {
 }
 
 
-async function getUserIdByAuth(auth: string) {
+async function getUserIdByAuth(auth?: string) {
+    if (!auth) return;
     const res = await db.get<{ id: string }>(["usersByAuth", auth]);
     if (res.versionstamp == null) return null;
     return res.value?.id;
