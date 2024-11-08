@@ -1,9 +1,11 @@
-import manifest from "@/static/manifest.json" with {type: "json"};
+import * as emoji from 'npm:node-emoji';
 
 export const siteData = {
-    title: manifest.name,
-    emojiFavicon: '🎯',
-    themeColor: manifest.theme_color,
+    name: "Fresh Template",
+    favicon: emoji.get("rocket") as string,
+    themeColor: "#2596be",
     description: "A Deno Fresh template",
-    email: "vaza@vaza.app"
+    email: "vaza@vaza.app",
+    lang: "en-US"
 };
+

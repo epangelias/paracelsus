@@ -30,13 +30,13 @@ export async function sendEmailVerification(baseUrl: string, user: User) {
 
     try {
         await sendMail({
-            fromName: `${siteData.title}`,
+            fromName: `${siteData.name}`,
             from: siteData.email,
             to: user.username,
             toName: user.name,
-            subject: `Verify your email - ${siteData.title}`,
-            text: `Proceed to the following link to validate your email for ${siteData.title}.\n\n${link}`,
-            html: `<h1>Welcome to ${siteData.title}!</h1>
+            subject: `Verify your email - ${siteData.name}`,
+            text: `Proceed to the following link to validate your email for ${siteData.name}.\n\n${link}`,
+            html: `<h1>Welcome to ${siteData.name}!</h1>
             <p>To validate your email, proceed to the following link: <a href=${link}>${link}</a></p>`,
         });
     } catch (e) {

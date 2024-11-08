@@ -8,8 +8,8 @@ import { User } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 
-await deleteUser(await getUserIdByUsername("a@a.a"));
-await createUser("Albert", "a@a.a", "134391");
+// await deleteUser(await getUserIdByUsername("a@a.a"));
+// await createUser("Albert", "a@a.a", "134391");
 
 export async function getUserFromState(ctx: FreshContext<State>) {
     if (ctx.state.user) return ctx.state.user;
