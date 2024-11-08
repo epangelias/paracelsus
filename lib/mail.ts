@@ -1,5 +1,5 @@
 import { User } from '@/lib/types.ts';
-import { siteData } from '@/lib/siteData.ts';
+import { site } from './site.ts';
 import { generateEmailVerification } from '@/lib/user.ts';
 
 interface Options {
@@ -30,13 +30,13 @@ export async function sendEmailVerification(baseUrl: string, user: User) {
 
     try {
         await sendMail({
-            fromName: `${siteData.name}`,
-            from: siteData.email,
+            fromName: `${site.name}`,
+            from: site.email,
             to: user.username,
             toName: user.name,
-            subject: `Verify your email - ${siteData.name}`,
-            text: `Proceed to the following link to validate your email for ${siteData.name}.\n\n${link}`,
-            html: `<h1>Welcome to ${siteData.name}!</h1>
+            subject: `Verify your email - ${site.name}`,
+            text: `Proceed to the following link to validate your email for ${site.name}.\n\n${link}`,
+            html: `<h1>Welcome to ${site.name}!</h1>
             <p>To validate your email, proceed to the following link: <a href=${link}>${link}</a></p>`,
         });
     } catch (e) {

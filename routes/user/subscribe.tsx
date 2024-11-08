@@ -1,6 +1,5 @@
 import { define } from '@/lib/utils.ts';
 import { getStripePremiumPlanPriceId, isStripeEnabled, stripe } from '@/lib/stripe.ts';
-import { getUserFromState } from '../../lib/user.ts';
 import { HttpError } from 'fresh';
 
 export const handler = define.handlers(async (ctx) => {
@@ -10,13 +9,11 @@ export const handler = define.handlers(async (ctx) => {
         throw new Error('"STRIPE_PREMIUM_PLAN_PRICE_ID" environment variable not set');
     }
 
-    const user = await getUserFromState(ctx);
-
-    if (!user) throw new HttpError(401, 'Unauthorized');
+    if (!ctx.state.user) throw new HttpError(401, 'Unauthorized');
 
     const { url } = await stripe.checkout.sessions.create({
         success_url: ctx.url.origin + '/user',
-        customer: user.stripeCustomerId,
+        customer: ctx.state.user.stripeCustomerId,
         line_items: [
             {
                 price: stripePremiumPlanPriceId,

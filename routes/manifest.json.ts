@@ -1,18 +1,18 @@
 import { define } from '@/lib/utils.ts';
-import { siteData } from '@/lib/siteData.ts';
+import { site } from '../lib/site.ts';
 import { emojiOrFaviconToUrl } from '@/components/Favicon.tsx';
 
 export const handler = define.handlers(ctx => {
     return Response.json({
-        name: siteData.name,
+        name: site.name,
         start_url: "/",
-        lang: siteData.lang,
-        theme_color: siteData.themeColor,
+        lang: site.lang,
+        theme_color: site.themeColor,
         display: "standalone",
-        description: siteData.description,
+        description: site.description,
         icons: [
             {
-                src: emojiOrFaviconToUrl(siteData.favicon),
+                src: emojiOrFaviconToUrl(site.favicon),
                 sizes: "any",
             }
         ]

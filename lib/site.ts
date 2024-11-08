@@ -1,6 +1,6 @@
 import * as emoji from 'npm:node-emoji';
 
-export const siteData = {
+export const site = {
     name: "Fresh Template",
     favicon: emoji.get("rocket") as string,
     themeColor: "#2596be",

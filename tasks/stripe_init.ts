@@ -1,7 +1,7 @@
 #!/usr/bin/env -S deno run -A
 
 import type Stripe from "stripe";
-import { siteData } from '@/lib/siteData.ts';
+import { site } from '../lib/site.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 
 async function createPremiumTierProduct(stripe: Stripe) {
@@ -44,7 +44,7 @@ async function createDefaultPortalConfiguration(
             invoice_history: { enabled: true },
         },
         business_profile: {
-            headline: siteData.description,
+            headline: site.description,
         },
     });
 }

@@ -1,14 +1,12 @@
 import { define } from '@/lib/utils.ts';
-import { getUserFromState } from '@/lib/user.ts';
 import { sendEmailVerification } from '@/lib/mail.ts';
 import { HttpError } from 'https://jsr.io/@fresh/core/2.0.0-alpha.25/src/error.ts';
 import { page } from 'fresh';
 
 export const handler = define.handlers({
-    GET: async (ctx) => {
-        const user = await getUserFromState(ctx);
-        if (!user || user.isEmailVerified) throw new HttpError(404);
-        sendEmailVerification(ctx.url.origin, user);
+    GET: (ctx) => {
+        if (!ctx.state.user || ctx.state.user.isEmailVerified) throw new HttpError(404);
+        sendEmailVerification(ctx.url.origin, ctx.state.user);
         return page();
     },
 });

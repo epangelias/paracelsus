@@ -1,30 +1,35 @@
-import { Favicon } from '../components/Favicon.tsx';
-import { siteData } from '../lib/siteData.ts';
-import { WebAppify } from '@/components/WebAppify.tsx';
+import { emojiOrFaviconToUrl, Favicon } from '../components/Favicon.tsx';
+import { site } from '../lib/site.ts';
 import { createGlobalData, Global } from '../islands/Global.tsx';
 import { define } from '@/lib/utils.ts';
-import { InitJS } from '@/components/InitJS.tsx';
+import { InlineJS } from '../components/InlineJS.tsx';
+import { InlineCSS } from '@/components/InlineCSS.tsx';
 
 export default define.page(({ Component, state }) => {
   return (
-    <html lang={siteData.lang}>
+    <html lang={site.lang}>
       <head>
+        <title>{site.name}</title>
         <meta charset='utf-8' />
+        <meta name='description' content={site.description} />
         <meta
           content='minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no'
           name='viewport'
         />
-        <title>{siteData.name}</title>
-        <link rel='stylesheet' href='/css/main.css' />
         <meta name='color-scheme' content='light dark' />
-        <Favicon icon={siteData.favicon} />
-        <WebAppify />
+        <link rel='apple-touch-icon' href={emojiOrFaviconToUrl(site.favicon)} />
+        <meta name='apple-mobile-web-app-capable' content='yes' />
+        <meta name='msapplication-tap-highlight' content='no' />
+        <meta name='theme-color' content={site.themeColor} />
+        <link rel='manifest' href='/manifest.json' />
+        <Favicon icon={site.favicon} />
+        <InlineCSS />
       </head>
       <body>
         <Global data={createGlobalData(state.user)}>
           <Component />
         </Global>
-        <InitJS />
+        <InlineJS />
       </body>
     </html>
   );
