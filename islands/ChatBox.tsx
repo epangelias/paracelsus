@@ -46,6 +46,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
     };
 
     chatData.value.messages.push(message);
+    chatData.value = { ...chatData.value };
     generating.value = true;
 
     watchSSE(`${endpoint}?ai=1`, (newMessage: AIMessage) => {

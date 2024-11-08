@@ -8,8 +8,8 @@ import { User } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 
-// await deleteUser(await getUserIdByUsername("a@a.a"));
-// await createUser("Albert", "a@a.a", "134391");
+await deleteUser(await getUserIdByUsername("a@a.a"));
+await createUser("Albert", "a@a.a", "134391");
 
 export async function getUserFromState(ctx: FreshContext<State>) {
     if (ctx.state.user) return ctx.state.user;
@@ -123,6 +123,9 @@ export async function deleteUser(id: string | null) {
     if (!user) return;
     await db.delete(["users", id]);
     await db.delete(["usersByUsername", user.username]);
+
+    // User data
+    await db.delete(["chat", id]);
 
     if (user.stripeCustomerId)
         await db.delete(["usersByStripeCustomer", user.stripeCustomerId]);
