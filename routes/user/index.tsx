@@ -39,8 +39,8 @@ export default define.page<typeof handler>(({ state }) => (
         </p>
         <p>
             {state.user!.isSubscribed
-                ? <a href='/user/subscription'>Manage Subscription</a>
-                : <a href='/user/subscribe'>Subscribe</a>}
+                ? <a href='/user/subscription' target='_blank'>Manage Subscription</a>
+                : <a href='/user/subscribe' target='_blank'>Subscribe</a>}
         </p>
     </main>
 ));
