@@ -96,7 +96,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
       <form onSubmit={onSubmit}>
         <input type='text' autofocus name='message' required autocomplete='off' />
-        <button disabled={generating.value}>Send</button>
+        <button disabled={generating.value}>➢</button>
       </form>
     </div>
   );
