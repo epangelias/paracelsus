@@ -176,6 +176,7 @@ a {
 
 *:not(p, input) {
     user-select: none;
+    -webkit-user-select: none;
 }
 
 /* Error */
