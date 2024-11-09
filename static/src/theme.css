@@ -1,8 +1,6 @@
 /* Theme */
 
-:root,
-.theme-dark,
-.theme-light {
+:root {
     --dark1: #000;
     --dark2: #222;
     --dark3: #333;
@@ -21,18 +19,20 @@
     --radius: 3px;
     --border-color: var(--bg3);
     --border-width: 1px;
-    --spacing: 8px;
+    --spacing: 12px;
 }
 
 .theme-light {
     --bg1: var(--light1);
-    --bg2: var(--light2);
+    --bg2: var(--light1);
     --bg3: var(--light3);
     --bg4: var(--light4);
     --fg1: var(--dark1);
     --fg2: var(--dark2);
     --fg3: var(--dark3);
     --fg4: var(--dark4);
+
+    --input-shadow: 0 1px 3px #0003;
 }
 
 .theme-dark {
@@ -44,6 +44,13 @@
     --fg2: var(--light2);
     --fg3: var(--light3);
     --fg4: var(--light4);
+
+    --input-shadow: none;
+}
+
+.theme-dark,
+.theme-light {
+    --red: color-mix(in srgb, red, var(--fg1) 25%);
 }
 
 /* General Styles */
@@ -79,35 +86,90 @@ body {
     outline-offset: -1px;
 }
 
+p {
+    margin: var(--spacing) 0;
+}
+
+a+a:not(:first-of-type) {
+    margin-left: var(--spacing);
+}
+
+form div:has(label) {
+    margin: var(--spacing) 0;
+
+    & label {
+        display: block;
+        margin-bottom: calc(var(--spacing)/3);
+    }
+}
+
 
 /* Buttons */
 
 button,
 input:is([type="button"], [type="reset"], [type="submit"]) {
-    background-color: var(--bg2);
+    background-color: var(--accent);
     border-radius: var(--radius);
     border: var(--border-width) solid var(--border-color);
     padding: calc(var(--spacing)/2) calc(var(--spacing));
     cursor: pointer;
     font: inherit;
+    font-weight: bold;
+    color: var(--on-accent);
+    display: block;
 
     &:focus-visible {
         border-color: transparent;
+        outline-offset: 2px;
     }
 
     &:hover {
-        background-color: var(--bg3);
+        background-color: color-mix(in srgb, var(--accent), var(--on-accent) 15%);
     }
 
     &:active {
-        background-color: var(--bg4);
-        border-color: var(--bg4);
+        background-color: color-mix(in srgb, var(--accent), var(--on-accent) 15%);
     }
 }
 
 
 /* Inputs */
 
-input {
-    font-size: inherit;
+input:is([type="text"], [type="email"], [type="password"], [type="tel"], [type="search"], [type="url"], [type="number"], [type="date"], [type="time"], [type="datetime-local"], [type="color"], [type="month"], [type="week"]) {
+    width: 100%;
+    padding: calc(var(--spacing)/2) var(--spacing);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--radius);
+    background-color: var(--bg2);
+    font: inherit;
+    box-shadow: var(--input-shadow);
+
+    &:focus-visible {
+        border-color: transparent;
+    }
+}
+
+/* Links */
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover,
+    &:focus-visible {
+        text-decoration: underline;
+    }
+
+    &:active:hover {
+        display: inline-block;
+        scale: 1.2;
+        color: color-mix(in srgb, var(--accent), currentColor 15%);
+    }
+}
+
+/* Error */
+
+p.error {
+    color: var(--red);
 }

@@ -173,8 +173,23 @@ function validateName(name: string) {
     if (!/^[a-zA-Z\s]+$/.test(name)) throw new Error("Name must only contain letters and spaces");
 }
 
-export async function updateUser(user: User) {
-    await db.set(["users", user.id], user);
+export async function updateUser(changes: User) {
+    const user = await getUserById(changes.id);
+    if (!user) throw new Error("User not found");
+
+    if (user.username != changes.username) {
+        validateUsername(changes.username);
+        // await db.delete(["usersByUsername", user.username]);
+        // await db.set(["usersByUsername", changes.username], { id: changes.id });
+        await db.atomic()
+            .check({ key: ["usersByUsername", changes.username], versionstamp: null })
+            .delete(["usersByUsername", user.username])
+            .set(["usersByUsername", changes.username], { id: user.id })
+            .commit();
+        changes.isEmailVerified = false;
+    }
+
+    await db.set(["users", changes.id], changes);
 }
 
 export async function getUserByVerificationCode(code: string) {

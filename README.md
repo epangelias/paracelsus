@@ -17,3 +17,4 @@ initproject my-project
 - Integrate email system
 - CSS Theme
 - Refactor and simplify, make bloated features more componential, easy to add/remove
+- auto-resizing textarea

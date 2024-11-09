@@ -2,7 +2,7 @@ export function SignupForm() {
     return (
         <form method='POST'>
             <div>
-                <label for='name'>Name</label> <br />
+                <label for='name'>Name</label>
                 <input
                     type='text'
                     id='name'
@@ -14,7 +14,7 @@ export function SignupForm() {
                 />
             </div>
             <div>
-                <label for='username'>Email</label> <br />
+                <label for='username'>Email</label>
                 <input
                     type='email'
                     id='username'
@@ -25,7 +25,7 @@ export function SignupForm() {
                 />
             </div>
             <div>
-                <label for='password'>Password</label> <br />
+                <label for='password'>Password</label>
                 <input
                     type='password'
                     name='password'

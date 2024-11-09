@@ -3,7 +3,7 @@
 @import "helpers.css";
 
 main {
-  border: 2px solid var(--primary);
+  border: 8px solid var(--primary);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +12,6 @@ main {
 }
 
 .chat-box {
-  border: 2px solid var(--primary);
   overflow: hidden;
   height: 100%;
   flex: 1;
