@@ -7,9 +7,6 @@ export function ServerCodePage(
                 <div>
                     <h1>{props.code}</h1>
                     <p>{props.message}</p>
-                    <p>
-                        <a href='/'>Back to the Homepage</a>
-                    </p>
                 </div>
             </main>
         </>

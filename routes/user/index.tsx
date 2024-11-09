@@ -11,12 +11,12 @@ export const handler = define.handlers({
             ctx.state.user.name = formData.get('name') as string;
             ctx.state.user.username = formData.get('username') as string;
             await updateUser(ctx.state.user);
-            return page();
+            return page({ message: 'Saved!' });
         } catch (e) {
             return page({ error: e.message });
         }
     },
-    GET: async (ctx) => {
+    GET: (ctx) => {
         if (!ctx.state.user) throw new HttpError(404);
         return page();
     },
@@ -27,7 +27,6 @@ export default define.page<typeof handler>(({ state, data }) => (
         <h1>User {state.user!.name}</h1>
 
         <p>
-            <a href='/'>Back</a>
             <a href='/user/signout'>Signout</a>
             {state.user!.isSubscribed
                 ? <a href='/user/subscription' target='_blank'>Manage Subscription</a>
@@ -40,6 +39,6 @@ export default define.page<typeof handler>(({ state, data }) => (
             </p>
         )}
 
-        <UserForm user={state.user} error={data?.error} />
+        <UserForm user={state.user} error={data?.error} message={data?.message} />
     </main>
 ));

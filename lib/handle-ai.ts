@@ -5,17 +5,20 @@ import { AIMessage, OAIOptions } from '@/lib/types.ts';
 import { generateChatCompletions } from '@/lib/oai.ts';
 import { safelyRenderMarkdown } from '@/lib/md.ts';
 
-export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, onEnd = (_messages: AIMessage[]) => { }) {
+export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, onEnd = (_messages?: AIMessage[]) => { }, onError = (_messages?: AIMessage[]) => { }) {
     let stream: Stream<ChatCompletionChunk>;
 
     return handleSSE(async (send) => {
         try {
             stream = await generateChatCompletions(options, messages.map(({ role, content }) => ({ role, content })));
         } catch (e) {
+            onError();
             console.error(e);
         }
 
         let content = '';
+
+        messages.push({ role: "assistant", content: "", html: "" })
 
         for await (const token of stream) {
             const deltaContent = token.choices[0].delta.content;
@@ -29,6 +32,8 @@ export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, on
                 html: await safelyRenderMarkdown(content)
             }
 
+            messages[messages.length - 1] = message;
+
             send(message);
         }
 
@@ -36,8 +41,9 @@ export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, on
 
         send(null);
 
-        onEnd([...messages, { role: 'assistant', content, html: await safelyRenderMarkdown(content) }]);
+        onEnd(messages);
     }, () => {
+        onError(messages);
         stream.controller.abort();
     });
 }

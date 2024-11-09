@@ -23,7 +23,9 @@ export const handler = define.handlers(async (ctx) => {
 
             if (res.versionstamp === null) return Response.error();
 
-            const saveMessages = async (messages: AIMessage[]) => {
+            const saveMessages = async (messages?: AIMessage[]) => {
+                if (!messages) return;
+
                 db.set(path, { ...res.value, messages });
 
                 const tokens = (ctx.state.user!.tokens || 1) - 1;
@@ -31,7 +33,12 @@ export const handler = define.handlers(async (ctx) => {
                 await updateUser({ ...ctx.state.user!, tokens });
             };
 
-            return await handleAIResponse(res.value.messages, undefined, saveMessages);
+            return await handleAIResponse(
+                res.value.messages,
+                undefined,
+                saveMessages,
+                saveMessages,
+            );
         }
 
         return handleSSE(watchKV(path));

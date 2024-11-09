@@ -27,14 +27,9 @@ export const handler = define.handlers({
 export default define.page<typeof handler>(({ data }) => (
     <main>
         <div>
-            <p>
-                <a href='/'>Back</a>
-            </p>
             <h1>Sign Up</h1>
             {data?.error && <p>{data.error}</p>}
             <SignupForm />
-            <br />
-            <a href='/user/signin'>Sign in</a>
         </div>
     </main>
 ));

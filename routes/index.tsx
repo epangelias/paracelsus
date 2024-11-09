@@ -13,11 +13,8 @@ export default define.page(async ({ state }) => {
 
   return (
     <main>
-      <p>
-        {state.user ? <a href='/user'>{state.user.name}</a> : <a href='/user/signin'>Sign In</a>}
-      </p>
       <h1>{site.name}</h1>
-      {state.user ? <ChatBox data={chatData} /> : <p>Sign in to chat</p>}
+      <ChatBox data={chatData} />
     </main>
   );
 });

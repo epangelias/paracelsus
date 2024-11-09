@@ -32,14 +32,9 @@ export const handler = define.handlers({
 export default define.page<typeof handler>(({ data }) => (
     <main>
         <div>
-            <p>
-                <a href='/'>Back</a>
-            </p>
             <h1>Sign In</h1>
             {data?.error && <p>{data.error}</p>}
             <SigninForm />
-            <br />
-            <a href='/user/signup'>Sign up</a>
         </div>
     </main>
 ));

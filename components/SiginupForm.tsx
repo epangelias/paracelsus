@@ -35,7 +35,10 @@ export function SignupForm() {
                     required
                 />
             </div>
-            <button>Sign Up</button>
+            <div>
+                <button>Sign Up</button>
+                <a href='/user/signin'>Sign in</a>
+            </div>
         </form>
     );
 }

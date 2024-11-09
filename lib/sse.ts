@@ -1,11 +1,15 @@
 import { Signal } from '@preact/signals';
-import { useEffect } from 'preact/hooks';
 import { fetchOrError } from '@/lib/fetch.ts';
+import { Meth } from '@/lib/meth.ts';
 
 export function syncSSE<T>(endpoint: string, data: Signal<T>) {
     const eventSource = new EventSource(endpoint);
 
-    eventSource.onmessage = (e) => data.value = JSON.parse(e.data);
+    eventSource.onmessage = (e) => {
+        const newData = JSON.parse(e.data);
+        if (Meth.objectEquals(data.value, newData)) return;
+        data.value = newData;
+    }
     eventSource.onerror = (error) => console.log('SSE error: ', error);
 
     return () => eventSource?.close();

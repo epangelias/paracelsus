@@ -1,9 +1,10 @@
 import { User } from '@/lib/types.ts';
 
-export function UserForm({ user, error }: { user?: User; error?: string }) {
+export function UserForm(
+    { user, error, message }: { user?: User; error?: string; message?: string },
+) {
     return (
         <form method='POST'>
-            {error && <p class='error'>{error}</p>}
             <div>
                 <label for='name'>Name</label>
                 <input type='text' name='name' id='name' value={user!.name} required />
@@ -18,7 +19,12 @@ export function UserForm({ user, error }: { user?: User; error?: string }) {
                     required
                 />
             </div>
-            <button>Save</button>
+
+            <div>
+                <button>Save</button>
+                {error && <span class='error-message'>{error}</span>}
+                {message && <span class='message'>{message}</span>}
+            </div>
         </form>
     );
 }

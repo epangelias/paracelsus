@@ -3,6 +3,7 @@ import { site } from '../lib/site.ts';
 import { createGlobalData, Global } from '../islands/Global.tsx';
 import { define } from '@/lib/utils.ts';
 import { InlineJS } from '../components/InlineJS.tsx';
+import { Header } from '@/islands/Header.tsx';
 
 export default define.page(({ Component, state }) => {
   return (
@@ -25,9 +26,12 @@ export default define.page(({ Component, state }) => {
         <Favicon icon={site.favicon} />
       </head>
       <body>
-        <Global data={createGlobalData(state.user)}>
-          <Component />
-        </Global>
+        <div class='container'>
+          <Global data={createGlobalData(state.user)}>
+            <Header />
+            <Component />
+          </Global>
+        </div>
         <InlineJS />
       </body>
     </html>

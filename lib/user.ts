@@ -7,6 +7,7 @@ import { db } from '@/lib/db.ts';
 import { User } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
+import { sendEmailVerification } from '@/lib/mail.ts';
 
 // await deleteUser(await getUserIdByUsername("a@a.a"));
 // await createUser("Albert", "a@a.a", "134391");
@@ -90,7 +91,10 @@ export async function createUser(name: string, username: string, password: strin
     let stripeCustomerId;
 
     if (isStripeEnabled()) {
-        const customer = await stripe.customers.create();
+        const customer = await stripe.customers.create({
+            email: username,
+            name: name,
+        });
         stripeCustomerId = customer.id;
     }
 
@@ -105,8 +109,6 @@ export async function createUser(name: string, username: string, password: strin
         tokens: 10,
         isEmailVerified: false,
     }
-
-    console.log(user);
 
     const res = await db.atomic()
         .check({ key: ["users", user.id], versionstamp: null })
@@ -123,7 +125,7 @@ export async function createUser(name: string, username: string, password: strin
 
 export async function generateEmailVerification(user: User) {
     const code = Meth.code(12);
-    await db.set(["userVerification", code], { id: user.id }, { expireIn: 1000 * 60 * 60 })
+    await db.set(["userVerification", code], { id: user.id, email: user.username }, { expireIn: 1000 * 60 * 60 })
     return code;
 }
 
@@ -179,22 +181,26 @@ export async function updateUser(changes: User) {
 
     if (user.username != changes.username) {
         validateUsername(changes.username);
-        // await db.delete(["usersByUsername", user.username]);
-        // await db.set(["usersByUsername", changes.username], { id: changes.id });
-        await db.atomic()
+        const { ok } = await db.atomic()
             .check({ key: ["usersByUsername", changes.username], versionstamp: null })
             .delete(["usersByUsername", user.username])
             .set(["usersByUsername", changes.username], { id: user.id })
             .commit();
+        if (!ok) throw new Error("Username already exists");
         changes.isEmailVerified = false;
+    }
+
+    if (isStripeEnabled() && user.stripeCustomerId) {
+        stripe.customers.update(user.stripeCustomerId, { email: changes.username, name: changes.name });
     }
 
     await db.set(["users", changes.id], changes);
 }
 
 export async function getUserByVerificationCode(code: string) {
-    const res = await db.get<{ id: string }>(["userVerification", code]);
-    console.log(res);
+    const res = await db.get<{ id: string, email: string }>(["userVerification", code]);
     if (res.versionstamp == null) return null;
-    return await getUserById(res.value.id);
+    const user = await getUserById(res.value.id);
+    if (user?.username != res.value.email) return null;
+    return user;
 }

@@ -9,7 +9,10 @@ export function SigninForm() {
                 <label for='password'>Password</label>
                 <input type='password' name='password' id='password' required />
             </div>
-            <button>Sign In</button>
+            <div>
+                <button>Sign In</button>
+                <a href='/user/signup'>Sign up</a>
+            </div>
         </form>
     );
 }
