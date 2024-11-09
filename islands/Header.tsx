@@ -11,7 +11,6 @@ export function Header() {
                 <a href='/'>
                     <img
                         src={emojiOrFaviconToUrl(site.favicon)}
-                        alt={site.name}
                         width={32}
                         height={32}
                     />
