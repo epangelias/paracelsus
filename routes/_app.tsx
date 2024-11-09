@@ -23,7 +23,6 @@ export default define.page(({ Component, state }) => {
         <meta name='theme-color' content={site.themeColor} />
         <link rel='manifest' href='/manifest.json' />
         <link rel='stylesheet' href='/css.css' />
-        <meta http-equiv='Content-Security-Policy' content="script-src 'none'" />
         <Favicon icon={site.favicon} />
       </head>
       <body>
