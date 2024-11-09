@@ -16,7 +16,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   const generating = useSignal(false);
   const messagesRef = useRef<HTMLDivElement>(null);
 
-  if (!global.value.user) {
+  if (!global?.value.user) {
     return (
       <p>
         <a href='/user/signin'>Sign in</a> to chat
@@ -77,10 +77,12 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
   return (
     <div class='chat-box'>
-      <small class='text-center'>
-        You have <b>{global.value.user?.isSubscribed ? Infinity : global.value.user?.tokens}</b>
-        {global.value.user?.tokens == 1 ? ' token' : ' tokens'} left.
-      </small>
+      {!global.value.user?.isSubscribed && (
+        <small class='text-center'>
+          You have <b>{global.value.user?.tokens}</b>
+          {global.value.user?.tokens == 1 ? ' token' : ' tokens'} left.
+        </small>
+      )}
       <div class='messages' ref={messagesRef}>
         {chatData.value.messages.map((message: AIMessage) => (
           <div

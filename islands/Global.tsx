@@ -25,6 +25,13 @@ export const useGlobal = () => useContext(GlobalContext) as Signal<GlobalData>;
 
 export function createGlobalData(user?: User) {
     return {
-        user: user && { name: user.name, tokens: user.tokens, isSubscribed: user.isSubscribed },
+        user: user &&
+            {
+                name: user.name,
+                tokens: user.tokens,
+                isSubscribed: user.isSubscribed,
+                isEmailVerified: user.isEmailVerified,
+                username: user.username,
+            },
     };
 }

@@ -10,3 +10,4 @@ if (Deno.args.includes("build")) {
 } else {
   await builder.listen(app);
 }
+

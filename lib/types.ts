@@ -39,5 +39,7 @@ export interface GlobalData {
         name: string;
         tokens: number;
         isSubscribed: boolean;
+        isEmailVerified: boolean;
+        username: string;
     }
 }

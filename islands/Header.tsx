@@ -19,8 +19,8 @@ export function Header() {
                 </a>
             </div>
             <div className='right'>
-                {global.value.user
-                    ? <a href='/user'>{global.value.user.name}</a>
+                {global?.value.user
+                    ? <a href='/user'>{global?.value.user.name}</a>
                     : <a href='/user/signin'>Sign In</a>}
             </div>
         </header>

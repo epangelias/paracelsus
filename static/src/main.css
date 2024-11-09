@@ -10,6 +10,7 @@
 }
 
 main {
+  /* opacity: 0.5; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,6 +27,12 @@ header {
 
   * {
     vertical-align: middle;
+  }
+
+  .left,
+  .right {
+    display: flex;
+    align-items: center;
   }
 }
 

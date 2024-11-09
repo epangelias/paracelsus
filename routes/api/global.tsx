@@ -3,6 +3,7 @@ import { handleSSE } from '../../lib/handle-sse.ts';
 import { db } from '@/lib/db.ts';
 import { User } from '@/lib/types.ts';
 import { HttpError } from 'fresh';
+import { createGlobalData } from '@/islands/Global.tsx';
 
 export const handler = define.handlers((ctx) => {
     if (!ctx.state.user) throw new HttpError(401);
@@ -10,10 +11,8 @@ export const handler = define.handlers((ctx) => {
     return handleSSE(async (send) => {
         for await (const event of db.watch([['users', ctx.state.user!.id]])) {
             if (event[0].versionstamp === null) continue;
-            const { name, isSubscribed, tokens } = event[0].value as User;
-            const globalData = {
-                user: { name, isSubscribed, tokens },
-            };
+            const user = event[0].value as User;
+            const globalData = createGlobalData(user);
             send(globalData);
         }
     });

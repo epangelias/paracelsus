@@ -2,7 +2,7 @@ import { define } from '@/lib/utils.ts';
 import { site } from '@/lib/site.ts';
 import { db } from '@/lib/db.ts';
 import { ChatData } from '@/lib/types.ts';
-import ChatBox from '@/islands/ChatBox.tsx';
+import ChatBox from '../islands/ChatBox.tsx';
 
 export default define.page(async ({ state }) => {
   let chatData: ChatData = { messages: [] };
@@ -13,7 +13,6 @@ export default define.page(async ({ state }) => {
 
   return (
     <main>
-      <h1>{site.name}</h1>
       <ChatBox data={chatData} />
     </main>
   );
