@@ -3,8 +3,6 @@ import { site } from '../lib/site.ts';
 import { createGlobalData, Global } from '../islands/Global.tsx';
 import { define } from '@/lib/utils.ts';
 import { InlineJS } from '../components/InlineJS.tsx';
-import { Partial } from 'fresh/runtime';
-// import { Partial } from 'fresh/runtime.ts';
 
 export default define.page(({ Component, state }) => {
   return (
@@ -26,12 +24,10 @@ export default define.page(({ Component, state }) => {
         <link rel='stylesheet' href='/css.css' />
         <Favicon icon={site.favicon} />
       </head>
-      <body f-client-nav>
-        <Partial name='body'>
-          <Global data={createGlobalData(state.user)}>
-            <Component />
-          </Global>
-        </Partial>
+      <body>
+        <Global data={createGlobalData(state.user)}>
+          <Component />
+        </Global>
         <InlineJS />
       </body>
     </html>
