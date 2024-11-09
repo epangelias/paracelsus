@@ -8,7 +8,7 @@ import { syncSSE } from '@/lib/sse.ts';
 export function Global({ children, data }: { children: ComponentChildren; data: GlobalData }) {
     const global = useSignal(data);
 
-    if (data.user) useEffect(() => syncSSE('/api/global', global), []);
+    useEffect(() => syncSSE('/api/global', global), []);
 
     return (
         <>

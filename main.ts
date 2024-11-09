@@ -15,7 +15,8 @@ async function setCatch(ctx: FreshContext) {
 
 app.use(define.middleware(async ctx => {
   const base = ctx.req.url.split("/")[3];
-  const isStatic = "src|_fresh|img|favicon.ico|manifest.json|css.css".includes(base);
+  const isStatic = "src|_fresh|img|favicon.ico|manifest.json|css.css".includes(base) && base !== "";
+  console.log(ctx.req.url, isStatic);
   if (!isStatic) await getUserFromState(ctx);
   if (isStatic && import.meta.main) return setCatch(ctx);
   return await ctx.next();
