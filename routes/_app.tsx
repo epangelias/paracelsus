@@ -12,7 +12,7 @@ export default define.page(({ Component, state }) => {
         <meta charset='utf-8' />
         <meta name='description' content={site.description} />
         <meta
-          content='minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no'
+          content='minimum-scale=1.0, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
           name='viewport'
         />
         <meta name='color-scheme' content='light dark' />
