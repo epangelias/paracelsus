@@ -6,7 +6,6 @@ import { InlineJS } from '../components/InlineJS.tsx';
 import { Header } from '@/islands/Header.tsx';
 
 export default define.page(({ Component, state }) => {
-  console.log(state.user);
   return (
     <html lang={site.lang}>
       <head>
