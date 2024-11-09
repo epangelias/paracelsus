@@ -10,8 +10,8 @@
     --light3: #bbb;
     --light4: #aaa;
 
-    --accent: #5294eb;
-    --on-accent: #fff;
+    --accent: #7eb1f4;
+    --on-accent: var(--dark1);
 
     --primary: ThemeColor;
     --on-primary: #fff;
@@ -33,6 +33,9 @@
     --fg4: var(--dark4);
 
     --input-shadow: 0 1px 3px #0003;
+
+    --accent: #3885ea;
+    --on-accent: #fff;
 }
 
 .theme-dark {
