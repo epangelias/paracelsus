@@ -50,6 +50,7 @@
 
 * {
     box-sizing: border-box;
+    touch-action: manipulation;
 }
 
 html,
@@ -61,7 +62,6 @@ body {
     background: var(--bg1);
     color: var(--fg2);
     overscroll-behavior: none;
-    touch-action: manipulation;
 }
 
 ::selection {
