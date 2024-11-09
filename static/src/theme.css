@@ -88,6 +88,7 @@ body {
 
 p {
     margin: var(--spacing) 0;
+    font: inherit;
 }
 
 a+a:not(:first-of-type) {
@@ -163,9 +164,14 @@ a {
 
     &:active {
         display: inline-block;
-        scale: 1.2;
+        scale: 1.1;
         color: color-mix(in srgb, var(--accent), currentColor 15%);
     }
+}
+
+*:active {
+    transition: all 0.1s;
+    background-color: red;
 }
 
 /* Error */
