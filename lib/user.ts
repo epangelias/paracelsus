@@ -7,7 +7,6 @@ import { db } from '@/lib/db.ts';
 import { User } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
-import { sendEmailVerification } from '@/lib/mail.ts';
 
 // await deleteUser(await getUserIdByUsername("a@a.a"));
 // await createUser("Albert", "a@a.a", "134391");

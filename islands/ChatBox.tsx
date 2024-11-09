@@ -16,7 +16,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   const generating = useSignal(false);
   const messagesRef = useRef<HTMLDivElement>(null);
 
-  if (!global.user) {
+  if (!global.value.user) {
     return (
       <p>
         <a href='/user/signin'>Sign in</a> to chat
