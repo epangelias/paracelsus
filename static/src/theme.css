@@ -111,17 +111,13 @@ button,
 input:is([type="button"], [type="reset"], [type="submit"]) {
     background-color: var(--accent);
     border-radius: var(--radius);
-    border: var(--border-width) solid var(--border-color);
+    border: none;
     padding: calc(var(--spacing)/2) calc(var(--spacing));
     cursor: pointer;
     font: inherit;
     font-weight: bold;
     color: var(--on-accent);
-
-    &:focus-visible {
-        border-color: transparent;
-        outline-offset: 2px;
-    }
+    outline-offset: 2px;
 
     &:hover:not(:disabled) {
         background-color: color-mix(in srgb, var(--accent), var(--on-accent) 15%);
@@ -177,10 +173,10 @@ a {
     }
 }
 
-*:not(p, input) {
+/* *:not(p, input) {
     user-select: none;
     -webkit-user-select: none;
-}
+} */
 
 /* Error */
 
