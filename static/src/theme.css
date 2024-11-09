@@ -161,7 +161,7 @@ a {
         text-decoration: underline;
     }
 
-    &:active:hover {
+    &:active {
         display: inline-block;
         scale: 1.2;
         color: color-mix(in srgb, var(--accent), currentColor 15%);

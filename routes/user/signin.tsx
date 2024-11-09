@@ -38,6 +38,7 @@ export default define.page<typeof handler>(({ data }) => (
             <h1>Sign In</h1>
             {data?.error && <p>{data.error}</p>}
             <SigninForm />
+            <br />
             <a href='/user/signup'>Sign up</a>
         </div>
     </main>
