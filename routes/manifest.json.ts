@@ -1,8 +1,7 @@
 import { define } from '@/lib/utils.ts';
 import { site } from '../lib/site.ts';
-import { emojiOrFaviconToUrl } from '@/components/Favicon.tsx';
 
-export const handler = define.handlers(ctx => {
+export const handler = define.handlers(() => {
     return Response.json({
         name: site.name,
         start_url: "/",
@@ -12,7 +11,7 @@ export const handler = define.handlers(ctx => {
         description: site.description,
         icons: [
             {
-                src: emojiOrFaviconToUrl(site.favicon),
+                src: site.favicon,
                 sizes: "any",
             }
         ]

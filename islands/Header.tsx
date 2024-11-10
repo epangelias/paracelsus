@@ -1,6 +1,5 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { site } from '@/lib/site.ts';
-import { emojiOrFaviconToUrl } from '@/components/Favicon.tsx';
 
 export function Header() {
     const global = useGlobal();
@@ -10,7 +9,7 @@ export function Header() {
             <div className='left'>
                 <a href='/'>
                     <img
-                        src={emojiOrFaviconToUrl(site.favicon)}
+                        src={site.favicon}
                         width={32}
                         height={32}
                         alt=''

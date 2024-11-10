@@ -1,25 +1,24 @@
 /// <reference lib="deno.unstable" />
 
-import { App, FreshContext, fsRoutes, staticFiles } from "fresh";
+import { App, fsRoutes, staticFiles } from "fresh";
 import { type State, define } from "@/lib/utils.ts";
 import { getUserFromState } from "@/lib/user.ts";
+import { isStaticAsset, setCatchHeader } from '@/lib/http.ts';
 
 export const app = new App<State>();
+export const isProduction = import.meta.main;
+
 app.use(staticFiles());
 
-async function setCatch(ctx: FreshContext) {
-  const res = await ctx.next();
-  res.headers.set("cache-control", "public, must-revalidate, max-age=" + 60 * 60);
-  return res;
-}
-
 app.use(define.middleware(async ctx => {
-  const base = ctx.req.url.split("/")[3];
-  const isStatic = "src|_fresh|img|favicon.ico|manifest.json|css.css".includes(base) && base !== "";
+  const res = await ctx.next();
+  const isStatic = isStaticAsset(ctx.req);
+
   if (!isStatic) await getUserFromState(ctx);
-  if (isStatic && import.meta.main) return setCatch(ctx);
-  return await ctx.next();
-}))
+  if (isStatic && isProduction) setCatchHeader(res);
+
+  return res;
+}));
 
 await fsRoutes(app, {
   dir: "./",
@@ -27,7 +26,5 @@ await fsRoutes(app, {
   loadRoute: (path) => import(`./routes/${path}`),
 });
 
-if (import.meta.main) {
-  await app.listen();
-}
+if (isProduction) await app.listen();
 
