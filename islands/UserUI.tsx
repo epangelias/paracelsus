@@ -1,7 +1,9 @@
 import { useGlobal } from '@/islands/Global.tsx';
+import { useSignal } from '@preact/signals';
 
 export function UserUI({ error, message }: { error?: string; message?: string }) {
     const global = useGlobal();
+    const changed = useSignal(false);
 
     return (
         <>
@@ -27,6 +29,7 @@ export function UserUI({ error, message }: { error?: string; message?: string })
                         id='name'
                         value={global.value.user!.name}
                         required
+                        onInput={() => changed.value = true}
                     />
                 </div>
                 <div>
@@ -37,11 +40,13 @@ export function UserUI({ error, message }: { error?: string; message?: string })
                         id='username'
                         value={global.value.user!.username}
                         required
+                        onInput={() => changed.value = true}
+                        autocomplete='off'
                     />
                 </div>
 
                 <div>
-                    <button>Save</button>
+                    <button disabled={!changed.value}>Save</button>
                     {error && <span class='error-message'>{error}</span>}
                     {message && <span class='message'>{message}</span>}
                 </div>

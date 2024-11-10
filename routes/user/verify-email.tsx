@@ -13,7 +13,10 @@ export const handler = define.handlers({
                     'Verification code expired. Request a new one in the user settings',
                 );
             }
-            await updateUser({ ...user, isEmailVerified: true });
+            if (!user.hasVerifiedEmail) user.tokens += 10;
+            user.isEmailVerified = true;
+            user.hasVerifiedEmail = true;
+            await updateUser(user);
             return page({ message: 'Email verified!' });
         } catch (e) {
             return page({ message: e.message });

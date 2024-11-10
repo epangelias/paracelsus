@@ -32,6 +32,7 @@ export function createGlobalData(user?: User) {
                 isSubscribed: user.isSubscribed,
                 isEmailVerified: user.isEmailVerified,
                 username: user.username,
+                hasVerifiedEmail: user.hasVerifiedEmail,
             },
     };
 }

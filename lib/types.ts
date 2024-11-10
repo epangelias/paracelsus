@@ -32,14 +32,9 @@ export interface User {
     isSubscribed: boolean;
     tokens: number;
     isEmailVerified: boolean;
+    hasVerifiedEmail: boolean;
 }
 
 export interface GlobalData {
-    user?: {
-        name: string;
-        tokens: number;
-        isSubscribed: boolean;
-        isEmailVerified: boolean;
-        username: string;
-    }
+    user?: Partial<User>
 }

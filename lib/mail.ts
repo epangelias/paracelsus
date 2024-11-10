@@ -12,15 +12,15 @@ interface Options {
     html: string
 }
 
-// export async function sendMail({ from, fromName, to, toName, subject, text, html }: Options) {
-//     const body = JSON.stringify({
-//         from, fromName, to, toName, subject, text, html,
-//         auth: Deno.env.get("MAIL_AUTH"),
-//     });
-//     const res = await fetch("http://x.virtualfreight.software:8000/email", { method: "POST", body });
-//     if (!res.ok) throw new Error("Error sending mail: " + await res.text());
-//     return;
-// }
+export async function sendMail({ from, fromName, to, toName, subject, text, html }: Options) {
+    const body = JSON.stringify({
+        from, fromName, to, toName, subject, text, html,
+        auth: Deno.env.get("MAIL_AUTH"),
+    });
+    const res = await fetch("http://x.virtualfreight.software:8000/email", { method: "POST", body });
+    if (!res.ok) throw new Error("Error sending mail: " + await res.text());
+    return;
+}
 
 export async function sendEmailVerification(baseUrl: string, user: User) {
     const code = await generateEmailVerification(user);

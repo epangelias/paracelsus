@@ -107,6 +107,7 @@ export async function createUser(name: string, username: string, password: strin
         isSubscribed: false,
         tokens: 10,
         isEmailVerified: false,
+        hasVerifiedEmail: false,
     }
 
     const res = await db.atomic()

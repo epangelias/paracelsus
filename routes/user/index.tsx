@@ -2,15 +2,19 @@ import { define } from '@/lib/utils.ts';
 import { HttpError, page } from 'fresh';
 import { updateUser } from '@/lib/user.ts';
 import { UserUI } from '@/islands/UserUI.tsx';
+import { sendEmailVerification } from '@/lib/mail.ts';
 
 export const handler = define.handlers({
     POST: async (ctx) => {
-        if (!ctx.state.user) throw new HttpError(404);
+        const user = ctx.state.user;
+        if (!user) throw new HttpError(404);
         try {
+            const oldUsername = user.username;
             const formData = await ctx.req.formData();
-            ctx.state.user.name = formData.get('name') as string;
-            ctx.state.user.username = formData.get('username') as string;
-            await updateUser(ctx.state.user);
+            user.name = formData.get('name') as string;
+            user.username = formData.get('username') as string;
+            await updateUser(user);
+            if (oldUsername! + user.username) await sendEmailVerification(ctx.req.url, user);
             return page({ message: 'Saved!', error: undefined });
         } catch (e) {
             return page({ error: e.message, message: undefined });

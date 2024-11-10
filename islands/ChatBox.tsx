@@ -81,6 +81,12 @@ export default function ChatBox({ data }: { data: ChatData }) {
         <small class='text-center'>
           You have <b>{global.value.user?.tokens}</b>
           {global.value.user?.tokens == 1 ? ' token' : ' tokens'} left.
+          {!global.value.user.hasVerifiedEmail && global.value.user.tokens! <= 0 &&
+            (
+              <p>
+                <a href='/user'>Verify your email</a> for more tokens.
+              </p>
+            )}
         </small>
       )}
       <div class='messages' ref={messagesRef}>
