@@ -1,21 +1,10 @@
+import { Field } from '@/components/Field.tsx';
+
 export function SigninForm({ error, username }: { error: string; username: string }) {
     return (
         <form method='POST'>
-            <div>
-                <label for='username'>Email</label>
-                <input
-                    type='email'
-                    id='username'
-                    name='username'
-                    value={username}
-                    required
-                    autofocus
-                />
-            </div>
-            <div>
-                <label for='password'>Password</label>
-                <input type='password' name='password' id='password' required />
-            </div>
+            <Field name='username' label='Username' required autofocus />
+            <Field name='password' label='Password' required />
             {error && <p class='error-message'>{error}</p>}
             <div>
                 <button>Sign In</button>

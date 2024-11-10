@@ -1,8 +1,7 @@
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 import { define } from '@/lib/utils.ts';
-import { BadRequestError } from '@/lib/http.ts';
 import Stripe from "stripe";
-import { getUserByStripeCustomer, updateUser } from '../../lib/user.ts';
+import { getUserByStripeCustomer, updateUser } from "@/lib/user.ts";
 import { STATUS_CODE } from '@std/http/status';
 import { HttpError } from 'fresh';
 

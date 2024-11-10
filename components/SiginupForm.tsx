@@ -1,44 +1,14 @@
+import { Field } from '@/components/Field.tsx';
+
 export function SignupForm(
     { error, name, username }: { error: string; name: string; username: string },
 ) {
     return (
         <form method='POST'>
-            <div>
-                <label for='name'>Name</label>
-                <input
-                    type='text'
-                    id='name'
-                    name='name'
-                    minlength={3}
-                    maxlength={100}
-                    required
-                    autofocus
-                    value={name}
-                />
-            </div>
-            <div>
-                <label for='username'>Email</label>
-                <input
-                    type='email'
-                    id='username'
-                    name='username'
-                    minlength={3}
-                    maxlength={100}
-                    required
-                    value={username}
-                />
-            </div>
-            <div>
-                <label for='password'>Password</label>
-                <input
-                    type='password'
-                    name='password'
-                    id='password'
-                    minlength={6}
-                    maxlength={100}
-                    required
-                />
-            </div>
+            <Field name='name' label='Name' required autofocus value={name} />
+            <Field name='username' label='Email' type='email' required value={username} />
+            <Field name='password' label='Password' type='password' required />
+
             {error && <p class='error-message'>{error}</p>}
             <div>
                 <button>Sign Up</button>

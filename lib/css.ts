@@ -3,7 +3,7 @@ import { site } from '@/lib/site.ts';
 const CSSVariables: Record<string, string> = {
     ThemeColor: site.themeColor,
     AnyField:
-        ':is(input:is([type="text"], [type="password"], [type="email"], [type="number"], [type="url"], [type="tel"], [type="search"], [type="date"]), textarea)',
+        ':is(input:not([type]), input:is([type="text"], [type="password"], [type="email"], [type="number"], [type="url"], [type="tel"], [type="search"], [type="date"]), textarea)',
     AnyButton:
         ':is(button, input:is([type="button"], [type="submit"], [type="reset"], [type="file"], [type="color"]), select)',
 };

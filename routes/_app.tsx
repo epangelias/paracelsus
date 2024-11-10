@@ -1,4 +1,3 @@
-import { Favicon } from '@/components/Favicon.tsx';
 import { site } from '@/lib/site.ts';
 import { createGlobalData, Global } from '@/islands/Global.tsx';
 import { define } from '@/lib/utils.ts';
@@ -23,7 +22,7 @@ export default define.page(({ Component, state }) => {
         <meta name='theme-color' content={site.themeColor} />
         <link rel='manifest' href='/manifest.json' />
         <link rel='stylesheet' href='/css.css' />
-        <Favicon icon={site.favicon} />
+        <link rel='icon' href={site.favicon} />
       </head>
       <body>
         <div class='container'>
