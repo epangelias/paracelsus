@@ -179,8 +179,10 @@ export async function updateUser(changes: User) {
     const user = await getUserById(changes.id);
     if (!user) throw new Error("User not found");
 
+    validateUsername(changes.username);
+    validateName(changes.name);
+
     if (user.username != changes.username) {
-        validateUsername(changes.username);
         const { ok } = await db.atomic()
             .check({ key: ["usersByUsername", changes.username], versionstamp: null })
             .delete(["usersByUsername", user.username])

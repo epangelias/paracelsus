@@ -1,6 +1,22 @@
 import { define } from '@/lib/utils.ts';
 import { site } from '@/lib/site.ts';
 
+const CSSVariables: Record<string, string> = {
+    ThemeColor: site.themeColor,
+    AnyField:
+        ':is(input:is([type="text"], [type="password"], [type="email"], [type="number"], [type="url"], [type="tel"], [type="search"], [type="date"]), textarea)',
+    AnyButton:
+        ':is(button, input:is([type="button"], [type="submit"], [type="reset"], [type="file"], [type="color"]), select)',
+};
+
+function applyVariables(text: string) {
+    for (const name in CSSVariables) {
+        const value = CSSVariables[name];
+        text = text.replaceAll(name, value);
+    }
+    return text;
+}
+
 function resolveCssImports(filePath: string) {
     const folder = filePath.split('/').slice(0, -1).join('/');
     let css = Deno.readTextFileSync(filePath);
@@ -14,7 +30,7 @@ function resolveCssImports(filePath: string) {
         css = css.replace(imp[0], importedCss);
     }
 
-    return css;
+    return applyVariables(css);
 }
 
 const css = resolveCssImports(import.meta.resolve('../static/src/main.css').slice(7))

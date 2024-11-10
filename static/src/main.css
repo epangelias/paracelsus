@@ -4,6 +4,9 @@
 
 .container {
   border: 10px solid var(--primary);
+  border-radius: calc(var(--radius) * 10);
+  outline: 100px solid var(--primary);
+  outline-offset: -1px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -71,10 +74,18 @@ header {
       &[data-role="user"] {
         max-width: 90%;
         float: right;
-        background-color: var(--bg2);
+        background-color: var(--primary);
+        color: var(--on-primary);
         padding: var(--spacing);
         border-radius: var(--radius);
       }
     }
   }
+}
+
+/* Scrollbar */
+
+* {
+  scrollbar-color: var(--accent) transparent;
+  word-wrap: break-word;
 }

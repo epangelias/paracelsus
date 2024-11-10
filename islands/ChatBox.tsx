@@ -31,7 +31,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
     if (!global.value.user) return;
 
-    if (global.value.user.tokens <= 0 && !global.value.user.isSubscribed) {
+    if (global.value.user.tokens! <= 0 && !global.value.user.isSubscribed) {
       return alert('Your out of tokens now pay');
     }
 
@@ -42,7 +42,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
     chatData.value.messages.push({ role: 'user', content: input.value });
     chatData.value = { ...chatData.value };
     input.value = '';
-    scrollToBottom();
+    setTimeout(() => scrollToBottom());
 
     await sendSSE(endpoint, chatData.value);
     generateResponse();
