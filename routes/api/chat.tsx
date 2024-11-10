@@ -3,11 +3,12 @@ import { handleSSE, watchKV } from '../../lib/handle-sse.ts';
 import { db } from '@/lib/db.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 import { handleAIResponse } from '@/lib/handle-ai.ts';
-import { updateUser } from '@/lib/user.ts';
+import { ensureLoggedIn, updateUser } from '@/lib/user.ts';
 import { HttpError } from 'fresh';
+import { STATUS_CODE } from '@std/http/status';
 
 export const handler = define.handlers(async (ctx) => {
-    if (!ctx.state.user) throw new HttpError(401);
+    if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
 
     const path = ['chat', ctx.state.user.id];
 
@@ -46,6 +47,6 @@ export const handler = define.handlers(async (ctx) => {
         await db.set(path, await ctx.req.json());
         return Response.json({});
     } else {
-        throw new HttpError(405);
+        throw new HttpError(STATUS_CODE.MethodNotAllowed);
     }
 });

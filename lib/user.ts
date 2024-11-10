@@ -1,12 +1,13 @@
 
 
-import { FreshContext } from 'fresh';
+import { FreshContext, HttpError } from 'fresh';
 import { getCookies } from "jsr:@std/http/cookie";
 import { State } from '@/lib/utils.ts';
 import { db } from '@/lib/db.ts';
 import { User } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
+import { STATUS_CODE } from '@std/http/status';
 
 export async function getUserFromState(ctx: FreshContext<State>) {
     if (ctx.state.user) return ctx.state.user;
@@ -86,13 +87,13 @@ export async function createUser(name: string, username: string, password: strin
 
     let stripeCustomerId;
 
-    // if (isStripeEnabled()) {
-    //     const customer = await stripe.customers.create({
-    //         email: username,
-    //         name: name,
-    //     });
-    //     stripeCustomerId = customer.id;
-    // }
+    if (isStripeEnabled()) {
+        const customer = await stripe.customers.create({
+            email: username,
+            name: name,
+        });
+        stripeCustomerId = customer.id;
+    }
 
     const user: User = {
         id: Meth.code(),

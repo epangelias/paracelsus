@@ -1,5 +1,4 @@
 import Stripe from "stripe";
-import { AssertionError } from "@std/assert";
 
 const STRIPE_SECRET_KEY = Deno.env.get("STRIPE_SECRET_KEY");
 
@@ -17,9 +16,3 @@ export const stripe = new Stripe(STRIPE_SECRET_KEY!, {
     apiVersion: "2024-10-28.acacia",
     httpClient: Stripe.createFetchHttpClient(),
 });
-
-export function assertIsPrice(value: unknown): asserts value is Stripe.Price {
-    if (value === undefined || value === null || typeof value === "string") {
-        throw new AssertionError("Default price must be of type `Stripe.Price`");
-    }
-}
