@@ -1,4 +1,6 @@
-export function SignupForm() {
+export function SignupForm(
+    { error, name, username }: { error: string; name: string; username: string },
+) {
     return (
         <form method='POST'>
             <div>
@@ -11,6 +13,7 @@ export function SignupForm() {
                     maxlength={100}
                     required
                     autofocus
+                    value={name}
                 />
             </div>
             <div>
@@ -22,6 +25,7 @@ export function SignupForm() {
                     minlength={3}
                     maxlength={100}
                     required
+                    value={username}
                 />
             </div>
             <div>
@@ -35,6 +39,7 @@ export function SignupForm() {
                     required
                 />
             </div>
+            {error && <p class='error-message'>{error}</p>}
             <div>
                 <button>Sign Up</button>
                 <a href='/user/signin'>Sign in</a>

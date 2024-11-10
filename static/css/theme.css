@@ -195,13 +195,17 @@ a {
 
 .error-message {
     color: var(--red);
-    padding: var(--spacing);
+    margin: var(--spacing) 0;
     animation: fadeIn .5s ease-in-out;
 }
 
 .message {
-    padding: var(--spacing);
+    margin: var(--spacing) 0;
     animation: fadeIn .5s ease-in-out;
+}
+
+AnyButton+ :is(.message, .error-message) {
+    margin-left: var(--spacing);
 }
 
 @keyframes fadeIn {

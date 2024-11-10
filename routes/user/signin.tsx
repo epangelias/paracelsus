@@ -25,7 +25,7 @@ export const handler = define.handlers({
             return res;
         }
 
-        return page({ error: 'Invalid credentials' });
+        return page({ error: 'Invalid credentials', username });
     },
 });
 
@@ -33,8 +33,7 @@ export default define.page<typeof handler>(({ data }) => (
     <main>
         <div>
             <h1>Sign In</h1>
-            {data?.error && <p>{data.error}</p>}
-            <SigninForm />
+            <SigninForm error={data?.error} username={data?.username} />
         </div>
     </main>
 ));

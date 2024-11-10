@@ -8,9 +8,6 @@ import { User } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 
-// await deleteUser(await getUserIdByUsername("a@a.a"));
-// await createUser("Albert", "a@a.a", "134391");
-
 export async function getUserFromState(ctx: FreshContext<State>) {
     if (ctx.state.user) return ctx.state.user;
     const { auth } = getCookies(ctx.req.headers);
@@ -40,7 +37,7 @@ async function getUserById(id: string) {
     return res.value;
 }
 
-async function getUserIdByUsername(id: string) {
+export async function getUserIdByUsername(id: string) {
     const res = await db.get<{ id: string }>(["usersByUsername", id]);
     if (res.versionstamp == null) return null;
     return res.value?.id;
@@ -89,13 +86,13 @@ export async function createUser(name: string, username: string, password: strin
 
     let stripeCustomerId;
 
-    if (isStripeEnabled()) {
-        const customer = await stripe.customers.create({
-            email: username,
-            name: name,
-        });
-        stripeCustomerId = customer.id;
-    }
+    // if (isStripeEnabled()) {
+    //     const customer = await stripe.customers.create({
+    //         email: username,
+    //         name: name,
+    //     });
+    //     stripeCustomerId = customer.id;
+    // }
 
     const user: User = {
         id: Meth.code(),

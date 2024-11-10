@@ -84,7 +84,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
           {!global.value.user.hasVerifiedEmail && global.value.user.tokens! <= 0 &&
             (
               <p>
-                <a href='/user'>Verify your email</a> for more tokens.
+                <a href='/user/resend-email'>Verify your email</a> for more tokens.
               </p>
             )}
         </small>
