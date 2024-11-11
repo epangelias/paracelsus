@@ -1,6 +1,7 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal } from '@preact/signals';
 import { Field } from '@/components/Field.tsx';
+import { MessageBox } from '../components/MessageBox.tsx';
 
 export function UserUI({ error, message }: { error?: string; message?: string }) {
     const global = useGlobal();
@@ -40,8 +41,7 @@ export function UserUI({ error, message }: { error?: string; message?: string })
 
                 <div>
                     <button disabled={!changed.value}>Save</button>
-                    {error && <span class='error-message'>{error}</span>}
-                    {message && <span class='message'>{message}</span>}
+                    <MessageBox message={message} error={error} inline />
                 </div>
             </form>
         </>

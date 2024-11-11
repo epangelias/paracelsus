@@ -1,9 +1,5 @@
 import OpenAI from "https://deno.land/x/openai@v4.28.0/mod.ts";
-import {
-    ChatCompletionChunk,
-    ChatCompletionMessageParam,
-} from "https://deno.land/x/openai@v4.28.0/resources/mod.ts";
-import { Stream } from "https://deno.land/x/openai@v4.28.0/streaming.ts";
+import { ChatCompletionMessageParam } from "https://deno.land/x/openai@v4.28.0/resources/mod.ts";
 import { AIMessage, OAIOptions } from '@/lib/types.ts';
 
 

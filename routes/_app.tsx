@@ -1,7 +1,7 @@
 import { site } from '@/lib/site.ts';
 import { createGlobalData, Global } from '@/islands/Global.tsx';
 import { define } from '@/lib/utils.ts';
-import { InlineJS } from '@/components/InlineJS.tsx';
+import { InitJS } from '../components/InitJS.tsx';
 import { Header } from '@/islands/Header.tsx';
 
 export default define.page(({ Component, state }) => {
@@ -31,7 +31,7 @@ export default define.page(({ Component, state }) => {
             <Component />
           </Global>
         </div>
-        <InlineJS />
+        <InitJS />
       </body>
     </html>
   );

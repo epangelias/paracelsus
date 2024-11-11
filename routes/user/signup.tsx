@@ -1,9 +1,9 @@
 import { define } from '@/lib/utils.ts';
 import { page } from 'fresh';
-import { setCookie } from 'jsr:@std/http/cookie';
-import { authorizeUser, createUser } from '../../lib/user.ts';
+import { authorizeUser, createUser } from '@/lib/user.ts';
 import { SignupForm } from '@/components/SiginupForm.tsx';
 import { sendEmailVerification } from '@/lib/mail.ts';
+import { SetAuthCookie } from '@/routes/user/signin.tsx';
 
 export const handler = define.handlers({
     POST: async (ctx) => {
@@ -17,7 +17,10 @@ export const handler = define.handlers({
             const user = await createUser(Name, username, password);
             sendEmailVerification(ctx.url.origin, user);
 
-            return ctx.redirect('/user/signin');
+            const authCode = await authorizeUser(username, password);
+            if (authCode) return SetAuthCookie(ctx, authCode);
+
+            throw new Error('Error authorizing user');
         } catch (e) {
             return page({ error: e.message, Name, username });
         }

@@ -26,14 +26,10 @@ header {
   display: flex;
   justify-content: space-between;
   padding: var(--spacing) calc(var(--spacing) * 2);
-  /* border-bottom: 1px solid var(--fg1); */
-
-  * {
-    vertical-align: middle;
-  }
 
   .left,
-  .right {
+  .right,
+  a.logo {
     display: flex;
     align-items: center;
   }
@@ -78,6 +74,10 @@ header {
         color: var(--on-primary);
         padding: var(--spacing);
         border-radius: var(--radius);
+      }
+
+      pre {
+        overflow-x: auto;
       }
     }
   }

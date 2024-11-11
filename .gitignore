@@ -4,3 +4,5 @@ _fresh/
 
 node_modules/
 vendor/
+
+.archive

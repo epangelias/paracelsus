@@ -1,15 +1,15 @@
-# Fresh Template
+# Paracelsus - A Deno Fresh Template
 
-## Install fresh-template
+## Install Paracelsus
 
 ```bash
-deno install -Ag https://raw.githubusercontent.com/epangelias/fresh-template/refs/heads/main/tasks/initproject.ts
+deno install -Ag https://raw.githubusercontent.com/epangelias/paracelsus/refs/heads/main/tasks/paracelsus.ts
 ```
 
 ## Create a new project
 
 ```bash
-initproject my-project
+paracelsus my-project
 ```
 
 ## TODO

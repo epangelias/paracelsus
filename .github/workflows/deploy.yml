@@ -29,7 +29,7 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "fresh-template-dog"
+          project: "paracelsus"
           entrypoint: "main.ts"
           root: "."
           

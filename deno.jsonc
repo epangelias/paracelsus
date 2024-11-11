@@ -1,13 +1,11 @@
 {
   "tasks": {
-    "check": "deno fmt --env --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
+    "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
     "dev": "deno run -A --env --watch=static/,routes/ tasks/dev.ts",
     "build": "deno run -A --env tasks/dev.ts build",
     "start": "deno run -A --env main.ts",
     "update": "deno run -A --env -r jsr:@fresh/update .",
     "init": "deno run -A --env tasks/init.ts",
-    "open": "deno run -A --env tasks/open.ts",
-    "template": "deno run -A --env tasks/template.ts",
     "db:reset": "deno run -A --env tasks/db_reset.ts",
     "stripe:init": "deno run -A --env tasks/stripe_init.ts"
   },

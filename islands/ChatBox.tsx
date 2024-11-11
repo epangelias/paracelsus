@@ -19,7 +19,9 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
   useEffect(() => syncSSE(endpoint, chatData), []);
 
-  useEffect(() => scrollToBottom, [chatData.value]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatData.value]);
 
   async function onSubmit(e: SubmitEvent) {
     e.preventDefault();
@@ -43,12 +45,15 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
     generating.value = true;
 
-    watchSSE(`${endpoint}?ai=1`, (newMessage: AIMessage) => {
+    watchSSE('/api/ai', (newMessage: AIMessage) => {
       if (newMessage == null) return generating.value = false;
       message.content = newMessage.content;
       message.html = newMessage.html;
       chatData.value = { ...chatData.value };
       scrollToBottom();
+    }, () => {
+      message.html = '<p class="error-message">Error generating response</p>';
+      generating.value = false;
     });
   }
 
@@ -59,29 +64,9 @@ export default function ChatBox({ data }: { data: ChatData }) {
   }
 
   async function scrollToBottom() {
-    await new Promise((resolve) => setTimeout(resolve, 0));
     if (!messagesRef.current) return;
+    await new Promise((resolve) => setTimeout(resolve, 0));
     messagesRef.current.scrollTo(0, messagesRef.current.scrollHeight);
-  }
-
-  function TokenDisplay() {
-    if (global.value.user?.isSubscribed) return <></>;
-
-    return (
-      <small class='text-center'>
-        You have <b>{global.value.user?.tokens}</b> tokens left.
-      </small>
-    );
-  }
-
-  function VerifyEmailMessage() {
-    if (global.value.user!.hasVerifiedEmail || global.value.user!.tokens! > 0) return <></>;
-
-    return (
-      <p class='text-center'>
-        <a href='/user/resend-email'>Verify your email</a> for more tokens.
-      </p>
-    );
   }
 
   function ChatMessage(message: AIMessage) {
@@ -97,9 +82,6 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
   return (
     <div class='chat-box'>
-      <TokenDisplay />
-      <VerifyEmailMessage />
-
       <div class='messages' ref={messagesRef}>{chatData.value.messages.map(ChatMessage)}</div>
 
       <form onSubmit={onSubmit}>

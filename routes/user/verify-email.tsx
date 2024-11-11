@@ -29,7 +29,7 @@ export default define.page<typeof handler>(({ data }) => (
     <main>
         <h1>{data.message}</h1>
         <p>
-            <a href='/'>Go to homepage</a>
+            <a href='/'>Back</a>
         </p>
     </main>
 ));

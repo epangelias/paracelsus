@@ -25,7 +25,7 @@ await Deno.remove(path('README.md'));
 
 // Remove Tasks
 await Deno.remove(path('tasks/init.ts'));
-await Deno.remove(path('tasks/initproject.ts'));
+await Deno.remove(path('tasks/paracelsus.ts'));
 
 // Remove task from deno.json
 const denoJSON = JSON.parse(await Deno.readTextFile(path('deno.json')));
