@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 
-const STRIPE_SECRET_KEY = Deno.env.get("STRIPE_SECRET_KEY");
+const STRIPE_SECRET_KEY = Deno.env.get("STRIPE_SECRET_KEY") || "X";
 
 export function isStripeEnabled() {
     return Deno.env.has("STRIPE_SECRET_KEY");
