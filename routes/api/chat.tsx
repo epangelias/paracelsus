@@ -3,7 +3,7 @@ import { handleSSE, watchKV } from '../../lib/handle-sse.ts';
 import { db } from '@/lib/db.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 import { handleAIResponse } from '@/lib/handle-ai.ts';
-import { ensureLoggedIn, updateUser } from '@/lib/user.ts';
+import { updateUser } from '@/lib/user.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 

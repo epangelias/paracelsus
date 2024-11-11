@@ -10,6 +10,7 @@ export function SignupForm(
             <Field name='password' label='Password' type='password' required />
 
             {error && <p class='error-message'>{error}</p>}
+
             <div>
                 <button>Sign Up</button>
                 <a href='/user/signin'>Sign in</a>

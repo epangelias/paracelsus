@@ -4,6 +4,7 @@ import { User } from '@/lib/types.ts';
 // deno-lint-ignore no-empty-interface
 export interface State {
     user?: User;
+    auth?: string;
 }
 
 export const define = createDefine<State>();

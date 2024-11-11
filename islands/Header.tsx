@@ -7,13 +7,8 @@ export function Header() {
     return (
         <header>
             <div className='left'>
-                <a href='/'>
-                    <img
-                        src={site.favicon}
-                        width={32}
-                        height={32}
-                        alt=''
-                    />
+                <a href='/' class='color-primary'>
+                    <img src={site.favicon} width={32} height={32} alt='' />
                     {' ' + site.name}
                 </a>
             </div>

@@ -1,5 +1,6 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal } from '@preact/signals';
+import { Field } from '@/components/Field.tsx';
 
 export function UserUI({ error, message }: { error?: string; message?: string }) {
     const global = useGlobal();
@@ -21,29 +22,21 @@ export function UserUI({ error, message }: { error?: string; message?: string })
             )}
 
             <form method='POST'>
-                <div>
-                    <label for='name'>Name</label>
-                    <input
-                        type='text'
-                        name='name'
-                        id='name'
-                        value={global.value.user!.name}
-                        required
-                        onInput={() => changed.value = true}
-                    />
-                </div>
-                <div>
-                    <label for='username'>Email</label>
-                    <input
-                        type='email'
-                        name='username'
-                        id='username'
-                        value={global.value.user!.username}
-                        required
-                        onInput={() => changed.value = true}
-                        autocomplete='off'
-                    />
-                </div>
+                <Field
+                    name='name'
+                    label='Name'
+                    required
+                    autofocus
+                    value={global.value.user!.name}
+                    onInput={() => changed.value = true}
+                />
+                <Field
+                    name='username'
+                    label='Email'
+                    required
+                    value={global.value.user!.username}
+                    onInput={() => changed.value = true}
+                />
 
                 <div>
                     <button disabled={!changed.value}>Save</button>

@@ -10,13 +10,7 @@ export function Global({ children, data }: { children: ComponentChildren; data: 
 
     useEffect(() => syncSSE('/api/global', global), []);
 
-    return (
-        <>
-            <GlobalContext.Provider value={global}>
-                {children}
-            </GlobalContext.Provider>
-        </>
-    );
+    return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
 }
 
 const GlobalContext = createContext<Signal<GlobalData> | null>(null);

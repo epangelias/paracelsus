@@ -12,6 +12,7 @@ import { STATUS_CODE } from '@std/http/status';
 export async function getUserFromState(ctx: FreshContext<State>) {
     if (ctx.state.user) return ctx.state.user;
     const { auth } = getCookies(ctx.req.headers);
+    ctx.state.auth = auth;
     const user = await getUserByAuth(auth);
     if (user) ctx.state.user = user;
     return user;
@@ -87,13 +88,13 @@ export async function createUser(name: string, username: string, password: strin
 
     let stripeCustomerId;
 
-    if (isStripeEnabled()) {
-        const customer = await stripe.customers.create({
-            email: username,
-            name: name,
-        });
-        stripeCustomerId = customer.id;
-    }
+    // if (isStripeEnabled()) {
+    //     const customer = await stripe.customers.create({
+    //         email: username,
+    //         name: name,
+    //     });
+    //     stripeCustomerId = customer.id;
+    // }
 
     const user: User = {
         id: Meth.code(),
@@ -103,7 +104,7 @@ export async function createUser(name: string, username: string, password: strin
         name,
         stripeCustomerId,
         isSubscribed: false,
-        tokens: 10,
+        tokens: 5,
         isEmailVerified: false,
         hasVerifiedEmail: false,
     }

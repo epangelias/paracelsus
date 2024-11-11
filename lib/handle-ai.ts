@@ -8,6 +8,8 @@ import { safelyRenderMarkdown } from '@/lib/md.ts';
 export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, onEnd = (_messages?: AIMessage[]) => { }, onError = (_messages?: AIMessage[]) => { }) {
     let stream: Stream<ChatCompletionChunk>;
 
+    const message = { role: "assistant", content: "", html: "" };
+
     return handleSSE(async (send) => {
         try {
             stream = await generateChatCompletions(options, messages.map(({ role, content }) => ({ role, content })));
@@ -18,7 +20,7 @@ export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, on
 
         let content = '';
 
-        messages.push({ role: "assistant", content: "", html: "" })
+        messages.push(message);
 
         for await (const token of stream) {
             const deltaContent = token.choices[0].delta.content;
@@ -26,24 +28,30 @@ export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, on
             if (typeof deltaContent == "undefined") break;
 
             content += token.choices[0].delta.content;
-            const message = {
-                role: "assistant",
-                content,
-                html: await safelyRenderMarkdown(content)
-            }
 
-            messages[messages.length - 1] = message;
+            const html = insertLoaderToHTML(await safelyRenderMarkdown(content))
+
+            message.content = content;
+            message.html = html;
 
             send(message);
         }
+
+        message.html = await safelyRenderMarkdown(content);
+        send(message);
 
         stream.controller.abort();
 
         send(null);
 
         onEnd(messages);
-    }, () => {
+    }, async () => {
+        message.html = await safelyRenderMarkdown(message.content);
         onError(messages);
         stream.controller.abort();
     });
+}
+
+function insertLoaderToHTML(html: string) {
+    return html.replace(/<\/([^>]+)>\n+$/, `&nbsp;&nbsp;<span class="loader"></span></$1>`);
 }
