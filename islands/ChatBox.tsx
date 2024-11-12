@@ -27,10 +27,11 @@ export default function ChatBox({ data }: { data: ChatData }) {
     e.preventDefault();
 
     if (!checkCanGenerate()) return alert('Your out of tokens now pay');
+    if (!inputRef.current) return;
 
     generating.value = true;
-    addMessage({ role: 'user', content: inputRef.current?.value! });
-    if (inputRef.current) inputRef.current.value = '';
+    addMessage({ role: 'user', content: inputRef.current.value });
+    inputRef.current.value = '';
     scrollToBottom();
     await sendSSE(endpoint, chatData.value);
     generateResponse();
@@ -64,8 +65,8 @@ export default function ChatBox({ data }: { data: ChatData }) {
   }
 
   async function scrollToBottom() {
-    if (!messagesRef.current) return;
     await new Promise((resolve) => setTimeout(resolve, 0));
+    if (!messagesRef.current) return;
     messagesRef.current.scrollTo(0, messagesRef.current.scrollHeight);
   }
 
