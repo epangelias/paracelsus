@@ -16,6 +16,8 @@ export const handler = define.handlers((ctx) => {
         for await (const [user, auth] of db.watch<[User, { id: string }]>([userKey, authKey])) {
             let globalData = createGlobalData();
 
+            console.log(JSON.stringify(user), JSON.stringify(auth));
+
             if (user.versionstamp !== null && auth.versionstamp !== null) {
                 globalData = createGlobalData(user.value);
             }
