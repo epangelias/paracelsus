@@ -8,8 +8,6 @@ import { syncSSE } from '@/lib/sse.ts';
 export function Global({ children, data }: { children: ComponentChildren; data: GlobalData }) {
     const global = useSignal(data);
 
-    useEffect(() => console.log({ userData: global.value }), [global.value]);
-
     useEffect(() => syncSSE('/api/global', global), []);
 
     return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;

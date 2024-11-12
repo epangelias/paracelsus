@@ -130,7 +130,7 @@ AnyButton {
 
     &:disabled {
         opacity: 0.6;
-        cursor: none;
+        cursor: default;
     }
 
     &:focus-visible {

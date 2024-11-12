@@ -7,7 +7,11 @@ import { IS_BROWSER } from 'fresh/runtime';
 
 export function UserUI({ error, message }: { error?: string; message?: string }) {
     const global = useGlobal();
-    const changed = useSignal(false);
+    const nameChanged = useSignal(false);
+    const usernameChanged = useSignal(false);
+
+    const username = global.value.user?.username;
+    const name = global.value.user?.name;
 
     useEffect(() => {
         if (!global.value?.user && IS_BROWSER) globalThis.window.location.href = '/user/signin';
@@ -34,19 +38,21 @@ export function UserUI({ error, message }: { error?: string; message?: string })
                     label='Name'
                     required
                     autofocus
-                    value={global.value.user?.name}
-                    onInput={() => changed.value = true}
+                    value={name}
+                    onInput={(e) =>
+                        nameChanged.value = (e.target as HTMLInputElement).value !== name}
                 />
                 <Field
                     name='username'
                     label='Email'
                     required
-                    value={global.value.user?.username}
-                    onInput={() => changed.value = true}
+                    value={username}
+                    onInput={(e) =>
+                        usernameChanged.value = (e.target as HTMLInputElement).value !== username}
                 />
 
                 <div>
-                    <button disabled={!changed.value}>Save</button>
+                    <button disabled={!nameChanged.value && !usernameChanged.value}>Save</button>
                     <MessageBox message={message} error={error} inline />
                 </div>
             </form>

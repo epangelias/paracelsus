@@ -23,7 +23,7 @@ export const Meth = {
             await navigator.clipboard.writeText(text);
         } catch (_e) { }
     },
-    objectEquals(x: Record<string, unknown>, y: Record<string, unknown>) {
+    objectEquals(x: unknown, y: unknown) {
         if (x === y) return true;
         if (!(x instanceof Object) || !(y instanceof Object)) return false;
         if (x.constructor !== y.constructor) return false;
