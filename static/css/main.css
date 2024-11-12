@@ -60,7 +60,6 @@ header {
   flex-direction: column;
   gap: var(--spacing);
   padding: 1rem;
-  margin-bottom: 1rem;
   border-radius: calc(var(--radius) * 2);
 
   form {

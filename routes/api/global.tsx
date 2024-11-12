@@ -20,6 +20,8 @@ export const handler = define.handlers((ctx) => {
                 globalData = createGlobalData(user.value);
             }
 
+            console.log('sending', JSON.stringify(globalData), { user, auth });
+
             send(globalData);
         }
     });

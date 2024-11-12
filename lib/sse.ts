@@ -7,7 +7,6 @@ export function syncSSE<T>(endpoint: string, data: Signal<T>) {
 
     eventSource.onmessage = (event) => {
         const newData = JSON.parse(event.data);
-        console.log(newData);
         if (Meth.objectEquals(data.value, newData)) return;
         data.value = newData;
     }

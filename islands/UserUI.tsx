@@ -20,7 +20,7 @@ export function UserUI({ error, message }: { error?: string; message?: string })
     return (
         <>
             <p>
-                <a href='/user/signout'>Signout</a>
+                <a href='/user/signout'>Sign Out</a>
                 {global.value.user?.isSubscribed
                     ? <a href='/user/subscription' target='_blank'>Manage Subscription</a>
                     : <a href='/user/subscribe' target='_blank'>Subscribe</a>}
