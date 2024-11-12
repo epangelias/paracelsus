@@ -19,9 +19,11 @@ export function Header() {
                     </a>
                 </div>
                 <div className='right'>
-                    <span class='spacing-right'>
-                        ⚡️{global?.value.user?.tokens}
-                    </span>
+                    {global?.value.user && (
+                        <span class='spacing-right'>
+                            ⚡️{global.value.user.tokens}
+                        </span>
+                    )}
 
                     {global?.value.user
                         ? <a href='/user'>{global?.value.user.name}</a>
