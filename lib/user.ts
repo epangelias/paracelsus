@@ -88,13 +88,13 @@ export async function createUser(name: string, username: string, password: strin
 
     let stripeCustomerId;
 
-    // if (isStripeEnabled()) {
-    //     const customer = await stripe.customers.create({
-    //         email: username,
-    //         name: name,
-    //     });
-    //     stripeCustomerId = customer.id;
-    // }
+    if (isStripeEnabled()) {
+        const customer = await stripe.customers.create({
+            email: username,
+            name: name,
+        });
+        stripeCustomerId = customer.id;
+    }
 
     const user: User = {
         id: Meth.code(),
