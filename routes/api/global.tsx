@@ -11,7 +11,6 @@ export const handler = define.handlers((ctx) => {
 
     return handleSSE(async (send) => {
         const userKey: Deno.KvKey = ['users', ctx.state.user!.id];
-        const authKey: Deno.KvKey = ['usersByAuth', ctx.state.auth!];
 
         const watchUser = async () => {
             for await (const [user] of db.watch<[User]>([userKey])) {
@@ -25,14 +24,6 @@ export const handler = define.handlers((ctx) => {
             }
         };
 
-        const watchAuth = async () => {
-            for await (const [auth] of db.watch<[{ id: string }]>([authKey])) {
-                if (auth.versionstamp === null) {
-                    send(createGlobalData());
-                }
-            }
-        };
-
-        await Promise.all([watchUser(), watchAuth()]);
+        await Promise.all([watchUser()]);
     });
 });
