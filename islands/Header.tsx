@@ -14,7 +14,13 @@ export function Header() {
             <header>
                 <div className='left'>
                     <a href='/' class='color-primary logo'>
-                        <img src={site.favicon} width={32} height={32} alt='' />
+                        <img
+                            class='spacing-right'
+                            src={site.favicon}
+                            width={32}
+                            height={32}
+                            alt=''
+                        />
                         <span>{' ' + site.name}</span>
                     </a>
                 </div>
