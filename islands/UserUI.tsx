@@ -1,21 +1,14 @@
 import { useGlobal } from '@/islands/Global.tsx';
-import { useSignal } from '@preact/signals';
+import { useComputed, useSignal } from '@preact/signals';
 import { Field } from '@/components/Field.tsx';
 import { MessageBox } from '../components/MessageBox.tsx';
-import { useEffect } from 'preact/hooks';
+import { useEffect, useMemo } from 'preact/hooks';
 import { IS_BROWSER } from 'fresh/runtime';
 
 export function UserUI({ error, message }: { error?: string; message?: string }) {
     const global = useGlobal();
     const nameChanged = useSignal(false);
     const usernameChanged = useSignal(false);
-
-    const username = global.value.user?.username;
-    const name = global.value.user?.name;
-
-    useEffect(() => {
-        if (!global.value?.user && IS_BROWSER) globalThis.window.location.href = '/user/signin';
-    }, [global.value]);
 
     return (
         <>
@@ -38,17 +31,19 @@ export function UserUI({ error, message }: { error?: string; message?: string })
                     label='Name'
                     required
                     autofocus
-                    value={name}
+                    defaultValue={global.value.user?.name}
                     onInput={(e) =>
-                        nameChanged.value = (e.target as HTMLInputElement).value !== name}
+                        nameChanged.value =
+                            (e.target as HTMLInputElement).value !== global.value.user?.name}
                 />
                 <Field
                     name='username'
                     label='Email'
                     required
-                    value={username}
+                    defaultValue={global.value.user?.username}
                     onInput={(e) =>
-                        usernameChanged.value = (e.target as HTMLInputElement).value !== username}
+                        usernameChanged.value =
+                            (e.target as HTMLInputElement).value !== global.value.user?.username}
                 />
 
                 <div>
