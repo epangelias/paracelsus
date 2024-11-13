@@ -12,15 +12,16 @@ interface Options {
     html: string
 }
 
-// export async function sendMail({ from, fromName, to, toName, subject, text, html }: Options) {
-//     const body = JSON.stringify({
-//         from, fromName, to, toName, subject, text, html,
-//         auth: Deno.env.get("MAIL_AUTH"),
-//     });
-//     const res = await fetch("http://x.virtualfreight.software:8000/email", { method: "POST", body });
-//     if (!res.ok) throw new Error("Error sending mail: " + await res.text());
-//     return;
-// }
+export async function sendMail({ from, fromName, to, toName, subject, text, html }: Options) {
+    return;
+    const body = JSON.stringify({
+        from, fromName, to, toName, subject, text, html,
+        auth: Deno.env.get("MAIL_AUTH"),
+    });
+    const res = await fetch("http://x.virtualfreight.software:8000/email", { method: "POST", body });
+    if (!res.ok) throw new Error("Error sending mail: " + await res.text());
+    return;
+}
 
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
     const code = await generateEmailVerification(user);
@@ -166,29 +167,29 @@ curl -s \
 
 
 
-import Mailjet from "npm:node-mailjet";
+// import Mailjet from "npm:node-mailjet";
 
 
-const mailjet = new Mailjet.Client({
-    apiKey: Deno.env.get("MJ_APIKEY_PUBLIC"),
-    apiSecret: Deno.env.get("MJ_APIKEY_PRIVATE")
-});
+// const mailjet = new Mailjet.Client({
+//     apiKey: Deno.env.get("MJ_APIKEY_PUBLIC"),
+//     apiSecret: Deno.env.get("MJ_APIKEY_PRIVATE")
+// });
 
-export async function sendMail(options: Options) {
-    const req = await mailjet.post('send', { 'version': 'v3.1' }).request({
-        Messages: [
-            {
-                From: { Email: options.from, Name: options.fromName, },
-                To: [{ Email: options.to, Name: options.toName, },],
-                Subject: options.subject,
-                TextPart: options.text,
-                HTMLPart: options.html,
-            },
-        ],
-    })
+// export async function sendMail(options: Options) {
+//     const req = await mailjet.post('send', { 'version': 'v3.1' }).request({
+//         Messages: [
+//             {
+//                 From: { Email: options.from, Name: options.fromName, },
+//                 To: [{ Email: options.to, Name: options.toName, },],
+//                 Subject: options.subject,
+//                 TextPart: options.text,
+//                 HTMLPart: options.html,
+//             },
+//         ],
+//     })
 
-    console.log("EMAIL:", req.response.statusText);
-}
+//     console.log("EMAIL:", req.response.statusText);
+// }
 
 /*
 
