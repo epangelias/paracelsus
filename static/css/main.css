@@ -64,11 +64,15 @@ header {
   form {
     display: flex;
     clear: both;
-    font-size: 1.2em;
+    font-size: 1em;
     padding: 1rem;
 
     input {
       flex: 1;
+    }
+
+    button {
+      padding: var(--spacing);
     }
   }
 
