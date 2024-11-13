@@ -13,16 +13,20 @@ export const handler = define.handlers((ctx) => {
         const userKey: Deno.KvKey = ['users', ctx.state.user!.id];
         const authKey: Deno.KvKey = ['usersByAuth', ctx.state.auth!];
 
-        for await (const [user, auth] of db.watch<[User, { id: string }]>([userKey, authKey])) {
+        for await (const [user] of db.watch<[User]>([userKey])) {
             let globalData = createGlobalData();
 
-            if (user.versionstamp !== null && auth.versionstamp !== null) {
+            if (user.versionstamp !== null) {
                 globalData = createGlobalData(user.value);
             }
 
-            console.log('sending', JSON.stringify(globalData), { user, auth });
-
             send(globalData);
+        }
+
+        for await (const [auth] of db.watch<[{ id: string }]>([authKey])) {
+            if (auth.versionstamp !== null) {
+                send(createGlobalData());
+            }
         }
     });
 });
