@@ -21,13 +21,13 @@ export function Header() {
                             height={32}
                             alt=''
                         />
-                        <span>{' ' + site.name}</span>
+                        <span>{site.name}</span>
                     </a>
                 </div>
                 <div className='right'>
                     {global?.value.user && (
                         <span class='spacing-right'>
-                            ⚡️{global.value.user.tokens}
+                            ⚡️{global.value.user.isSubscribed ? '∞' : global.value.user.tokens}
                         </span>
                     )}
 
