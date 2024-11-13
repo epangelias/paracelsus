@@ -13,7 +13,6 @@ interface Options {
 }
 
 export async function sendMail({ from, fromName, to, toName, subject, text, html }: Options) {
-    return;
     const body = JSON.stringify({
         from, fromName, to, toName, subject, text, html,
         auth: Deno.env.get("MAIL_AUTH"),
