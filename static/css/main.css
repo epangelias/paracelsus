@@ -20,6 +20,7 @@ main {
   overflow-y: auto;
   height: 100%;
   padding: 1rem;
+  padding-top: 0;
 }
 
 header {
@@ -59,7 +60,6 @@ header {
   display: flex;
   flex-direction: column;
   gap: var(--spacing);
-  padding: 1rem;
   border-radius: calc(var(--radius) * 2);
 
   form {
