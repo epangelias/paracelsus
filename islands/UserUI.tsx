@@ -8,7 +8,6 @@ import { IS_BROWSER } from 'fresh/runtime';
 export function UserUI({ error, message }: { error?: string; message?: string }) {
     const global = useGlobal();
     const nameChanged = useSignal(false);
-    const usernameChanged = useSignal(false);
 
     return (
         <>
@@ -36,18 +35,9 @@ export function UserUI({ error, message }: { error?: string; message?: string })
                         nameChanged.value =
                             (e.target as HTMLInputElement).value !== global.value.user?.name}
                 />
-                <Field
-                    name='username'
-                    label='Email'
-                    required
-                    defaultValue={global.value.user?.username}
-                    onInput={(e) =>
-                        usernameChanged.value =
-                            (e.target as HTMLInputElement).value !== global.value.user?.username}
-                />
 
                 <div>
-                    <button disabled={!nameChanged.value && !usernameChanged.value}>Save</button>
+                    <button disabled={!nameChanged.value}>Save</button>
                     <MessageBox message={message} error={error} inline />
                 </div>
             </form>

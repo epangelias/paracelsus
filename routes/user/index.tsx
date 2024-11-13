@@ -10,12 +10,9 @@ export const handler = define.handlers(async (ctx) => {
     if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
     if (ctx.req.method == 'GET') return page();
     try {
-        const oldUsername = user.username;
         const formData = await ctx.req.formData();
         user.name = formData.get('name') as string;
-        user.username = formData.get('username') as string;
         await updateUser(user);
-        if (oldUsername! + user.username) await sendEmailVerification(ctx.req.url, user);
         return page({ message: 'Saved!', error: undefined });
     } catch (e) {
         return page({ error: e.message, message: undefined });

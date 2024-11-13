@@ -89,7 +89,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
       <form onSubmit={onSubmit}>
         <input autofocus required autocomplete='off' ref={inputRef} />
-        <button disabled={generating.value}>➢</button>
+        <button disabled={generating.value}>◉</button>
       </form>
     </div>
   );

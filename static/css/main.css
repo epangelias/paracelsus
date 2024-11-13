@@ -42,7 +42,7 @@ header {
   padding: .5rem;
   color: var(--on-accent);
   width: calc(100% - var(--spacing) * 2);
-  margin: 0 var(--spacing);
+  margin: 2px var(--spacing);
   border-radius: var(--radius);
 
   a {
