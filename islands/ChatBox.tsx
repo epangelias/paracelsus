@@ -83,7 +83,9 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
   return (
     <div class='chat-box'>
-      <div class='messages' ref={messagesRef}>{chatData.value.messages.map(ChatMessage)}</div>
+      <div class='messages' ref={messagesRef}>
+        {chatData.value.messages.filter((m) => m.role !== 'system').map(ChatMessage)}
+      </div>
 
       <form onSubmit={onSubmit}>
         <input autofocus required autocomplete='off' ref={inputRef} />

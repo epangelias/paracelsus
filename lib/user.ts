@@ -4,7 +4,7 @@ import { FreshContext, HttpError } from 'fresh';
 import { getCookies } from "jsr:@std/http/cookie";
 import { State } from '@/lib/utils.ts';
 import { db } from '@/lib/db.ts';
-import { User } from '@/lib/types.ts';
+import { UserData } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 import { STATUS_CODE } from '@std/http/status';
@@ -34,7 +34,7 @@ async function getUserIdByAuth(auth?: string) {
 }
 
 async function getUserById(id: string) {
-    const res = await db.get<User>(["users", id]);
+    const res = await db.get<UserData>(["users", id]);
     if (res.versionstamp == null) return null;
     return res.value;
 }
@@ -96,7 +96,7 @@ export async function createUser(name: string, username: string, password: strin
         stripeCustomerId = customer.id;
     }
 
-    const user: User = {
+    const user: UserData = {
         id: Meth.code(),
         username,
         passwordHash,
@@ -122,7 +122,7 @@ export async function createUser(name: string, username: string, password: strin
     return user;
 }
 
-export async function generateEmailVerification(user: User) {
+export async function generateEmailVerification(user: UserData) {
     const code = Meth.code(12);
     await db.set(["userVerification", code], { id: user.id, email: user.username }, { expireIn: 1000 * 60 * 60 })
     return code;
@@ -174,7 +174,7 @@ function validateName(name: string) {
     if (!/^[a-zA-Z\s]+$/.test(name)) throw new Error("Name must only contain letters and spaces");
 }
 
-export async function updateUser(changes: User) {
+export async function updateUser(changes: UserData) {
     const user = await getUserById(changes.id);
     if (!user) throw new Error("User not found");
 

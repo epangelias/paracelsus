@@ -1,17 +1,14 @@
 import { define } from '@/lib/utils.ts';
-import { site } from '@/lib/site.ts';
-import { db } from '@/lib/db.ts';
 import { ChatData } from '@/lib/types.ts';
 import ChatBox from '../islands/ChatBox.tsx';
-import { page } from 'fresh';
+import { HttpError, page } from 'fresh';
+import { GetChatData } from '@/routes/api/chat.tsx';
+import { STATUS_CODE } from '@std/http/status';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
-    let chatData: ChatData = { messages: [] };
-    if (ctx.state.user) {
-      const res = await db.get<ChatData>(['chat', ctx.state.user.id]);
-      if (res.value) chatData = res.value;
-    }
+    if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
+    const chatData = await GetChatData(ctx.state.user);
     return page({ chatData });
   },
 });

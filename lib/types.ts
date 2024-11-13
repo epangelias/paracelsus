@@ -22,7 +22,7 @@ export interface OAIOptions {
 }
 
 
-export interface User {
+export interface UserData {
     id: string;
     username: string;
     passwordHash: string;
@@ -36,5 +36,5 @@ export interface User {
 }
 
 export interface GlobalData {
-    user?: Partial<User>
+    user?: Partial<UserData>
 }

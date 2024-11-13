@@ -1,9 +1,9 @@
 import { createDefine } from 'fresh';
-import { User } from '@/lib/types.ts';
+import { UserData } from '@/lib/types.ts';
 
 // deno-lint-ignore no-empty-interface
 export interface State {
-    user?: User;
+    user?: UserData;
     auth?: string;
 }
 

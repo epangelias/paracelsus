@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'preact/hooks';
 import { createContext } from 'preact';
 import { ComponentChildren } from 'preact';
-import { GlobalData, User } from '@/lib/types.ts';
+import { GlobalData, UserData } from '@/lib/types.ts';
 import { Signal, useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/sse.ts';
 
@@ -17,7 +17,7 @@ const GlobalContext = createContext<Signal<GlobalData> | null>(null);
 
 export const useGlobal = () => useContext(GlobalContext) as Signal<GlobalData>;
 
-export function createGlobalData(user?: User) {
+export function createGlobalData(user?: UserData) {
     return {
         user: user &&
             {
