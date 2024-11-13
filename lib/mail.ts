@@ -123,24 +123,24 @@ curl -s \
 
 */
 
-const res = await fetch(`https://api.mailjet.com/v3/send`, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Basic ${btoa(`${Deno.env.get("MJ_APIKEY_PUBLIC")}:${Deno.env.get("MJ_APIKEY_PRIVATE")}`)}`
-    },
-    body: JSON.stringify({
-        FromEmail: "vaza@vaza.app",
-        FromName: "VAZA",
-        Subject: "subject",
-        TextPart: "text",
-        HTMLPart: "html",
-        Recipients: [{ Email: "epangelias@gmail.com" }],
+// const res = await fetch(`https://api.mailjet.com/v3/send`, {
+//     method: "POST",
+//     headers: {
+//         "Content-Type": "application/json",
+//         "Authorization": `Basic ${btoa(`${Deno.env.get("MJ_APIKEY_PUBLIC")}:${Deno.env.get("MJ_APIKEY_PRIVATE")}`)}`
+//     },
+//     body: JSON.stringify({
+//         FromEmail: "vaza@vaza.app",
+//         FromName: "VAZA",
+//         Subject: "subject",
+//         TextPart: "text",
+//         HTMLPart: "html",
+//         Recipients: [{ Email: "epangelias@gmail.com" }],
 
-    })
-})
+//     })
+// })
 
-console.log(await res.json());
+// console.log(await res.json());
 
 
 
