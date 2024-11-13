@@ -27,7 +27,7 @@ export const handler = define.handlers((ctx) => {
 
         const watchAuth = async () => {
             for await (const [auth] of db.watch<[{ id: string }]>([authKey])) {
-                if (auth.versionstamp !== null) {
+                if (auth.versionstamp === null) {
                     send(createGlobalData());
                 }
             }
