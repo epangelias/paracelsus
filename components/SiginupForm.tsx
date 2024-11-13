@@ -14,7 +14,7 @@ export function SignupForm(
 
             <div>
                 <button>Sign Up</button>
-                <a href='/user/signin'>Sign in</a>
+                <a href='/user/signin'>Sign In</a>
             </div>
         </form>
     );

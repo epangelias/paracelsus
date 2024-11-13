@@ -95,6 +95,6 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
 const LoggedOutContent = () => (
   <p>
-    <a href='/user/signin'>Sign in</a> to chat
+    <a href='/user/signin'>Sign In</a> to chat
   </p>
 );
