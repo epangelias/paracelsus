@@ -1,5 +1,6 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { site } from '@/lib/site.ts';
+import { Meth } from '@/lib/meth.ts';
 
 export function Header() {
     const global = useGlobal();
@@ -31,7 +32,7 @@ export function Header() {
                     )}
 
                     {global?.value.user
-                        ? <a href='/user'>{global?.value.user.name}</a>
+                        ? <a href='/user'>{Meth.limitText(global?.value.user.name, 20)}</a>
                         : <a href='/user/signin'>Sign In</a>}
                 </div>
             </header>

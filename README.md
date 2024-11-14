@@ -20,3 +20,4 @@ paracelsus my-project
 - auto-resizing textarea
 - Validation library for accepting form data
 - Allow data and other events to be sent through sse
+- also max length for the name on header

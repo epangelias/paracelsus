@@ -48,5 +48,10 @@ export const Meth = {
         return Meth.isEmoji(icon)
             ? `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${icon}</text></svg>`
             : icon;
+    },
+    limitText(text?: string, length: number) {
+        if (!text) return "";
+        if (text.length > length - 3) return text.slice(0, length - 3) + "...";
+        return text;
     }
 };

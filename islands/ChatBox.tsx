@@ -15,7 +15,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
   const checkCanGenerate = () => global.value.user?.tokens! > 0 || global.value.user?.isSubscribed;
 
-  if (!global?.value.user) return <LoggedOutContent />;
+  if (!global?.value.user) return <></>;
 
   useEffect(() => syncSSE(endpoint, chatData), []);
 
@@ -94,9 +94,3 @@ export default function ChatBox({ data }: { data: ChatData }) {
     </div>
   );
 }
-
-const LoggedOutContent = () => (
-  <p>
-    <a href='/user/signin'>Sign In</a> to chat
-  </p>
-);
