@@ -5,9 +5,17 @@ export function handleSSE(handler: (send: (data: unknown) => void) => Promise<vo
     const stream = new ReadableStream({
         start: async (controller) => {
 
-            await handler(data => {
+            const send = (data: unknown) => {
                 controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify(data)}\n\n`))
-            });
+            }
+
+            try {
+                await handler(send);
+            } catch (e) {
+                console.error("Error in sse handler:");
+                console.error(e);
+                controller?.close();
+            }
 
         },
         cancel: () => {
