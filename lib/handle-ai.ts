@@ -48,7 +48,7 @@ export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, on
     }, async () => {
         message.html = await safelyRenderMarkdown(message.content);
         onError(messages);
-        stream.controller.abort();
+        stream?.controller?.abort();
     });
 }
 
