@@ -21,3 +21,4 @@ paracelsus my-project
 - Validation library for accepting form data
 - Allow data and other events to be sent through sse
 - also max length for the name on header
+  - Better refactor function to display name, and to validate it and to reformat it

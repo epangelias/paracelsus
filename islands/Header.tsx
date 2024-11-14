@@ -32,7 +32,11 @@ export function Header() {
                     )}
 
                     {global?.value.user
-                        ? <a href='/user'>{Meth.limitText(global?.value.user.name, 20)}</a>
+                        ? (
+                            <a href='/user'>
+                                {Meth.limitText(global?.value.user.name?.split(' ')[0], 15)}
+                            </a>
+                        )
                         : <a href='/user/signin'>Sign In</a>}
                 </div>
             </header>
