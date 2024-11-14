@@ -16,13 +16,13 @@ export default define.page(({ Component, state }) => {
           name='viewport'
         />
         <meta name='color-scheme' content='light dark' />
-        <link rel='apple-touch-icon' href={site.favicon} />
+        <link rel='apple-touch-icon' href={site.appIcon} />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <meta name='msapplication-tap-highlight' content='no' />
         <meta name='theme-color' content={site.themeColor} />
         <link rel='manifest' href='/manifest.json' />
         <link rel='stylesheet' href='/css.css' />
-        <link rel='icon' href={site.appIcon} />
+        <link rel='icon' href={site.favicon} />
       </head>
       <body>
         <div class='container'>
