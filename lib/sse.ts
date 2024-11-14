@@ -12,6 +12,10 @@ export function syncSSE<T>(endpoint: string, data: Signal<T>) {
     }
     // eventSource.onerror = (error) => console.log('SSE error: ', error);
 
+    globalThis.addEventListener('beforeunload', () => {
+        eventSource.close();
+    });
+
     return () => eventSource?.close();
 }
 
@@ -25,6 +29,10 @@ export function watchSSE<T>(endpoint: string, handler: (data: T) => void, errorH
 
     eventSource.onmessage = (event) => handler(JSON.parse(event.data));
     eventSource.onerror = (_error) => errorHandler();
+
+    globalThis.addEventListener('beforeunload', () => {
+        eventSource.close();
+    });
 
     return () => eventSource?.close();
 }

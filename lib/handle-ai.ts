@@ -13,8 +13,10 @@ export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, on
     return handleSSE(async (send) => {
         try {
             stream = await generateChatCompletions(options, messages.map(({ role, content }) => ({ role, content })));
+            if (stream instanceof Stream == false) throw new Error("Invalid stream");
         } catch (e) {
             onError();
+            stream?.controller.abort();
             console.error(e);
         }
 

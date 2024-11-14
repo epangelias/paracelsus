@@ -6,7 +6,8 @@ export function handleSSE(handler: (send: (data: unknown) => void) => Promise<vo
         start: async (controller) => {
 
             const send = (data: unknown) => {
-                controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify(data)}\n\n`))
+                const message = `data: ${JSON.stringify(data)}\n\n`;
+                controller.enqueue(new TextEncoder().encode(message))
             }
 
             try {
@@ -14,7 +15,7 @@ export function handleSSE(handler: (send: (data: unknown) => void) => Promise<vo
             } catch (e) {
                 console.error("Error in sse handler:");
                 console.error(e);
-                controller?.close();
+                controller.error(e);
             }
 
         },

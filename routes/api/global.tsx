@@ -12,18 +12,14 @@ export const handler = define.handlers((ctx) => {
     return handleSSE(async (send) => {
         const userKey: Deno.KvKey = ['users', ctx.state.user!.id];
 
-        const watchUser = async () => {
-            for await (const [user] of db.watch<[UserData]>([userKey])) {
-                let globalData = createGlobalData();
+        for await (const [user] of db.watch<[UserData]>([userKey])) {
+            let globalData = createGlobalData();
 
-                if (user.versionstamp !== null) {
-                    globalData = createGlobalData(user.value);
-                }
-
-                send(globalData);
+            if (user.versionstamp !== null) {
+                globalData = createGlobalData(user.value);
             }
-        };
 
-        await Promise.all([watchUser()]);
+            send(globalData);
+        }
     });
 });
