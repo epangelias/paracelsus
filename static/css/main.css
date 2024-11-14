@@ -26,7 +26,7 @@ header {
   display: flex;
   justify-content: space-between;
   padding: calc(var(--spacing) / 2) calc(var(--spacing) * 2);
-  border-bottom: 1px solid color-mix(in srgb, currentColor, transparent 80%);
+  border-bottom: 2px solid color-mix(in srgb, currentColor, transparent 80%);
 
   .left,
   .right,
@@ -35,6 +35,9 @@ header {
     align-items: center;
   }
 
+  &:has(+ .banner) {
+    border-bottom: none;
+  }
 }
 
 .banner {
@@ -42,8 +45,8 @@ header {
   background-color: var(--accent);
   padding: .5rem;
   color: var(--on-accent);
-  width: calc(100% - var(--spacing) * 2);
-  margin: 2px var(--spacing);
+  width: calc(100% - 8px * 2);
+  margin: 2px 8px;
   border-radius: var(--radius);
 
   a {
