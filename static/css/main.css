@@ -19,7 +19,6 @@ main {
   flex-direction: column;
   overflow-y: auto;
   height: 100%;
-  padding-top: 0;
 }
 
 header {
@@ -76,7 +75,7 @@ header {
     }
 
     button {
-      padding: var(--spacing);
+      /* padding: var(--spacing); */
     }
   }
 

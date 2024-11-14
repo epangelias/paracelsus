@@ -18,3 +18,4 @@ paracelsus my-project
 - CSS Theme
 - Refactor and simplify, make bloated features more componential, easy to add/remove
 - auto-resizing textarea
+- Validation library for accepting form data
