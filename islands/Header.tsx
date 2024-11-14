@@ -15,10 +15,9 @@ export function Header() {
                 <div className='left'>
                     <a href='/' class='color-primary logo'>
                         <img
-                            class='spacing-right'
                             src={site.favicon}
-                            width={32}
-                            height={32}
+                            width={48}
+                            height={48}
                             alt=''
                         />
                         <span>{site.name}</span>

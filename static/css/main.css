@@ -25,7 +25,7 @@ main {
 header {
   display: flex;
   justify-content: space-between;
-  padding: var(--spacing) calc(var(--spacing) * 2);
+  padding: calc(var(--spacing) / 2) calc(var(--spacing) * 2);
   border-bottom: 1px solid color-mix(in srgb, currentColor, transparent 80%);
 
   .left,
@@ -34,6 +34,7 @@ header {
     display: flex;
     align-items: center;
   }
+
 }
 
 .banner {
