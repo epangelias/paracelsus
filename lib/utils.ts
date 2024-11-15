@@ -1,5 +1,5 @@
 import { createDefine } from 'fresh';
-import { UserData } from '@/lib/types.ts';
+import type { UserData } from '@/lib/types.ts';
 
 // deno-lint-ignore no-empty-interface
 export interface State {
