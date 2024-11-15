@@ -9,11 +9,6 @@ export const exec = async (args: string[]) =>
     })
         .output();
 
-export const getParentDir = (path?: string) => {
-    if (!path) return "";
-    return path.split('/').slice(0, -1).join('/') as string;
-};
-
 const projectName = Deno.args[0] ||
     prompt('Enter Project Name [fresh-project]') ||
     'fresh-project';
@@ -31,7 +26,7 @@ Deno.chdir(projectName);
 // Initial Project
 //
 
-const path = (p: string) => `${getParentDir(import.meta.dirname)}/${p}`;
+const path = (p: string) => import.meta.resolve(`./${p}`).slice(7);
 
 // Remove Github Repo
 await Deno.remove(path('.git'), { recursive: true });
