@@ -1,6 +1,18 @@
 #!/usr/bin/env -S deno run -A
 
-import { exec, getParentDir } from '../lib/utils.ts';
+export const exec = async (args: string[]) =>
+    await new Deno.Command(args[0], {
+        args: args.slice(1),
+        stdin: 'inherit',
+        stdout: 'inherit',
+        stderr: 'inherit',
+    })
+        .output();
+
+export const getParentDir = (path?: string) => {
+    if (!path) return "";
+    return path.split('/').slice(0, -1).join('/') as string;
+};
 
 const projectName = Deno.args[0] ||
     prompt('Enter Project Name [fresh-project]') ||
