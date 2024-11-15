@@ -17,6 +17,9 @@ interface Options {
 let mailjet: Mailjet.Client;
 
 export async function sendMail(options: Options) {
+    if (!Deno.env.has("MJ_APIKEY_PUBLIC") || !Deno.env.has("MJ_APIKEY_PRIVATE"))
+        throw new Error("Missing mailjet credentials");
+
     if (!mailjet) mailjet = new Mailjet.Client({
         apiKey: Deno.env.get("MJ_APIKEY_PUBLIC"),
         apiSecret: Deno.env.get("MJ_APIKEY_PRIVATE")
