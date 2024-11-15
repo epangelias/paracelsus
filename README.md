@@ -14,7 +14,6 @@ paracelsus my-project
 
 ## TODO
 
-- Integrate email system
 - CSS Theme
 - Refactor and simplify, make bloated features more componential, easy to add/remove
 - Validation library for accepting form data

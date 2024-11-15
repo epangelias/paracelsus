@@ -12,6 +12,6 @@ for await (const res of iter) promises.push(db.delete(res.key));
 await Promise.all(promises);
 
 await deleteUser(await getUserIdByUsername("a@a.a"));
-await createUser("Albert", "a@a.a", "134391");
+await createUser("Albert", "a@a.a", "password");
 
 db.close();
