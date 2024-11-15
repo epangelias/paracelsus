@@ -31,7 +31,7 @@ export async function sendMail(options: Options) {
         ],
     })
 
-    console.log("EMAIL:", req.response.statusText);
+    console.log("EMAIL RESPONSE:", req.response.statusText, req.response.status);
 }
 
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
