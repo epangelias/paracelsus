@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run -A
 
-import { exec, getParentDir } from '@/lib/utils.ts';
+import { exec, getParentDir } from '../lib/utils.ts';
 
 const projectName = Deno.args[0] ||
     prompt('Enter Project Name [fresh-project]') ||
