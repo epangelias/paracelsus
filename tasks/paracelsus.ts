@@ -20,16 +20,17 @@ await exec([
     projectName,
 ]);
 
-Deno.chdir(projectName);
 
 //
 // Initial Project
 //
 
-const path = (p: string) => import.meta.resolve(`./${p}`).slice(7);
+Deno.chdir(projectName);
+
+const getPath = (path: string) => `${Deno.cwd()}/${path}`;
 
 // Remove Github Repo
-await Deno.remove(path('.git'), { recursive: true });
+await Deno.remove(getPath('.git'), { recursive: true });
 
 // Set Site Data
 const siteData = `export const site = {
@@ -40,13 +41,13 @@ const siteData = `export const site = {
     email: "vaza@vaza.app",
     lang: "en-US"
 };`
-Deno.writeTextFile(path('lib/site.ts'), siteData);
+Deno.writeTextFile(getPath('lib/site.ts'), siteData);
 
 // Remove Readme
-await Deno.remove(path('README.md'));
+await Deno.remove(getPath('README.md'));
 
 // Remove Tasks
-await Deno.remove(path('tasks/paracelsus.ts'));
+await Deno.remove(getPath('tasks/paracelsus.ts'));
 
 // Open VSCODE
 await exec([Deno.execPath(), 'task', 'open']);
