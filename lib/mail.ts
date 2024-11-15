@@ -13,12 +13,15 @@ interface Options {
     html: string
 }
 
-const mailjet = new Mailjet.Client({
-    apiKey: Deno.env.get("MJ_APIKEY_PUBLIC"),
-    apiSecret: Deno.env.get("MJ_APIKEY_PRIVATE")
-});
+
+let mailjet: Mailjet.Client;
 
 export async function sendMail(options: Options) {
+    if (!mailjet) mailjet = new Mailjet.Client({
+        apiKey: Deno.env.get("MJ_APIKEY_PUBLIC"),
+        apiSecret: Deno.env.get("MJ_APIKEY_PRIVATE")
+    });
+
     const req = await mailjet.post('send', { 'version': 'v3.1' }).request({
         Messages: [
             {
