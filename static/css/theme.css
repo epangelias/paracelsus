@@ -152,6 +152,7 @@ AnyField {
     background-color: var(--bg2);
     font: inherit;
     box-shadow: var(--field-shadow);
+    resize: none;
 
     &:focus-visible {
         border-color: transparent;
@@ -163,7 +164,7 @@ AnyField {
     }
 }
 
-:is(AnyField, AnyButton, a)+ :is(AnyField, AnyButton, a) {
+:is(AnyField, AnyButton, a, .textarea-container)+ :is(AnyField, AnyButton, a, .textarea-container) {
     margin-left: var(--spacing);
 }
 

@@ -17,7 +17,6 @@ paracelsus my-project
 - Integrate email system
 - CSS Theme
 - Refactor and simplify, make bloated features more componential, easy to add/remove
-- auto-resizing textarea
 - Validation library for accepting form data
 - Allow data and other events to be sent through sse
 - also max length for the name on header

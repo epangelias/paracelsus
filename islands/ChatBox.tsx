@@ -3,6 +3,7 @@ import { sendSSE, syncSSE, watchSSE } from '@/lib/sse.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 import { useEffect, useRef } from 'preact/hooks';
 import { useGlobal } from '@/islands/Global.tsx';
+import { TextArea } from './Textarea.tsx';
 
 const endpoint = '/api/chat';
 
@@ -11,7 +12,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   const chatData = useSignal<ChatData>(data);
   const generating = useSignal(false);
   const messagesRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const checkCanGenerate = () => global.value.user?.tokens! > 0 || global.value.user?.isSubscribed;
 
@@ -88,7 +89,11 @@ export default function ChatBox({ data }: { data: ChatData }) {
       </div>
 
       <form onSubmit={onSubmit}>
-        <input autofocus required autocomplete='off' ref={inputRef} />
+        <TextArea
+          autofocus
+          required
+          inputRef={inputRef}
+        />
         <button disabled={generating.value}>◉</button>
       </form>
     </div>

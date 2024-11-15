@@ -1,7 +1,7 @@
 import { JSX } from 'preact';
 
 export function Field(
-    props: JSX.HTMLAttributes<HTMLInputElement> & { label?: string; name: string },
+    props: JSX.HTMLAttributes<HTMLInputElement> & { label?: string },
 ) {
     return (
         <div>

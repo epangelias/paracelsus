@@ -74,22 +74,22 @@ header {
     display: flex;
     clear: both;
     font-size: 1em;
-    padding: var(--spacing) 0;
+    padding: var(--spacing);
 
-    input {
+    .textarea-container {
       flex: 1;
     }
 
     button {
-      aspect-ratio: 1 / 1;
       font-size: 1.5em;
-      padding: 0;
+      padding: 0 var(--spacing);
     }
   }
 
   .messages {
     flex: 1;
     overflow-y: auto;
+    padding-top: calc(var(--spacing) * 2);
 
     div {
       margin: var(--spacing);
