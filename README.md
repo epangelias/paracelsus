@@ -3,7 +3,7 @@
 ## Install Paracelsus
 
 ```bash
-deno install -Agr https://raw.githubusercontent.com/epangelias/paracelsus/refs/heads/main/tasks/paracelsus.ts
+deno install -Agrf https://raw.githubusercontent.com/epangelias/paracelsus/refs/heads/main/tasks/paracelsus.ts
 ```
 
 ## Create a new project
