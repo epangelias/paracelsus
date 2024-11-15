@@ -18,7 +18,7 @@
     "@std/assert": "jsr:@std/assert@^1.0.7",
     "@std/http": "jsr:@std/http@^1.0.9",
     "fresh": "jsr:@fresh/core@^2.0.0-alpha.22",
-    // "node-mailjet": "npm:node-mailjet@^6.0.6",
+    "node-mailjet": "npm:node-mailjet@^6.0.6",
     "preact": "npm:preact@^10.24.2",
     "stripe": "npm:stripe@^17.3.1"
   },

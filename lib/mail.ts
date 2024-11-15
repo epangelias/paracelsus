@@ -1,7 +1,7 @@
 import { UserData } from '@/lib/types.ts';
 import { site } from './site.ts';
 import { generateEmailVerification } from '@/lib/user.ts';
-import Mailjet from "npm:node-mailjet";
+import Mailjet from "node-mailjet";
 
 interface Options {
     fromName: string,
