@@ -2,10 +2,7 @@
 
 export const exec = async (args: string[]) =>
   await new Deno.Command(args[0], {
-    args: args.slice(1),
-    stdin: 'inherit',
-    stdout: 'inherit',
-    stderr: 'inherit',
+    args: args.slice(1), stdin: 'inherit', stdout: 'inherit', stderr: 'inherit',
   }).output();
 
 const projectName = Deno.args[0] ||
