@@ -2,7 +2,6 @@ import { define } from '@/lib/utils.ts';
 import { HttpError, page } from 'fresh';
 import { updateUser } from '@/lib/user.ts';
 import { UserUI } from '@/islands/UserUI.tsx';
-import { sendEmailVerification } from '@/lib/mail.ts';
 import { STATUS_CODE } from '@std/http/status';
 
 export const handler = define.handlers(async (ctx) => {
@@ -22,7 +21,6 @@ export const handler = define.handlers(async (ctx) => {
 export default define.page<typeof handler>(({ data }) => (
   <main>
     <h1>User Settings</h1>
-
     <UserUI message={data?.message} error={data?.error} />
   </main>
 ));

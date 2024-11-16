@@ -1,14 +1,40 @@
 import { define } from '@/lib/utils.ts';
-import { resolveCssImports } from '@/lib/css.ts';
+import { site } from '@/lib/site.ts';
 
-const css = resolveCssImports(import.meta.resolve('../static/css/main.css').slice(8));
+const CSSVariables: Record<string, string> = {
+  ThemeColor: site.themeColor,
+  AnyField:
+    ':is(input:not([type]), input:is([type="text"], [type="password"], [type="email"], [type="number"], [type="url"], [type="tel"], [type="search"], [type="date"]), textarea)',
+  AnyButton:
+    ':is(button, input:is([type="button"], [type="submit"], [type="reset"], [type="file"], [type="color"]), select)',
+};
 
-export const handler = define.handlers({
-  GET: (_ctx) => {
-    return new Response(css, {
-      headers: {
-        'Content-Type': 'text/css',
-      },
-    });
-  },
-});
+function applyVariables(text: string) {
+  for (const name in CSSVariables) {
+    const value = CSSVariables[name];
+    text = text.replaceAll(name, value);
+  }
+  return text;
+}
+
+export function resolveCssImports(filePath: URL) {
+  const folder = new URL(filePath.href.split('/').slice(0, -1).join('/'));
+  let css = Deno.readTextFileSync(filePath);
+  const importPattern = /@import\s+["']([^"']+)["'];/g;
+  const imports = [...css.matchAll(importPattern)];
+
+  for (let imp of imports) {
+    const importedFile = imp[1] as string;
+    const fullImportPath = new URL(`${folder}/${importedFile}`);
+    const importedCss = resolveCssImports(fullImportPath);
+    css = css.replace(imp[0], importedCss);
+  }
+
+  return applyVariables(css);
+}
+
+const css = resolveCssImports(new URL('../static/css/main.css', import.meta.url));
+
+export const handler = define.handlers(() =>
+  new Response(css, { headers: { 'Content-Type': 'text/css' } })
+);

@@ -13,7 +13,7 @@ await exec(['git', 'clone', 'https://github.com/epangelias/fresh-tempalte.git', 
 
 Deno.chdir(projectName);
 
-const getPath = (path: string) => `${Deno.cwd()}/${path}`;
+const getPath = (path: string) => new URL(path, import.meta.url);
 
 const siteData = `import { Meth } from "@/lib/meth.ts";\n
 export const site = {
