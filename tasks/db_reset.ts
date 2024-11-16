@@ -4,8 +4,9 @@ import { db } from '@/lib/db.ts';
 
 const promises = [];
 
-for await (const res of db.list({ prefix: [] }))
-    promises.push(db.delete(res.key));
+for await (const res of db.list({ prefix: [] })) {
+  promises.push(db.delete(res.key));
+}
 
 await Promise.all(promises);
 

@@ -1,6 +1,6 @@
-@import "loader.css";
-@import "theme.css";
-@import "helpers.css";
+@import 'loader.css';
+@import 'theme.css';
+@import 'helpers.css';
 
 .container {
   border: 10px solid var(--primary);
@@ -49,7 +49,7 @@ header {
 .banner {
   text-align: center;
   background-color: var(--accent);
-  padding: .5rem;
+  padding: 0.5rem;
   color: var(--on-accent);
   width: calc(100% - 8px * 2);
   margin: 2px 8px;
@@ -96,7 +96,7 @@ header {
       margin: var(--spacing);
       clear: both;
 
-      &[data-role="user"] {
+      &[data-role='user'] {
         max-width: 90%;
         float: right;
         background-color: var(--primary);

@@ -2,14 +2,17 @@
 
 export const exec = async (args: string[]) =>
   await new Deno.Command(args[0], {
-    args: args.slice(1), stdin: 'inherit', stdout: 'inherit', stderr: 'inherit',
+    args: args.slice(1),
+    stdin: 'inherit',
+    stdout: 'inherit',
+    stderr: 'inherit',
   }).output();
 
 const projectName = Deno.args[0] ||
   prompt('Enter Project Name [fresh-project]') ||
   'fresh-project';
 
-await exec(['git', 'clone', 'https://github.com/epangelias/fresh-tempalte.git', projectName,]);
+await exec(['git', 'clone', 'https://github.com/epangelias/fresh-tempalte.git', projectName]);
 
 Deno.chdir(projectName);
 
@@ -28,10 +31,10 @@ export const site = {
 
 Deno.writeTextFile(getPath('lib/site.ts'), siteData);
 
-const envTemplate = await Deno.readTextFile(getPath(".template.env"));
-await Deno.writeTextFile(getPath(".env"), envTemplate);
+const envTemplate = await Deno.readTextFile(getPath('.template.env'));
+await Deno.writeTextFile(getPath('.env'), envTemplate);
 
-await Deno.remove(getPath(".template.env"));
+await Deno.remove(getPath('.template.env'));
 await Deno.remove(getPath('tasks/paracelsus.ts'));
 await Deno.remove(getPath('README.md'));
 await Deno.remove(getPath('.git'), { recursive: true });

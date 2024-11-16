@@ -1,7 +1,7 @@
 .text-center {
-    text-align: center;
+  text-align: center;
 }
 
 .spacing-right {
-    margin-right: var(--spacing);
+  margin-right: var(--spacing);
 }

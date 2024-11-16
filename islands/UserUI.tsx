@@ -9,6 +9,8 @@ export function UserUI({ error, message }: { error?: string; message?: string })
   const global = useGlobal();
   const nameChanged = useSignal(false);
 
+  if (!global?.value?.user) return <></>;
+
   return (
     <>
       <p>

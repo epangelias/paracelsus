@@ -1,8 +1,8 @@
 import { define } from '@/lib/utils.ts';
 import { FreshContext, page } from 'fresh';
 import { setCookie } from 'jsr:@std/http/cookie';
-import { authorizeUser } from '../../lib/user.ts';
 import { SigninForm } from '@/components/SigininForm.tsx';
+import { authorizeUser } from '@/lib/user.ts';
 
 export const handler = define.handlers({
   POST: async (ctx) => {
