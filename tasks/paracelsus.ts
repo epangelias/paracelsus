@@ -12,42 +12,31 @@ const projectName = Deno.args[0] ||
   prompt('Enter Project Name [fresh-project]') ||
   'fresh-project';
 
-await exec([
-  'git',
-  'clone',
-  'https://github.com/epangelias/fresh-tempalte.git',
-  projectName,
-]);
-
-//
-// Initial Project
-//
+await exec(['git', 'clone', 'https://github.com/epangelias/fresh-tempalte.git', projectName,]);
 
 Deno.chdir(projectName);
 
 const getPath = (path: string) => `${Deno.cwd()}/${path}`;
 
-// Remove Github Repo
-await Deno.remove(getPath('.git'), { recursive: true });
+const siteData = `import { Meth } from "@/lib/meth.ts";\n
+export const site = {
+  name: ${projectName},
+  favicon: Meth.emojiToUrl("${prompt('Emoji Icon [🔥]') || '🔥'}"),
+  appIcon: "/img/app.png",
+  themeColor: "#eb9a52",
+  description: "${prompt('Project Description') || ''}",
+  email: "vaza@vaza.app",
+  lang: "en-US"
+  };`;
 
-// Set Site Data
-const siteData = `export const site = {
-    name: ${projectName},
-    favicon: Meth.emojiToUrl("${prompt('Emoji Icon [🔥]') || '🔥'}"),
-    themeColor: "#eb9a52",
-    description: ${prompt('Project Description') || ''},
-    email: "vaza@vaza.app",
-    lang: "en-US"
-};`;
 Deno.writeTextFile(getPath('lib/site.ts'), siteData);
 
-// Remove Readme
-await Deno.remove(getPath('README.md'));
+const envTemplate = await Deno.readTextFile(getPath(".template.env"));
+await Deno.writeTextFile(getPath(".env"), envTemplate);
 
-// Remove Tasks
+await Deno.remove(getPath(".template.env"));
 await Deno.remove(getPath('tasks/paracelsus.ts'));
-
-// .env
-await Deno.writeTextFile(getPath(".env"), "");
+await Deno.remove(getPath('README.md'));
+await Deno.remove(getPath('.git'), { recursive: true });
 
 await exec(['deno', 'task', 'update']);
