@@ -110,10 +110,3 @@ header {
     }
   }
 }
-
-/* Scrollbar */
-
-* {
-  scrollbar-color: var(--accent) transparent;
-  word-wrap: break-word;
-}

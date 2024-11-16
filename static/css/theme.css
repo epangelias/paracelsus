@@ -59,10 +59,33 @@
 /* General Styles */
 
 * {
-    box-sizing: border-box;
     touch-action: manipulation;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--accent) transparent;
+    margin: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 7. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* 8. Improve line wrapping */
+p {
+    text-wrap: pretty;
 }
 
 html,
@@ -74,6 +97,10 @@ body {
     background: var(--bg1);
     color: var(--fg2);
     overscroll-behavior: none;
+    /* accessible line-height */
+    line-height: 1.5;
+    /* Improve text rendering */
+    -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
@@ -81,10 +108,11 @@ body {
     color: var(--on-accent);
 }
 
-:is(h1, h2, h3, h4, h5, h6) {
+:is(h1, h2, h3, h4, h5) {
     color: var(--fg1);
     margin-top: calc(var(--spacing)*2);
     margin-top: calc(var(--spacing));
+    text-wrap: balance;
 }
 
 :focus-visible {

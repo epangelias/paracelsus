@@ -1,7 +1,7 @@
 import { define } from '@/lib/utils.ts';
 import { resolveCssImports } from '@/lib/css.ts';
 
-const css = resolveCssImports(import.meta.resolve('../static/css/main.css').slice(7));
+const css = resolveCssImports(import.meta.resolve('../static/css/main.css').slice(8));
 
 export const handler = define.handlers({
   GET: (_ctx) => {
