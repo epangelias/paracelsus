@@ -22,6 +22,7 @@ export default define.page(({ Component, state }) => {
         />
         <meta name='color-scheme' content='light dark' />
         <link rel='apple-touch-icon' href={site.appIcon} />
+        {/* <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /> */}
         <meta name='mobile-web-app-capable' content='yes' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <meta name='msapplication-tap-highlight' content='no' />
