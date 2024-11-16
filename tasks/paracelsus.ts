@@ -6,8 +6,7 @@ export const exec = async (args: string[]) =>
     stdin: 'inherit',
     stdout: 'inherit',
     stderr: 'inherit',
-  })
-    .output();
+  }).output();
 
 const projectName = Deno.args[0] ||
   prompt('Enter Project Name [fresh-project]') ||
@@ -51,9 +50,4 @@ await Deno.remove(getPath('tasks/paracelsus.ts'));
 // .env
 await Deno.writeTextFile(getPath(".env"), "");
 
-// Open VSCODE
-await exec([Deno.execPath(), 'task', 'open']);
-
 await exec(['deno', 'task', 'update']);
-
-await exec(['exit']);
