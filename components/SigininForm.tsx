@@ -1,5 +1,4 @@
 import { Field } from '@/components/Field.tsx';
-import { MessageBox } from './MessageBox.tsx';
 
 export function SigninForm({ error, username }: { error: string; username: string }) {
   return (
@@ -7,7 +6,7 @@ export function SigninForm({ error, username }: { error: string; username: strin
       <Field name='username' type='email' label='Email' value={username} required autofocus />
       <Field name='password' type='password' label='Password' required />
 
-      <MessageBox error={error} />
+      {error && <p class='error-message'>{error}</p>}
 
       <div>
         <button>Sign In</button>

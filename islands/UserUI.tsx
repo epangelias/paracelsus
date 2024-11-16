@@ -1,9 +1,6 @@
 import { useGlobal } from '@/islands/Global.tsx';
-import { useComputed, useSignal } from '@preact/signals';
+import { useSignal } from '@preact/signals';
 import { Field } from '@/components/Field.tsx';
-import { MessageBox } from '../components/MessageBox.tsx';
-import { useEffect, useMemo } from 'preact/hooks';
-import { IS_BROWSER } from 'fresh/runtime';
 
 export function UserUI({ error, message }: { error?: string; message?: string }) {
   const global = useGlobal();
@@ -39,7 +36,8 @@ export function UserUI({ error, message }: { error?: string; message?: string })
 
         <div>
           <button disabled={!nameChanged.value}>Save</button>
-          <MessageBox message={message} error={error} inline />
+          {message && <span class='message'>{message}</span>}
+          {error && <span class='error-message'>{error}</span>}
         </div>
       </form>
     </>

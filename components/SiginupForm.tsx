@@ -1,5 +1,4 @@
 import { Field } from '@/components/Field.tsx';
-import { MessageBox } from './MessageBox.tsx';
 
 export function SignupForm(
   { error, name, username }: { error: string; name: string; username: string },
@@ -10,7 +9,7 @@ export function SignupForm(
       <Field name='username' label='Email' type='email' required value={username} />
       <Field name='password' label='Password' type='password' required />
 
-      <MessageBox error={error} />
+      {error && <p class='error-message'>{error}</p>}
 
       <div>
         <button>Sign Up</button>

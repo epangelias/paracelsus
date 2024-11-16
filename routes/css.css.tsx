@@ -3,9 +3,9 @@ import { site } from '@/lib/site.ts';
 
 const CSSVariables: Record<string, string> = {
   ThemeColor: site.themeColor,
-  AnyField:
+  anyfield:
     ':is(input:not([type]), input:is([type="text"], [type="password"], [type="email"], [type="number"], [type="url"], [type="tel"], [type="search"], [type="date"]), textarea)',
-  AnyButton:
+  anybutton:
     ':is(button, input:is([type="button"], [type="submit"], [type="reset"], [type="file"], [type="color"]), select)',
 };
 
@@ -33,7 +33,7 @@ export function resolveCssImports(filePath: URL) {
   return applyVariables(css);
 }
 
-const css = resolveCssImports(new URL('../static/css/main.css', import.meta.url));
+const css = resolveCssImports(new URL('../css/main.css', import.meta.url));
 
 export const handler = define.handlers(() =>
   new Response(css, { headers: { 'Content-Type': 'text/css' } })
