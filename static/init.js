@@ -32,3 +32,15 @@ globalThis.matchMedia('(prefers-color-scheme: dark)')
 
 new MutationObserver(() => updateTheme())
   .observe(colorSchemeMeta, { attributes: true, attributeFilter: ['content'] });
+
+// Service Worker
+
+if ('serviceWorker' in navigator) {
+  globalThis.addEventListener('load', () => {
+    navigator.serviceWorker.register('/worker.js').then((registration) => {
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch((error) => {
+      console.error('ServiceWorker registration failed: ', error);
+    });
+  });
+}
