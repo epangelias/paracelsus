@@ -4,10 +4,11 @@ import ChatBox from '../islands/ChatBox.tsx';
 import { HttpError, page } from 'fresh';
 import { GetChatData } from '@/routes/api/chat.tsx';
 import { STATUS_CODE } from '@std/http/status';
+import { site } from '@/lib/site.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
-    if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
+    if (!ctx.state.user) return page();
     const chatData = await GetChatData(ctx.state.user);
     return page({ chatData });
   },
@@ -16,7 +17,15 @@ export const handler = define.handlers({
 export default define.page<typeof handler>(({ data }) => {
   return (
     <main>
-      <ChatBox data={data.chatData} />
+      {data?.chatData ? <ChatBox data={data.chatData} /> : (
+        <>
+          <h1>Paracelsus</h1>
+          <p>{site.description}</p>
+          <p>
+            <a href='/user/signin'>Sign In</a> to chat.
+          </p>
+        </>
+      )}
     </main>
   );
 });
