@@ -5,55 +5,63 @@ import { AIMessage, OAIOptions } from '@/lib/types.ts';
 import { generateChatCompletions } from '@/lib/oai.ts';
 import { safelyRenderMarkdown } from '@/lib/md.ts';
 
-export function handleAIResponse(messages: AIMessage[], options?: OAIOptions, onEnd = (_messages?: AIMessage[]) => { }, onError = (_messages?: AIMessage[]) => { }) {
-    let stream: Stream<ChatCompletionChunk>;
+export function handleAIResponse(
+  messages: AIMessage[],
+  options?: OAIOptions,
+  onEnd = (_messages?: AIMessage[]) => {},
+  onError = (_messages?: AIMessage[]) => {},
+) {
+  let stream: Stream<ChatCompletionChunk>;
 
-    const message = { role: "assistant", content: "", html: "" };
+  const message = { role: 'assistant', content: '', html: '' };
 
-    return handleSSE(async (send) => {
-        try {
-            stream = await generateChatCompletions(options, messages.map(({ role, content }) => ({ role, content })));
-            if (stream instanceof Stream == false) throw new Error("Invalid stream");
-        } catch (e) {
-            onError();
-            stream?.controller.abort();
-            console.error(e);
-        }
+  return handleSSE(async (send) => {
+    try {
+      stream = await generateChatCompletions(
+        options,
+        messages.map(({ role, content }) => ({ role, content })),
+      );
+      if (stream instanceof Stream == false) throw new Error('Invalid stream');
+    } catch (e) {
+      onError();
+      stream?.controller.abort();
+      console.error(e);
+    }
 
-        let content = '';
+    let content = '';
 
-        messages.push(message);
+    messages.push(message);
 
-        for await (const token of stream) {
-            const deltaContent = token.choices[0].delta.content;
+    for await (const token of stream) {
+      const deltaContent = token.choices[0].delta.content;
 
-            if (typeof deltaContent == "undefined") break;
+      if (typeof deltaContent == 'undefined') break;
 
-            content += token.choices[0].delta.content;
+      content += token.choices[0].delta.content;
 
-            const html = insertLoaderToHTML(await safelyRenderMarkdown(content))
+      const html = insertLoaderToHTML(await safelyRenderMarkdown(content));
 
-            message.content = content;
-            message.html = html;
+      message.content = content;
+      message.html = html;
 
-            send(message);
-        }
+      send(message);
+    }
 
-        message.html = await safelyRenderMarkdown(content);
-        send(message);
+    message.html = await safelyRenderMarkdown(content);
+    send(message);
 
-        stream.controller.abort();
+    stream.controller.abort();
 
-        send(null);
+    send(null);
 
-        onEnd(messages);
-    }, async () => {
-        message.html = await safelyRenderMarkdown(message.content);
-        onError(messages);
-        stream?.controller?.abort();
-    });
+    onEnd(messages);
+  }, async () => {
+    message.html = await safelyRenderMarkdown(message.content);
+    onError(messages);
+    stream?.controller?.abort();
+  });
 }
 
 function insertLoaderToHTML(html: string) {
-    return html.replace(/<\/([^>]+)>\n+$/, `&nbsp;&nbsp;<span class="loader"></span></$1>`);
+  return html.replace(/<\/([^>]+)>\n+$/, `&nbsp;&nbsp;<span class="loader"></span></$1>`);
 }

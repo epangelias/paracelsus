@@ -3,36 +3,35 @@ import { fetchOrError } from '@/lib/fetch.ts';
 import { Meth } from '@/lib/meth.ts';
 
 export function syncSSE<T>(endpoint: string, data: Signal<T>) {
-    const eventSource = new EventSource(endpoint);
+  const eventSource = new EventSource(endpoint);
 
-    eventSource.onmessage = (event) => {
-        const newData = JSON.parse(event.data);
-        if (Meth.objectEquals(data.value, newData)) return;
-        data.value = newData;
-    }
-    // eventSource.onerror = (error) => console.log('SSE error: ', error);
+  eventSource.onmessage = (event) => {
+    const newData = JSON.parse(event.data);
+    if (Meth.objectEquals(data.value, newData)) return;
+    data.value = newData;
+  };
+  // eventSource.onerror = (error) => console.log('SSE error: ', error);
 
-    globalThis.addEventListener('beforeunload', () => {
-        eventSource.close();
-    });
+  globalThis.addEventListener('beforeunload', () => {
+    eventSource.close();
+  });
 
-    return () => eventSource?.close();
+  return () => eventSource?.close();
 }
-
 
 export async function sendSSE<T>(endpoint: string, body: unknown) {
-    return await fetchOrError<T>(endpoint, { method: 'POST', body });
+  return await fetchOrError<T>(endpoint, { method: 'POST', body });
 }
 
-export function watchSSE<T>(endpoint: string, handler: (data: T) => void, errorHandler = () => { }) {
-    const eventSource = new EventSource(endpoint);
+export function watchSSE<T>(endpoint: string, handler: (data: T) => void, errorHandler = () => {}) {
+  const eventSource = new EventSource(endpoint);
 
-    eventSource.onmessage = (event) => handler(JSON.parse(event.data));
-    eventSource.onerror = (_error) => errorHandler();
+  eventSource.onmessage = (event) => handler(JSON.parse(event.data));
+  eventSource.onerror = (_error) => errorHandler();
 
-    globalThis.addEventListener('beforeunload', () => {
-        eventSource.close();
-    });
+  globalThis.addEventListener('beforeunload', () => {
+    eventSource.close();
+  });
 
-    return () => eventSource?.close();
+  return () => eventSource?.close();
 }

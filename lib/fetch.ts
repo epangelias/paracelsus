@@ -1,16 +1,16 @@
 export async function fetchOrError<T>(
   url: string,
-  init?: { method: "POST" | "PATCH"; body: unknown } | { method: "DELETE" },
+  init?: { method: 'POST' | 'PATCH'; body: unknown } | { method: 'DELETE' },
 ): Promise<T> {
   const res = await fetch(
     url,
     init
       ? {
         method: init.method,
-        body: "body" in init ? JSON.stringify(init.body) : undefined,
+        body: 'body' in init ? JSON.stringify(init.body) : undefined,
         headers: {
-          "content-type": "application/json",
-          "accept": "application/json",
+          'content-type': 'application/json',
+          'accept': 'application/json',
         },
       }
       : undefined,

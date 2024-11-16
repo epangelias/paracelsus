@@ -5,20 +5,20 @@ import { page } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 
 export const handler = define.handlers({
-    GET: (ctx) => {
-        if (!ctx.state.user || ctx.state.user.isEmailVerified) {
-            throw new HttpError(STATUS_CODE.Unauthorized);
-        }
-        sendEmailVerification(ctx.url.origin, ctx.state.user);
-        return page();
-    },
+  GET: (ctx) => {
+    if (!ctx.state.user || ctx.state.user.isEmailVerified) {
+      throw new HttpError(STATUS_CODE.Unauthorized);
+    }
+    sendEmailVerification(ctx.url.origin, ctx.state.user);
+    return page();
+  },
 });
 
 export default define.page(() => (
-    <main>
-        <h1>Sent verification link to your email!</h1>
-        <p>
-            <a href='/'>Go to homepage</a>
-        </p>
-    </main>
+  <main>
+    <h1>Sent verification link to your email!</h1>
+    <p>
+      <a href='/'>Go to homepage</a>
+    </p>
+  </main>
 ));
