@@ -1,12 +1,12 @@
 import { Field } from '@/components/Field.tsx';
 
 export function SignupForm(
-  { error, name, username }: { error: string; name: string; username: string },
+  { error, name, email }: { error: string; name: string; email: string },
 ) {
   return (
     <form method='POST'>
       <Field name='name' label='Name' required autofocus value={name} />
-      <Field name='username' label='Email' type='email' required value={username} />
+      <Field name='email' label='Email' type='email' required value={email} />
       <Field name='password' label='Password' type='password' required />
 
       {error && <p class='error-message'>{error}</p>}

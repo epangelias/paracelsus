@@ -1,9 +1,9 @@
 import { Field } from '@/components/Field.tsx';
 
-export function SigninForm({ error, username }: { error: string; username: string }) {
+export function SigninForm({ error, email }: { error: string; email: string }) {
   return (
     <form method='POST'>
-      <Field name='username' type='email' label='Email' value={username} required autofocus />
+      <Field name='email' type='email' label='Email' value={email} required autofocus />
       <Field name='password' type='password' label='Password' required />
 
       {error && <p class='error-message'>{error}</p>}

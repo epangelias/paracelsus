@@ -1,11 +1,11 @@
-import { FreshContext, HttpError } from 'fresh';
+import { FreshContext } from 'fresh';
 import { getCookies } from 'jsr:@std/http/cookie';
 import { State } from '@/lib/utils.ts';
 import { db } from '@/lib/db.ts';
 import { UserData } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
-import { STATUS_CODE } from '@std/http/status';
+import { normalizeEmail, normalizeName, validateEmail, validateName, validatePassword } from '@/lib/validation.ts';
 
 export async function getUserFromState(ctx: FreshContext<State>) {
   if (ctx.state.user) return ctx.state.user;
@@ -36,8 +36,8 @@ async function getUserById(id: string) {
   return res.value;
 }
 
-export async function getUserIdByUsername(id: string) {
-  const res = await db.get<{ id: string }>(['usersByUsername', id]);
+export async function getUserIdByEmail(id: string) {
+  const res = await db.get<{ id: string }>(['usersByEmail', id]);
   if (res.versionstamp == null) return null;
   return res.value?.id;
 }
@@ -60,10 +60,9 @@ async function CreateAuthCode(id: string) {
   return code;
 }
 
-export async function authorizeUser(username: string, password: string) {
-  username = transformUsername(username);
-
-  const id = await getUserIdByUsername(username);
+export async function authorizeUser(email: string, password: string) {
+  email = normalizeEmail(email);
+  const id = await getUserIdByEmail(email);
   if (!id) return null;
   const user = await getUserById(id);
   if (!user) return null;
@@ -72,12 +71,16 @@ export async function authorizeUser(username: string, password: string) {
   return await CreateAuthCode(id);
 }
 
-export async function createUser(name: string, username: string, password: string) {
-  username = transformUsername(username);
+function validateUser(user: UserData) {
+  validateEmail(user.email);
+  validateName(user.name);
+}
+
+export async function createUser(name: string, email: string, password: string) {
+  email = normalizeEmail(email);
+  name = normalizeName(name);
 
   validatePassword(password);
-  validateUsername(username);
-  validateName(name);
 
   const salt = Meth.code();
   const passwordHash = await Meth.hash(`${salt}:${password}`);
@@ -85,16 +88,13 @@ export async function createUser(name: string, username: string, password: strin
   let stripeCustomerId;
 
   if (isStripeEnabled()) {
-    const customer = await stripe.customers.create({
-      email: username,
-      name: name,
-    });
+    const customer = await stripe.customers.create({ email, name });
     stripeCustomerId = customer.id;
   }
 
   const user: UserData = {
     id: Meth.code(),
-    username,
+    email,
     passwordHash,
     salt,
     name,
@@ -105,11 +105,13 @@ export async function createUser(name: string, username: string, password: strin
     hasVerifiedEmail: false,
   };
 
+  validateUser(user);
+
   const res = await db.atomic()
     .check({ key: ['users', user.id], versionstamp: null })
-    .check({ key: ['usersByUsername', user.username], versionstamp: null })
+    .check({ key: ['usersByEmail', user.email], versionstamp: null })
     .set(['users', user.id], user)
-    .set(['usersByUsername', user.username], { id: user.id })
+    .set(['usersByEmail', user.email], { id: user.id })
     .set(['usersByStripeCustomer', user.stripeCustomerId || ''], { id: user.id })
     .commit();
 
@@ -120,7 +122,7 @@ export async function createUser(name: string, username: string, password: strin
 
 export async function generateEmailVerification(user: UserData) {
   const code = Meth.code(12);
-  await db.set(['userVerification', code], { id: user.id, email: user.username }, {
+  await db.set(['userVerification', code], { id: user.id, email: user.email }, {
     expireIn: 1000 * 60 * 60,
   });
   return code;
@@ -131,7 +133,7 @@ export async function deleteUser(id: string | null) {
   const user = await getUserById(id);
   if (!user) return;
   await db.delete(['users', id]);
-  await db.delete(['usersByUsername', user.username]);
+  await db.delete(['usersByEmail', user.email]);
 
   // User data
   await db.delete(['chat', id]);
@@ -146,52 +148,24 @@ export async function deleteUser(id: string | null) {
   await Promise.all(promises);
 }
 
-function validatePassword(password: string) {
-  if (password.length < 6) throw new Error('Password must be at least 8 characters');
-  if (password.length > 100) throw new Error('Password must be less than 100 characters');
-}
-
-function validateEmail(email: string) {
-  const regex = /^[^@]+@[^@]+\.[^@]+$/;
-  return !!email.match(regex);
-}
-
-function validateUsername(username: string) {
-  if (username.length < 3) throw new Error('Username must be at least 3 characters');
-  if (username.length > 100) throw new Error('Username must be less than 100 characters');
-  if (!validateEmail(username)) throw new Error('Invalid email');
-  // if (!/^[a-zA-Z0-9_-]+$/.test(username)) throw new Error("Username must be alphanumeric");
-}
-
-function transformUsername(username: string) {
-  return username.toLowerCase();
-}
-
-function validateName(name: string) {
-  if (name.length < 3) throw new Error('Name must be at least 3 characters');
-  if (name.length > 100) throw new Error('Name must be less than 100 characters');
-  if (!/^[a-zA-Z\s]+$/.test(name)) throw new Error('Name must only contain letters and spaces');
-}
-
 export async function updateUser(changes: UserData) {
   const user = await getUserById(changes.id);
   if (!user) throw new Error('User not found');
 
-  validateUsername(changes.username);
-  validateName(changes.name);
+  validateUser(changes);
 
-  if (user.username != changes.username) {
+  if (user.email != changes.email) {
     const { ok } = await db.atomic()
-      .check({ key: ['usersByUsername', changes.username], versionstamp: null })
-      .delete(['usersByUsername', user.username])
-      .set(['usersByUsername', changes.username], { id: user.id })
+      .check({ key: ['usersByEmail', changes.email], versionstamp: null })
+      .delete(['usersByEmail', user.email])
+      .set(['usersByEmail', changes.email], { id: user.id })
       .commit();
-    if (!ok) throw new Error('Username already exists');
+    if (!ok) throw new Error('User already exists');
     changes.isEmailVerified = false;
   }
 
   if (isStripeEnabled() && user.stripeCustomerId) {
-    stripe.customers.update(user.stripeCustomerId, { email: changes.username, name: changes.name });
+    stripe.customers.update(user.stripeCustomerId, { email: changes.email, name: changes.name });
   }
 
   await db.set(['users', changes.id], changes);
@@ -201,6 +175,6 @@ export async function getUserByVerificationCode(code: string) {
   const res = await db.get<{ id: string; email: string }>(['userVerification', code]);
   if (res.versionstamp == null) return null;
   const user = await getUserById(res.value.id);
-  if (user?.username != res.value.email) return null;
+  if (user?.email != res.value.email) return null;
   return user;
 }

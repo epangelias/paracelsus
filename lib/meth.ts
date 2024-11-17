@@ -21,7 +21,7 @@ export const Meth = {
   async copy(text: string) {
     try {
       await navigator.clipboard.writeText(text);
-    } catch (_e) {}
+    } catch (_e) { }
   },
   objectEquals(x: unknown, y: unknown) {
     if (x === y) return true;
@@ -58,4 +58,16 @@ export const Meth = {
     if (text.length > length) return text.slice(0, length - 3) + '...';
     return text;
   },
+  formDataToObject(formData: FormData): Record<string, any> {
+    const result: Record<string, any> = {};
+
+    for (const [key, value] of formData.entries()) {
+      result[key] = key in result
+        ? [].concat(result[key]).concat(value)
+        : value;
+    }
+
+    return result;
+  }
+
 };

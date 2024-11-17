@@ -52,7 +52,7 @@ export async function sendEmailVerification(baseUrl: string, user: UserData) {
     await sendMail({
       fromName: `${site.name}`,
       from: site.email,
-      to: user.username,
+      to: user.email,
       toName: user.name,
       subject: `Verify your email - ${site.name}`,
       text: `Proceed to the following link to validate your email for ${site.name}.\n\n${link}`,
@@ -60,6 +60,6 @@ export async function sendEmailVerification(baseUrl: string, user: UserData) {
             <p>To validate your email, proceed to the following link: <a href=${link}>${link}</a></p>`,
     });
   } catch (e) {
-    console.error('Error sending verification email: ', e);
+    console.error('Error sending verification email: ', e.message);
   }
 }

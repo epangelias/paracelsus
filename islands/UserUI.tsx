@@ -1,10 +1,8 @@
 import { useGlobal } from '@/islands/Global.tsx';
-import { useSignal } from '@preact/signals';
 import { Field } from '@/components/Field.tsx';
 
 export function UserUI({ error, message }: { error?: string; message?: string }) {
   const global = useGlobal();
-  const nameChanged = useSignal(false);
 
   if (!global?.value?.user) return <></>;
 
@@ -30,12 +28,18 @@ export function UserUI({ error, message }: { error?: string; message?: string })
           required
           autofocus
           defaultValue={global.value.user?.name}
-          onInput={(e) =>
-            nameChanged.value = (e.target as HTMLInputElement).value !== global.value.user?.name}
+        />
+
+        <Field
+          name='email'
+          label='Email'
+          required
+          autofocus
+          defaultValue={global.value.user?.email}
         />
 
         <div>
-          <button disabled={!nameChanged.value}>Save</button>
+          <button>Save</button>
           {message && <span class='message'>{message}</span>}
           {error && <span class='error-message'>{error}</span>}
         </div>

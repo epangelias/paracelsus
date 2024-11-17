@@ -25,7 +25,7 @@ export function createGlobalData(user?: UserData) {
         tokens: user.tokens,
         isSubscribed: user.isSubscribed,
         isEmailVerified: user.isEmailVerified,
-        username: user.username,
+        email: user.email,
         hasVerifiedEmail: user.hasVerifiedEmail,
       },
   };

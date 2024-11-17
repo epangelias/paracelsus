@@ -20,7 +20,7 @@ export interface OAIOptions {
 
 export interface UserData {
   id: string;
-  username: string;
+  email: string;
   passwordHash: string;
   salt: string;
   name: string;

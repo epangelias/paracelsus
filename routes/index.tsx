@@ -1,9 +1,7 @@
 import { define } from '@/lib/utils.ts';
-import { ChatData } from '@/lib/types.ts';
 import ChatBox from '../islands/ChatBox.tsx';
-import { HttpError, page } from 'fresh';
+import { page } from 'fresh';
 import { GetChatData } from '@/routes/api/chat.tsx';
-import { STATUS_CODE } from '@std/http/status';
 import { site } from '@/lib/site.ts';
 
 export const handler = define.handlers({

@@ -8,13 +8,13 @@ export const handler = define.handlers({
   POST: async (ctx) => {
     const formData = await ctx.req.formData();
 
-    const username = formData.get('username') as string;
+    const email = formData.get('email') as string;
     const password = formData.get('password') as string;
 
-    const authCode = await authorizeUser(username, password);
+    const authCode = await authorizeUser(email, password);
     if (authCode) return SetAuthCookie(ctx, authCode);
 
-    return page({ error: 'Invalid credentials', username });
+    return page({ error: 'Invalid credentials', email });
   },
 });
 
@@ -22,7 +22,7 @@ export default define.page<typeof handler>(({ data }) => (
   <main>
     <div>
       <h1>Sign In</h1>
-      <SigninForm error={data?.error} username={data?.username} />
+      <SigninForm error={data?.error} email={data?.email} />
     </div>
   </main>
 ));
