@@ -26,7 +26,7 @@ export function Header() {
         </div>
         <div className='right'>
           {global?.value.user && (
-            <span class='spacing-right'>
+            <span class='tokens'>
               ⚡️{global.value.user.isSubscribed ? '∞' : global.value.user.tokens}
             </span>
           )}
@@ -41,12 +41,12 @@ export function Header() {
         </div>
       </header>
       {promptVerify && (
-        <div class='banner spacing-right'>
+        <div class='banner'>
           <a href='/user/resend-email'>Verify email</a> for more tokens
         </div>
       )}
       {promptSubscribe && (
-        <div class='banner spacing-right'>
+        <div class='banner'>
           <a href='/user/subscribe' target='_blank'>Subscribe</a> for unlimited tokens
         </div>
       )}
