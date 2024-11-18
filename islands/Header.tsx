@@ -1,6 +1,7 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { site } from '@/lib/site.ts';
 import { Meth } from '@/lib/meth.ts';
+import { IS_BROWSER } from 'fresh/runtime';
 
 export function Header() {
   const global = useGlobal();
@@ -64,17 +65,17 @@ function PWA() {
   }
 
   function isPWA(): boolean {
-    const isStandalone = globalThis.matchMedia('(display-mode: standalone)').matches;
+    const isStandalone = globalThis?.matchMedia('(display-mode: standalone)').matches;
     const isPWAFromManifest = 'serviceWorker' in navigator && 'PushManager' in window;
 
     return isStandalone || isPWAFromManifest;
   }
 
-  if (!isIOSSafari() || !isPWA()) return <></>;
+  if (!IS_BROWSER || !isIOSSafari() || isPWA()) return <></>;
 
   return (
     <div class='banner'>
-      We recommend you <a href='/install-guide-ios'>install this app to your device</a>
+      You can <a href='/install-guide-ios'>install this app to your device</a>
     </div>
   );
 }
