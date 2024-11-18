@@ -38,6 +38,7 @@ new MutationObserver(() => updateTheme())
 if ('serviceWorker' in navigator) {
   console.log('Service Worker Enabled');
   globalThis.addEventListener('load', () => {
+    console.log('Loading Service Worker...');
     navigator.serviceWorker.register('/worker.js').then((registration) => {
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
     }).catch((error) => {
