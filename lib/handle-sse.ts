@@ -6,18 +6,19 @@ export function handleSSE(
 ) {
   const stream = new ReadableStream({
     start: async (controller) => {
+
       const send = (data: unknown) => {
         const message = `data: ${JSON.stringify(data)}\n\n`;
-        controller.enqueue(new TextEncoder().encode(message));
+        try {
+          controller.enqueue(new TextEncoder().encode(message));
+        } catch (e) {
+          console.error('Error sending SSE message:');
+          console.error(e);
+          controller.error(e);
+        }
       };
+      await handler(send);
 
-      try {
-        await handler(send);
-      } catch (e) {
-        console.error('Error in sse handler:');
-        console.error(e);
-        controller.error(e);
-      }
     },
     cancel: () => {
       if (cancelHandler) cancelHandler();
