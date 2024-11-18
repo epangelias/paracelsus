@@ -8,8 +8,8 @@ import { safelyRenderMarkdown } from '@/lib/md.ts';
 export function handleAIResponse(
   messages: AIMessage[],
   options?: OAIOptions,
-  onEnd = (_messages?: AIMessage[]) => {},
-  onError = (_messages?: AIMessage[]) => {},
+  onEnd = (_messages?: AIMessage[]) => { },
+  onError = (_messages?: AIMessage[]) => { },
 ) {
   let stream: Stream<ChatCompletionChunk>;
 

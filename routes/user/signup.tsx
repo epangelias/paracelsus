@@ -4,17 +4,14 @@ import { authorizeUser, createUser } from '@/lib/user.ts';
 import { SignupForm } from '@/components/SiginupForm.tsx';
 import { sendEmailVerification } from '@/lib/mail.ts';
 import { SetAuthCookie } from '@/routes/user/signin.tsx';
+import { Meth } from '@/lib/meth.ts';
 
 export const handler = define.handlers({
   POST: async (ctx) => {
-    const formData = await ctx.req.formData();
-
-    const Name = formData.get('name') as string;
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+    const { name, email, password } = Meth.formDataToObject(await ctx.req.formData());
 
     try {
-      const user = await createUser(Name, email, password);
+      const user = await createUser(name, email, password);
       sendEmailVerification(ctx.url.origin, user);
 
       const authCode = await authorizeUser(email, password);
@@ -22,7 +19,7 @@ export const handler = define.handlers({
 
       throw new Error('Error authorizing user');
     } catch (e) {
-      return page({ error: e.message, Name, email });
+      return page({ error: e.message, name, email });
     }
   },
 });

@@ -3,13 +3,11 @@ import { FreshContext, page } from 'fresh';
 import { setCookie } from 'jsr:@std/http/cookie';
 import { SigninForm } from '@/components/SigininForm.tsx';
 import { authorizeUser } from '@/lib/user.ts';
+import { Meth } from '@/lib/meth.ts';
 
 export const handler = define.handlers({
   POST: async (ctx) => {
-    const formData = await ctx.req.formData();
-
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+    const { email, password } = Meth.formDataToObject(await ctx.req.formData());
 
     const authCode = await authorizeUser(email, password);
     if (authCode) return SetAuthCookie(ctx, authCode);

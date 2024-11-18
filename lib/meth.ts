@@ -21,7 +21,10 @@ export const Meth = {
   async copy(text: string) {
     try {
       await navigator.clipboard.writeText(text);
-    } catch (_e) { }
+      return true;
+    } catch (_e) {
+      return false;
+    }
   },
   objectEquals(x: unknown, y: unknown) {
     if (x === y) return true;
@@ -36,9 +39,7 @@ export const Meth = {
     }
 
     for (p in y) {
-      if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) {
-        return false;
-      }
+      if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) return false;
     }
 
     return true;
@@ -58,8 +59,8 @@ export const Meth = {
     if (text.length > length) return text.slice(0, length - 3) + '...';
     return text;
   },
-  formDataToObject(formData: FormData): Record<string, any> {
-    const result: Record<string, any> = {};
+  formDataToObject<T = Record<string, any>>(formData: FormData): T {
+    const result = {} as T;
 
     for (const [key, value] of formData.entries()) {
       result[key] = key in result

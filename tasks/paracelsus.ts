@@ -20,14 +20,14 @@ const getPath = (path: string) => new URL(path, import.meta.url);
 
 const siteData = `import { Meth } from "@/lib/meth.ts";\n
 export const site = {
-  name: ${projectName},
+  name: "${projectName}",
   favicon: Meth.emojiToUrl("${prompt('Emoji Icon [🔥]') || '🔥'}"),
   appIcon: "/img/app.png",
   themeColor: "#eb9a52",
   description: "${prompt('Project Description') || ''}",
   email: "vaza@vaza.app",
   lang: "en-US"
-  };`;
+};`;
 
 Deno.writeTextFile(getPath('lib/site.ts'), siteData);
 
