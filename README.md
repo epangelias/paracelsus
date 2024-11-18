@@ -16,7 +16,16 @@ paracelsus my-project
 
 - CSS Theme
 - Refactor and simplify, make bloated features more componential, easy to add/remove
-- Validation library for accepting form data
 - Allow data and other events to be sent through sse
 - also max length for the name on header
   - Better refactor function to display name, and to validate it and to reformat it
+- Add to homescreen guide
+- Notifications
+- SEO, Analytics
+- Rate limit emails
+- Login delay, security
+- Multilingual
+- accessability, aria roles
+- make features complemental, so can be removed, plugins
+- error logging
+- Improve caching
