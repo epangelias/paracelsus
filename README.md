@@ -27,3 +27,4 @@ paracelsus my-project
 - accessability, aria roles
 - error logging
 - Improve caching
+- Create island for banner, make it so that can close it, sets localstorage, multiple banners and order that they are shown automatically
