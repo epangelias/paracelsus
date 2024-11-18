@@ -1,11 +1,9 @@
 import { FreshContext } from 'fresh';
 import { getCookies } from 'jsr:@std/http/cookie';
-import { State } from '@/lib/utils.ts';
 import { db } from '@/lib/db.ts';
-import { UserData } from '@/lib/types.ts';
+import { State, UserData } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
-import { normalizeEmail, normalizeName, validateEmail, validateName, validatePassword } from '@/lib/validation.ts';
 
 export async function getUserFromState(ctx: FreshContext<State>) {
   if (ctx.state.user) return ctx.state.user;
@@ -72,15 +70,24 @@ export async function authorizeUser(email: string, password: string) {
 }
 
 function validateUser(user: UserData) {
-  validateEmail(user.email);
-  validateName(user.name);
+  // Email
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!regex.test(user.email)) throw new Error("Invalid email");
+  if (user.email.length > 320) throw new Error("Email must be less than 320 characters");
+  if (user.email.length < 5) throw new Error("Email must be at least 5 characters");
+
+  // Name
+  if (user.name.length < 3) throw new Error('Name must be at least 3 characters');
+  if (user.name.length > 100) throw new Error('Name must be less than 100 characters');
+  if (!/^[a-zA-Z\s]+$/.test(user.name)) throw new Error('Name must only contain letters and spaces');
 }
 
 export async function createUser(name: string, email: string, password: string) {
   email = normalizeEmail(email);
   name = normalizeName(name);
 
-  validatePassword(password);
+  if (password.length < 6) throw new Error('Password must be at least 8 characters');
+  if (password.length > 100) throw new Error('Password must be less than 100 characters');
 
   const salt = Meth.code();
   const passwordHash = await Meth.hash(`${salt}:${password}`);
@@ -177,4 +184,12 @@ export async function getUserByVerificationCode(code: string) {
   const user = await getUserById(res.value.id);
   if (user?.email != res.value.email) return null;
   return user;
+}
+
+export function normalizeName(name: string) {
+  return name.trim().replace(/\s+/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+}
+
+export function normalizeEmail(email: string) {
+  return email.trim().toLowerCase();
 }

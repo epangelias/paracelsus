@@ -1,8 +1,8 @@
 /// <reference lib="deno.unstable" />
 
 import { App, fsRoutes, staticFiles } from 'fresh';
-import { type State } from '@/lib/utils.ts';
 import middlewareHandler from '@/lib/middleware.ts';
+import { State } from '@/lib/types.ts';
 
 export const app = new App<State>();
 export const isProduction = import.meta.main;
