@@ -291,3 +291,11 @@ td {
   background-color: var(--bg1);
   color: var(--fg2);
 }
+
+
+/* Disable text selection of UI Elements */
+anybutton,
+a {
+  user-select: none;
+  -webkit-user-select: none;
+}

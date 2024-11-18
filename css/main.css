@@ -27,14 +27,19 @@
 main {
   display: flex;
   /* FIX LATER */
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
   overflow-y: auto;
-  height: 100%;
+  margin: auto 0;
+  /* height: 100%; */
   padding: 0 var(--spacing);
 
   animation: f .3s ease-in-out;
+
+  &:has(.chat-box) {
+    height: 100%;
+  }
 }
 
 header {
@@ -84,9 +89,9 @@ header {
   display: flex;
   flex-direction: column;
   border-radius: calc(var(--radius) * 2);
-  line-height: 1;
 
   form {
+    line-height: 1;
     display: flex;
     clear: both;
     font-size: 1em;
