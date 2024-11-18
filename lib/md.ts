@@ -1,5 +1,5 @@
 import * as ammonia from 'https://deno.land/x/ammonia@0.3.1/mod.ts';
-import { marked } from 'npm:marked@11.1.0';
+import { marked } from 'marked';
 
 const ammoniaInit = ammonia.init();
 

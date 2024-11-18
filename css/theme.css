@@ -112,6 +112,11 @@ body {
   line-height: 1.5;
   /* Improve text rendering */
   -webkit-font-smoothing: antialiased;
+
+  /* IOS Remove gray highlight */
+  -webkit-tap-highlight-color: transparent;
+  /* IOS Disable touch callout */
+  -webkit-touch-callout: none;
 }
 
 ::selection {
