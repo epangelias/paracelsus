@@ -49,3 +49,7 @@ if ('serviceWorker' in navigator) {
 
 // IOS active state
 document.addEventListener('touchstart', () => {}, { passive: true });
+
+globalThis.addEventListener('beforeunload', () => {
+  document.body.classList.add('fade-out');
+});

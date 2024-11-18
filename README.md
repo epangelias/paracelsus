@@ -24,8 +24,8 @@ paracelsus my-project
 - SEO, Analytics
 - Rate limit emails
 - Login delay, security
-- Multilingual
+- Multilingual, at least for the chats
 - accessability, aria roles
-- make features complemental, so can be removed, plugins
+- make features componential, so can be removed, plugins
 - error logging
 - Improve caching

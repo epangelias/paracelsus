@@ -22,6 +22,24 @@
   }
 }
 
+@keyframes fadeOut {
+  0% {
+    scale: 1;
+    opacity: 1;
+  }
+
+  10% {
+    scale: 0.9;
+    opacity: 0;
+  }
+}
+
+body.fade-out {
+  main {
+    animation: fadeOut 3s ease-in-out;
+  }
+}
+
 main {
   display: flex;
   /* FIX LATER */
@@ -32,8 +50,8 @@ main {
   margin: auto 0;
   /* height: 100%; */
   padding: 0 var(--spacing);
-
   animation: pageTransition .3s ease-in-out;
+
 
   &:has(.chat-box) {
     height: 100%;
