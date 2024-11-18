@@ -94,7 +94,9 @@ export default function ChatBox({ data }: { data: ChatData }) {
           required
           inputRef={inputRef}
         />
-        <button disabled={generating.value}>◉</button>
+        <button disabled={generating.value}>
+          <span>◉</span>
+        </button>
       </form>
     </div>
   );

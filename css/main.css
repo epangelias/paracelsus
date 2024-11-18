@@ -12,6 +12,18 @@
   height: 100%;
 }
 
+@keyframes f {
+  from {
+    scale: 0.9;
+    opacity: 0;
+  }
+
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
 main {
   display: flex;
   /* FIX LATER */
@@ -21,6 +33,8 @@ main {
   overflow-y: auto;
   height: 100%;
   padding: 0 var(--spacing);
+
+  animation: f .3s ease-in-out;
 }
 
 header {
@@ -70,6 +84,7 @@ header {
   display: flex;
   flex-direction: column;
   border-radius: calc(var(--radius) * 2);
+  line-height: 1;
 
   form {
     display: flex;
@@ -82,8 +97,12 @@ header {
     }
 
     button {
-      font-size: 1.5em;
-      padding: 0 var(--spacing);
+
+      & span {
+        display: inline-block;
+        scale: 1.5;
+      }
+
     }
   }
 

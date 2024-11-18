@@ -201,8 +201,7 @@ anyfield {
   }
 }
 
-:is(anyfield, anybutton, a, .textarea-container)
-  + :is(anyfield, anybutton, a, .textarea-container) {
+:is(anyfield, anybutton, a, .textarea-container)+ :is(anyfield, anybutton, a, .textarea-container) {
   margin-left: var(--spacing);
 }
 
@@ -249,7 +248,7 @@ a {
   animation: fadeIn 0.5s ease-in-out;
 }
 
-anybutton + :is(.message, .error-message) {
+anybutton+ :is(.message, .error-message) {
   margin-left: var(--spacing);
 }
 
