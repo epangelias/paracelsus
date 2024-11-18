@@ -1,6 +1,6 @@
 import { FreshContext } from 'fresh';
 import { getCookies } from 'jsr:@std/http/cookie';
-import { db } from '@/lib/db.ts';
+import { db } from './utils.ts';
 import { State, UserData } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';

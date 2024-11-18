@@ -46,3 +46,6 @@ if ('serviceWorker' in navigator) {
     });
   });
 } else console.warn('Service Worker Disabled');
+
+// IOS active state
+document.addEventListener('touchstart', () => {}, { passive: true });

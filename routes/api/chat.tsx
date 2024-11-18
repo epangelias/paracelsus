@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils.ts';
-import { handleSSE, watchKV } from '../../lib/handle-sse.ts';
-import { db } from '@/lib/db.ts';
+import { handleSSE, watchKV } from '@/lib/handle-sse.ts';
+import { db } from '@/lib/utils.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 import { ChatData, UserData } from '@/lib/types.ts';

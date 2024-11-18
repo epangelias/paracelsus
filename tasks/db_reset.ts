@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run -A
 
-import { db } from '@/lib/db.ts';
+import { db } from "@/lib/utils.ts";
 
 const itemsReset: Record<string, number> = {};
 

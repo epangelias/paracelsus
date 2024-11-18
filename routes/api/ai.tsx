@@ -1,5 +1,5 @@
 import { define } from '@/lib/utils.ts';
-import { db } from '@/lib/db.ts';
+import { db } from '@/lib/utils.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 import { handleAIResponse } from '@/lib/handle-ai.ts';
 import { updateUser } from '@/lib/user.ts';

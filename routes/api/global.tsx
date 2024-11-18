@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils.ts';
 import { handleSSE } from '../../lib/handle-sse.ts';
-import { db } from '@/lib/db.ts';
+import { db } from '@/lib/utils.ts';
 import { UserData } from '@/lib/types.ts';
 import { createGlobalData } from '@/islands/Global.tsx';
 import { HttpError } from 'fresh';

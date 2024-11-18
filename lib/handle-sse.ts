@@ -1,4 +1,4 @@
-import { db } from '@/lib/db.ts';
+import { db } from "@/lib/utils.ts";
 
 export function handleSSE(
   handler: (send: (data: unknown) => void) => Promise<void>,
