@@ -14,11 +14,10 @@ paracelsus my-project
 
 ## TODO
 
+- Instead of <main>, make a component to put in the header so can hide header or other things
 - CSS Theme
-- Refactor and simplify, make bloated features more componential, easy to add/remove
+- Refactor and simplify, make bloated features more componential, easy to add/remove, plugins
 - Allow data and other events to be sent through sse
-- also max length for the name on header
-  - Better refactor function to display name, and to validate it and to reformat it
 - Add to homescreen guide
 - Notifications
 - SEO, Analytics
@@ -26,6 +25,5 @@ paracelsus my-project
 - Login delay, security
 - Multilingual, at least for the chats
 - accessability, aria roles
-- make features componential, so can be removed, plugins
 - error logging
 - Improve caching

@@ -50,6 +50,31 @@ export function Header() {
           <a href='/user/subscribe' target='_blank'>Subscribe</a> for unlimited tokens
         </div>
       )}
+      {!promptVerify && !promptSubscribe && <PWA />}
     </>
+  );
+}
+
+function PWA() {
+  function isIOSSafari(): boolean {
+    const userAgent = globalThis.navigator.userAgent;
+    const isIOS = /iPhone|iPad|iPod/.test(userAgent);
+    const isSafari = /Safari/.test(userAgent) && !/Chrome/.test(userAgent);
+    return isIOS && isSafari;
+  }
+
+  function isPWA(): boolean {
+    const isStandalone = globalThis.matchMedia('(display-mode: standalone)').matches;
+    const isPWAFromManifest = 'serviceWorker' in navigator && 'PushManager' in window;
+
+    return isStandalone || isPWAFromManifest;
+  }
+
+  if (!isIOSSafari() || !isPWA()) return <></>;
+
+  return (
+    <div class='banner'>
+      We recommend you <a href='/install-guide-ios'>install this app to your device</a>
+    </div>
   );
 }
