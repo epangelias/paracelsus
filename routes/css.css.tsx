@@ -17,7 +17,7 @@ function applyVariables(text: string) {
   return text;
 }
 
-export function resolveCssImports(filePath: URL) {
+function resolveCssImports(filePath: URL) {
   const folder = new URL(filePath.href.split('/').slice(0, -1).join('/'));
   let css = Deno.readTextFileSync(filePath);
   const importPattern = /@import\s+["']([^"']+)["'];/g;
@@ -33,8 +33,8 @@ export function resolveCssImports(filePath: URL) {
   return applyVariables(css);
 }
 
-const css = resolveCssImports(new URL('../css/main.css', import.meta.url));
+export const SITE_CSS = resolveCssImports(new URL('../css/main.css', import.meta.url));
 
 export const handler = define.handlers(() =>
-  new Response(css, { headers: { 'Content-Type': 'text/css' } })
+  new Response(SITE_CSS, { headers: { 'Content-Type': 'text/css' } })
 );
