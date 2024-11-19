@@ -154,12 +154,12 @@ form div:has(label) {
   box-shadow: var(--field-shadow);
 
   &:hover:not(:disabled) {
-    background-color: color-mix(in srgb, currentColor, var(--on-accent) 15%);
+    background-color: color-mix(in srgb, var(--accent), var(--on-accent) 15%);
     box-shadow: none;
   }
 
   &:active:hover:not(:disabled) {
-    background-color: color-mix(in srgb, currentColor, var(--on-accent) 15%);
+    background-color: color-mix(in srgb, var(--accent), var(--on-accent) 15%);
     scale: 1.05;
   }
 
