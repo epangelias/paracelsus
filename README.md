@@ -22,3 +22,4 @@ paracelsus my-project
 - Login delay, security
 - Multilingual, at least for the chats
 - error reporting
+- Paracelsus randomly follows up to user and send push notification
