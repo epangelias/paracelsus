@@ -34,7 +34,7 @@ function resolveCssImports(filePath: URL) {
     return applyVariables(css);
 }
 
-export const SITE_CSS = resolveCssImports(new URL('../../css/main.css', import.meta.url));
+export const SITE_CSS = resolveCssImports(new URL('../main.css', import.meta.url));
 
 export function CSSMod(app: App<State>) {
     app.get("/css.css", () => new Response(SITE_CSS, { headers: { 'Content-Type': 'text/css' } }));
