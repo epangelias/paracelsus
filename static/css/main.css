@@ -100,8 +100,7 @@ header {
   }
 
   button {
-    padding: 0;
-    background: none;
+    padding: 0 !important;
     position: absolute;
     right: 1rem;
     scale: 1.5;

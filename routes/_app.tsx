@@ -29,14 +29,15 @@ export default define.page(({ Component, state }) => {
         <meta name='theme-color' content={site.themeColor} />
         <meta name='format-detection' content='telephone=no' />
         <link rel='manifest' href={asset('/manifest.json')} />
-        <link rel='stylesheet' href={asset('/css/main.css')} />
         <link rel='stylesheet' href={asset('/css/theme.css')} />
-        <link rel='icon' href={site.favicon} />
+        <link rel='stylesheet' href={asset('/css/main.css')} />
+        <link rel='icon' href={asset(site.favicon)} />
       </head>
       <body>
         <Global data={createGlobalData(state.user)}>
           <Component />
         </Global>
+
         <InitJS />
 
         <style dangerouslySetInnerHTML={{ __html: `:root{--primary: ${site.themeColor}` }}></style>
