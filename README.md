@@ -14,7 +14,6 @@ paracelsus my-project
 
 ## TODO
 
-- Instead of <main>, make a component to put in the header so can hide header or other things
 - CSS Theme
 - Refactor and simplify, make bloated features more componential, easy to add/remove, plugins
 - Allow data and other events to be sent through sse
@@ -26,5 +25,4 @@ paracelsus my-project
 - Multilingual, at least for the chats
 - accessability, aria roles
 - error logging
-- Improve caching
-- Create island for banner, make it so that can close it, sets localstorage, multiple banners and order that they are shown automatically
+- Caching for CSS later, utilizing fresh caching, discord?

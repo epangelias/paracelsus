@@ -28,7 +28,7 @@ export default define.page(({ Component, state }) => {
         <meta name='theme-color' content={site.themeColor} />
         <meta name='format-detection' content='telephone=no' />
         <link rel='manifest' href='/manifest.json' />
-        <link rel='stylesheet' href='/css.css' />
+        <link rel='stylesheet' href='/css/main.css' />
         <link rel='icon' href={site.favicon} />
       </head>
       <body>
@@ -36,6 +36,8 @@ export default define.page(({ Component, state }) => {
           <Component />
         </Global>
         <InitJS />
+
+        <style dangerouslySetInnerHTML={{ __html: `:root{--primary: ${site.themeColor}` }}></style>
       </body>
     </html>
   );

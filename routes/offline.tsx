@@ -1,6 +1,8 @@
 import { define } from '@/lib/utils.ts';
 import { Page } from '@/components/Page.tsx';
-import { SITE_CSS } from '@/plugins/css/mod.ts';
+
+const CSS = await Deno.readTextFile('static/css/main.css') +
+    await Deno.readTextFile('static/css/theme.css');
 
 export default define.page(() => (
     <Page hideHeader={true} hideBanner={true}>
@@ -8,7 +10,6 @@ export default define.page(() => (
         <p>
             <a href='/'>Reload</a>
         </p>
-        <style dangerouslySetInnerHTML={{ __html: SITE_CSS + '\nheader{display:none!important}' }}>
-        </style>
+        <style dangerouslySetInnerHTML={{ __html: CSS }}></style>
     </Page>
 ));

@@ -13,7 +13,7 @@
   --accent: #7eb1f4;
   --on-accent: var(--dark1);
 
-  --primary: ThemeColor;
+  /* --primary: ThemeColor; */
   --on-primary: #000;
 
   --radius: 4px;
@@ -152,7 +152,7 @@ form div:has(label) {
 
 /* Buttons */
 
-anybutton {
+:is(button, input:is([type="button"], [type="submit"], [type="reset"], [type="file"], [type="color"]), select) {
   background-color: var(--accent);
   border-radius: var(--radius);
   border: none;
@@ -186,7 +186,7 @@ anybutton {
 
 /* Inputs */
 
-anyfield {
+:is(input:not([type]), input:is([type="text"], [type="password"], [type="email"], [type="number"], [type="url"], [type="tel"], [type="search"], [type="date"]), textarea) {
   width: 100%;
   padding: calc(var(--spacing)) calc(var(--spacing) * 2);
   border: var(--border-width) solid var(--border-color);
@@ -206,7 +206,7 @@ anyfield {
   }
 }
 
-:is(anyfield, anybutton, a, .textarea-container)+ :is(anyfield, anybutton, a, .textarea-container) {
+:is(:is(input:not([type]), input:is([type="text"], [type="password"], [type="email"], [type="number"], [type="url"], [type="tel"], [type="search"], [type="date"]), textarea), :is(button, input:is([type="button"], [type="submit"], [type="reset"], [type="file"], [type="color"]), select), a, .textarea-container)+:is(:is(input:not([type]), input:is([type="text"], [type="password"], [type="email"], [type="number"], [type="url"], [type="tel"], [type="search"], [type="date"]), textarea), :is(button, input:is([type="button"], [type="submit"], [type="reset"], [type="file"], [type="color"]), select), a, .textarea-container) {
   margin-left: var(--spacing);
 }
 
@@ -253,7 +253,7 @@ a {
   animation: fadeIn 0.5s ease-in-out;
 }
 
-anybutton+ :is(.message, .error-message) {
+:is(button, input:is([type="button"], [type="submit"], [type="reset"], [type="file"], [type="color"]), select)+ :is(.message, .error-message) {
   margin-left: var(--spacing);
 }
 
@@ -294,7 +294,7 @@ td {
 
 
 /* Disable text selection of UI Elements */
-anybutton,
+:is(button, input:is([type="button"], [type="submit"], [type="reset"], [type="file"], [type="color"]), select),
 a {
   user-select: none;
   -webkit-user-select: none;
