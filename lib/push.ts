@@ -3,7 +3,6 @@
 import { App } from 'fresh';
 import * as webPush from "web-push";
 import { State } from '@/lib/types.ts';
-import { title } from 'process';
 
 const VAPID_PUBLIC_KEY = Deno.env.get("VAPID_PUBLIC_KEY");
 const VAPID_PRIVATE_KEY = Deno.env.get("VAPID_PRIVATE_KEY");
