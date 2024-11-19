@@ -9,11 +9,11 @@ export const handler = define.handlers(async (ctx) => {
   try {
     if (!ctx.error) return await ctx.next();
     else if (typeof ctx.error === 'string') {
-      throw new HttpError(STATUS_CODE.NotFound, STATUS_TEXT[STATUS_CODE.NotFound]);
+      throw new HttpError(STATUS_CODE.InternalServerError);
     } else if (ctx.error instanceof Error) {
-      throw new HttpError(STATUS_CODE.InternalServerError, STATUS_TEXT[STATUS_CODE.NotFound]);
+      throw new HttpError(STATUS_CODE.InternalServerError);
     } else if (ctx.error instanceof HttpError) throw ctx.error;
-    else throw new HttpError(STATUS_CODE.NotFound, STATUS_TEXT[STATUS_CODE.NotFound]);
+    else throw new HttpError(STATUS_CODE.NotFound);
   } catch (e) {
     const { status, message } = e as HttpError;
     if (isAPI) {

@@ -21,7 +21,8 @@
     "marked": "npm:marked@^15.0.0",
     "node-mailjet": "npm:node-mailjet@^6.0.6",
     "preact": "npm:preact@^10.24.3",
-    "stripe": "npm:stripe@^17.3.1"
+    "stripe": "npm:stripe@^17.3.1",
+    "web-push": "npm:web-push@^3.6.7"
   },
   "compilerOptions": {
     "lib": ["dom", "dom.asynciterable", "deno.ns"],

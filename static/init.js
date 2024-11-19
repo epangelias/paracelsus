@@ -1,3 +1,83 @@
+// Service Worker
+
+if ('serviceWorker' in navigator) {
+  console.log('Service Worker Enabled');
+
+  globalThis.addEventListener('load', () => {
+    console.log('Loading Service Worker...');
+    navigator.serviceWorker.register('/worker.js').then(async (registration) => {
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+
+      // Subscription for Push Notifications
+      try {
+        const subscription = await registration.pushManager.getSubscription() ||
+          await registerForPushNotifications(registration);
+        console.log('Push subscription obtained: ', subscription);
+
+        // Send the subscription to the server
+        await fetch('./register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ subscription }),
+        });
+
+        // Simulate sending a notification (replace hardcoded delay/ttl as needed)
+        const delay = 5; // Delay in seconds
+        const ttl = 60; // Time-to-live in seconds
+
+        console.log('Sending test notification...');
+        await fetch('./sendNotification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ subscription, delay, ttl }),
+        });
+        console.log('Notification sent!');
+      } catch (error) {
+        console.error('Error during Push Subscription process:', error);
+      }
+    }).catch((error) => {
+      console.error('ServiceWorker registration failed: ', error);
+    });
+  });
+} else {
+  console.warn('Service Worker Disabled');
+}
+
+// Function to handle Push Notification Subscription
+async function registerForPushNotifications(registration) {
+  console.log('Registering for push notifications...');
+  const response = await fetch('./vapidPublicKey');
+  const vapidPublicKey = await response.text();
+
+  // Convert VAPID key
+  const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+
+  // Subscribe the user
+  return registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: convertedVapidKey,
+  });
+}
+
+// Utility function to convert Base64 VAPID key to Uint8Array
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const rawData = globalThis.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; i++) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+// Color Scheme Management
+
 let colorSchemeMeta = document.querySelector('meta[name="color-scheme"]');
 
 if (!colorSchemeMeta) {
@@ -33,21 +113,7 @@ globalThis.matchMedia('(prefers-color-scheme: dark)')
 new MutationObserver(() => updateTheme())
   .observe(colorSchemeMeta, { attributes: true, attributeFilter: ['content'] });
 
-// Service Worker
-
-if ('serviceWorker' in navigator) {
-  console.log('Service Worker Enabled');
-  globalThis.addEventListener('load', () => {
-    console.log('Loading Service Worker...');
-    navigator.serviceWorker.register('/worker.js').then((registration) => {
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }).catch((error) => {
-      console.error('ServiceWorker registration failed: ', error);
-    });
-  });
-} else console.warn('Service Worker Disabled');
-
-// IOS active state
+// iOS active state
 document.addEventListener('touchstart', () => {}, { passive: true });
 
 globalThis.addEventListener('beforeunload', () => {
