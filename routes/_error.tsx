@@ -1,6 +1,7 @@
 import { define } from '@/lib/utils.ts';
 import { STATUS_TEXT, StatusCode } from '@std/http/status';
 import { page } from 'fresh';
+import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers(async (ctx) => {
   const status = (ctx.error as { status: StatusCode }).status;
@@ -19,13 +20,13 @@ export const handler = define.handlers(async (ctx) => {
 
 export default define.page<typeof handler>((ctx) => {
   return (
-    <main>
+    <Page>
       <div>
         <h1>{ctx.data.status} {ctx.data.statusText}</h1>
         <p>
           <a href='/'>Go Back</a>
         </p>
       </div>
-    </main>
+    </Page>
   );
 });

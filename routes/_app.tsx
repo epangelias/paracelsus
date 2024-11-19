@@ -2,7 +2,6 @@ import { site } from '@/lib/site.ts';
 import { createGlobalData, Global } from '@/islands/Global.tsx';
 import { define } from '@/lib/utils.ts';
 import { InitJS } from '../components/InitJS.tsx';
-import { Header } from '@/islands/Header.tsx';
 
 export default define.page(({ Component, state }) => {
   return (
@@ -33,12 +32,9 @@ export default define.page(({ Component, state }) => {
         <link rel='icon' href={site.favicon} />
       </head>
       <body>
-        <div class='container'>
-          <Global data={createGlobalData(state.user)}>
-            <Header />
-            <Component />
-          </Global>
-        </div>
+        <Global data={createGlobalData(state.user)}>
+          <Component />
+        </Global>
         <InitJS />
       </body>
     </html>

@@ -5,6 +5,7 @@ import { SignupForm } from '@/components/SiginupForm.tsx';
 import { sendEmailVerification } from '@/lib/mail.ts';
 import { SetAuthCookie } from '@/routes/user/signin.tsx';
 import { Meth } from '@/lib/meth.ts';
+import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers({
   POST: async (ctx) => {
@@ -25,10 +26,10 @@ export const handler = define.handlers({
 });
 
 export default define.page<typeof handler>(({ data }) => (
-  <main>
+  <Page>
     <div>
       <h1>Sign Up</h1>
       <SignupForm error={data?.error} email={data?.email} name={data?.Name} />
     </div>
-  </main>
+  </Page>
 ));

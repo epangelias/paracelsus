@@ -5,6 +5,7 @@ import { UserUI } from '@/islands/UserUI.tsx';
 import { STATUS_CODE } from '@std/http/status';
 import { Meth } from '@/lib/meth.ts';
 import { sendEmailVerification } from '@/lib/mail.ts';
+import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers(async (ctx) => {
   const user = ctx.state.user;
@@ -24,8 +25,8 @@ export const handler = define.handlers(async (ctx) => {
 });
 
 export default define.page<typeof handler>(({ data }) => (
-  <main>
+  <Page>
     <h1>User Settings</h1>
     <UserUI message={data?.message} error={data?.error} />
-  </main>
+  </Page>
 ));

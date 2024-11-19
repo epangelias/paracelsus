@@ -3,6 +3,7 @@ import ChatBox from '../islands/ChatBox.tsx';
 import { page } from 'fresh';
 import { GetChatData } from '@/routes/api/chat.tsx';
 import { site } from '@/lib/site.ts';
+import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
@@ -14,7 +15,7 @@ export const handler = define.handlers({
 
 export default define.page<typeof handler>(({ data }) => {
   return (
-    <main>
+    <Page>
       {data?.chatData ? <ChatBox data={data.chatData} /> : (
         <>
           <h1>Paracelsus</h1>
@@ -24,6 +25,6 @@ export default define.page<typeof handler>(({ data }) => {
           </p>
         </>
       )}
-    </main>
+    </Page>
   );
 });

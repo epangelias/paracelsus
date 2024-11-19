@@ -3,6 +3,7 @@ import { sendEmailVerification } from '@/lib/mail.ts';
 import { HttpError } from 'https://jsr.io/@fresh/core/2.0.0-alpha.25/src/error.ts';
 import { page } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
+import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers({
   GET: (ctx) => {
@@ -15,10 +16,10 @@ export const handler = define.handlers({
 });
 
 export default define.page(() => (
-  <main>
+  <Page>
     <h1>Sent verification link to your email!</h1>
     <p>
       <a href='/'>Go to homepage</a>
     </p>
-  </main>
+  </Page>
 ));

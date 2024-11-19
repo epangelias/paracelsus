@@ -2,6 +2,7 @@ import { define } from '@/lib/utils.ts';
 import { HttpError, page } from 'fresh';
 import { getUserByVerificationCode, updateUser } from '@/lib/user.ts';
 import { STATUS_CODE } from '@std/http/status';
+import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
@@ -26,10 +27,10 @@ export const handler = define.handlers({
 });
 
 export default define.page<typeof handler>(({ data }) => (
-  <main>
+  <Page>
     <h1>{data.message}</h1>
     <p>
       <a href='/'>Back</a>
     </p>
-  </main>
+  </Page>
 ));

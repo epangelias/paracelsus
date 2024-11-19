@@ -4,6 +4,7 @@ import { setCookie } from 'jsr:@std/http/cookie';
 import { SigninForm } from '@/components/SigininForm.tsx';
 import { authorizeUser } from '@/lib/user.ts';
 import { Meth } from '@/lib/meth.ts';
+import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers({
   POST: async (ctx) => {
@@ -17,12 +18,12 @@ export const handler = define.handlers({
 });
 
 export default define.page<typeof handler>(({ data }) => (
-  <main>
+  <Page>
     <div>
       <h1>Sign In</h1>
       <SigninForm error={data?.error} email={data?.email} />
     </div>
-  </main>
+  </Page>
 ));
 
 export function SetAuthCookie(ctx: FreshContext, authCode: string) {

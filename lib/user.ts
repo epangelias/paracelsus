@@ -159,6 +159,9 @@ export async function updateUser(changes: UserData) {
   const user = await getUserById(changes.id);
   if (!user) throw new Error('User not found');
 
+  user.email = normalizeEmail(user.email);
+  user.name = normalizeName(user.name);
+
   validateUser(changes);
 
   if (user.email != changes.email) {
