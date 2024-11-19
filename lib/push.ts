@@ -11,7 +11,7 @@ const VAPID_PRIVATE_KEY = Deno.env.get("VAPID_PRIVATE_KEY");
 
 if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
     webPush.setVapidDetails(
-        "https://paracelsus.vaza.app",
+        "mainto:" + site.email,
         VAPID_PUBLIC_KEY,
         VAPID_PRIVATE_KEY
     );
