@@ -3,6 +3,7 @@
 import { App } from 'fresh';
 import * as webPush from "web-push";
 import { State } from '@/lib/types.ts';
+import { title } from 'process';
 
 const VAPID_PUBLIC_KEY = Deno.env.get("VAPID_PUBLIC_KEY");
 const VAPID_PRIVATE_KEY = Deno.env.get("VAPID_PRIVATE_KEY");
@@ -29,7 +30,7 @@ export function EnablePush(app: App<State>) {
     app.post("/api/register", () => new Response(null, { status: 201 })); // Should store the subscription info
     app.post("/api/sendNotification", async (ctx) => {
         const { subscription, TTL, delay } = await ctx.req.json();
-        const payload = JSON.stringify({ body: "Hello", icon: "https://paracelsus.vaza.app/img/favicon.png" });
+        const payload = JSON.stringify({ body: "Hello", icon: "https://paracelsus.vaza.app/img/favicon.png", title: "From Paracelsus" });
         const options = { TTL };
 
         console.log("Sending Notification...");
