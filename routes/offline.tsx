@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils.ts';
-import { SITE_CSS } from '@/routes/css.css.tsx';
 import { Page } from '@/components/Page.tsx';
+import { SITE_CSS } from '@/plugins/css/mod.ts';
 
 export default define.page(() => (
     <Page hideHeader={true}>
