@@ -63,12 +63,9 @@ export const Meth = {
     const result = {} as T;
 
     for (const [key, value] of formData.entries()) {
-      result[key] = key in result
-        ? [].concat(result[key]).concat(value)
-        : value;
+      result[key] = key in result ? [].concat(result[key]).concat(value) : value;
     }
 
     return result;
-  }
-
+  },
 };

@@ -34,11 +34,10 @@
 
 body.fade-out {
   main {
-    animation: fadeOut .3s ease-in-out;
+    animation: fadeOut 0.3s ease-in-out;
     opacity: 0;
   }
 }
-
 
 main {
   display: flex;
@@ -50,8 +49,7 @@ main {
   margin: auto 0;
   /* height: 100%; */
   padding: 0 var(--spacing);
-  animation: pageTransition .5s ease-in-out;
-
+  animation: pageTransition 0.5s ease-in-out;
 
   &:has(.chat-box) {
     height: 100%;
@@ -131,12 +129,10 @@ header {
     }
 
     button {
-
       & span {
         display: inline-block;
         scale: 1.5;
       }
-
     }
   }
 

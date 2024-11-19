@@ -23,7 +23,7 @@ export async function sendSSE<T>(endpoint: string, body: unknown) {
   return await fetchOrError<T>(endpoint, { method: 'POST', body });
 }
 
-export function watchSSE<T>(endpoint: string, handler: (data: T) => void, errorHandler = () => { }) {
+export function watchSSE<T>(endpoint: string, handler: (data: T) => void, errorHandler = () => {}) {
   const eventSource = new EventSource(endpoint);
 
   eventSource.onmessage = (event) => handler(JSON.parse(event.data));

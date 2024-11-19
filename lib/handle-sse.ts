@@ -1,4 +1,4 @@
-import { db } from "@/lib/utils.ts";
+import { db } from '@/lib/utils.ts';
 
 export function handleSSE(
   handler: (send: (data: unknown) => void) => Promise<void>,
@@ -6,7 +6,6 @@ export function handleSSE(
 ) {
   const stream = new ReadableStream({
     start: async (controller) => {
-
       const send = (data: unknown) => {
         const message = `data: ${JSON.stringify(data)}\n\n`;
         try {
@@ -18,7 +17,6 @@ export function handleSSE(
         }
       };
       await handler(send);
-
     },
     cancel: () => {
       if (cancelHandler) cancelHandler();

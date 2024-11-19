@@ -6,7 +6,6 @@ import { HttpError } from 'fresh';
 
 export const handler = define.handlers({
   POST: async (ctx) => {
-
     const event = await HandleStripeWebhook(ctx);
 
     const { customer } = event.data.object;

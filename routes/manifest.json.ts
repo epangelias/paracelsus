@@ -1,5 +1,5 @@
 import { define } from '@/lib/utils.ts';
-import { site } from "@/lib/site.ts";
+import { site } from '@/lib/site.ts';
 
 export const handler = define.handlers(() => {
   return Response.json({

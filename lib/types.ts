@@ -35,7 +35,6 @@ export interface GlobalData {
   user?: Partial<UserData>;
 }
 
-
 export interface State {
   user?: UserData;
   auth?: string;
