@@ -13,14 +13,15 @@ if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) {
         "environment variables. You can use the following ones:"
     );
     console.log(webPush.generateVAPIDKeys());
-    Deno.exit(1);
 }
 
-webPush.setVapidDetails(
-    "https://paracelsus.vaza.app",
-    VAPID_PUBLIC_KEY,
-    VAPID_PRIVATE_KEY
-);
+if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
+    webPush.setVapidDetails(
+        "https://paracelsus.vaza.app",
+        VAPID_PUBLIC_KEY,
+        VAPID_PRIVATE_KEY
+    );
+}
 
 
 export function EnablePush(app: App<State>) {
