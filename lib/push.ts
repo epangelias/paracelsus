@@ -1,17 +1,20 @@
 
 
 import { App } from 'fresh';
-import * as webPush from "web-push";
+import * as _webPush from "web-push";
+import * as webPushTypes from "@types/web-push";
 import { State } from '@/lib/types.ts';
 import { site } from '@/lib/site.ts';
 import { asset } from 'fresh/runtime';
+
+const webPush = _webPush as typeof webPushTypes;
 
 const VAPID_PUBLIC_KEY = Deno.env.get("VAPID_PUBLIC_KEY");
 const VAPID_PRIVATE_KEY = Deno.env.get("VAPID_PRIVATE_KEY");
 
 if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
     webPush.setVapidDetails(
-        "mainto:" + site.email,
+        "mailto:" + site.email,
         VAPID_PUBLIC_KEY,
         VAPID_PRIVATE_KEY
     );
@@ -22,7 +25,6 @@ if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
     );
     console.log(webPush.generateVAPIDKeys());
 }
-
 
 export function EnablePush(app: App<State>) {
     app.get("/api/vapidPublicKey", () => new Response(VAPID_PUBLIC_KEY));
