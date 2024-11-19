@@ -15,7 +15,7 @@ if ('serviceWorker' in navigator) {
         console.log('Push subscription obtained: ', subscription);
 
         // Send the subscription to the server
-        await fetch('./register', {
+        await fetch('/api/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ if ('serviceWorker' in navigator) {
         const ttl = 60; // Time-to-live in seconds
 
         console.log('Sending test notification...');
-        await fetch('./sendNotification', {
+        await fetch('/api/sendNotification', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ if ('serviceWorker' in navigator) {
 // Function to handle Push Notification Subscription
 async function registerForPushNotifications(registration) {
   console.log('Registering for push notifications...');
-  const response = await fetch('./vapidPublicKey');
+  const response = await fetch('/api/vapidPublicKey');
   const vapidPublicKey = await response.text();
 
   // Convert VAPID key

@@ -25,18 +25,21 @@ if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
 
 
 export function EnablePush(app: App<State>) {
-    app.get("/vapidPublicKey", () => new Response(VAPID_PUBLIC_KEY));
-    app.post("/register", () => new Response(null, { status: 201 })); // Should store the subscription info
-    app.post("/sendNotification", async (ctx) => {
+    app.get("/api/vapidPublicKey", () => new Response(VAPID_PUBLIC_KEY));
+    app.post("/api/register", () => new Response(null, { status: 201 })); // Should store the subscription info
+    app.post("/api/sendNotification", async (ctx) => {
         const { subscription, TTL, delay } = await ctx.req.json();
         const payload = null;
         const options = { TTL };
 
-        console.log("sending Notification...");
+        console.log("Sending Notification...");
 
         await new Promise(resolve => setTimeout(resolve, delay * 1000));
 
         await webPush.sendNotification(subscription, payload, options);
+
+        console.log("Notification sent.");
+
         return new Response(null, { status: 201 });
     })
 }
