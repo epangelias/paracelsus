@@ -8,37 +8,39 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/worker.js').then(async (registration) => {
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
 
-      // Subscription for Push Notifications
-      try {
-        const subscription = await registration.pushManager.getSubscription() ||
-          await registerForPushNotifications(registration);
-        console.log('Push subscription obtained: ', subscription);
+      globalThis.testPush = async () => {
+        // Subscription for Push Notifications
+        try {
+          const subscription = await registration.pushManager.getSubscription() ||
+            await registerForPushNotifications(registration);
+          console.log('Push subscription obtained: ', subscription);
 
-        // Send the subscription to the server
-        await fetch('/api/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ subscription }),
-        });
+          // Send the subscription to the server
+          await fetch('/api/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ subscription }),
+          });
 
-        // Simulate sending a notification (replace hardcoded delay/ttl as needed)
-        const delay = 5; // Delay in seconds
-        const ttl = 60; // Time-to-live in seconds
+          // Simulate sending a notification (replace hardcoded delay/ttl as needed)
+          const delay = 5; // Delay in seconds
+          const ttl = 60; // Time-to-live in seconds
 
-        console.log('Sending test notification...');
-        await fetch('/api/sendNotification', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ subscription, delay, ttl }),
-        });
-        console.log('Notification sent!');
-      } catch (error) {
-        console.error('Error during Push Subscription process:', error);
-      }
+          console.log('Sending test notification...');
+          await fetch('/api/sendNotification', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ subscription, delay, ttl }),
+          });
+          console.log('Notification sent!');
+        } catch (error) {
+          console.error('Error during Push Subscription process:', error);
+        }
+      };
     }).catch((error) => {
       console.error('ServiceWorker registration failed: ', error);
     });
