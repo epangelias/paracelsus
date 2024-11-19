@@ -3,6 +3,7 @@
 import { App, fsRoutes, staticFiles } from 'fresh';
 import middlewareHandler from '@/lib/middleware.ts';
 import { State } from '@/lib/types.ts';
+import { asset } from 'fresh/runtime';
 
 export const app = new App<State>();
 

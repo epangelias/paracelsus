@@ -1,5 +1,3 @@
-@import 'theme.css';
-
 .container {
   border: 10px solid var(--primary);
   border-radius: calc(var(--radius) * 8);

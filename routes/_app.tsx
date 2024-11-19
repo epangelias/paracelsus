@@ -2,6 +2,7 @@ import { site } from '@/lib/site.ts';
 import { createGlobalData, Global } from '@/islands/Global.tsx';
 import { define } from '@/lib/utils.ts';
 import { InitJS } from '../components/InitJS.tsx';
+import { asset } from 'fresh/runtime';
 
 export default define.page(({ Component, state }) => {
   return (
@@ -27,8 +28,9 @@ export default define.page(({ Component, state }) => {
         <meta name='msapplication-tap-highlight' content='no' />
         <meta name='theme-color' content={site.themeColor} />
         <meta name='format-detection' content='telephone=no' />
-        <link rel='manifest' href='/manifest.json' />
-        <link rel='stylesheet' href='/css/main.css' />
+        <link rel='manifest' href={asset('/manifest.json')} />
+        <link rel='stylesheet' href={asset('/css/main.css')} />
+        <link rel='stylesheet' href={asset('/css/theme.css')} />
         <link rel='icon' href={site.favicon} />
       </head>
       <body>
