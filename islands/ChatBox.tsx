@@ -54,7 +54,8 @@ export default function ChatBox({ data }: { data: ChatData }) {
       chatData.value = { ...chatData.value };
       scrollToBottom();
     }, () => {
-      message.html = '<p class="error-message">Error generating response</p>';
+      message.html =
+        '<p class="error-message" role="alert" aria-live="assertive">Error generating response</p>';
       generating.value = false;
     });
   }

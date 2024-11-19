@@ -6,5 +6,5 @@ export const site = {
   themeColor: '#eb9a52',
   description: 'Talk to Paracelsus',
   email: 'vaza@vaza.app',
-  lang: 'en-US',
+  lang: 'en',
 };

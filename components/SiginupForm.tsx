@@ -9,7 +9,7 @@ export function SignupForm(
       <Field name='email' label='Email' type='email' required value={email} />
       <Field name='password' label='Password' type='password' required />
 
-      {error && <p class='error-message'>{error}</p>}
+      {error && <p class='error-message' role='alert' aria-live='assertive'>{error}</p>}
 
       <div>
         <button>Sign Up</button>

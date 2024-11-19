@@ -40,8 +40,8 @@ export function UserUI({ error, message }: { error?: string; message?: string })
 
         <div>
           <button>Save</button>
-          {message && <span class='message'>{message}</span>}
-          {error && <span class='error-message'>{error}</span>}
+          {message && <span class='message' role='status' aria-live='polite'>{message}</span>}
+          {error && <span class='error-message' role='alert' aria-live='assertive'>{error}</span>}
         </div>
       </form>
     </>

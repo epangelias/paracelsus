@@ -6,7 +6,7 @@ export function SigninForm({ error, email }: { error: string; email: string }) {
       <Field name='email' type='email' label='Email' value={email} required autofocus />
       <Field name='password' type='password' label='Password' required />
 
-      {error && <p class='error-message'>{error}</p>}
+      {error && <p class='error-message' role='alert' aria-live='assertive'>{error}</p>}
 
       <div>
         <button>Sign In</button>

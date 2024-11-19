@@ -50,9 +50,9 @@ export function Banner(
     }
 
     return (
-        <div class='banner'>
+        <div class='banner' role='status' aria-live='polite'>
             {children}
-            {canClose && <button onClick={onClose}>×</button>}
+            {canClose && <button onClick={onClose} aria-label='Close'>×</button>}
         </div>
     );
 }
