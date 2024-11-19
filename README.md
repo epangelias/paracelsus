@@ -17,7 +17,6 @@ paracelsus my-project
 - CSS Theme
 - Refactor and simplify, make bloated features more componential, easy to add/remove, plugins
 - Allow data and other events to be sent through sse
-- Add to homescreen guide
 - Notifications
 - SEO
 - Login delay, security

@@ -13,3 +13,22 @@ self.addEventListener('fetch', (event) => {
         }),
     );
 });
+
+// self.addEventListener('push', function (event) {
+//     const data = event.data.json(); // Parse the incoming push message
+//     const options = {
+//         body: data.body,
+//         icon: data.icon,
+//     };
+
+//     event.waitUntil(
+//         self.registration.showNotification(data.title, options),
+//     );
+// });
+
+// self.addEventListener('notificationclick', function (event) {
+//     event.notification.close();
+//     event.waitUntil(
+//         clients.openWindow('https://your-web-app-url.com'),
+//     );
+// });
