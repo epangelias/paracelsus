@@ -2,11 +2,31 @@ import { IS_BROWSER } from 'fresh/runtime';
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal } from '@preact/signals';
 import { ComponentChildren } from 'preact';
+import { useEffect } from 'preact/hooks';
 
 export function Banners() {
     const global = useGlobal();
 
     const outOfTokens = global.value.user?.tokens! <= 0 && !global.value.user?.isSubscribed;
+
+    const installPWA = useSignal<() => {}>();
+
+    useEffect(() => {
+        globalThis.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+
+            const deferredPrompt = e as Event & {
+                prompt: () => {};
+                userChoice: Promise<{ outcome: string }>;
+            };
+
+            installPWA.value = async () => {
+                deferredPrompt.prompt();
+                const choice = await deferredPrompt.userChoice;
+                console.log('User choice: ', choice);
+            };
+        });
+    }, []);
 
     if (!IS_BROWSER) return <></>;
     if (!global.value.user?.hasVerifiedEmail && outOfTokens) {
@@ -26,6 +46,12 @@ export function Banners() {
             return (
                 <Banner name='ios-install'>
                     <a href='/install-guide-ios'>Install this app to your device</a>
+                </Banner>
+            );
+        } else if (installPWA.value) {
+            return (
+                <Banner name='ios-install'>
+                    <a href='#' onClick={installPWA.value}>Install this app to your device</a>
                 </Banner>
             );
         }
