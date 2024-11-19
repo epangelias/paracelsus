@@ -43,11 +43,11 @@ export function UserUI({ error, message }: { error?: string; message?: string })
           {message && <span class='message' role='status' aria-live='polite'>{message}</span>}
           {error && <span class='error-message' role='alert' aria-live='assertive'>{error}</span>}
         </div>
-
-        <div>
-          <button onClick={() => globalThis?.testPush()}>Test Push</button>
-        </div>
       </form>
+      <div>
+        <br />
+        <button onClick={() => globalThis?.testPush()}>Test Push</button>
+      </div>
     </>
   );
 }
