@@ -13,11 +13,8 @@ export const handler = define.handlers(async (ctx) => {
   if (ctx.req.method == 'GET') return page();
   try {
     const { email, name } = Meth.formDataToObject(await ctx.req.formData());
-    const emailChanged = email != user.email;
-    user.name = name as string;
-    user.email = email as string;
-    await updateUser(user);
-    if (emailChanged) sendEmailVerification(ctx.url.origin, user);
+    const newUser = await updateUser({ ...user, name, email });
+    if (newUser.email != user.email) await sendEmailVerification(ctx.url.origin, user);
     return page({ message: 'Saved!', error: undefined });
   } catch (e) {
     return page({ error: e.message, message: undefined });

@@ -156,6 +156,8 @@ export async function deleteUser(id: string | null) {
 }
 
 export async function updateUser(changes: UserData) {
+  changes = { ...changes };
+
   const user = await getUserById(changes.id);
   if (!user) throw new Error('User not found');
 
@@ -179,6 +181,8 @@ export async function updateUser(changes: UserData) {
   }
 
   await db.set(['users', changes.id], changes);
+
+  return changes;
 }
 
 export async function getUserByVerificationCode(code: string) {
