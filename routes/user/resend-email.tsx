@@ -6,11 +6,11 @@ import { STATUS_CODE } from '@std/http/status';
 import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers({
-  GET: (ctx) => {
+  GET: async (ctx) => {
     if (!ctx.state.user || ctx.state.user.isEmailVerified) {
       throw new HttpError(STATUS_CODE.Unauthorized);
     }
-    sendEmailVerification(ctx.url.origin, ctx.state.user);
+    await sendEmailVerification(ctx.url.origin, ctx.state.user);
     return page();
   },
 });

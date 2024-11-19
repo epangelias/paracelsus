@@ -26,7 +26,7 @@
     opacity: 1;
   }
 
-  10% {
+  100% {
     scale: 0.95;
     opacity: 0;
   }
@@ -34,9 +34,11 @@
 
 body.fade-out {
   main {
-    animation: fadeOut 5s ease-in-out;
+    animation: fadeOut .3s ease-in-out;
+    opacity: 0;
   }
 }
+
 
 main {
   display: flex;

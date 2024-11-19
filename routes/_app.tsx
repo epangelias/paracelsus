@@ -12,7 +12,7 @@ export default define.page(({ Component, state }) => {
         <meta content={site.name} property='og:title'></meta>
         <meta content={site.description} name='description' />
         <meta content={site.description} property='og:description' />
-        <meta content={site.previewImage} property='og:image' />
+        <meta content={asset(site.previewImage)} property='og:image' />
         <meta property='og:type' content='website' />
 
         <meta charset='utf-8' />
@@ -21,7 +21,7 @@ export default define.page(({ Component, state }) => {
           content='width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover'
         />
         <meta name='color-scheme' content='light dark' />
-        <link rel='apple-touch-icon' href={site.appIcon} />
+        <link rel='apple-touch-icon' href={asset(site.appIcon)} />
         {/* <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /> */}
         <meta name='mobile-web-app-capable' content='yes' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
@@ -29,6 +29,7 @@ export default define.page(({ Component, state }) => {
         <meta name='theme-color' content={site.themeColor} />
         <meta name='format-detection' content='telephone=no' />
         <link rel='manifest' href={asset('/manifest.json')} />
+        <style dangerouslySetInnerHTML={{ __html: `:root{--primary: ${site.themeColor}` }}></style>
         <link rel='stylesheet' href={asset('/css/theme.css')} />
         <link rel='stylesheet' href={asset('/css/main.css')} />
         <link rel='icon' href={asset(site.favicon)} />
@@ -39,8 +40,6 @@ export default define.page(({ Component, state }) => {
         </Global>
 
         <InitJS />
-
-        <style dangerouslySetInnerHTML={{ __html: `:root{--primary: ${site.themeColor}` }}></style>
       </body>
     </html>
   );

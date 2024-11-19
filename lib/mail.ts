@@ -2,6 +2,8 @@ import { UserData } from '@/lib/types.ts';
 import { site } from './site.ts';
 import { generateEmailVerification } from '@/lib/user.ts';
 import Mailjet from 'node-mailjet';
+import { HttpError } from 'fresh';
+import { STATUS_CODE } from '@std/http/status';
 
 interface Options {
   fromName: string;
@@ -42,7 +44,13 @@ export async function sendMail(options: Options) {
   console.log('EMAIL RESPONSE:', req.response.statusText, req.response.status);
 }
 
+let lastRequest = 0;
+
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
+
+  lastRequest = Date.now();
+  if (Date.now() - lastRequest < 30000) throw new HttpError(STATUS_CODE.TooManyRequests, "Too many requests, please try again later");
+
   const code = await generateEmailVerification(user);
 
   const link = `${baseUrl}/user/verify-email?code=${code}`;

@@ -20,9 +20,6 @@ paracelsus my-project
 - Add to homescreen guide
 - Notifications
 - SEO, Analytics
-- Rate limit emails
 - Login delay, security
 - Multilingual, at least for the chats
-- accessability, aria roles
-- error logging
-- Caching for CSS later, utilizing fresh caching, discord?
+- error reporting
