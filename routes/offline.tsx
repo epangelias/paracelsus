@@ -3,7 +3,7 @@ import { Page } from '@/components/Page.tsx';
 import { SITE_CSS } from '@/plugins/css/mod.ts';
 
 export default define.page(() => (
-    <Page hideHeader={true}>
+    <Page hideHeader={true} hideBanner={true}>
         <h1>Your Offline!</h1>
         <p>
             <a href='/'>Reload</a>

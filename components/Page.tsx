@@ -1,15 +1,18 @@
 import { Header } from '@/islands/Header.tsx';
-import { JSX } from 'preact';
+import { ComponentChildren, JSX } from 'preact';
+import { Banners } from '@/islands/Banner.tsx';
 
 interface PageProps {
-    children: JSX.Element | JSX.Element[];
+    children: ComponentChildren;
     hideHeader?: boolean;
+    hideBanner?: boolean;
 }
 
 export function Page(props: PageProps) {
     return (
         <div class='container'>
             {!props.hideHeader && <Header />}
+            {!props.hideBanner && <Banners />}
             <main>{props.children}</main>
         </div>
     );

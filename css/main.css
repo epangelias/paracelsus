@@ -12,7 +12,7 @@
 
 @keyframes pageTransition {
   from {
-    scale: 0.9;
+    scale: 0.95;
     opacity: 0;
   }
 
@@ -29,14 +29,14 @@
   }
 
   10% {
-    scale: 0.9;
+    scale: 0.95;
     opacity: 0;
   }
 }
 
 body.fade-out {
   main {
-    animation: fadeOut 3s ease-in-out;
+    animation: fadeOut 5s ease-in-out;
   }
 }
 
@@ -50,7 +50,7 @@ main {
   margin: auto 0;
   /* height: 100%; */
   padding: 0 var(--spacing);
-  animation: pageTransition .3s ease-in-out;
+  animation: pageTransition .5s ease-in-out;
 
 
   &:has(.chat-box) {
@@ -94,10 +94,19 @@ header {
   margin: 2px 8px;
   border-radius: var(--radius);
   margin-right: var(--spacing);
+  position: relative;
 
   a {
     color: var(--on-accent);
     text-decoration: underline;
+  }
+
+  button {
+    padding: 0;
+    background: none;
+    position: absolute;
+    right: 1rem;
+    scale: 1.5;
   }
 }
 
