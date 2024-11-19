@@ -19,7 +19,7 @@ paracelsus my-project
 - Allow data and other events to be sent through sse
 - Add to homescreen guide
 - Notifications
-- SEO, Analytics
+- SEO
 - Login delay, security
 - Multilingual, at least for the chats
 - error reporting

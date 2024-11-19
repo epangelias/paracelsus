@@ -1,6 +1,5 @@
 import { define } from '@/lib/utils.ts';
 import { site } from "@/lib/site.ts";
-import icons from "@/static/AppImages/icons.json"  with { type: "json" };
 
 export const handler = define.handlers(() => {
   return Response.json({
@@ -17,7 +16,6 @@ export const handler = define.handlers(() => {
         src: site.favicon,
         sizes: 'any',
       },
-      ...icons.icons.map(icon => ({ ...icon, src: "/AppImages/" + icon.src }))
     ],
   });
 });
