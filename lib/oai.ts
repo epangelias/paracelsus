@@ -1,6 +1,7 @@
 import OpenAI from 'https://deno.land/x/openai@v4.28.0/mod.ts';
 import { ChatCompletionMessageParam } from 'https://deno.land/x/openai@v4.28.0/resources/mod.ts';
 import { AIMessage, OAIOptions } from '@/lib/types.ts';
+import { Stream } from 'https://deno.land/x/openai@v4.28.0/streaming.ts';
 
 const backends: Record<string, OpenAI> = {};
 
@@ -10,9 +11,17 @@ const defaultTestOptions = {
   model: Deno.env.get('AI_MODEL') || 'llama3.2:1b-instruct-q4_K_M',
 };
 
-export async function generateChatCompletions(
+export function generateChatCompletionStream(
   options: OAIOptions = defaultTestOptions,
   messages: AIMessage[],
+) {
+  return generateChatCompletion(options, messages, true) as unknown as Stream<OpenAI.ChatCompletionChunk>;
+}
+
+export async function generateChatCompletion(
+  options: OAIOptions = defaultTestOptions,
+  messages: AIMessage[],
+  stream = false,
 ) {
   const backendId = `${options.baseURL}:${options.apiKey}`;
 
@@ -24,6 +33,6 @@ export async function generateChatCompletions(
   return await backends[backendId].chat.completions.create({
     model: options.model,
     messages: messages as ChatCompletionMessageParam[],
-    stream: true,
-  });
+    stream
+  }) as unknown as OpenAI.ChatCompletion;
 }

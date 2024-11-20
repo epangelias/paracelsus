@@ -29,3 +29,4 @@ paracelsus my-project
 - Add date to users for user in spam down the road
 - Ensure that any functions called in route that are are async but not with await dont throw errors, otherwise it will crash the server
 - Disable page transitions when on the same page, disable fade in and out
+- Email template

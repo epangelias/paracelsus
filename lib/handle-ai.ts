@@ -2,7 +2,7 @@ import { handleSSE } from './handle-sse.ts';
 import { ChatCompletionChunk } from 'https://deno.land/x/openai@v4.28.0/resources/mod.ts';
 import { Stream } from 'https://deno.land/x/openai@v4.28.0/streaming.ts';
 import { AIMessage, OAIOptions } from '@/lib/types.ts';
-import { generateChatCompletions } from '@/lib/oai.ts';
+import { generateChatCompletionStream } from '@/lib/oai.ts';
 import { safelyRenderMarkdown } from '@/lib/md.ts';
 
 export function handleAIResponse(
@@ -17,7 +17,7 @@ export function handleAIResponse(
 
   return handleSSE(async (send) => {
     try {
-      stream = await generateChatCompletions(
+      stream = await generateChatCompletionStream(
         options,
         messages.map(({ role, content }) => ({ role, content })),
       );
