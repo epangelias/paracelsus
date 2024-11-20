@@ -34,11 +34,9 @@ export default define.page(({ Component, state }) => {
         <link rel='icon' href={asset(site.favicon)} />
       </head>
       <body>
-        <Global data={createGlobalData(state.user)}>
+        <Global user={state.user}>
           <Component />
         </Global>
-
-        <script src={asset('/js/init.js')}></script>
       </body>
     </html>
   );

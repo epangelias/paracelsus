@@ -23,3 +23,5 @@ paracelsus my-project
 - Multilingual, at least for the chats
 - error reporting
 - Paracelsus randomly follows up to user and send push notification
+- Make init.js in an island
+- Allow methods on global, make user a separate signal within it

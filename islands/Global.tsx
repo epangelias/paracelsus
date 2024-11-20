@@ -2,20 +2,36 @@ import { useContext, useEffect } from 'preact/hooks';
 import { createContext } from 'preact';
 import { ComponentChildren } from 'preact';
 import { GlobalData, UserData } from '@/lib/types.ts';
-import { Signal, useSignal } from '@preact/signals';
+import { useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/sse.ts';
+import { initJS } from '@/lib/init.ts';
+import { loadServiceWorker, requestRegistration } from '@/lib/worker.ts';
 
-export function Global({ children, data }: { children: ComponentChildren; data: GlobalData }) {
-  const global = useSignal(data);
+export function Global(
+  { children, user }: { children: ComponentChildren; user?: Partial<UserData> },
+) {
+  const global: GlobalData = { user: useSignal(user), requestSubscription: async () => null };
 
-  if (data.user) useEffect(() => syncSSE('/api/global', global), []);
+  if (user) useEffect(() => syncSSE('/api/global', global), []);
+  useEffect(() => {
+    init();
+  }, []);
+
+  async function init() {
+    initJS();
+
+    global.worker = await loadServiceWorker();
+    global.pushSubscription = await global.worker?.pushManager.getSubscription();
+    global.requestSubscription = async () =>
+      global.pushSubscription = await requestRegistration(global.worker);
+  }
 
   return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
 }
 
-const GlobalContext = createContext<Signal<GlobalData> | null>(null);
+const GlobalContext = createContext<GlobalData | null>(null);
 
-export const useGlobal = () => useContext(GlobalContext) as Signal<GlobalData>;
+export const useGlobal = () => useContext(GlobalContext) as GlobalData;
 
 export function createGlobalData(user?: UserData) {
   return {

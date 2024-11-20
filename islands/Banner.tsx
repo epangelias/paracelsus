@@ -7,7 +7,9 @@ import { useEffect } from 'preact/hooks';
 export function Banners() {
   const global = useGlobal();
 
-  const outOfTokens = global.value.user?.tokens! <= 0 && !global.value.user?.isSubscribed;
+  console.log(global);
+
+  const outOfTokens = global.user.value?.tokens! <= 0 && !global.user.value?.isSubscribed;
 
   const installPWA = useSignal<() => {}>();
 
@@ -29,13 +31,13 @@ export function Banners() {
   }, []);
 
   if (!IS_BROWSER) return <></>;
-  if (!global.value.user?.hasVerifiedEmail && outOfTokens) {
+  if (!global.user.value?.hasVerifiedEmail && outOfTokens) {
     return (
       <Banner name='subscribe' canClose={false}>
         <a href='/user/resend-email'>Verify email</a> for more tokens
       </Banner>
     );
-  } else if (global.value.user?.hasVerifiedEmail && outOfTokens) {
+  } else if (global.user.value?.hasVerifiedEmail && outOfTokens) {
     return (
       <Banner name='subscribe' canClose={false}>
         <a href='/user/subscribe' target='_blank'>Subscribe</a> for unlimited tokens
@@ -54,11 +56,11 @@ export function Banners() {
           <a href='#' onClick={installPWA.value}>Install this app to your device</a>
         </Banner>
       );
-    } else if (true) {
+    } else if (global.worker && !global.pushSubscription) {
       return (
         <Banner name='notifications'>
           <a
-            onClick={() => (globalThis as unknown as { testPush: () => {} }).testPush()}
+            onClick={() => global.requestSubscription()}
             href='javascript:void'
           >
             Turn on Notifications

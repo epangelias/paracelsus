@@ -30,16 +30,14 @@ export function EnablePush(app: App<State>) {
   app.get('/api/vapidPublicKey', () => new Response(VAPID_PUBLIC_KEY));
   app.post('/api/register', () => new Response(null, { status: 201 })); // Should store the subscription info
   app.post('/api/sendNotification', async (ctx) => {
-    const { subscription, TTL, delay } = await ctx.req.json();
-
-    console.log({ subscription, TTL, delay });
+    const { subscription } = await ctx.req.json();
 
     const payload = JSON.stringify({ body: 'Hello', icon: appIcon, title: site.name });
-    const options = { TTL };
+    const options = { TTL: 60 };
 
     console.log('Sending Notification...');
 
-    await new Promise((resolve) => setTimeout(resolve, delay * 1000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     await webPush.sendNotification(subscription, payload, options);
 

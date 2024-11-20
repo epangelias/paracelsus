@@ -4,18 +4,18 @@ import { Field } from '@/components/Field.tsx';
 export function UserUI({ error, message }: { error?: string; message?: string }) {
   const global = useGlobal();
 
-  if (!global?.value?.user) return <></>;
+  if (!global.user.value) return <></>;
 
   return (
     <>
       <p>
         <a href='/user/signout'>Sign Out</a>
-        {global.value.user?.isSubscribed
+        {global.user.value?.isSubscribed
           ? <a href='/user/subscription' target='_blank'>Manage Subscription</a>
           : <a href='/user/subscribe' target='_blank'>Subscribe</a>}
       </p>
 
-      {!global.value.user?.isEmailVerified && (
+      {!global.user.value?.isEmailVerified && (
         <p>
           Please verify your email address. <a href='/user/resend-email'>Resend email</a>
         </p>
@@ -27,7 +27,7 @@ export function UserUI({ error, message }: { error?: string; message?: string })
           label='Name'
           required
           autofocus
-          defaultValue={global.value.user?.name}
+          defaultValue={global.user.value?.name}
         />
 
         <Field
@@ -35,7 +35,7 @@ export function UserUI({ error, message }: { error?: string; message?: string })
           label='Email'
           required
           autofocus
-          defaultValue={global.value.user?.email}
+          defaultValue={global.user.value?.email}
         />
 
         <div>

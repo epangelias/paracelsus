@@ -5,7 +5,7 @@ import { Meth } from '@/lib/meth.ts';
 export function Header() {
   const global = useGlobal();
 
-  const name = Meth.limitText(global?.value.user?.name?.split(' ')[0], 15);
+  const name = Meth.limitText(global.user.value?.name?.split(' ')[0], 15);
 
   return (
     <>
@@ -17,13 +17,13 @@ export function Header() {
           </a>
         </div>
         <div className='right'>
-          {global?.value.user && (
+          {global.user.value && (
             <span class='tokens'>
-              ⚡️{global.value.user.isSubscribed ? '∞' : global.value.user.tokens}
+              ⚡️{global.user.value.isSubscribed ? '∞' : global.user.value.tokens}
             </span>
           )}
 
-          {global?.value.user ? <a href='/user'>{name}</a> : <a href='/user/signin'>Sign In</a>}
+          {global.user.value ? <a href='/user'>{name}</a> : <a href='/user/signin'>Sign In</a>}
         </div>
       </header>
     </>

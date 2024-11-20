@@ -1,3 +1,5 @@
+import type { Signal } from '@preact/signals';
+
 export interface CounterData {
   count: number;
 }
@@ -32,7 +34,10 @@ export interface UserData {
 }
 
 export interface GlobalData {
-  user?: Partial<UserData>;
+  user?: Signal<Partial<UserData>>;
+  worker?: ServiceWorkerRegistration | null;
+  pushSubscription?: PushSubscription | null;
+  requestSubscription: () => Promise<PushSubscription | null>;
 }
 
 export interface State {

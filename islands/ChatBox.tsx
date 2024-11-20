@@ -14,9 +14,9 @@ export default function ChatBox({ data }: { data: ChatData }) {
   const messagesRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const checkCanGenerate = () => global.value.user?.tokens! > 0 || global.value.user?.isSubscribed;
+  const checkCanGenerate = () => global.user.value?.tokens! > 0 || global.user.value?.isSubscribed;
 
-  if (!global?.value.user) return <></>;
+  if (!global.user.value) return <></>;
 
   useEffect(() => syncSSE(endpoint, chatData), []);
 
@@ -86,7 +86,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   return (
     <div class='chat-box'>
       <div class='messages' ref={messagesRef}>
-        {chatData.value.messages.filter((m) => m.role !== 'system').map(ChatMessage)}
+        {chatData.value.messages.filter((m: AIMessage) => m.role !== 'system').map(ChatMessage)}
       </div>
 
       <form onSubmit={onSubmit}>
