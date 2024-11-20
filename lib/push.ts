@@ -1,9 +1,11 @@
-import { App } from 'fresh';
+import { App, HttpError } from 'fresh';
 import * as _webPush from 'web-push';
 import * as webPushTypes from '@types/web-push';
 import { State } from '@/lib/types.ts';
 import { site } from '@/lib/site.ts';
 import { asset } from 'fresh/runtime';
+import { STATUS_CODE } from '@std/http/status';
+import { getUserById, updateUser } from '@/lib/user.ts';
 
 const webPush = _webPush as typeof webPushTypes;
 
@@ -24,20 +26,39 @@ if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
   console.log(webPush.generateVAPIDKeys());
 }
 
-async function sendNotification(subscription: webPushTypes.PushSubscription) {
-  const payload = JSON.stringify({ body: 'Hello', icon: asset(site.appIcon), title: site.name });
-  console.log('Sending Notification...');
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-  console.log({ subscription, payload });
-  await webPush.sendNotification(subscription, payload, { TTL: 60 });
-  console.log('Sent Notification.');
+async function sendNotification(userId: string) {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const user = await getUserById(userId);
+
+  if (!user) return;
+
+  const payload = JSON.stringify({ body: 'Hello, this is Paracelsus', icon: asset(site.appIcon), title: site.name });
+
+  console.log('Sending Notifications...');
+  for (const subscription of user.pushSubscriptions) {
+    console.log('Sending to ', subscription.endpoint);
+    await webPush.sendNotification(subscription, payload, { TTL: 60 });
+  }
+
+  console.log('Sent Notifications.');
+
+  return "count:" + user.pushSubscriptions.length;
 }
 
 export function EnablePush(app: App<State>) {
   app.get('/api/vapidPublicKey', () => Response.json(VAPID_PUBLIC_KEY));
   app.post('/api/register', async (ctx) => {
+    if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
     const { subscription } = await ctx.req.json();
-    sendNotification(subscription);
+    ctx.state.user.pushSubscriptions.push(subscription);
+    await updateUser(ctx.state.user);
+    sendNotification(ctx.state.user.id);
     return Response.json({}, { status: 201 })
   });
+  app.get('/123', async (ctx) => {
+    if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
+    const res = await sendNotification(ctx.state.user.id);
+    return new Response("sent:" + res, { status: 201 })
+  })
 }

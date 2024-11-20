@@ -31,6 +31,7 @@ export interface UserData {
   tokens: number;
   isEmailVerified: boolean;
   hasVerifiedEmail: boolean;
+  pushSubscriptions: PushSubscription[];
 }
 
 export interface GlobalData {

@@ -28,7 +28,7 @@ async function getUserIdByAuth(auth?: string) {
   return res.value?.id;
 }
 
-async function getUserById(id: string) {
+export async function getUserById(id: string) {
   const res = await db.get<UserData>(['users', id]);
   if (res.versionstamp == null) return null;
   return res.value;
@@ -112,6 +112,7 @@ export async function createUser(name: string, email: string, password: string) 
     tokens: 5,
     isEmailVerified: false,
     hasVerifiedEmail: false,
+    pushSubscriptions: [],
   };
 
   validateUser(user);

@@ -6,6 +6,8 @@ import { Page } from '@/components/Page.tsx';
 export const handler = define.handlers(async (ctx) => {
   const isAPI = !!ctx.url.pathname.match(/^\/api\//);
 
+  console.log(123);
+
   try {
     if (!ctx.error) return await ctx.next();
     else if (typeof ctx.error === 'string') {

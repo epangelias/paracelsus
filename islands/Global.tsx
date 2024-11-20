@@ -7,10 +7,10 @@ import { syncSSE } from '@/lib/sse.ts';
 import { getSubscription, loadServiceWorker, requestSubscription } from '@/lib/worker.ts';
 
 export function Global(
-  { children, user }: { children: ComponentChildren; user?: UserData },
+  { children, user }: { children: ComponentChildren; user?: Partial<UserData | null> },
 ) {
   const global: GlobalData = {
-    user: useSignal(stripUserData(user)),
+    user: useSignal(user),
     requestSubscription: () => requestSubscription(global.worker),
   };
 
@@ -41,5 +41,5 @@ export function stripUserData(user?: UserData) {
     isEmailVerified: user.isEmailVerified,
     email: user.email,
     hasVerifiedEmail: user.hasVerifiedEmail,
-  };
+  } as Partial<UserData>;
 }

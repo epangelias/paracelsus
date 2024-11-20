@@ -34,7 +34,7 @@ export default define.page(({ Component, state }) => {
         <link rel='icon' href={asset(site.favicon)} />
       </head>
       <body>
-        <Global user={state.user}>
+        <Global user={stripUserData(state.user)}>
           <Component />
         </Global>
 
