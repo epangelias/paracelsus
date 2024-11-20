@@ -51,6 +51,13 @@ if ('serviceWorker' in navigator) {
 
 // Function to handle Push Notification Subscription
 async function registerForPushNotifications(registration) {
+  // Test unsubscribe
+  const existingSubscription = await registration.pushManager.getSubscription();
+  if (existingSubscription) {
+    await existingSubscription.unsubscribe();
+    console.log('Unsubscribed from existing push subscription.');
+  }
+
   console.log('Registering for push notifications...');
   const response = await fetch('/api/vapidPublicKey');
   const vapidPublicKey = await response.text();
