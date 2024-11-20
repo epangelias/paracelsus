@@ -46,8 +46,9 @@ export function UserUI({ error, message }: { error?: string; message?: string })
       </form>
 
       <div>
-        <button onClick={() => console.log(global)}>Log</button>
-        <button onClick={global.requestSubscription}>Subscribe</button>
+        <button disabled={!!global.pushSubscription} onClick={global.requestSubscription}>
+          Subscribe
+        </button>
       </div>
     </>
   );

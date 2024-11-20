@@ -7,11 +7,7 @@ export async function requestSubscription(registration?: ServiceWorkerRegistrati
     if(!registration)return null;
 
     const existingSubscription = await registration.pushManager.getSubscription();
-    if (existingSubscription) {
-        existingSubscription.unsubscribe(); 
-        // console.log("Found existing subscription");
-        // return existingSubscription;
-    }
+    if (existingSubscription) return existingSubscription;
 
     const vapidPublicKey = await fetchOrError('/api/vapidPublicKey') as string;
     console.log("Loaded VAPID key: ", vapidPublicKey);

@@ -26,3 +26,4 @@ paracelsus my-project
 - Make init.js in an island
 - Allow methods on global, make user a separate signal within it
 - Make js back to being run locally
+- Add date to users for user in spam down the road
