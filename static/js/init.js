@@ -26,7 +26,7 @@ if ('serviceWorker' in navigator) {
 
           // Simulate sending a notification (replace hardcoded delay/ttl as needed)
           const delay = 5; // Delay in seconds
-          const ttl = 60; // Time-to-live in seconds
+          const TTL = 60; // Time-to-live in seconds
 
           console.log('Sending test notification...');
           await fetch('/api/sendNotification', {
@@ -34,7 +34,7 @@ if ('serviceWorker' in navigator) {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ subscription, delay, ttl }),
+            body: JSON.stringify({ subscription, delay, TTL }),
           });
           console.log('Notification sent!');
         } catch (error) {
