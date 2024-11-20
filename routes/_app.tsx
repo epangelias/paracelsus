@@ -1,5 +1,5 @@
 import { site } from '@/lib/site.ts';
-import { createGlobalData, Global } from '@/islands/Global.tsx';
+import { Global, stripUserData } from '@/islands/Global.tsx';
 import { define } from '@/lib/utils.ts';
 import { asset } from 'fresh/runtime';
 

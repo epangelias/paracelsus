@@ -7,8 +7,6 @@ import { useEffect } from 'preact/hooks';
 export function Banners() {
   const global = useGlobal();
 
-  console.log(global);
-
   const outOfTokens = global.user.value?.tokens! <= 0 && !global.user.value?.isSubscribed;
 
   const installPWA = useSignal<() => {}>();
