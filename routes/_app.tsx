@@ -38,7 +38,7 @@ export default define.page(({ Component, state }) => {
           <Component />
         </Global>
 
-        <script src='/js/init.js'></script>
+        <script src={asset('/js/init.js')}></script>
       </body>
     </html>
   );
