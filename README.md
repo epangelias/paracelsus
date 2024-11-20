@@ -27,4 +27,4 @@ paracelsus my-project
 - Allow methods on global, make user a separate signal within it
 - Make js back to being run locally
 - Add date to users for user in spam down the road
-- Fix error handling, create new user, too many requests
+- Ensure that any functions called in route that are are async but not with await dont throw errors, otherwise it will crash the server

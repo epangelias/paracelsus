@@ -13,7 +13,7 @@ export const handler = define.handlers({
 
     try {
       const user = await createUser(name, email, password);
-      sendEmailVerification(ctx.url.origin, user);
+      await sendEmailVerification(ctx.url.origin, user);
 
       const authCode = await authorizeUser(email, password);
       if (authCode) return SetAuthCookie(ctx, authCode);

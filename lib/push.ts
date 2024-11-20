@@ -35,11 +35,21 @@ async function sendNotification(userId: string) {
 
   const payload = JSON.stringify({ body: 'Hello, this is Paracelsus', icon: asset(site.appIcon), title: site.name });
 
+  let removedSubscriptions = false;
+
   console.log('Sending Notifications...');
   for (const subscription of user.pushSubscriptions) {
     console.log('Sending to ', subscription.endpoint);
-    await webPush.sendNotification(subscription, payload, { TTL: 60 });
+    try {
+      await webPush.sendNotification(subscription, payload, { TTL: 60 });
+    } catch (e) {
+      removedSubscriptions = true;
+      const index = user.pushSubscriptions.indexOf(subscription);
+      if (index > -1) user.pushSubscriptions.splice(index, 1);
+    }
   }
+
+  if (removedSubscriptions) await updateUser(user);
 
   console.log('Sent Notifications.');
 
