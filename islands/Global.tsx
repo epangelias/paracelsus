@@ -4,7 +4,7 @@ import { ComponentChildren } from 'preact';
 import { GlobalData, UserData } from '@/lib/types.ts';
 import { useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/sse.ts';
-import { loadServiceWorker, requestSubscription } from '@/lib/worker.ts';
+import { getSubscription, loadServiceWorker, requestSubscription } from '@/lib/worker.ts';
 
 export function Global(
   { children, user }: { children: ComponentChildren; user?: UserData },
@@ -22,7 +22,7 @@ export function Global(
 
   async function init() {
     global.worker = await loadServiceWorker();
-    global.pushSubscription = await global.worker?.pushManager.getSubscription();
+    global.pushSubscription = await getSubscription(global.worker);
   }
 
   return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;

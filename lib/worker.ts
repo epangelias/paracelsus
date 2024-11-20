@@ -4,11 +4,14 @@ import { asset } from 'fresh/runtime';
 
 
 export async function requestSubscription(registration?: ServiceWorkerRegistration | null) {
-    if(!registration || Notification.permission !== 'granted')return null;
+    if(!registration)return null;
 
     const existingSubscription = await registration.pushManager.getSubscription();
-    console.log("Found existing subscription");
-    if (existingSubscription) return existingSubscription;
+    if (existingSubscription) {
+        existingSubscription.unsubscribe(); 
+        // console.log("Found existing subscription");
+        // return existingSubscription;
+    }
 
     const vapidPublicKey = await fetchOrError('/api/vapidPublicKey') as string;
     console.log("Loaded VAPID key: ", vapidPublicKey);
@@ -24,6 +27,12 @@ export async function requestSubscription(registration?: ServiceWorkerRegistrati
     // await fetchOrError('/api/register', { method: 'POST', body: { subscription } });
 
     return subscription;
+}
+
+export async function getSubscription(worker?: ServiceWorkerRegistration){
+    if(!worker)return null;
+    if(Notification.permission !== "granted")return null;
+    return await worker.pushManager.getSubscription();
 }
 
 export async function loadServiceWorker(): Promise<ServiceWorkerRegistration | undefined> {
