@@ -46,10 +46,8 @@ export function UserUI({ error, message }: { error?: string; message?: string })
       </form>
 
       <div>
-        <p>Worker: {!!global.worker ? 'ON' : 'OFF'}</p>
-        <button onClick={global.requestSubscription} disabled={!global.pushSubscription}>
-          Subscribe
-        </button>
+        <button onClick={() => console.log(global)}>Log</button>
+        <button onClick={global.requestSubscription}>Subscribe</button>
       </div>
     </>
   );
