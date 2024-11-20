@@ -20,12 +20,10 @@ function initTheme() {
     );
 }
 
-export function initJS() {
-    initTheme();
+initTheme();
 
-    // iOS active state
-    document.addEventListener('touchstart', () => {}, { passive: true });
+// iOS active state
+document.addEventListener('touchstart', () => {}, { passive: true });
 
-    // Page transition out
-    globalThis.addEventListener('beforeunload', () => document.body.classList.add('fade-out'));
-}
+// Page transition out
+globalThis.addEventListener('beforeunload', () => document.body.classList.add('fade-out'));
