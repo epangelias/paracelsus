@@ -24,7 +24,7 @@ export async function requestSubscription(registration?: ServiceWorkerRegistrati
     
     console.log("Subscribed.");
 
-    // await fetchOrError('/api/register', { method: 'POST', body: { subscription } });
+    await fetchOrError('/api/register', { method: 'POST', body: { subscription } });
 
     return subscription;
 }
