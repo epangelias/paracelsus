@@ -92,8 +92,5 @@ function isIOSSafari(): boolean {
 
 function isPWA(): boolean {
   if (IS_BROWSER) return false;
-  const isStandalone = globalThis?.matchMedia('(display-mode: standalone)').matches;
-  const isPWAFromManifest = 'serviceWorker' in navigator && 'PushManager' in window;
-
-  return isStandalone || isPWAFromManifest;
+  return globalThis?.matchMedia('(display-mode: standalone)').matches;
 }
