@@ -83,7 +83,6 @@ export function EnablePush(app: App<State>) {
     const { subscription } = await ctx.req.json();
     ctx.state.user.pushSubscriptions.push(subscription);
     await updateUser(ctx.state.user);
-    sendNotification(ctx.state.user.id);
     return Response.json({}, { status: 201 })
   });
   app.get('/123', async (ctx) => {
