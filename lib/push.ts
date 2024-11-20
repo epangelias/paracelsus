@@ -29,7 +29,7 @@ export function EnablePush(app: App<State>) {
     app.post("/api/register", () => new Response(null, { status: 201 })); // Should store the subscription info
     app.post("/api/sendNotification", async (ctx) => {
         const { subscription, TTL, delay } = await ctx.req.json();
-        const payload = { body: "Hello", icon: "https://paracelsus.vaza.app/img/favicon.png" };
+        const payload = JSON.stringify({ body: "Hello", icon: "https://paracelsus.vaza.app/img/favicon.png" });
         const options = { TTL };
 
         console.log("Sending Notification...");

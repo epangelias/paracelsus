@@ -79,7 +79,6 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 // Color Scheme Management
-
 let colorSchemeMeta = document.querySelector('meta[name="color-scheme"]');
 
 if (!colorSchemeMeta) {
@@ -88,19 +87,11 @@ if (!colorSchemeMeta) {
   document.head.appendChild(colorSchemeMeta);
 }
 
-if (localStorage.getItem('color-scheme')) {
-  colorSchemeMeta.setAttribute('content', localStorage.getItem('color-scheme'));
-}
-
 const updateTheme = () => {
-  const colorScheme = localStorage.getItem('color-scheme') ||
-    colorSchemeMeta.getAttribute('content');
-
+  const colorScheme = colorSchemeMeta.getAttribute('content');
   const prefersDark = globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
-
   const canDark = colorScheme.includes('dark');
   const canLight = colorScheme.includes('light') || !canDark;
-
   const theme = canDark && (prefersDark || !canLight) ? 'dark' : 'light';
 
   document.body.classList.remove('theme-light', 'theme-dark');
@@ -109,8 +100,7 @@ const updateTheme = () => {
 
 updateTheme();
 
-globalThis.matchMedia('(prefers-color-scheme: dark)')
-  .addEventListener('change', updateTheme);
+globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
 
 new MutationObserver(() => updateTheme())
   .observe(colorSchemeMeta, { attributes: true, attributeFilter: ['content'] });
