@@ -5,7 +5,7 @@ if ('serviceWorker' in navigator) {
 
   globalThis.addEventListener('load', () => {
     console.log('Loading Service Worker...');
-    navigator.serviceWorker.register('/js/worker.js').then(async (registration) => {
+    navigator.serviceWorker.register('/js/worker.js', { scope: '/' }).then(async (registration) => {
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
 
       globalThis.testPush = async () => {
@@ -66,6 +66,8 @@ async function registerForPushNotifications(registration) {
 
   // Convert VAPID key
   const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+
+  console.assert(convertedVapidKey instanceof Uint8Array, 'VAPID key must be a Uint8Array.');
 
   console.log('Converted VAPID public key: ', convertedVapidKey);
 
