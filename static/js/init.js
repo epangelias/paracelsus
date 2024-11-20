@@ -55,8 +55,12 @@ async function registerForPushNotifications(registration) {
   const response = await fetch('/api/vapidPublicKey');
   const vapidPublicKey = await response.text();
 
+  console.log('Obtained VAPID public key: ', vapidPublicKey);
+
   // Convert VAPID key
   const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+
+  console.log('Converted VAPID public key: ', convertedVapidPublicKey);
 
   // Subscribe the user
   return registration.pushManager.subscribe({
@@ -67,12 +71,15 @@ async function registerForPushNotifications(registration) {
 
 // Utility function to convert Base64 VAPID key to Uint8Array
 function urlBase64ToUint8Array(base64String) {
-  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/');
+
   const rawData = globalThis.atob(base64);
   const outputArray = new Uint8Array(rawData.length);
 
-  for (let i = 0; i < rawData.length; i++) {
+  for (let i = 0; i < rawData.length; ++i) {
     outputArray[i] = rawData.charCodeAt(i);
   }
   return outputArray;
