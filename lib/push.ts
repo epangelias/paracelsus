@@ -27,7 +27,7 @@ if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
 }
 
 async function sendNotification(userId: string) {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 1000 * 0));
 
   const user = await getUserById(userId);
 
