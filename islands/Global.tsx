@@ -10,7 +10,10 @@ import { loadServiceWorker, requestSubscription } from '@/lib/worker.ts';
 export function Global(
   { children, user }: { children: ComponentChildren; user?: Partial<UserData> },
 ) {
-  const global: GlobalData = { user: useSignal(user), requestSubscription: async () => null };
+  const global: GlobalData = {
+    user: useSignal(user),
+    requestSubscription: () => requestSubscription(global.worker),
+  };
 
   if (user) useEffect(() => syncSSE('/api/global', global), []);
 
@@ -23,8 +26,6 @@ export function Global(
 
     global.worker = await loadServiceWorker();
     global.pushSubscription = await global.worker?.pushManager.getSubscription();
-    global.requestSubscription = async () =>
-      global.pushSubscription = await requestSubscription(global.worker);
   }
 
   return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
