@@ -32,7 +32,7 @@ async function makeResponse(user: UserData) {
   const chatData = await db.get<ChatData>(['chat', user.id]);
   if (chatData.versionstamp === null) return null;
   const messages = chatData.value.messages.map(({ role, content }) => ({ role, content }));
-  messages.push({ role: "system", content: `Follow up to ${user.name} with a message.` });
+  messages.push({ role: "system", content: `Follow up to ${user.name} with a short message try to start a conversation with them.` });
   const stream = await generateChatCompletions(undefined, messages);
 
   let content = '';
