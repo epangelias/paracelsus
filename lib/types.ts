@@ -34,7 +34,7 @@ export interface UserData {
 }
 
 export interface GlobalData {
-  user?: Signal<Partial<UserData | null>>;
+  user: Signal<Partial<UserData | null>>;
   worker?: ServiceWorkerRegistration | null;
   pushSubscription?: PushSubscription | null;
   requestSubscription: () => Promise<PushSubscription | null>;
