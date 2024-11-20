@@ -41,6 +41,9 @@ async function makeResponse(user: UserData) {
     content += chunk.choices[0].delta.content;
   }
 
+  chatData.value.messages.push({ role: "assistant", content });
+  await db.set(['chat', user.id], chatData.value);
+
   return content;
 }
 
