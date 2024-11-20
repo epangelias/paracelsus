@@ -17,7 +17,7 @@ export async function requestSubscription(registration?: ServiceWorkerRegistrati
     console.log("Loaded VAPID key: ", vapidPublicKey);
     const convertedVapidKey = Meth.urlBase64ToUint8Array(vapidPublicKey);
 
-    const subscription = registration.pushManager.subscribe({
+    const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: convertedVapidKey,
     });
