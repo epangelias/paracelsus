@@ -36,6 +36,7 @@ export function EnablePush(app: App<State>) {
   app.get('/api/vapidPublicKey', () => Response.json(VAPID_PUBLIC_KEY));
   app.post('/api/register', async (ctx) => {
     const { subscription } = await ctx.req.json();
+    console.log({ subscription });
     sendNotification(subscription);
     return Response.json({}, { status: 201 })
   });
