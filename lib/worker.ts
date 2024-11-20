@@ -27,15 +27,9 @@ export async function loadServiceWorker(): Promise<ServiceWorkerRegistration | u
     if ('serviceWorker' in navigator == false) return console.warn('Service Worker Disabled') as undefined;
     console.log("Loading registration...");
 
-    let registration = await navigator.serviceWorker.ready;
+    let registration = await navigator.serviceWorker.getRegistration();
 
     if (!registration) {
-        
-        const registrations = await navigator.serviceWorker.getRegistrations();
-        
-        console.log("Unregistering registrations...");
-        for (const registration of registrations) await registration.unregister();
-        
         console.log("Creating registration...");
         registration = await navigator.serviceWorker.register(asset('/worker.js'), { scope: '/' });
     }
