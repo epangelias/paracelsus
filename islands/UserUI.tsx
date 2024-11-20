@@ -46,7 +46,7 @@ export function UserUI({ error, message }: { error?: string; message?: string })
       </form>
 
       <div>
-        <p>Worker: {!!global.worker}</p>
+        <p>Worker: {!!global.worker ? 'ON' : 'OFF'}</p>
         <button onClick={global.requestSubscription} disabled={!global.pushSubscription}>
           Subscribe
         </button>

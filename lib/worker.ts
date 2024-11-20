@@ -38,7 +38,6 @@ async function getRegistration() {
 
 export async function loadServiceWorker(): Promise<ServiceWorkerRegistration | undefined> {
     if ('serviceWorker' in navigator == false) return console.warn('Service Worker Disabled') as undefined;
-    await new Promise(resolve => globalThis.addEventListener('load', resolve));
     return await getRegistration();
 }
 
