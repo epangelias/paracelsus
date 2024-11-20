@@ -11,6 +11,8 @@ if ('serviceWorker' in navigator) {
       globalThis.testPush = async () => {
         // Subscription for Push Notifications
         try {
+          await navigator.serviceWorker.ready;
+
           const subscription = await registration.pushManager.getSubscription() ||
             await registerForPushNotifications(registration);
           console.log('Push subscription obtained: ', subscription);
