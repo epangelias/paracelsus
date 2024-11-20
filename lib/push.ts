@@ -37,7 +37,7 @@ async function makeResponse(user: UserData) {
 
   let content = '';
   for await (const chunk of stream) {
-    if (typeof chunk.choices[0].delta == 'undefined') break;
+    if (typeof chunk.choices[0].delta.content == 'undefined') break;
     content += chunk.choices[0].delta.content;
   }
 
