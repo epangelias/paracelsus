@@ -44,6 +44,13 @@ export function UserUI({ error, message }: { error?: string; message?: string })
           {error && <span class='error-message' role='alert' aria-live='assertive'>{error}</span>}
         </div>
       </form>
+
+      <div>
+        <p>Worker: {!!global.worker}</p>
+        <button onClick={global.requestSubscription} disabled={!global.pushSubscription}>
+          Subscribe
+        </button>
+      </div>
     </>
   );
 }

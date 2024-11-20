@@ -13,6 +13,7 @@ export function Global(
   const global: GlobalData = { user: useSignal(user), requestSubscription: async () => null };
 
   if (user) useEffect(() => syncSSE('/api/global', global), []);
+
   useEffect(() => {
     init();
   }, []);
