@@ -1,11 +1,13 @@
 import { App, HttpError } from 'fresh';
 import * as _webPush from 'web-push';
 import * as webPushTypes from '@types/web-push';
-import { State } from '@/lib/types.ts';
+import { ChatData, State, UserData } from '@/lib/types.ts';
 import { site } from '@/lib/site.ts';
 import { asset } from 'fresh/runtime';
 import { STATUS_CODE } from '@std/http/status';
 import { getUserById, updateUser } from '@/lib/user.ts';
+import { db } from '@/lib/utils.ts';
+import { generateChatCompletions } from '@/lib/oai.ts';
 
 const webPush = _webPush as typeof webPushTypes;
 
@@ -26,14 +28,32 @@ if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
   console.log(webPush.generateVAPIDKeys());
 }
 
+async function makeResponse(user: UserData) {
+  const chatData = await db.get<ChatData>(['chat', user.id]);
+  if (chatData.versionstamp === null) return null;
+  const messages = chatData.value.messages.map(({ role, content }) => ({ role, content }));
+  messages.push({ role: "system", content: `Follow up to ${user.name} with a message.` });
+  const stream = await generateChatCompletions(undefined, messages);
+
+  let content = '';
+  for await (const chunk of stream) {
+    if (typeof chunk.choices[0].delta == 'undefined') break;
+    content += chunk.choices[0].delta.content;
+  }
+
+  return content;
+}
+
 async function sendNotification(userId: string) {
-  await new Promise((resolve) => setTimeout(resolve, 1000 * 0));
+  await new Promise((resolve) => setTimeout(resolve, 1000 * 10));
 
   const user = await getUserById(userId);
 
   if (!user) return;
 
-  const payload = JSON.stringify({ body: 'Hello, this is Paracelsus', icon: asset(site.appIcon), title: site.name });
+  const message = await makeResponse(user);
+
+  const payload = JSON.stringify({ body: message, icon: asset(site.appIcon), title: site.name });
 
   let removedSubscriptions = false;
 

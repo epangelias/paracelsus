@@ -8,8 +8,8 @@ import { safelyRenderMarkdown } from '@/lib/md.ts';
 export function handleAIResponse(
   messages: AIMessage[],
   options?: OAIOptions,
-  onEnd = (_messages?: AIMessage[]) => {},
-  onError = (_messages?: AIMessage[]) => {},
+  onEnd = (_messages?: AIMessage[]) => { },
+  onError = (_messages?: AIMessage[]) => { },
 ) {
   let stream: Stream<ChatCompletionChunk>;
 
@@ -37,7 +37,7 @@ export function handleAIResponse(
 
       if (typeof deltaContent == 'undefined') break;
 
-      content += token.choices[0].delta.content;
+      content += deltaContent;
 
       const html = insertLoaderToHTML(await safelyRenderMarkdown(content));
 
