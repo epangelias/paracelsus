@@ -60,7 +60,7 @@ async function registerForPushNotifications(registration) {
   // Convert VAPID key
   const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
 
-  console.log('Converted VAPID public key: ', convertedVapidPublicKey);
+  console.log('Converted VAPID public key: ', convertedVapidKey);
 
   // Subscribe the user
   return registration.pushManager.subscribe({
