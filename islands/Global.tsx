@@ -5,7 +5,7 @@ import { GlobalData, UserData } from '@/lib/types.ts';
 import { useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/sse.ts';
 import { initJS } from '@/lib/init.ts';
-import { loadServiceWorker, requestRegistration } from '@/lib/worker.ts';
+import { loadServiceWorker, requestSubscription } from '@/lib/worker.ts';
 
 export function Global(
   { children, user }: { children: ComponentChildren; user?: Partial<UserData> },
@@ -24,7 +24,7 @@ export function Global(
     global.worker = await loadServiceWorker();
     global.pushSubscription = await global.worker?.pushManager.getSubscription();
     global.requestSubscription = async () =>
-      global.pushSubscription = await requestRegistration(global.worker);
+      global.pushSubscription = await requestSubscription(global.worker);
   }
 
   return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;

@@ -1,8 +1,9 @@
 import { Meth } from '@/lib/meth.ts';
 import { fetchOrError } from '@/lib/fetch.ts';
+import { asset } from 'fresh/runtime';
 
 
-export async function requestRegistration(registration?: ServiceWorkerRegistration | null) {
+export async function requestSubscription(registration?: ServiceWorkerRegistration | null) {
     if(!registration)return null;
 
     const existingSubscription = await registration.pushManager.getSubscription();
@@ -22,23 +23,26 @@ export async function requestRegistration(registration?: ServiceWorkerRegistrati
     return subscription;
 }
 
-async function getRegistration() {
+export async function loadServiceWorker(): Promise<ServiceWorkerRegistration | undefined> {
+    if ('serviceWorker' in navigator == false) return console.warn('Service Worker Disabled') as undefined;
+    console.log("Loading registration...");
+
     let registration = await navigator.serviceWorker.ready;
 
     if (!registration) {
+        
         const registrations = await navigator.serviceWorker.getRegistrations();
-
+        
+        console.log("Unregistering registrations...");
         for (const registration of registrations) await registration.unregister();
-
+        
+        console.log("Creating registration...");
         registration = await navigator.serviceWorker.register(asset('/worker.js'), { scope: '/' });
     }
 
-    return registration;
-}
+    console.log("Loaded registration: ", registration);
 
-export async function loadServiceWorker(): Promise<ServiceWorkerRegistration | undefined> {
-    if ('serviceWorker' in navigator == false) return console.warn('Service Worker Disabled') as undefined;
-    return await getRegistration();
+    return registration;
 }
 
 // const registration = await initServiceWorker();
