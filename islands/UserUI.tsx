@@ -44,10 +44,6 @@ export function UserUI({ error, message }: { error?: string; message?: string })
           {error && <span class='error-message' role='alert' aria-live='assertive'>{error}</span>}
         </div>
       </form>
-      <div>
-        <br />
-        <button onClick={() => globalThis?.testPush()}>Test Push</button>
-      </div>
     </>
   );
 }

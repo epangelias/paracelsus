@@ -54,6 +54,17 @@ export function Banners() {
           <a href='#' onClick={installPWA.value}>Install this app to your device</a>
         </Banner>
       );
+    } else if (true) {
+      return (
+        <Banner name='notifications'>
+          <a
+            onClick={() => (globalThis as unknown as { testPush: () => {} }).testPush()}
+            href='javascript:void'
+          >
+            Turn on Notifications
+          </a>
+        </Banner>
+      );
     }
   }
   return <></>;
