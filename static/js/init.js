@@ -5,7 +5,7 @@ if ('serviceWorker' in navigator) {
 
   globalThis.addEventListener('load', () => {
     console.log('Loading Service Worker...');
-    navigator.serviceWorker.register('/worker.js').then(async (registration) => {
+    navigator.serviceWorker.register('/js/worker.js').then(async (registration) => {
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
 
       globalThis.testPush = async () => {

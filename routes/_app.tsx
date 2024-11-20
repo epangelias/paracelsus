@@ -1,7 +1,6 @@
 import { site } from '@/lib/site.ts';
 import { createGlobalData, Global } from '@/islands/Global.tsx';
 import { define } from '@/lib/utils.ts';
-import { InitJS } from '../components/InitJS.tsx';
 import { asset } from 'fresh/runtime';
 
 export default define.page(({ Component, state }) => {
@@ -39,7 +38,7 @@ export default define.page(({ Component, state }) => {
           <Component />
         </Global>
 
-        <InitJS />
+        <script src={asset('/js/init.js')}></script>
       </body>
     </html>
   );
