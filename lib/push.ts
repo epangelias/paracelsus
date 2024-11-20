@@ -24,6 +24,8 @@ if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
   console.log(webPush.generateVAPIDKeys());
 }
 
+const appIcon = asset(site.appIcon);
+
 export function EnablePush(app: App<State>) {
   app.get('/api/vapidPublicKey', () => new Response(VAPID_PUBLIC_KEY));
   app.post('/api/register', () => new Response(null, { status: 201 })); // Should store the subscription info
@@ -32,7 +34,7 @@ export function EnablePush(app: App<State>) {
 
     console.log({ subscription, TTL, delay });
 
-    const payload = JSON.stringify({ body: 'Hello', icon: asset(site.appIcon), title: site.name });
+    const payload = JSON.stringify({ body: 'Hello', icon: appIcon, title: site.name });
     const options = { TTL };
 
     console.log('Sending Notification...');
