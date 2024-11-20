@@ -7,10 +7,11 @@ export async function requestSubscription(registration?: ServiceWorkerRegistrati
     if(!registration)return null;
 
     const existingSubscription = await registration.pushManager.getSubscription();
+    console.log("Found existing subscription");
     if (existingSubscription) return existingSubscription;
 
-    const response = await fetch('/api/vapidPublicKey');
-    const vapidPublicKey = await response.text();
+    const vapidPublicKey = await fetchOrError('/api/vapidPublicKey') as string;
+    console.log("Loaded VAPID key: ", vapidPublicKey);
     const convertedVapidKey = Meth.urlBase64ToUint8Array(vapidPublicKey);
 
     const subscription = registration.pushManager.subscribe({
