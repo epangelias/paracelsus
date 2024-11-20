@@ -37,6 +37,8 @@ export default define.page(({ Component, state }) => {
         <Global user={state.user}>
           <Component />
         </Global>
+
+        <script src='/js/init.js'></script>
       </body>
     </html>
   );

@@ -4,7 +4,6 @@ import { ComponentChildren } from 'preact';
 import { GlobalData, UserData } from '@/lib/types.ts';
 import { useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/sse.ts';
-import { initJS } from '@/lib/init.ts';
 import { loadServiceWorker, requestSubscription } from '@/lib/worker.ts';
 
 export function Global(
@@ -22,8 +21,6 @@ export function Global(
   }, []);
 
   async function init() {
-    initJS();
-
     global.worker = await loadServiceWorker();
     global.pushSubscription = await global.worker?.pushManager.getSubscription();
   }
