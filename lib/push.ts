@@ -24,21 +24,17 @@ if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
   console.log(webPush.generateVAPIDKeys());
 }
 
-const appIcon = asset(site.appIcon);
-
-async function sendNotification(subscription: PushSubscription) {
-  const payload = JSON.stringify({ body: 'Hello', icon: appIcon, title: site.name });
+async function sendNotification(subscription: webPushTypes.PushSubscription) {
+  const payload = JSON.stringify({ body: 'Hello', icon: asset(site.appIcon), title: site.name });
   const options = { TTL: 60 };
 
   console.log('Sending Notification...');
 
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  await new Promise((resolve) => setTimeout(resolve, 10000));
 
   await webPush.sendNotification(subscription, payload, options);
 
   console.log('Notification sent.');
-
-
 }
 
 export function EnablePush(app: App<State>) {
@@ -48,9 +44,4 @@ export function EnablePush(app: App<State>) {
     sendNotification(subscription);
     return Response.json({}, { status: 201 })
   }); // Should store the subscription info
-  app.post('/api/sendNotification', async (ctx) => {
-    const { subscription } = await ctx.req.json();
-    sendNotification(subscription);
-    return Response.json({}, { status: 201 });
-  });
 }

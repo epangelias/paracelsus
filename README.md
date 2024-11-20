@@ -25,3 +25,4 @@ paracelsus my-project
 - Paracelsus randomly follows up to user and send push notification
 - Make init.js in an island
 - Allow methods on global, make user a separate signal within it
+- Make js back to being run locally

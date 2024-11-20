@@ -4,7 +4,7 @@ import { asset } from 'fresh/runtime';
 
 
 export async function requestSubscription(registration?: ServiceWorkerRegistration | null) {
-    if(!registration)return null;
+    if(!registration || Notification.permission !== 'granted')return null;
 
     const existingSubscription = await registration.pushManager.getSubscription();
     console.log("Found existing subscription");
@@ -18,8 +18,10 @@ export async function requestSubscription(registration?: ServiceWorkerRegistrati
         userVisibleOnly: true,
         applicationServerKey: convertedVapidKey,
     });
+    
+    console.log("Subscribed.");
 
-    await fetchOrError('/api/register', { method: 'POST', body: { subscription } });
+    // await fetchOrError('/api/register', { method: 'POST', body: { subscription } });
 
     return subscription;
 }
