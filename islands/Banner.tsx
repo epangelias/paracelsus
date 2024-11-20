@@ -13,8 +13,8 @@ export function Banners() {
 
   useEffect(() => {
     globalThis.addEventListener('beforeinstallprompt', (e) => {
-      e.prompt();
       e.preventDefault();
+      e.prompt();
 
       const deferredPrompt = e as Event & {
         prompt: () => {};
