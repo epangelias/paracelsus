@@ -1,5 +1,6 @@
 import { define } from '@/lib/utils.ts';
 import { Page } from '@/components/Page.tsx';
+import { Textarea } from '@/islands/Textarea.tsx';
 
 export default define.page(() => (
     <Page>
@@ -58,7 +59,7 @@ function hello() {
                 </select>
 
                 <label htmlFor='textareaInput'>Textarea:</label>
-                <textarea id='textareaInput' placeholder='Enter text'></textarea>
+                <Textarea id='textareaInput' placeholder='Enter text'></Textarea>
 
                 <label>
                     <input type='checkbox' /> Checkbox

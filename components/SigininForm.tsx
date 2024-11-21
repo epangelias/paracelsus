@@ -10,7 +10,7 @@ export function SigninForm({ error, email }: { error: string; email: string }) {
 
       <div>
         <button>Sign In</button>
-        <a href='/user/signup'>Sign up</a>
+        <a href='/user/signup'>Sign Up</a>
       </div>
     </form>
   );

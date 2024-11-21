@@ -3,7 +3,7 @@ import { sendSSE, syncSSE, watchSSE } from '@/lib/sse.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 import { useEffect, useRef } from 'preact/hooks';
 import { useGlobal } from '@/islands/Global.tsx';
-import { TextArea } from './Textarea.tsx';
+import { Textarea } from './Textarea.tsx';
 
 const endpoint = '/api/chat';
 
@@ -90,7 +90,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
       </div>
 
       <form onSubmit={onSubmit}>
-        <TextArea
+        <Textarea
           autofocus
           required
           inputRef={inputRef}

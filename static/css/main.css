@@ -41,12 +41,6 @@ body.fade-out {
   }
 }
 
-body.hide {
-  main {
-    opacity: 0;
-  }
-}
-
 main {
   display: flex;
   /* FIX LATER */
@@ -136,6 +130,10 @@ header {
 
     .textarea-container {
       flex: 1;
+
+      textarea {
+        width: 100%;
+      }
     }
 
     button {

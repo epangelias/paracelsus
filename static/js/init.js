@@ -27,7 +27,3 @@ document.addEventListener('touchstart', () => {}, { passive: true });
 
 // Page transition out
 globalThis.addEventListener('beforeunload', () => document.body.classList.add('fade-out'));
-
-// Hide page before loaded
-document.body.classList.add('hide');
-globalThis.addEventListener('load', () => document.body.classList.remove('hide'));

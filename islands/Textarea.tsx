@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'preact/hooks';
 import { JSX, RefObject } from 'preact';
 
-export function TextArea(
+export function Textarea(
   props: JSX.HTMLAttributes<HTMLTextAreaElement> & {
     label?: string;
     inputRef?: RefObject<HTMLTextAreaElement>;

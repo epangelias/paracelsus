@@ -4,16 +4,15 @@
   --dark1: #000;
   --dark2: #222;
   --dark3: #333;
-  --dark4: #444;
+  --dark4: #555;
   --light1: #fff;
   --light2: #ddd;
-  --light3: #bbb;
-  --light4: #aaa;
+  --light3: #aaa;
+  --light4: #777;
 
   --accent: #7eb1f4;
   --on-accent: var(--dark1);
 
-  /* --primary: ThemeColor; */
   --on-primary: #000;
 
   --radius: 4px;
@@ -21,6 +20,9 @@
   --border-width: 1px;
   --spacing: 10px;
   --transition: 0.2s ease-in-out;
+  --field-shadow: 0 1px 4px #0002;
+
+  --red: color-mix(in srgb, red, var(--fg1) 25%);
 }
 
 .theme-light {
@@ -32,8 +34,6 @@
   --fg2: var(--dark2);
   --fg3: var(--dark3);
   --fg4: var(--dark4);
-
-  --field-shadow: 0 1px 4px #0003;
 
   --accent: #3885ea;
   --on-accent: #fff;
@@ -75,7 +75,7 @@
   box-sizing: border-box;
 }
 
-/* 7. Avoid text overflows */
+/* Avoid text overflows */
 p,
 h1,
 h2,
@@ -86,7 +86,7 @@ h6 {
   overflow-wrap: break-word;
 }
 
-/* 8. Improve line wrapping */
+/* Improve line wrapping */
 p {
   text-wrap: pretty;
 }
@@ -95,27 +95,14 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Open Sans',
-    'Helvetica Neue',
-    sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   height: 100%;
   background: var(--bg1);
   color: var(--fg2);
   overscroll-behavior: none;
-  /* accessible line-height */
   line-height: 1.5;
-  /* Improve text rendering */
+  /* Improve text rendering mac */
   -webkit-font-smoothing: antialiased;
-
   /* IOS Remove gray highlight */
   -webkit-tap-highlight-color: transparent;
   /* IOS Disable touch callout */
@@ -173,8 +160,7 @@ label:has(input[type='radio'], input[type='checkbox']) {
 
 form {
   /* So that content not cut off for field transitions */
-  padding: var(--spacing);
-  margin: calc(-1 * var(--spacing));
+  padding: calc(var(--spacing) / 2);
 }
 
 /* divider */
@@ -190,6 +176,10 @@ hr {
 /* Transitions */
 
 :is(button, input, select, textarea) {
+  transition: background-color var(--transition);
+}
+
+:is(button) {
   transition: background-color var(--transition), box-shadow var(--transition);
 }
 
@@ -199,9 +189,7 @@ a {
 
 /* Buttons */
 
-:is(button,
-  input:is([type='button'], [type='submit'], [type='reset'], [type='file'], [type='color']),
-  select) {
+button {
   background-color: var(--accent);
   border-radius: var(--radius);
   border: none;
@@ -236,16 +224,9 @@ a {
 /* Inputs */
 
 :is(input:not([type]),
-  input:is([type='text'],
-    [type='password'],
-    [type='email'],
-    [type='number'],
-    [type='url'],
-    [type='tel'],
-    [type='search'],
-    [type='date']),
+  input:is([type='text'], [type='password'], [type='email'], [type='number'], [type='url'], [type='tel'], [type='search'], [type='date'], [type='file'], [type='color']), select,
   textarea) {
-  width: 100%;
+  max-width: 100%;
   padding: calc(var(--spacing)) calc(var(--spacing) * 2);
   border: var(--border-width) solid var(--border-color);
   border-radius: var(--radius);
@@ -262,10 +243,25 @@ a {
   &:disabled {
     opacity: 0.6;
   }
+
+  &:is(select) {
+    font-weight: bold;
+    color: var(--fg2);
+  }
 }
 
-:is(input, button, select a, .textarea-container)+:is(input, button, select a, .textarea-container) {
+:is(input, button, select, a, .textarea-container)+:is(input, button, select, a, .textarea-container) {
   margin-left: var(--spacing);
+}
+
+:is(button, select)~a {
+  padding: var(--spacing);
+}
+
+/* Disable text selection of fields */
+:is(button, label, select, a) {
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Links */
@@ -289,7 +285,7 @@ a {
   &:active {
     display: inline-block;
     scale: 1.05;
-    color: color-mix(in srgb, var(--accent), currentColor 20%);
+    color: color-mix(in srgb, var(--color), currentColor 20%);
   }
 }
 
@@ -298,14 +294,15 @@ a {
 .error-message {
   color: var(--red);
   margin: var(--spacing) 0;
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn .5s ease-in-out;
 }
 
 .message {
   margin: var(--spacing) 0;
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn .5s ease-in-out;
 }
 
+/* Spacing when message adjacent */
 :is(button, input, select)+ :is(.message, .error-message) {
   margin-left: var(--spacing);
 }
@@ -346,12 +343,6 @@ th {
 td {
   background-color: var(--bg1);
   color: var(--fg2);
-}
-
-/* Disable text selection of UI Elements */
-:is(button, label, select, a) {
-  user-select: none;
-  -webkit-user-select: none;
 }
 
 /* Images */
