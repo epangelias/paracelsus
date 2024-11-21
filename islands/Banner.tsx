@@ -93,8 +93,5 @@ function isIOSSafari(): boolean {
 function isPWA(): boolean {
   if (IS_BROWSER) return false;
   const standalone = globalThis?.matchMedia('(display-mode: standalone)').matches;
-  if (isIOSSafari()) {
-    return standalone && (navigator as unknown as { standalone: true }).standalone === true;
-  }
-  return standalone;
+  return standalone || globalThis.navigator.standalone;
 }
