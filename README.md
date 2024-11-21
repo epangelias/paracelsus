@@ -25,3 +25,4 @@ paracelsus my-project
 - remove old messages if too long in chat
 - Fix push notifications on chrome
 - Fix sse errors logged to server
+- Make Banners better

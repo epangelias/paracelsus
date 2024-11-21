@@ -99,9 +99,7 @@ const verifyEmailTemplate = ({ user, link, logo }: { user: UserData, link: strin
               </td>
             </tr>
             <tr>
-              <td style="padding: 20px; background-color: #f4f4f4; text-align: center; font-size: 12px; color: #666;">
-                © ${new Date().getFullYear()} ${site.name}. All rights reserved.
-              </td>
+              <td style="padding: 20px; background-color: #f4f4f4; text-align: center; font-size: 12px; color: #666;"> ${site.name} </td>
             </tr>
           </table>
         </div>`

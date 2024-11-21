@@ -15,6 +15,12 @@ export function UserUI({ error, message }: { error?: string; message?: string })
           : <a href='/user/subscribe' target='_blank'>Subscribe</a>}
       </p>
 
+      {global.worker.value && !global.pushSubscription.value && (
+        <div>
+          <a onClick={global.requestSubscription} href='javascript:void'>Enable Notifications</a>
+        </div>
+      )}
+
       {!global.user.value?.isEmailVerified && (
         <p>
           Please verify your email address. <a href='/user/resend-email'>Resend email</a>
@@ -44,12 +50,6 @@ export function UserUI({ error, message }: { error?: string; message?: string })
           {error && <span class='error-message' role='alert' aria-live='assertive'>{error}</span>}
         </div>
       </form>
-
-      <div>
-        <button disabled={!!global.pushSubscription} onClick={global.requestSubscription}>
-          Subscribe
-        </button>
-      </div>
     </>
   );
 }

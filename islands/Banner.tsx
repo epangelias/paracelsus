@@ -54,7 +54,7 @@ export function Banners() {
           <a href='#' onClick={installPWA.value}>Install this app to your device</a>
         </Banner>
       );
-    } else if (global.worker && !global.pushSubscription) {
+    } else if (global.worker.value && !global.pushSubscription.value) {
       return (
         <Banner name='notifications'>
           <a

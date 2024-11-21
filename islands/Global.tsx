@@ -7,11 +7,13 @@ import { syncSSE } from '@/lib/sse.ts';
 import { getSubscription, loadServiceWorker, requestSubscription } from '@/lib/worker.ts';
 
 export function Global(
-  { children, user }: { children: ComponentChildren; user?: Partial<UserData | null> },
+  { children, user }: { children: ComponentChildren; user?: Partial<UserData> | null },
 ) {
   const global: GlobalData = {
     user: useSignal(user),
-    requestSubscription: () => requestSubscription(global.worker),
+    requestSubscription: () => requestSubscription(global.worker.value),
+    pushSubscription: useSignal(null),
+    worker: useSignal(null),
   };
 
   if (user) useEffect(() => syncSSE('/api/userdata', global.user), []);
@@ -21,8 +23,8 @@ export function Global(
   }, []);
 
   async function init() {
-    global.worker = await loadServiceWorker();
-    global.pushSubscription = await getSubscription(global.worker);
+    global.worker.value = await loadServiceWorker();
+    global.pushSubscription.value = await getSubscription(global.worker.value);
   }
 
   return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
