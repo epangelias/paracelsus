@@ -31,7 +31,7 @@ async function sendFollowUp(user: UserData) {
 export function sendFollowUpsContinuously() {
     if (!Deno.env.has("CRON")) return;
     console.log("Setting chron task");
-    Deno.cron(`Follow up users`, { minute: { every: 1 } }, async () => {
+    Deno.cron(`Follow up users`, { minute: { every: 5 } }, async () => {
         console.log("Following up...");
         for await (const res of db.list<UserData>({ prefix: ['users'] })) {
             console.log("Following up " + res.value.name);
