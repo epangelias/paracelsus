@@ -32,11 +32,22 @@
   }
 }
 
+
 body.fade-out {
   main {
     animation: fadeOut 0.3s ease-in-out;
     opacity: 0;
   }
+}
+
+body.hide {
+  main {
+    opacity: 0;
+  }
+}
+
+body:not(.no-fade) main {
+  animation: pageTransition 0.5s ease-in-out;
 }
 
 main {
@@ -49,7 +60,6 @@ main {
   margin: auto 0;
   /* height: 100%; */
   padding: 0 var(--spacing);
-  animation: pageTransition 0.5s ease-in-out;
 
   &:has(.chat-box) {
     height: 100%;

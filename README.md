@@ -17,17 +17,12 @@ paracelsus my-project
 - CSS Theme
 - Refactor and simplify, make bloated features more componential, easy to add/remove, plugins
 - Allow data and other events to be sent through sse
-- Notifications
 - SEO
-- Login delay, security
+- Login delay, rate limit security
 - Multilingual, at least for the chats
-- error reporting
-- Paracelsus randomly follows up to user and send push notification
-- Make init.js in an island
-- Allow methods on global, make user a separate signal within it
-- Make js back to being run locally
-- Add date to users for user in spam down the road
-- Ensure that any functions called in route that are are async but not with await dont throw errors, otherwise it will crash the server
+- Ensure that any functions called in route that are are async but not with await catch errors so no server crash
 - Disable page transitions when on the same page, disable fade in and out
 - Email template
 - remove old messages if too long in chat
+- Fix push notifications on chrome
+- Fix sse errors logged to server
