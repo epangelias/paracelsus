@@ -124,6 +124,10 @@ body {
   text-wrap: balance;
 }
 
+h1:first-of-type {
+  margin-top: 0;
+}
+
 :focus-visible {
   outline: 3px solid var(--accent);
 }
@@ -178,11 +182,13 @@ hr {
 
 /* Transitions */
 
-:is(button, input, select, textarea) {
+input,
+select,
+textarea {
   transition: background-color var(--transition);
 }
 
-:is(button) {
+button {
   transition: background-color var(--transition), box-shadow var(--transition);
 }
 
@@ -311,16 +317,6 @@ a {
   margin-left: var(--spacing);
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
 /* Tables */
 
 table {
@@ -372,11 +368,7 @@ main img {
   animation: spin 1s infinite linear;
 }
 
-@keyframes spin {
-  100% {
-    transform: rotate(1turn);
-  }
-}
+
 
 /* Blockquote */
 
@@ -407,9 +399,29 @@ code {
 pre {
   background-color: var(--bg2);
   padding: var(--spacing);
-  border-radius: calc(var(--radius) * 2);
+  border-radius: var(--radius);
   font-family: var(--monospace);
   overflow-x: auto;
   white-space: pre-wrap;
   font-size: 12px;
+}
+
+
+/* Animations */
+
+@keyframes spin {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
