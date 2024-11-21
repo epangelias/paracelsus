@@ -17,8 +17,7 @@ paracelsus my-project
 - CSS Theme
 - Refactor and simplify, make bloated features more componential, easy to add/remove, plugins
 - Allow data and other events to be sent through sse
-- SEO
-- Login delay, rate limit security
+- Login delay, rate limit security, rate limit lib?
 - Ensure that any functions called in route that are are async but not with await catch errors so no server crash
 - Fix push notifications on chrome
 - Fix sse errors logged to server

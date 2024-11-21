@@ -13,7 +13,10 @@ export const handler = define.handlers({
 
     try {
       const user = await createUser(name, email, password);
-      await sendEmailVerification(ctx.url.origin, user);
+
+      try {
+        await sendEmailVerification(ctx.url.origin, user);
+      } catch (_e) {} // Do nothing if rate limited to send email
 
       const authCode = await authorizeUser(email, password);
       if (authCode) return SetAuthCookie(ctx, authCode);
