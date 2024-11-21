@@ -6,8 +6,14 @@ import { asset } from 'fresh/runtime';
 export async function requestSubscription(registration?: ServiceWorkerRegistration | null) {
     if (!registration) return null;
 
+    if (Notification.permission == "denied") {
+        alert("Notifications are disabled. Please enable them in your browser or device settings.");
+        return null;
+    }
+
     const existingSubscription = await registration.pushManager.getSubscription();
     if (existingSubscription) return existingSubscription;
+
 
     const vapidPublicKey = await fetchOrError('/api/vapid-public-key') as string;
     console.log("Loaded VAPID key: ", vapidPublicKey);
