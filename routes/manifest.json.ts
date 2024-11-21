@@ -9,8 +9,13 @@ export const handler = define.handlers(() => {
     start_url: '/',
     lang: site.lang,
     theme_color: site.themeColor,
+    background_color: "#000000",
     display: 'standalone',
     description: site.description,
+    handle_links: "preferred",
+    launch_handler: { "client_mode": "focus-existing" },
+    display_override: ["window-controls-overlay", "standalone", "browser"],
+    orientation: "any",
     icons: [
       {
         src: site.favicon,

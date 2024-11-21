@@ -19,10 +19,8 @@ paracelsus my-project
 - Allow data and other events to be sent through sse
 - SEO
 - Login delay, rate limit security
-- Multilingual, at least for the chats
 - Ensure that any functions called in route that are are async but not with await catch errors so no server crash
-- Email template
-- remove old messages if too long in chat
 - Fix push notifications on chrome
 - Fix sse errors logged to server
 - Make Banners better
+- Add screenshots, to manifest and to meta tags

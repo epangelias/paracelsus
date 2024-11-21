@@ -37,7 +37,11 @@ export const handler = define.handlers(async (ctx) => {
   if (ctx.req.method == 'GET') {
     return handleSSE(watchKV(path));
   } else if (ctx.req.method == 'POST') {
-    await db.set(path, await ctx.req.json());
+    const chatData = await ctx.req.json() as ChatData;
+
+    // Remove old messages
+    chatData.messages = chatData.messages.slice(-20);
+    await db.set(path, chatData);
     return Response.json({});
   } else {
     throw new HttpError(STATUS_CODE.MethodNotAllowed);
