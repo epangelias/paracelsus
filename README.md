@@ -23,4 +23,5 @@ paracelsus my-project
 - Fix sse errors logged to server
 - Make Banners better
 - DDOS
--
+- PWA msg not shown on ios safari
+- AI make page of all common html elements, let them all be styled by the theme
