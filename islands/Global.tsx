@@ -11,7 +11,8 @@ export function Global(
 ) {
   const global: GlobalData = {
     user: useSignal(user),
-    requestSubscription: () => requestSubscription(global.worker.value),
+    requestSubscription: () =>
+      global.pushSubscription.value = requestSubscription(global.worker.value),
     pushSubscription: useSignal(null),
     worker: useSignal(null),
   };
