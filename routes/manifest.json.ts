@@ -22,5 +22,8 @@ export const handler = define.handlers(() => {
         sizes: 'any',
       },
     ],
+    screenshots: [
+      { src: "/img/screenshot-og.jpg", form_factor: "wide" },
+    ],
   });
 });
