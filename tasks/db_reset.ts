@@ -13,6 +13,7 @@ async function clearDb() {
     promises.push(db.delete(res.key));
   }
 
+  console.log(itemsReset);
   await Promise.all(promises);
 }
 
@@ -20,5 +21,4 @@ await clearDb();
 
 db.close();
 
-console.log(itemsReset);
 console.log('RESET DATABASE');
