@@ -20,6 +20,7 @@
   --border-color: var(--bg3);
   --border-width: 1px;
   --spacing: 10px;
+  --transition: 0.2s ease-in-out;
 }
 
 .theme-light {
@@ -32,7 +33,7 @@
   --fg3: var(--dark3);
   --fg4: var(--dark4);
 
-  --field-shadow: 0 1px 3px #0003;
+  --field-shadow: 0 1px 4px #0003;
 
   --accent: #3885ea;
   --on-accent: #fff;
@@ -65,6 +66,7 @@
   text-size-adjust: 100%;
   scrollbar-color: var(--accent) transparent;
   margin: 0;
+  accent-color: var(--accent);
 }
 
 *,
@@ -133,8 +135,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline: 3px solid var(--accent);
 }
 
 p {
@@ -142,9 +143,58 @@ p {
   font: inherit;
 }
 
-:is(button, input, select, textarea, .textarea-container)+label {
-  display: block;
+/* Fields */
+
+label:has(+ :is(button, input, select, textarea, .textarea-container)) {
   margin-bottom: calc(var(--spacing) / 3);
+  display: block;
+  margin-top: var(--spacing);
+  margin-bottom: calc(var(--spacing) / 2);
+  color: var(--fg3);
+
+  &+* {
+    margin-bottom: var(--spacing);
+    display: block;
+  }
+}
+
+/* Checkbox and radio */
+label:has(input[type='radio'], input[type='checkbox']) {
+  display: block;
+  margin: var(--spacing) 0;
+
+  input {
+    margin: .1em;
+    margin-right: calc(var(--spacing)/2);
+    font-size: 2em;
+    scale: 1.4;
+  }
+}
+
+form {
+  /* So that content not cut off for field transitions */
+  padding: var(--spacing);
+  margin: calc(-1 * var(--spacing));
+}
+
+/* divider */
+
+hr {
+  border: none;
+  margin: calc(var(--spacing) * 2) 0;
+  background-color: var(--bg3);
+  border-radius: var(--radius);
+  height: 2px;
+}
+
+/* Transitions */
+
+:is(button, input, select, textarea) {
+  transition: background-color var(--transition), box-shadow var(--transition);
+}
+
+a {
+  transition: color var(--transition);
 }
 
 /* Buttons */
@@ -277,17 +327,20 @@ table {
   width: 100%;
   background-color: var(--bg2);
   margin: 1em 0;
+  border-spacing: 0;
 }
 
 th,
 td {
-  border: 1px solid var(--fg3);
-  padding: var(--box-spacing);
+  border: 2px solid var(--fg3);
+  padding: var(--spacing);
 }
 
 th {
   background-color: var(--primary);
   color: var(--on-primary);
+  border-color: var(--fg1);
+  font-weight: bold;
 }
 
 td {
@@ -299,6 +352,15 @@ td {
 :is(button, label, select, a) {
   user-select: none;
   -webkit-user-select: none;
+}
+
+/* Images */
+
+main img {
+  display: block;
+  max-width: 100%;
+  border-radius: calc(var(--radius) * 2);
+  box-shadow: var(--field-shadow);
 }
 
 .loader {
@@ -316,4 +378,39 @@ td {
   100% {
     transform: rotate(1turn);
   }
+}
+
+/* Blockquote */
+
+blockquote {
+  border-left: 5px solid var(--accent);
+  padding-left: var(--spacing);
+  margin: calc(var(--spacing) * 2) 0;
+  font-style: italic;
+  color: var(--fg3);
+}
+
+/* Code */
+
+code {
+  background-color: var(--bg2);
+  padding: calc(var(--spacing) / 2) var(--spacing);
+  border-radius: var(--radius);
+  font-family: monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  font-size: inherit;
+  vertical-align: middle;
+}
+
+/* Code Block */
+
+pre {
+  background-color: var(--bg2);
+  padding: var(--spacing);
+  border-radius: var(--radius);
+  font-family: monospace;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-size: inherit;
 }

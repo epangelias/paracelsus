@@ -20,12 +20,15 @@ export default define.page(() => (
                 "This is a blockquote. It's used to highlight text or quotes."
             </blockquote>
             <pre>
-                <code>${`// This is a code block
+                <code>{`// This is a code block
 function hello() {
     console.log("Hello, World!");
-}
-                `}</code>
+}`}</code>
             </pre>
+
+            <p>
+                And this is some <code>code.start().then()</code> that I have writ.
+            </p>
 
             <h2>Lists</h2>
             <h3>Unordered List</h3>
@@ -64,7 +67,9 @@ function hello() {
                     <input type='radio' name='radioGroup' /> Radio Button
                 </label>
 
-                <button type='submit'>Submit</button>
+                <div>
+                    <button type='submit'>Submit</button>
+                </div>
             </form>
 
             <h2>Tables</h2>

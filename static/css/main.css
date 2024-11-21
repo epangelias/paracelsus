@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  box-shadow: inset var(--field-shadow);
 }
 
 @keyframes pageTransition {
@@ -55,10 +56,12 @@ main {
   overflow-y: auto;
   margin: auto 0;
   /* height: 100%; */
-  padding: 0 var(--spacing);
+  padding: calc(var(--spacing) * 4) var(--spacing);
   animation: pageTransition 0.5s ease-in-out;
 
   &:has(.chat-box) {
+    padding-top: 0;
+    padding-bottom: 0;
     height: 100%;
   }
 }
