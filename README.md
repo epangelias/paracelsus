@@ -22,4 +22,3 @@ paracelsus my-project
 - Fix push notifications on chrome
 - Fix sse errors logged to server
 - Make Banners better
-- Add screenshots, to manifest and to meta tags
