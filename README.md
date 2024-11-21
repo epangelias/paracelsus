@@ -31,3 +31,4 @@ paracelsus my-project
 - Disable page transitions when on the same page, disable fade in and out
 - Email template
 - Let all exported functions capitalized
+- remove old messages if too long in chat

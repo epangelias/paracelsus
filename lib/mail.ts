@@ -47,10 +47,10 @@ export async function sendMail(options: Options) {
 let lastRequest = 0;
 
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
-  lastRequest = Date.now();
   if (Date.now() - lastRequest < 30000) {
     throw new HttpError(STATUS_CODE.TooManyRequests, 'Too many requests, please try again later');
   }
+  lastRequest = Date.now();
 
   const code = await generateEmailVerification(user);
 
