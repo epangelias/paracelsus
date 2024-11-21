@@ -23,13 +23,16 @@
   --field-shadow: 0 1px 4px #0002;
 
   --red: color-mix(in srgb, red, var(--fg1) 25%);
+
+  --monospace: "Fira Code", "JetBrains Mono", "Source Code Pro", "Hack", "Ubuntu Mono",
+    "DejaVu Sans Mono", "Monoid", "Inconsolata", "Courier New", monospace;
 }
 
 .theme-light {
   --bg1: var(--light1);
   --bg2: var(--light1);
-  --bg3: var(--light3);
-  --bg4: var(--light4);
+  --bg3: var(--light2);
+  --bg4: var(--light3);
   --fg1: var(--dark1);
   --fg2: var(--dark2);
   --fg3: var(--dark3);
@@ -117,7 +120,7 @@ body {
 :is(h1, h2, h3, h4, h5) {
   color: var(--fg1);
   margin-top: calc(var(--spacing) * 2);
-  margin-top: calc(var(--spacing));
+  margin-bottom: calc(var(--spacing));
   text-wrap: balance;
 }
 
@@ -205,7 +208,7 @@ button {
     box-shadow: none;
   }
 
-  &:active:hover:not(:disabled) {
+  &:active:not(:disabled) {
     background-color: color-mix(in srgb, var(--accent), var(--on-accent) 15%);
     scale: 1.05;
   }
@@ -247,6 +250,7 @@ button {
   &:is(select) {
     font-weight: bold;
     color: var(--fg2);
+    cursor: pointer;
   }
 }
 
@@ -354,18 +358,21 @@ main img {
   box-shadow: var(--field-shadow);
 }
 
+/* Loader */
+
 .loader {
   display: inline-block;
   width: 1em;
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--primary);
+  mask: radial-gradient(circle closest-side at 50% 40%, #0000 94%, #000);
   -webkit-mask: radial-gradient(circle closest-side at 50% 40%, #0000 94%, #000);
   transform-origin: 50% 40%;
-  animation: l25 1s infinite linear;
+  animation: spin 1s infinite linear;
 }
 
-@keyframes l25 {
+@keyframes spin {
   100% {
     transform: rotate(1turn);
   }
@@ -374,11 +381,12 @@ main img {
 /* Blockquote */
 
 blockquote {
-  border-left: 5px solid var(--accent);
   padding-left: var(--spacing);
   margin: calc(var(--spacing) * 2) 0;
   font-style: italic;
   color: var(--fg3);
+  position: relative;
+  border-left: 5px solid var(--primary);
 }
 
 /* Code */
@@ -387,11 +395,11 @@ code {
   background-color: var(--bg2);
   padding: calc(var(--spacing) / 2) var(--spacing);
   border-radius: var(--radius);
-  font-family: monospace;
+  font-family: var(--monospace);
   white-space: pre-wrap;
   overflow-x: auto;
-  font-size: inherit;
   vertical-align: middle;
+  font-size: 12px;
 }
 
 /* Code Block */
@@ -399,9 +407,9 @@ code {
 pre {
   background-color: var(--bg2);
   padding: var(--spacing);
-  border-radius: var(--radius);
-  font-family: monospace;
+  border-radius: calc(var(--radius) * 2);
+  font-family: var(--monospace);
   overflow-x: auto;
   white-space: pre-wrap;
-  font-size: inherit;
+  font-size: 12px;
 }

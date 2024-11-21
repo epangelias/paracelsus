@@ -24,6 +24,3 @@ paracelsus my-project
 - Make Banners better
 - DDOS
 - PWA msg not shown on ios safari
-- AI make page of all common html elements, let them all be styled by the theme
-- Make the sign up link a link button
-- Make a normal, non accent button. Let select box not be accent, same with other clickable inputs
