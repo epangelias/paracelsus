@@ -22,3 +22,5 @@ paracelsus my-project
 - Fix push notifications on chrome
 - Fix sse errors logged to server
 - Make Banners better
+- DDOS
+-

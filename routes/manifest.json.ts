@@ -1,5 +1,6 @@
 import { define } from '@/lib/utils.ts';
 import { site } from '@/lib/site.ts';
+import { asset } from 'fresh/runtime';
 
 export const handler = define.handlers(() => {
   return Response.json({
@@ -23,7 +24,7 @@ export const handler = define.handlers(() => {
       },
     ],
     screenshots: [
-      { src: "/img/screenshot-og.jpg", form_factor: "wide" },
+      { src: asset(site.previewImage), form_factor: "wide" },
     ],
   });
 });
