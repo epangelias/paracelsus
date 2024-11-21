@@ -29,7 +29,7 @@ export default define.page<typeof handler>(({ data }) => (
   <Page>
     <div>
       <h1>Sign Up</h1>
-      <SignupForm error={data?.error} email={data?.email} name={data?.Name} />
+      <SignupForm error={data?.error} email={data?.email} name={data?.name} />
     </div>
   </Page>
 ));

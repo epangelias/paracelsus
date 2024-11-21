@@ -31,7 +31,7 @@
     "jsxImportSource": "preact",
     "jsxPrecompileSkipElements": ["a", "img", "source", "body", "html", "head"]
   },
-  "unstable": ["kv"],
+  "unstable": ["kv", "cron"],
   "lock": false,
   "fmt": { "lineWidth": 100, "semiColons": true, "singleQuote": true, "proseWrap": "preserve" },
   "nodeModulesDir": "none"

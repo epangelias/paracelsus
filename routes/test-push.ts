@@ -28,16 +28,21 @@ async function sendFollowUp(user: UserData) {
     await sendNotificationsToUser(user, "Paracelsus Hath Spoken", message);
 }
 
-// Deno.cron(`Follow up users`, { minute: { every: 1 } }, async () => {
-//     for await(const res of db.list<UserData>({prefix: ['user']})){
-//         const user = res.value;
-//         try {
-//             await sendFollowUp(user);
-//         } catch (e) {
-//             console.error(`Failed to send follow up to ${user.email}`, e);
-//         }
-//     }
-// });
+export function sendFollowUpsContinuously() {
+    console.log("Setting chron task");
+    Deno.cron(`Follow up users`, { minute: { every: 1 } }, async () => {
+        console.log("Following up...");
+        for await (const res of db.list<UserData>({ prefix: ['users'] })) {
+            console.log("Following up " + res.value.name);
+            const user = res.value;
+            try {
+                await sendFollowUp(user);
+            } catch (e) {
+                console.error(`Failed to send follow up to ${user.email}`, e);
+            }
+        }
+    });
+}
 
 
 export const handler = define.handlers(async (ctx) => {
