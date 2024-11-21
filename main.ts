@@ -3,15 +3,14 @@
 import { App, fsRoutes, staticFiles } from 'fresh';
 import middlewareHandler from '@/lib/middleware.ts';
 import { State } from '@/lib/types.ts';
-import { asset } from 'fresh/runtime';
-import { EnablePush } from '@/lib/push.ts';
+import { enablePush } from '@/lib/push.ts';
 
 export const app = new App<State>();
 
 app.use(staticFiles());
 app.use(middlewareHandler);
 
-EnablePush(app);
+enablePush(app);
 
 await fsRoutes(app, {
   dir: './',

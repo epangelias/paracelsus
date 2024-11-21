@@ -6,29 +6,21 @@ import { asset } from 'fresh/runtime';
 import { STATUS_CODE } from '@std/http/status';
 import { updateUser } from '@/lib/user.ts';
 
-//import * as webPushTypes from '@types/web-push';
+// import * as webPushTypes from '@types/web-push';
 // const webPush = _webPush as typeof webPushTypes;
 
 const VAPID_PUBLIC_KEY = Deno.env.get('VAPID_PUBLIC_KEY');
 const VAPID_PRIVATE_KEY = Deno.env.get('VAPID_PRIVATE_KEY');
 
 if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
-  webPush.setVapidDetails(
-    'mailto:' + site.email,
-    VAPID_PUBLIC_KEY,
-    VAPID_PRIVATE_KEY,
-  );
+  webPush.setVapidDetails('mailto:' + site.email, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
 } else {
-  console.log(
-    'You must set the VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY ' +
-    'environment variables. You can use the following ones:',
-  );
+  console.log('To enable notifications, set the VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY');
   console.log(webPush.generateVAPIDKeys());
 }
 
-
-export async function sentNotificationsToUser(user: UserData, title: string, message: string) {
-  let removedSubscriptions = false;
+export async function sendNotificationsToUser(user: UserData, title: string, message: string) {
+  let subscriptionRemoved = false;
 
   for (const subscription of user.pushSubscriptions) {
     try {
@@ -36,18 +28,18 @@ export async function sentNotificationsToUser(user: UserData, title: string, mes
       await webPush.sendNotification(subscription, JSON.stringify(data), { TTL: 60 });
     } catch (e) {
       console.error(e);
-      removedSubscriptions = true;
+      subscriptionRemoved = true;
       const index = user.pushSubscriptions.indexOf(subscription);
       if (index > -1) user.pushSubscriptions.splice(index, 1);
     }
   }
 
-  if (removedSubscriptions) await updateUser(user);
+  if (subscriptionRemoved) await updateUser(user);
 }
 
-export function EnablePush(app: App<State>) {
-  app.get('/api/vapidPublicKey', () => Response.json(VAPID_PUBLIC_KEY));
-  app.post('/api/register', async (ctx) => {
+export function enablePush(app: App<State>) {
+  app.get('/api/vapid-public-key', () => Response.json(VAPID_PUBLIC_KEY));
+  app.post('/api/subscribe-notifications', async (ctx) => {
     if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
     const { subscription } = await ctx.req.json();
     ctx.state.user.pushSubscriptions.push(subscription);

@@ -4,12 +4,12 @@ import { asset } from 'fresh/runtime';
 
 
 export async function requestSubscription(registration?: ServiceWorkerRegistration | null) {
-    if(!registration)return null;
+    if (!registration) return null;
 
     const existingSubscription = await registration.pushManager.getSubscription();
     if (existingSubscription) return existingSubscription;
 
-    const vapidPublicKey = await fetchOrError('/api/vapidPublicKey') as string;
+    const vapidPublicKey = await fetchOrError('/api/vapid-public-key') as string;
     console.log("Loaded VAPID key: ", vapidPublicKey);
     const convertedVapidKey = Meth.urlBase64ToUint8Array(vapidPublicKey);
 
@@ -17,17 +17,17 @@ export async function requestSubscription(registration?: ServiceWorkerRegistrati
         userVisibleOnly: true,
         applicationServerKey: convertedVapidKey,
     });
-    
+
     console.log("Subscribed.");
 
-    await fetchOrError('/api/register', { method: 'POST', body: { subscription } });
+    await fetchOrError('/api/subscribe-notifications', { method: 'POST', body: { subscription } });
 
     return subscription;
 }
 
-export async function getSubscription(worker?: ServiceWorkerRegistration){
-    if(!worker)return null;
-    if(Notification.permission !== "granted")return null;
+export async function getSubscription(worker?: ServiceWorkerRegistration) {
+    if (!worker) return null;
+    if (Notification.permission !== "granted") return null;
     return await worker.pushManager.getSubscription();
 }
 
@@ -46,15 +46,3 @@ export async function loadServiceWorker(): Promise<ServiceWorkerRegistration | u
 
     return registration;
 }
-
-// const registration = await initServiceWorker();
-
-//     if(registration){
-        
-//         globalThis.testPush = async () => {
-//             const subscription = await requestNotificationRegistration(registration);
-//             subscription.
-            
-//             await fetchOrError('/api/sendNotification', { method: 'POST', body: { subscription } });
-//         };
-//     }
