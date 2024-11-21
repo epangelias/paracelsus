@@ -103,6 +103,7 @@ export async function createUser(name: string, email: string, password: string) 
 
   const user: UserData = {
     id: Meth.code(),
+    created: Date.now(),
     email,
     passwordHash,
     salt,
