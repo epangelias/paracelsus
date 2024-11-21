@@ -11,6 +11,8 @@ export function Banners() {
 
   const installPWA = useSignal<() => {}>();
 
+  const PWA = useSignal(false);
+
   useEffect(() => {
     globalThis.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -25,6 +27,11 @@ export function Banners() {
         const choice = await deferredPrompt.userChoice;
         console.log('User choice: ', choice);
       };
+
+      globalThis.matchMedia('(display-mode: standalone)')
+        .addEventListener('change', () => PWA.value = isPWA());
+
+      PWA.value = isPWA();
     });
   }, []);
 
@@ -41,7 +48,7 @@ export function Banners() {
         <a href='/user/subscribe' target='_blank'>Subscribe</a> for unlimited tokens
       </Banner>
     );
-  } else if (!isPWA()) {
+  } else if (PWA.value) {
     if (isIOSSafari()) {
       return (
         <Banner name='ios-install'>
