@@ -5,6 +5,7 @@ import Mailjet from 'node-mailjet';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 import { asset } from 'fresh/runtime';
+import { RateLimiter } from '@/lib/rate-limiter.ts';
 
 let mailjet: Mailjet.Client;
 
@@ -35,36 +36,26 @@ export async function sendMail(options: MailOptions) {
   console.log('EMAIL RESPONSE:', req.response.statusText, req.response.status);
 }
 
-let lastRequest = 0;
+const limiter = new RateLimiter({ maxRequests: 2, interval: 60 }); // 2 per minute
 
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
-  if (Date.now() - lastRequest < 10000) {
-    console.log('Rate limit reached for emails');
-    throw new HttpError(STATUS_CODE.TooManyRequests, 'Too many requests, please try again later');
-  }
-  lastRequest = Date.now();
+  limiter.request();
 
   const code = await generateEmailVerification(user);
 
   const link = `${baseUrl}/user/verify-email?code=${code}`;
   console.log(link);
 
-  const logo = baseUrl + asset(site.appIcon);
-
-  try {
-    await sendMail({
-      fromName: `${site.name}`,
-      from: site.email,
-      to: user.email,
-      toName: user.name,
-      subject: `Verify your email - ${site.name}`,
-      text:
-        `Welcome to ${site.name}, ${user.name}!\nValidate your email for ${site.name} by proceeding to the following link.\n${link}`,
-      html: verifyEmailTemplate({ user, link, logo }),
-    });
-  } catch (e) {
-    console.error('Error sending verification email: ', e.message);
-  }
+  await sendMail({
+    fromName: `${site.name}`,
+    from: site.email,
+    to: user.email,
+    toName: user.name,
+    subject: `Verify your email - ${site.name}`,
+    text:
+      `Welcome to ${site.name}, ${user.name}!\nValidate your email for ${site.name} by proceeding to the following link.\n${link}`,
+    html: verifyEmailTemplate({ user, link, logo: baseUrl + asset(site.appIcon) }),
+  });
 }
 
 const verifyEmailTemplate = (

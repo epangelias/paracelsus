@@ -6,10 +6,15 @@ import { sendEmailVerification } from '@/lib/mail.ts';
 import { SetAuthCookie } from '@/routes/user/signin.tsx';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
+import { RateLimiter } from '@/lib/rate-limiter.ts';
+
+const limiter = new RateLimiter();
 
 export const handler = define.handlers({
   POST: async (ctx) => {
     await new Promise((r) => setTimeout(r, 1000));
+
+    limiter.request();
 
     const { name, email, password } = Meth.formDataToObject(await ctx.req.formData());
 

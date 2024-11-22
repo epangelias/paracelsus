@@ -1,10 +1,10 @@
 import { db } from '@/lib/utils.ts';
 
 interface Options {
-  chunk?: (send: (s: unknown) => void) => void,
-  cancel?: () => void,
-  watchKey?: Deno.KvKey,
-};
+  chunk?: (send: (s: unknown) => void) => void;
+  cancel?: () => void;
+  watchKey?: Deno.KvKey;
+}
 
 export function StreamSSR(options: Options) {
   const stream = new ReadableStream({

@@ -6,13 +6,13 @@ import { generateChatCompletionStream } from '@/lib/oai.ts';
 import { safelyRenderMarkdown } from '@/lib/md.ts';
 
 interface Options {
-  messages: AIMessage[],
-  options?: OAIOptions,
-  chunk?: (send: (s: unknown) => void) => void,
-  end?: (messages: AIMessage[]) => void,
-  error?: (messages: AIMessage[]) => void,
-  cancel?: (messages: AIMessage[]) => void,
-};
+  messages: AIMessage[];
+  options?: OAIOptions;
+  chunk?: (send: (s: unknown) => void) => void;
+  end?: (messages: AIMessage[]) => void;
+  error?: (messages: AIMessage[]) => void;
+  cancel?: (messages: AIMessage[]) => void;
+}
 
 export function StreamAI(options: Options) {
   let stream: Stream<ChatCompletionChunk>;
@@ -65,9 +65,8 @@ export function StreamAI(options: Options) {
       message.html = await safelyRenderMarkdown(message.content);
       if (options.cancel) options.cancel(options.messages);
       stream?.controller?.abort();
-    }
+    },
   });
-
 }
 
 function insertLoaderToHTML(html: string) {

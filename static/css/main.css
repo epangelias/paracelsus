@@ -4,7 +4,6 @@
   --content-width: 880px;
 }
 
-
 /* Page Transitions */
 
 body.fade-out {
@@ -120,7 +119,7 @@ header {
   border-radius: calc(var(--spacing) * 4);
   aspect-ratio: 1 / 1;
 
-  &>span {
+  & > span {
     display: block;
   }
 }

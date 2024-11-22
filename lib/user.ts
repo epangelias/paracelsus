@@ -134,7 +134,7 @@ export async function createUser(name: string, email: string, password: string) 
 export async function generateEmailVerification(user: UserData) {
   const code = Meth.code(12);
   await db.set(['userVerification', code], { id: user.id, email: user.email }, {
-    expireIn: 1000 * 60 * 60,
+    expireIn: 1000 * 60 * 60, // One hour
   });
   return code;
 }
@@ -206,7 +206,6 @@ export function normalizeName(name: string) {
 export function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
 }
-
 
 export function userHasTokens(user?: UserData) {
   return user && user.tokens <= 0 && !user.isSubscribed;

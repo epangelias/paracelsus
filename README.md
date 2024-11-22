@@ -20,5 +20,4 @@ paracelsus my-project
 - PWA msg not shown on ios safari
 - Puppeteer testing
 - test out banners
-- Separate folder for non-libs, for follow-up
-- Create lib for chatdata
+- Separate folder for app specific modules, mod or app
