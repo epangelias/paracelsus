@@ -9,6 +9,8 @@ import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers({
   POST: async (ctx) => {
+    await new Promise((r) => setTimeout(r, 1000));
+
     const { name, email, password } = Meth.formDataToObject(await ctx.req.formData());
 
     try {
