@@ -1,4 +1,5 @@
 import type { Signal } from '@preact/signals';
+import { ComponentChildren } from 'preact';
 
 export interface CounterData {
   count: number;
@@ -40,9 +41,32 @@ export interface GlobalData {
   worker: Signal<ServiceWorkerRegistration | null>;
   pushSubscription: Signal<PushSubscription | null>;
   requestSubscription: () => Promise<PushSubscription | null>;
+  isPWA: Signal<boolean>;
+  installPWA: Signal<() => {}>;
+  outOfTokens: Signal<boolean>;
 }
 
 export interface State {
   user?: UserData;
   auth?: string;
+}
+
+
+
+export interface MailOptions {
+  fromName: string;
+  toName: string;
+  from: string;
+  to: string;
+  subject: string;
+  text: string;
+  html: string;
+}
+
+
+export interface BannerData {
+  name: string;
+  condition: () => boolean | undefined;
+  canClose: boolean;
+  content: () => ComponentChildren;
 }

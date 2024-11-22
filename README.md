@@ -16,7 +16,7 @@ paracelsus my-project
 
 - Refactor and simplify, make bloated features more componential, easy to add/remove, plugins
 - Ensure that any functions called in route that are are async but not with await catch errors so no server crash
-- Fix push notifications on chrome
+- Fix push notifications on chrome, test
 - Fix sse errors logged to server
 - Make Banners better
 - PWA msg not shown on ios safari

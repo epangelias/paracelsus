@@ -199,7 +199,8 @@ a {
 /* Buttons */
 
 button {
-  background-color: var(--accent);
+  --color: var(--accent);
+  background-color: var(--color);
   border-radius: var(--radius);
   border: none;
   padding: calc(var(--spacing)) calc(var(--spacing) * 2);
@@ -210,12 +211,12 @@ button {
   box-shadow: var(--field-shadow);
 
   &:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--accent), var(--on-accent) 15%);
+    background-color: color-mix(in srgb, var(--color), var(--on-accent) 15%);
     box-shadow: none;
   }
 
   &:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--accent), var(--on-accent) 15%);
+    background-color: color-mix(in srgb, var(--color), var(--on-accent) 15%);
     scale: 1.05;
   }
 
@@ -406,6 +407,11 @@ pre {
   font-size: 12px;
 }
 
+/* Other */
+
+[data-hide="true"] {
+  display: none;
+}
 
 /* Animations */
 

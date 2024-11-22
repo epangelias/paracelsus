@@ -76,10 +76,27 @@ header {
   }
 
   button {
-    padding: 0 !important;
+    padding: 0 var(--spacing);
     position: absolute;
     right: 1rem;
     scale: 1.5;
+  }
+}
+
+
+.banner-button {
+  float: right;
+  padding: 0 var(--spacing);
+  font-size: 1em;
+  --color: var(--primary);
+  margin-right: var(--spacing);
+  margin-top: var(--spacing);
+  border-radius: calc(var(--spacing) * 4);
+  /* aspect-ratio: 1 / 1; */
+
+  &>span {
+    display: block;
+    /* scale: 2 !important; */
   }
 }
 

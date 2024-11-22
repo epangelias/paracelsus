@@ -1,4 +1,4 @@
-import { UserData } from '@/lib/types.ts';
+import { MailOptions, UserData } from '@/lib/types.ts';
 import { site } from './site.ts';
 import { generateEmailVerification } from '@/lib/user.ts';
 import Mailjet from 'node-mailjet';
@@ -6,19 +6,10 @@ import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 import { asset } from 'fresh/runtime';
 
-interface Options {
-  fromName: string;
-  toName: string;
-  from: string;
-  to: string;
-  subject: string;
-  text: string;
-  html: string;
-}
 
 let mailjet: Mailjet.Client;
 
-export async function sendMail(options: Options) {
+export async function sendMail(options: MailOptions) {
   if (!Deno.env.has('MJ_APIKEY_PUBLIC') || !Deno.env.has('MJ_APIKEY_PRIVATE')) {
     throw new Error('Missing mailjet credentials');
   }

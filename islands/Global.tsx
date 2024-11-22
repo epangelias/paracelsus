@@ -2,19 +2,26 @@ import { useContext, useEffect } from 'preact/hooks';
 import { createContext } from 'preact';
 import { ComponentChildren } from 'preact';
 import { GlobalData, UserData } from '@/lib/types.ts';
-import { useSignal } from '@preact/signals';
+import { useComputed, useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/sse.ts';
-import { getSubscription, loadServiceWorker, requestSubscription } from '@/lib/worker.ts';
+import { getSubscription, loadServiceWorker, requestSubscription, usePWA } from '@/lib/worker.ts';
 
 export function Global(
   { children, user }: { children: ComponentChildren; user?: Partial<UserData> | null },
 ) {
+  const { isPWA, installPWA } = usePWA();
+
   const global: GlobalData = {
     user: useSignal(user),
     requestSubscription: () =>
       global.pushSubscription.value = requestSubscription(global.worker.value),
     pushSubscription: useSignal(null),
     worker: useSignal(null),
+    isPWA,
+    installPWA,
+    outOfTokens: useComputed(() =>
+      global.user.value?.tokens! <= 0 && !global.user.value?.isSubscribed
+    ),
   };
 
   if (user) useEffect(() => syncSSE('/api/userdata', global.user), []);
