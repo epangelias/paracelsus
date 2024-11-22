@@ -1,5 +1,5 @@
 import { define } from '@/lib/utils.ts';
-import { handleSSE, watchKV } from '@/lib/handle-sse.ts';
+import { StreamSSR, watchKV } from '../../lib/stream-sse.ts';
 import { db } from '@/lib/utils.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
@@ -35,7 +35,7 @@ export const handler = define.handlers(async (ctx) => {
   const path = ['chat', ctx.state.user.id];
 
   if (ctx.req.method == 'GET') {
-    return handleSSE(watchKV(path));
+    return StreamSSR({ watchKey: path });
   } else if (ctx.req.method == 'POST') {
     const chatData = await ctx.req.json() as ChatData;
 

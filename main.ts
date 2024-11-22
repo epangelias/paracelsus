@@ -3,8 +3,8 @@
 import { App, fsRoutes, staticFiles } from 'fresh';
 import { State } from '@/lib/types.ts';
 import { PushPlugin } from '@/lib/push.ts';
-import { AutoSendFollowUps } from '@/routes/test-push.ts';
 import { getUserFromState } from '@/lib/user.ts';
+import { AutoSendFollowUps } from '@/lib/follow-up.ts';
 
 export const app = new App<State>();
 

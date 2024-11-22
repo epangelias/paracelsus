@@ -17,6 +17,4 @@ export async function clearDb() {
   await Promise.all(promises);
 }
 
-await clearDb();
-
-console.log('RESET DATABASE');
+if (import.meta.main) await clearDb();

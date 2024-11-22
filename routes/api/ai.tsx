@@ -1,7 +1,7 @@
 import { define } from '@/lib/utils.ts';
 import { db } from '@/lib/utils.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
-import { handleAIResponse } from '@/lib/handle-ai.ts';
+import { StreamAI } from '../../lib/stream-ai.ts';
 import { updateUser } from '@/lib/user.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
@@ -16,9 +16,9 @@ export const handler = define.handlers({
     if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
 
     const path = ['chat', ctx.state.user.id];
-    const cantGenerate = ctx.state.user.tokens <= 0 && !ctx.state.user.isSubscribed;
+    const outOfTokens = ctx.state.user.tokens <= 0 && !ctx.state.user.isSubscribed;
 
-    if (cantGenerate) throw new HttpError(STATUS_CODE.Unauthorized);
+    if (outOfTokens) throw new HttpError(STATUS_CODE.Unauthorized);
 
     const res = await db.get<ChatData>(path);
 
@@ -31,11 +31,11 @@ export const handler = define.handlers({
       await updateUser({ ...ctx.state.user!, tokens });
     };
 
-    return await handleAIResponse(
-      [systemPrompt, ...res.value.messages],
-      undefined,
-      saveMessages,
-      saveMessages,
-    );
+    return StreamAI({
+      messages: [systemPrompt, ...res.value.messages],
+      error: saveMessages,
+      cancel: saveMessages,
+      end: saveMessages,
+    });
   },
 });

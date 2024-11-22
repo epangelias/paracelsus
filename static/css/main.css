@@ -26,11 +26,11 @@ main {
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
   overflow-y: auto;
   margin: auto 0;
   padding: calc(var(--spacing) * 2) var(--spacing);
   max-width: var(--content-width);
-
 
   &:has(.chat-box) {
     padding-top: 0;
@@ -48,6 +48,7 @@ main {
   flex-direction: column;
   height: 100%;
   box-shadow: inset var(--field-shadow);
+  align-items: center;
 }
 
 /* Header */
@@ -58,6 +59,7 @@ header {
   padding: calc(var(--spacing) / 2) calc(var(--spacing) * 2);
   padding-bottom: 0;
   border-bottom: 2px solid color-mix(in srgb, currentColor, transparent 80%);
+  width: 100%;
 
   .left,
   .right,
