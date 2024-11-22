@@ -1,19 +1,22 @@
 /// <reference lib="deno.unstable" />
 
 import { App, fsRoutes, staticFiles } from 'fresh';
-import middlewareHandler from '@/lib/middleware.ts';
 import { State } from '@/lib/types.ts';
-import { enablePush } from '@/lib/push.ts';
-import { sendFollowUpsContinuously } from '@/routes/test-push.ts';
+import { PushPlugin } from '@/lib/push.ts';
+import { AutoSendFollowUps } from '@/routes/test-push.ts';
+import { getUserFromState } from '@/lib/user.ts';
 
 export const app = new App<State>();
 
-sendFollowUpsContinuously();
+AutoSendFollowUps();
+PushPlugin(app);
+
+app.use(async (ctx) => {
+  if (ctx.req.url.includes('?__frsh_c=')) await getUserFromState(ctx);
+  return await ctx.next();
+});
 
 app.use(staticFiles());
-app.use(middlewareHandler);
-
-enablePush(app);
 
 await fsRoutes(app, {
   dir: './',

@@ -15,7 +15,9 @@ export function generateChatCompletionStream(
   options: OAIOptions = defaultTestOptions,
   messages: AIMessage[],
 ) {
-  return generateChatCompletion(options, messages, true) as unknown as Stream<OpenAI.ChatCompletionChunk>;
+  return generateChatCompletion(options, messages, true) as unknown as Stream<
+    OpenAI.ChatCompletionChunk
+  >;
 }
 
 export async function generateChatCompletion(
@@ -33,6 +35,6 @@ export async function generateChatCompletion(
   return await backends[backendId].chat.completions.create({
     model: options.model,
     messages: messages as ChatCompletionMessageParam[],
-    stream
+    stream,
   }) as unknown as OpenAI.ChatCompletion;
 }

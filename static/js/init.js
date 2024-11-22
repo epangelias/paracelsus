@@ -1,23 +1,23 @@
 const updateTheme = () => {
-    const colorScheme =
-        document.querySelector('meta[name="color-scheme"]')?.getAttribute('content') || 'light';
-    const prefersDark = globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
-    const hasDark = colorScheme?.includes('dark');
-    const hasLight = colorScheme?.includes('light');
-    const isDark = (hasDark && hasLight) ? prefersDark : hasDark;
+  const colorScheme =
+    document.querySelector('meta[name="color-scheme"]')?.getAttribute('content') || 'light';
+  const prefersDark = globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
+  const hasDark = colorScheme?.includes('dark');
+  const hasLight = colorScheme?.includes('light');
+  const isDark = (hasDark && hasLight) ? prefersDark : hasDark;
 
-    document.body.classList.remove('theme-light', 'theme-dark');
-    document.body.classList.add(`theme-${isDark ? 'dark' : 'light'}`);
+  document.body.classList.remove('theme-light', 'theme-dark');
+  document.body.classList.add(`theme-${isDark ? 'dark' : 'light'}`);
 };
 
 function initTheme() {
-    updateTheme();
-    globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
-    const options = { attributes: true, attributeFilter: ['content'] };
-    new MutationObserver(updateTheme).observe(
-        document.querySelector('meta[name="color-scheme"]'),
-        options,
-    );
+  updateTheme();
+  globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
+  const options = { attributes: true, attributeFilter: ['content'] };
+  new MutationObserver(updateTheme).observe(
+    document.querySelector('meta[name="color-scheme"]'),
+    options,
+  );
 }
 
 initTheme();

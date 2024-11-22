@@ -37,13 +37,13 @@ export async function sendNotificationsToUser(user: UserData, title: string, mes
   if (subscriptionRemoved) await updateUser(user);
 }
 
-export function enablePush(app: App<State>) {
+export function PushPlugin(app: App<State>) {
   app.get('/api/vapid-public-key', () => Response.json(VAPID_PUBLIC_KEY));
   app.post('/api/subscribe-notifications', async (ctx) => {
     if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
     const { subscription } = await ctx.req.json();
     ctx.state.user.pushSubscriptions.push(subscription);
     await updateUser(ctx.state.user);
-    return Response.json({}, { status: 201 })
+    return Response.json({}, { status: 201 });
   });
 }

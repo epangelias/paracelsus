@@ -81,5 +81,5 @@ export const Meth = {
       outputArray[i] = rawData.charCodeAt(i);
     }
     return outputArray;
-  }
+  },
 };

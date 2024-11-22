@@ -6,7 +6,6 @@ import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 import { asset } from 'fresh/runtime';
 
-
 let mailjet: Mailjet.Client;
 
 export async function sendMail(options: MailOptions) {
@@ -40,7 +39,7 @@ let lastRequest = 0;
 
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
   if (Date.now() - lastRequest < 10000) {
-    console.log("Rate limit reached for emails");
+    console.log('Rate limit reached for emails');
     throw new HttpError(STATUS_CODE.TooManyRequests, 'Too many requests, please try again later');
   }
   lastRequest = Date.now();
@@ -59,7 +58,8 @@ export async function sendEmailVerification(baseUrl: string, user: UserData) {
       to: user.email,
       toName: user.name,
       subject: `Verify your email - ${site.name}`,
-      text: `Welcome to ${site.name}, ${user.name}!\nValidate your email for ${site.name} by proceeding to the following link.\n${link}`,
+      text:
+        `Welcome to ${site.name}, ${user.name}!\nValidate your email for ${site.name} by proceeding to the following link.\n${link}`,
       html: verifyEmailTemplate({ user, link, logo }),
     });
   } catch (e) {
@@ -67,8 +67,9 @@ export async function sendEmailVerification(baseUrl: string, user: UserData) {
   }
 }
 
-
-const verifyEmailTemplate = ({ user, link, logo }: { user: UserData, link: string, logo: string }) => `
+const verifyEmailTemplate = (
+  { user, link, logo }: { user: UserData; link: string; logo: string },
+) => `
         <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
           <table width="100%" style="max-width: 600px; margin: auto; border-collapse: collapse;">
             <tr>
@@ -94,4 +95,4 @@ const verifyEmailTemplate = ({ user, link, logo }: { user: UserData, link: strin
               <td style="padding: 20px; background-color: #f4f4f4; text-align: center; font-size: 12px; color: #666;"> ${site.name} </td>
             </tr>
           </table>
-        </div>`
+        </div>`;

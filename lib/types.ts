@@ -51,8 +51,6 @@ export interface State {
   auth?: string;
 }
 
-
-
 export interface MailOptions {
   fromName: string;
   toName: string;
@@ -62,7 +60,6 @@ export interface MailOptions {
   text: string;
   html: string;
 }
-
 
 export interface BannerData {
   name: string;
