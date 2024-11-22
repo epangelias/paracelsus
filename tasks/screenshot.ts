@@ -16,8 +16,6 @@ await page.goto("http://0.0.0.0:8000", { waitUntil: "networkidle0" });
 await page.evaluate(() => {
     document.body.style.zoom = "2";
     document.body.style.fontSize = "1rem";
-    document.body.classList.remove("theme-light");
-    document.body.classList.add("theme-dark");
 })
 await page.screenshot({ path });
 await browser.close();

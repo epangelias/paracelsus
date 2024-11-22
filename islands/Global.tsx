@@ -7,8 +7,14 @@ import { syncSSE } from '@/lib/sse.ts';
 import { getSubscription, loadServiceWorker, requestSubscription, usePWA } from '@/lib/worker.ts';
 
 export function Global(
-  { children, user }: { children: ComponentChildren; user?: Partial<UserData> | null },
+  { children, user }: { children: ComponentChildren; user?: Partial<UserData> },
 ) {
+  const global = createGlobal(user);
+  if (user) useEffect(() => syncSSE('/api/userdata', global.user), []);
+  return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
+}
+
+export function createGlobal(user?: Partial<UserData>) {
   const { isPWA, installPWA } = usePWA();
 
   const global: GlobalData = {
@@ -24,18 +30,14 @@ export function Global(
     ),
   };
 
-  if (user) useEffect(() => syncSSE('/api/userdata', global.user), []);
-
   useEffect(() => {
-    init();
+    (async () => {
+      global.worker.value = await loadServiceWorker();
+      global.pushSubscription.value = await getSubscription(global.worker.value);
+    })();
   }, []);
 
-  async function init() {
-    global.worker.value = await loadServiceWorker();
-    global.pushSubscription.value = await getSubscription(global.worker.value);
-  }
-
-  return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
+  return global;
 }
 
 const GlobalContext = createContext<GlobalData | null>(null);

@@ -12,16 +12,6 @@ export function Banners() {
 
   const banners: BannerData[] = [
     {
-      name: 'test',
-      condition: () => true,
-      content: () => (
-        <>
-          Test Banner <a href='#'>link</a>
-        </>
-      ),
-      canClose: true,
-    },
-    {
       name: 'verify-email',
       condition: () => !global.user.value?.hasVerifiedEmail && global.outOfTokens.value,
       canClose: false,
@@ -88,16 +78,14 @@ export function Banner(
 
   return (
     <>
-      <div>
-        <button
-          onClick={open}
-          data-hide={!hideBanner.value}
-          aria-label='Open Banner'
-          class='banner-button'
-        >
-          <span>!</span>
-        </button>
-      </div>
+      <button
+        class='banner-button'
+        onClick={open}
+        data-hide={!hideBanner.value}
+        aria-label='Open Banner'
+      >
+        <span>!</span>
+      </button>
       <div class='banner' role='status' aria-live='polite' data-hide={hideBanner.value}>
         {content()}
         {canClose ? 'close' : 'no'}

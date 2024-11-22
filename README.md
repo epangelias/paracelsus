@@ -18,6 +18,6 @@ paracelsus my-project
 - Ensure that any functions called in route that are are async but not with await catch errors so no server crash
 - Fix push notifications on chrome, test
 - Fix sse errors logged to server
-- Make Banners better
 - PWA msg not shown on ios safari
 - Puppeteer testing
+- test out banners
