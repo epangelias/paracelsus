@@ -48,14 +48,14 @@ export function Banners() {
         <a href='/user/subscribe' target='_blank'>Subscribe</a> for unlimited tokens
       </Banner>
     );
-  } else if (PWA.value) {
+  } else if (installPWA.value) {
     if (isIOSSafari()) {
       return (
         <Banner name='ios-install'>
           <a href='/install-guide-ios'>Install this app to your device</a>
         </Banner>
       );
-    } else if (installPWA.value) {
+    } else if (PWA.value) {
       return (
         <Banner name='ios-install'>
           <a href='#' onClick={installPWA.value}>Install this app to your device</a>

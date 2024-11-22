@@ -24,3 +24,4 @@ paracelsus my-project
 - Make Banners better
 - DDOS
 - PWA msg not shown on ios safari
+- Puppeteer testing
