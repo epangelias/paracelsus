@@ -206,3 +206,8 @@ export function normalizeName(name: string) {
 export function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
 }
+
+
+export function userHasTokens(user?: UserData) {
+  return user && user.tokens <= 0 && !user.isSubscribed;
+}

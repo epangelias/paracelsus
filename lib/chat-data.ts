@@ -32,6 +32,3 @@ export async function setChatData(chatData: ChatData) {
     return await db.set(['chat', chatData.userId], chatData);
 }
 
-export function userHasTokens(user?: UserData) {
-    return user && user.tokens <= 0 && !user.isSubscribed;
-}
