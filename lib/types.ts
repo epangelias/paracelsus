@@ -12,6 +12,7 @@ export interface AIMessage {
 }
 
 export interface ChatData {
+  userId: string;
   messages: AIMessage[];
 }
 

@@ -1,9 +1,9 @@
 import { define } from '@/lib/utils.ts';
 import ChatBox from '../islands/ChatBox.tsx';
 import { page } from 'fresh';
-import { GetChatData } from '@/routes/api/chat.tsx';
 import { site } from '@/lib/site.ts';
 import { Page } from '@/components/Page.tsx';
+import { GetChatData } from '@/lib/chatdata.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {

@@ -9,9 +9,9 @@ interface Options {
   messages: AIMessage[],
   options?: OAIOptions,
   chunk?: (send: (s: unknown) => void) => void,
-  end?: () => void,
-  error?: () => void,
-  cancel?: () => void,
+  end?: (messages: AIMessage[]) => void,
+  error?: (messages: AIMessage[]) => void,
+  cancel?: (messages: AIMessage[]) => void,
 };
 
 export function StreamAI(options: Options) {
@@ -28,7 +28,7 @@ export function StreamAI(options: Options) {
         );
         if (stream instanceof Stream == false) throw new Error('Invalid stream');
       } catch (e) {
-        if (options.error) options.error();
+        if (options.error) options.error(options.messages);
         stream?.controller.abort();
         console.error(e);
       }
@@ -59,11 +59,11 @@ export function StreamAI(options: Options) {
 
       send(null);
 
-      if (options.end) options.end();
+      if (options.end) options.end(options.messages);
     },
     async cancel() {
       message.html = await safelyRenderMarkdown(message.content);
-      if (options.cancel) options.cancel();
+      if (options.cancel) options.cancel(options.messages);
       stream?.controller?.abort();
     }
   });

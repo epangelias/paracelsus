@@ -1,38 +1,26 @@
 import { define } from '@/lib/utils.ts';
-import { db } from '@/lib/utils.ts';
-import { AIMessage, ChatData } from '@/lib/types.ts';
+import { AIMessage } from '@/lib/types.ts';
 import { StreamAI } from '../../lib/stream-ai.ts';
 import { updateUser } from '@/lib/user.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
-
-const systemPrompt: AIMessage = {
-  role: 'system',
-  content: '',
-};
+import { GetChatData, setChatData, userHasTokens } from '@/lib/chatdata.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
-    if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
+    const user = ctx.state.user;
+    if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
+    if (userHasTokens(user)) throw new HttpError(STATUS_CODE.Unauthorized);
+    const chatData = await GetChatData(user);
+    if (!chatData) throw new HttpError(STATUS_CODE.NotFound);
 
-    const path = ['chat', ctx.state.user.id];
-    const outOfTokens = ctx.state.user.tokens <= 0 && !ctx.state.user.isSubscribed;
-
-    if (outOfTokens) throw new HttpError(STATUS_CODE.Unauthorized);
-
-    const res = await db.get<ChatData>(path);
-
-    if (res.versionstamp === null) return Response.error();
-
-    const saveMessages = async (messages?: AIMessage[]) => {
-      if (!messages) return;
-      db.set(path, { ...res.value, messages });
-      const tokens = (ctx.state.user!.tokens || 1) - 1;
-      await updateUser({ ...ctx.state.user!, tokens });
+    const saveMessages = async (messages: AIMessage[]) => {
+      await setChatData({ ...chatData, messages });
+      await updateUser({ ...user, tokens: user.tokens - 1 });
     };
 
     return StreamAI({
-      messages: [systemPrompt, ...res.value.messages],
+      messages: chatData.messages,
       error: saveMessages,
       cancel: saveMessages,
       end: saveMessages,
