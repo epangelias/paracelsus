@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run -A --env --watch=static/,routes/,css/
+#!/usr/bin/env -S deno run -A --env
 
 // npx puppeteer browsers install firefox
 
@@ -11,7 +11,13 @@ const path = new URL("../static/img/screenshot.jpg", import.meta.url).href.slice
 
 const browser = await puppeteer.launch({ browser: "firefox", headless: true });
 const page = await browser.newPage();
-await page.setViewport({ width: 600, height: 315, deviceScaleFactor: 4 });
+await page.setViewport({ width: 1200, height: 630, });
 await page.goto("http://0.0.0.0:8000", { waitUntil: "networkidle0" });
+await page.evaluate(() => {
+    document.body.style.zoom = "2";
+    document.body.style.fontSize = "1rem";
+    document.body.classList.remove("theme-light");
+    document.body.classList.add("theme-dark");
+})
 await page.screenshot({ path });
 await browser.close();

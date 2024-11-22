@@ -49,6 +49,7 @@ let lastRequest = 0;
 
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
   if (Date.now() - lastRequest < 30000) {
+    console.log("Rate limit reached for emails");
     throw new HttpError(STATUS_CODE.TooManyRequests, 'Too many requests, please try again later');
   }
   lastRequest = Date.now();
