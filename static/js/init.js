@@ -12,11 +12,12 @@ const updateTheme = () => {
 
 function initTheme() {
   updateTheme();
+
   globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
-  const options = { attributes: true, attributeFilter: ['content'] };
+
   new MutationObserver(updateTheme).observe(
     document.querySelector('meta[name="color-scheme"]'),
-    options,
+    { attributes: true, attributeFilter: ['content'] },
   );
 }
 

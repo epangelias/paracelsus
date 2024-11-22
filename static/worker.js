@@ -11,10 +11,14 @@ self.addEventListener('fetch', (event) => {
 });
 
 self.addEventListener('push', function (event) {
-  event.waitUntil(self.registration.showNotification(data.title, event.data.json()));
+  event.waitUntil(
+    self.registration.showNotification(data.title, event.data.json()),
+  );
 });
 
 self.addEventListener('notificationclick', function (event) {
   event.notification.close();
-  event.waitUntil(clients.openWindow(self.origin));
+  event.waitUntil(
+    clients.openWindow(self.origin),
+  );
 });

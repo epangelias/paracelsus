@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/utils.ts';
 
-async function clearDb() {
+export async function clearDb() {
   const itemsReset: Record<string, number> = {};
 
   const promises = [];
@@ -18,7 +18,5 @@ async function clearDb() {
 }
 
 await clearDb();
-
-db.close();
 
 console.log('RESET DATABASE');
