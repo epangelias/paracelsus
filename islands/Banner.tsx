@@ -39,18 +39,18 @@ export function Banners() {
     },
     {
       name: 'pwa-install',
-      condition: () => global.installPWA.value && !global.isPWA.value && !isIOSSafari(),
+      condition: () => global.pwa.installPWA.value && !global.pwa.isPWA.value && !isIOSSafari(),
       canClose: true,
-      content: () => <a href='#' onClick={global.installPWA.value}>Install this app to your device</a>,
+      content: () => <a href='#' onClick={global.pwa.installPWA.value}>Install this app to your device</a>,
     },
   ];
 
   const banner = useMemo(() => banners.find((b) => b.condition()), [
-    global.installPWA.value,
-    global.isPWA.value,
+    global.pwa.installPWA.value,
+    global.pwa.isPWA.value,
     global.outOfTokens.value,
-    global.pushSubscription.value,
-    global.worker.value,
+    global.pwa.pushSubscription.value,
+    global.pwa.worker.value,
     global.user.value,
   ]);
 

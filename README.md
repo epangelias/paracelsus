@@ -26,3 +26,4 @@ paracelsus my-project
 - spererate dir for hooks?
 - Go route to make all non app related routes to be in a plugin??
   - Or disconect modules from eachother and add seperate files for there implementation together in the app
+- Fix type errors

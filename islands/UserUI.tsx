@@ -4,8 +4,6 @@ import { Field } from '@/components/Field.tsx';
 export function UserUI({ error, message }: { error?: string; message?: string }) {
   const global = useGlobal();
 
-  if (!global.user.value) return <></>;
-
   return (
     <>
       <p>
@@ -15,9 +13,9 @@ export function UserUI({ error, message }: { error?: string; message?: string })
           : <a href='/user/subscribe' target='_blank'>Subscribe</a>}
       </p>
 
-      {global.worker.value && !global.pushSubscription.value && (
+      {global.pwa.worker.value && !global.pwa.pushSubscription.value && (
         <div>
-          <a onClick={global.requestSubscription} href='javascript:void'>Enable Notifications</a>
+          <a onClick={global.pwa.requestSubscription} href='javascript:void'>Enable Notifications</a>
         </div>
       )}
 

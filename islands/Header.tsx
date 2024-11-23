@@ -11,7 +11,7 @@ export function Header() {
     <>
       <header>
         <div className='left'>
-          <a href='/' class='color-primary logo' aria-label='Go to home page'>
+          <a href='/' class='logo' aria-label='Go to home page'>
             <img src={site.favicon} width={48} height={48} alt='' />
             <span>{site.name}</span>
           </a>

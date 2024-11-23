@@ -14,7 +14,7 @@ export function Global(
   const global: GlobalData = {
     user: useSignal(user),
     outOfTokens: useComputed(() => global.user.value?.tokens! <= 0 && !global.user.value?.isSubscribed),
-    ...usePWA(),
+    pwa: usePWA(),
   };
 
   if (user) useEffect(() => syncSSE({ endpoint, data: global.user }), []);

@@ -31,15 +31,16 @@ export async function requestPushSubscription(worker?: ServiceWorkerRegistration
   return subscription;
 }
 
-export async function getSubscription(worker?: ServiceWorkerRegistration) {
+export async function getSubscription(worker: ServiceWorkerRegistration | null) {
   if (!worker) return null;
-  if (Notification.permission !== 'granted') return null;
+  if (Notification.permission !== 'granted') null;
   return await worker.pushManager.getSubscription();
 }
 
-export async function loadServiceWorker(): Promise<ServiceWorkerRegistration | undefined> {
+export async function loadServiceWorker() {
   if ('serviceWorker' in navigator == false) {
-    return console.warn('Service Worker Disabled') as undefined;
+    console.warn('Service Worker Disabled');
+    return null;
   }
   console.log('Loading registration...');
 
@@ -71,7 +72,6 @@ export function usePWA() {
   const isPWA = useSignal(false);
   const worker = useSignal<ServiceWorkerRegistration | null>(null);
   const pushSubscription = useSignal<PushSubscription | null>(null);
-  const requestSubscription = () => pushSubscription.value = requestPushSubscription(worker.value);
 
   useEffect(() => {
     globalThis.addEventListener('beforeinstallprompt', (e) => {
@@ -97,5 +97,14 @@ export function usePWA() {
     })();
   }, []);
 
-  return { isPWA, installPWA, worker, pushSubscription, requestSubscription };
+  return {
+    isPWA,
+    installPWA,
+    worker,
+    pushSubscription,
+
+    async requestSubscription() {
+      return pushSubscription.value = await requestPushSubscription(worker.value);
+    }
+  };
 }

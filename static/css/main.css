@@ -68,6 +68,10 @@ header {
     align-items: center;
   }
 
+  a.logo {
+    --color: var(--primary);
+  }
+
   /* Remove bottom border if there is a banner */
   &:has(+ .banner) {
     border-bottom: none;
@@ -114,7 +118,7 @@ header {
   right: var(--spacing);
   float: right;
   padding: 0 var(--spacing);
-  --color: var(--primary);
+  --color: var(--accent);
   margin-right: var(--spacing);
   margin-top: var(--spacing);
   border-radius: calc(var(--spacing) * 4);

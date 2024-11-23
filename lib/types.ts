@@ -41,7 +41,8 @@ export interface UserData {
 export type GlobalData = {
   user: Signal<Partial<UserData> | null | undefined>;
   outOfTokens: Signal<boolean>;
-} & ReturnType<typeof usePWA>;
+  pwa: ReturnType<typeof usePWA>;
+};
 
 export interface State {
   user?: UserData;
