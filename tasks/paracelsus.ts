@@ -18,7 +18,7 @@ await exec(['git', 'clone', 'https://github.com/epangelias/fresh-tempalte.git', 
 
 Deno.chdir(projectPath);
 
-const getPath = (path: string) => projectPath + "/" + path;
+const getPath = (path: string) => Deno.cwd() + "/" + path;
 
 console.log(getPath(""));
 
