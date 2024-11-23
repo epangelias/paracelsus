@@ -10,7 +10,7 @@ const limiter = new RateLimiter({ maxRequests: 2, interval: 60 }); // 2 per minu
 let mailjet: Mailjet.Client;
 
 if (!Deno.env.has('MJ_APIKEY_PUBLIC') || !Deno.env.has('MJ_APIKEY_PRIVATE')) {
-  throw new Error('Missing mailjet credentials');
+  console.warn('Missing mailjet credentials');
 } else {
   mailjet = new Mailjet.Client({
     apiKey: Deno.env.get('MJ_APIKEY_PUBLIC'),
