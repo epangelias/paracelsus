@@ -8,17 +8,19 @@ export const exec = async (args: string[]) =>
     stderr: 'inherit',
   }).output();
 
-const projectName = Deno.args[0] ||
-  prompt('Enter Project Name [fresh-project]') ||
-  'fresh-project';
+const projectPath = Deno.args[0];
 
-await exec(['git', 'clone', 'https://github.com/epangelias/fresh-tempalte.git', projectName]);
+if (!projectPath) throw new Error('No project path provided');
 
-Deno.chdir(projectName);
+const projectName = projectPath.split("/")[-1];
 
-const getPath = (path: string) => new URL("../" + path, "file://" + Deno.cwd());
+await exec(['git', 'clone', 'https://github.com/epangelias/fresh-tempalte.git', projectPath]);
 
-console.log(getPath("/").href);
+Deno.chdir(projectPath);
+
+const getPath = (path: string) => projectPath + "/" + path;
+
+console.log(getPath(""));
 
 const siteData = `import { Meth } from "@/lib/meth.ts";\n
 export const site = {
