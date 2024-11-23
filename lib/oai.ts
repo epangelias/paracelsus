@@ -11,11 +11,11 @@ const defaultTestOptions = {
   model: Deno.env.get('AI_MODEL') || 'llama3.2:1b-instruct-q4_K_M',
 };
 
-export function generateChatCompletionStream(
+export async function generateChatCompletionStream(
   options: OAIOptions = defaultTestOptions,
   messages: AIMessage[],
 ) {
-  return generateChatCompletion(options, messages, true) as unknown as Stream<
+  return await generateChatCompletion(options, messages, true) as unknown as Stream<
     OpenAI.ChatCompletionChunk
   >;
 }

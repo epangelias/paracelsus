@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils.ts';
 import { HttpError, page } from 'fresh';
-import { getUserByVerificationCode, updateUser } from '@/lib/user.ts';
+import { getUserByVerificationCode, updateUser } from '../../lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { Page } from '@/components/Page.tsx';
 

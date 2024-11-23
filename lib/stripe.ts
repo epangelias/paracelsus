@@ -9,9 +9,7 @@ export function isStripeEnabled() {
 }
 
 export function getStripePremiumPlanPriceId() {
-  return Deno.env.get(
-    'STRIPE_PREMIUM_PLAN_PRICE_ID',
-  );
+  return Deno.env.get('STRIPE_PREMIUM_PLAN_PRICE_ID');
 }
 
 export const stripe = new Stripe(STRIPE_SECRET_KEY!, {
@@ -21,7 +19,7 @@ export const stripe = new Stripe(STRIPE_SECRET_KEY!, {
 
 const cryptoProvider = Stripe.createSubtleCryptoProvider();
 
-export async function HandleStripeWebhook(ctx: FreshContext) {
+export async function GetStripeWebhookEvent(ctx: FreshContext) {
   if (!isStripeEnabled()) throw new HttpError(STATUS_CODE.NotFound);
 
   const body = await ctx.req.text();
@@ -45,6 +43,35 @@ export async function HandleStripeWebhook(ctx: FreshContext) {
       cryptoProvider,
     ) as Stripe.Event & { data: { object: { customer: string } } };
   } catch (error) {
-    throw new HttpError(STATUS_CODE.NotFound, error.message);
+    throw new HttpError(STATUS_CODE.InternalServerError, "Error handling stripe webhook");
   }
 }
+
+
+
+// export function StripePlugin(app: App<State>) {
+//   app.post("/api/stripe-webhooks", async ctx => {
+//     const event = await GetStripeWebhookEvent(ctx);
+
+//     const { customer } = event.data.object;
+
+//     console.log('Received hook: ' + event.type);
+
+//     const user = await getUserByStripeCustomer(customer);
+//     if (!user) throw new HttpError(STATUS_CODE.NotFound, 'User not found');
+
+//     switch (event.type) {
+//       case 'customer.subscription.created': {
+//         await updateUser({ ...user, isSubscribed: true });
+//         return new Response(null, { status: STATUS_CODE.Created });
+//       }
+//       case 'customer.subscription.deleted': {
+//         await updateUser({ ...user, isSubscribed: false });
+//         return new Response(null, { status: STATUS_CODE.Accepted });
+//       }
+//       default: {
+//         throw new HttpError(STATUS_CODE.BadRequest, 'Event type not supported');
+//       }
+//     }
+//   })
+// }

@@ -4,8 +4,9 @@ import { AIMessage, ChatData } from '@/lib/types.ts';
 import { useEffect, useRef } from 'preact/hooks';
 import { useGlobal } from '@/islands/Global.tsx';
 import { Textarea } from './Textarea.tsx';
+import { userHasTokens } from '../lib/user-data.ts';
 
-const endpoint = '/api/chat';
+const endpoint = '/api/chatdata';
 
 export default function ChatBox({ data }: { data: ChatData }) {
   const global = useGlobal();
@@ -14,15 +15,28 @@ export default function ChatBox({ data }: { data: ChatData }) {
   const messagesRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const checkCanGenerate = () => global.user.value?.tokens! > 0 || global.user.value?.isSubscribed;
+  const checkCanGenerate = () =>
+    global.user && (global.user.tokens >= 0 || global.user.isSubscribed);
 
   if (!global.user.value) return <></>;
 
-  useEffect(() => syncSSE(endpoint, chatData), []);
+  useEffect(() => syncSSE({ endpoint, data: chatData }), []);
 
   useEffect(() => {
     scrollToBottom();
   }, [chatData.value]);
+
+  function addMessage(message: AIMessage) {
+    chatData.value.messages.push(message);
+    chatData.value = { ...chatData.value };
+    return message;
+  }
+
+  async function scrollToBottom() {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    if (!messagesRef.current) return;
+    messagesRef.current.scrollTo(0, messagesRef.current.scrollHeight);
+  }
 
   async function onSubmit(e: SubmitEvent) {
     e.preventDefault();
@@ -47,29 +61,21 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
     generating.value = true;
 
-    watchSSE('/api/ai', (newMessage: AIMessage) => {
-      if (newMessage == null) return generating.value = false;
-      message.content = newMessage.content;
-      message.html = newMessage.html;
-      chatData.value = { ...chatData.value };
-      scrollToBottom();
-    }, () => {
-      message.html =
-        '<p class="error-message" role="alert" aria-live="assertive">Error generating response</p>';
-      generating.value = false;
+    watchSSE({
+      endpoint: '/api/ai',
+      onMessage(newMessage: AIMessage) {
+        if (newMessage == null) return generating.value = false;
+        message.content = newMessage.content;
+        message.html = newMessage.html;
+        chatData.value = { ...chatData.value };
+        scrollToBottom();
+      },
+      onError() {
+        message.html =
+          '<p class="error-message" role="alert" aria-live="assertive">Error generating response</p>';
+        generating.value = false;
+      },
     });
-  }
-
-  function addMessage(message: AIMessage) {
-    chatData.value.messages.push(message);
-    chatData.value = { ...chatData.value };
-    return message;
-  }
-
-  async function scrollToBottom() {
-    await new Promise((resolve) => setTimeout(resolve, 0));
-    if (!messagesRef.current) return;
-    messagesRef.current.scrollTo(0, messagesRef.current.scrollHeight);
   }
 
   function ChatMessage(message: AIMessage) {

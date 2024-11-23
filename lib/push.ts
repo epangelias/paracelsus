@@ -4,7 +4,7 @@ import { State, UserData } from '@/lib/types.ts';
 import { site } from '@/lib/site.ts';
 import { asset } from 'fresh/runtime';
 import { STATUS_CODE } from '@std/http/status';
-import { updateUser } from '@/lib/user.ts';
+import { updateUser } from './user-data.ts';
 
 // import * as webPushTypes from '@types/web-push';
 // const webPush = _webPush as typeof webPushTypes;
@@ -19,15 +19,14 @@ if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
   console.log(webPush.generateVAPIDKeys());
 }
 
-export async function sendNotificationsToUser(user: UserData, title: string, message: string) {
+export async function sendNotificationToUser(user: UserData, title: string, message: string) {
   let subscriptionRemoved = false;
 
   for (const subscription of user.pushSubscriptions) {
     try {
       const data = { body: message, icon: asset(site.appIcon), title };
       await webPush.sendNotification(subscription, JSON.stringify(data), { TTL: 60 });
-    } catch (e) {
-      console.error(e);
+    } catch (_e) {
       subscriptionRemoved = true;
       const index = user.pushSubscriptions.indexOf(subscription);
       if (index > -1) user.pushSubscriptions.splice(index, 1);

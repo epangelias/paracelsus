@@ -1,5 +1,6 @@
 import type { Signal } from '@preact/signals';
 import { ComponentChildren } from 'preact';
+import { usePWA } from './pwa.ts';
 
 export interface CounterData {
   count: number;
@@ -37,15 +38,11 @@ export interface UserData {
   pushSubscriptions: PushSubscription[];
 }
 
-export interface GlobalData {
+export type GlobalData = {
   user: Signal<Partial<UserData> | null | undefined>;
-  worker: Signal<ServiceWorkerRegistration | null>;
-  pushSubscription: Signal<PushSubscription | null>;
-  requestSubscription: () => Promise<PushSubscription | null>;
-  isPWA: Signal<boolean>;
-  installPWA: Signal<() => {} | null>;
   outOfTokens: Signal<boolean>;
-}
+} & ReturnType<typeof usePWA>;
+
 
 export interface State {
   user?: UserData;

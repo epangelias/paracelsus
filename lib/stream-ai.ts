@@ -8,62 +8,56 @@ import { safelyRenderMarkdown } from '@/lib/md.ts';
 interface Options {
   messages: AIMessage[];
   options?: OAIOptions;
-  chunk?: (send: (s: unknown) => void) => void;
-  end?: (messages: AIMessage[]) => void;
-  error?: (messages: AIMessage[]) => void;
-  cancel?: (messages: AIMessage[]) => void;
+  onChunk?: (messages: AIMessage[]) => void;
+  onEnd?: (messages: AIMessage[]) => void;
+  onError?: (messages: AIMessage[]) => void;
+  onCancel?: (messages: AIMessage[]) => void;
 }
 
-export function StreamAI(options: Options) {
+export function StreamAI({ messages, options, onChunk, onEnd, onError, onCancel }: Options) {
   let stream: Stream<ChatCompletionChunk>;
 
   const message = { role: 'assistant', content: '', html: '' };
 
   return StreamSSR({
-    async chunk(send) {
+    async onChunk(send) {
       try {
         stream = await generateChatCompletionStream(
-          options.options,
-          options.messages.map(({ role, content }) => ({ role, content })),
+          options,
+          messages.map(({ role, content }) => ({ role, content })),
         );
         if (stream instanceof Stream == false) throw new Error('Invalid stream');
+        if (onChunk) onChunk(messages);
       } catch (e) {
-        if (options.error) options.error(options.messages);
+        if (onError) onError(messages);
         stream?.controller.abort();
         console.error(e);
       }
 
       let content = '';
 
-      options.messages.push(message);
+      messages.push(message);
 
       for await (const token of stream) {
         const deltaContent = token.choices[0].delta.content;
-
         if (typeof deltaContent == 'undefined') break;
-
         content += deltaContent;
-
         const html = insertLoaderToHTML(await safelyRenderMarkdown(content));
-
         message.content = content;
         message.html = html;
-
         send(message);
       }
 
       message.html = await safelyRenderMarkdown(content);
       send(message);
-
       stream.controller.abort();
-
       send(null);
 
-      if (options.end) options.end(options.messages);
+      if (onEnd) onEnd(messages);
     },
-    async cancel() {
+    async onCancel() {
       message.html = await safelyRenderMarkdown(message.content);
-      if (options.cancel) options.cancel(options.messages);
+      if (onCancel) onCancel(messages);
       stream?.controller?.abort();
     },
   });

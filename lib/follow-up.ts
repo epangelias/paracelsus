@@ -1,7 +1,7 @@
 import { HttpError } from 'https://jsr.io/@fresh/core/2.0.0-alpha.25/src/error.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { ChatData, UserData } from '@/lib/types.ts';
-import { sendNotificationsToUser } from '@/lib/push.ts';
+import { sendNotificationToUser } from '@/lib/push.ts';
 import { db } from '@/lib/utils.ts';
 import { generateChatCompletion } from '@/lib/oai.ts';
 
@@ -29,7 +29,7 @@ export async function sendFollowUp(user: UserData) {
   }
   const message = await generateFollowUpMessage(user);
   if (!message) throw new HttpError(500, 'Error generating message');
-  await sendNotificationsToUser(user, 'Paracelsus Hath Spoken', message);
+  await sendNotificationToUser(user, 'Paracelsus Hath Spoken', message);
 }
 
 export function AutoSendFollowUps() {

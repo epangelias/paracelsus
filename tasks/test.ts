@@ -3,8 +3,8 @@
 // npx puppeteer browsers install firefox
 
 import puppeteer from 'npm:puppeteer';
-import { deleteUser } from '@/lib/user.ts';
-import { getUserIdByEmail } from '@/lib/user.ts';
+import { deleteUser } from '../lib/user-data.ts';
+import { getUserIdByEmail } from '../lib/user-data.ts';
 
 await deleteUser(await getUserIdByEmail('test@test.test'));
 await deleteUser(await getUserIdByEmail('test@test.test2'));

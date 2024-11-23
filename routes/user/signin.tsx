@@ -2,7 +2,7 @@ import { define } from '@/lib/utils.ts';
 import { FreshContext, page } from 'fresh';
 import { setCookie } from 'jsr:@std/http/cookie';
 import { SigninForm } from '@/components/SigininForm.tsx';
-import { authorizeUser } from '@/lib/user.ts';
+import { authorizeUser } from '../../lib/user-data.ts';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/rate-limiter.ts';

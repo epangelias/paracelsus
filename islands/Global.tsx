@@ -4,40 +4,23 @@ import { ComponentChildren } from 'preact';
 import { GlobalData, UserData } from '@/lib/types.ts';
 import { useComputed, useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/sse.ts';
-import { getSubscription, loadServiceWorker, requestSubscription, usePWA } from '@/lib/worker.ts';
+import { usePWA } from '@/lib/pwa.ts';
+
+const endpoint = '/api/userdata';
 
 export function Global(
   { children, user }: { children: ComponentChildren; user?: Partial<UserData> },
 ) {
-  const global = createGlobal(user);
-  if (user) useEffect(() => syncSSE('/api/userdata', global.user), []);
-  return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
-}
-
-export function createGlobal(user?: Partial<UserData>) {
-  const { isPWA, installPWA } = usePWA();
-
   const global: GlobalData = {
     user: useSignal(user),
-    requestSubscription: () =>
-      global.pushSubscription.value = requestSubscription(global.worker.value),
-    pushSubscription: useSignal(null),
-    worker: useSignal(null),
-    isPWA,
-    installPWA,
     outOfTokens: useComputed(() =>
       global.user.value?.tokens! <= 0 && !global.user.value?.isSubscribed
     ),
+    ...usePWA(),
   };
 
-  useEffect(() => {
-    (async () => {
-      global.worker.value = await loadServiceWorker();
-      global.pushSubscription.value = await getSubscription(global.worker.value);
-    })();
-  }, []);
-
-  return global;
+  if (user) useEffect(() => syncSSE({ endpoint, data: global.user }), []);
+  return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
 }
 
 const GlobalContext = createContext<GlobalData | null>(null);

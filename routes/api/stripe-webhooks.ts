@@ -1,12 +1,12 @@
-import { HandleStripeWebhook } from '@/lib/stripe.ts';
 import { define } from '@/lib/utils.ts';
-import { getUserByStripeCustomer, updateUser } from '@/lib/user.ts';
+import { getUserByStripeCustomer, updateUser } from '../../lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { HttpError } from 'fresh';
+import { GetStripeWebhookEvent } from '@/lib/stripe.ts';
 
 export const handler = define.handlers({
   POST: async (ctx) => {
-    const event = await HandleStripeWebhook(ctx);
+    const event = await GetStripeWebhookEvent(ctx);
 
     const { customer } = event.data.object;
 

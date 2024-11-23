@@ -1,14 +1,14 @@
 import { db } from '@/lib/utils.ts';
 
 interface Options {
-  chunk?: (send: (s: unknown) => void) => void;
-  cancel?: () => void;
   watchKey?: Deno.KvKey;
+  onChunk?: (send: (s: unknown) => void) => void;
+  onCancel?: () => void;
 }
 
-export function StreamSSR(options: Options) {
+export function StreamSSR({ onChunk, onCancel, watchKey }: Options) {
   const stream = new ReadableStream({
-    start: (controller) => {
+    start: async (controller) => {
       const send = (data: unknown) => {
         const message = `data: ${JSON.stringify(data)}\n\n`;
         try {
@@ -17,20 +17,19 @@ export function StreamSSR(options: Options) {
           controller.error(e);
         }
       };
-      if (options.chunk) options.chunk(send);
-      if (options.watchKey) watchKV(options.watchKey, send);
+
+      if (onChunk) onChunk(send);
+
+      if (watchKey) {
+        for await (const event of db.watch([watchKey])) {
+          if (event[0].versionstamp === null) continue;
+          send(event[0].value);
+        }
+      }
     },
-    cancel: options.cancel,
+    cancel: onCancel,
   });
 
   const headers = new Headers({ 'Content-Type': 'text/event-stream' });
-
   return new Response(stream, { headers });
-}
-
-async function watchKV(key: Deno.KvKey, send: (d: unknown) => void) {
-  for await (const event of db.watch([key])) {
-    if (event[0].versionstamp === null) continue;
-    send(event[0].value);
-  }
 }

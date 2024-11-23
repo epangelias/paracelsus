@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils.ts';
 import { page } from 'fresh';
-import { authorizeUser, createUser } from '@/lib/user.ts';
+import { authorizeUser, createUser } from '../../lib/user-data.ts';
 import { SignupForm } from '@/components/SiginupForm.tsx';
 import { sendEmailVerification } from '@/lib/mail.ts';
 import { SetAuthCookie } from '@/routes/user/signin.tsx';

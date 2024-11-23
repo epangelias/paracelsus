@@ -4,22 +4,22 @@ import { asset, IS_BROWSER } from 'fresh/runtime';
 import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 
-export async function requestSubscription(registration?: ServiceWorkerRegistration | null) {
-  if (!registration) return null;
+export async function requestPushSubscription(worker?: ServiceWorkerRegistration | null) {
+  if (!worker) return null;
 
   if (Notification.permission == 'denied') {
     alert('Notifications are disabled. Please enable them in your browser or device settings.');
     return null;
   }
 
-  const existingSubscription = await registration.pushManager.getSubscription();
+  const existingSubscription = await worker.pushManager.getSubscription();
   if (existingSubscription) return existingSubscription;
 
   const vapidPublicKey = await fetchOrError('/api/vapid-public-key') as string;
   console.log('Loaded VAPID key: ', vapidPublicKey);
   const convertedVapidKey = Meth.urlBase64ToUint8Array(vapidPublicKey);
 
-  const subscription = await registration.pushManager.subscribe({
+  const subscription = await worker.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: convertedVapidKey,
   });
@@ -63,35 +63,40 @@ export function isIOSSafari(): boolean {
 }
 
 function detectIsPWA(): boolean {
-  if (IS_BROWSER) return false;
-  return globalThis.matchMedia('(display-mode: standalone)').matches;
+  return IS_BROWSER && globalThis.matchMedia('(display-mode: standalone)').matches;
 }
 
 export function usePWA() {
-  const installPWA = useSignal<() => {}>(null);
+  const installPWA = useSignal<() => void>();
   const isPWA = useSignal(false);
+  const worker = useSignal<ServiceWorkerRegistration | null>(null);
+  const pushSubscription = useSignal<PushSubscription | null>(null);
+  const requestSubscription = () => pushSubscription.value = requestPushSubscription(worker.value);
 
   useEffect(() => {
     globalThis.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
 
-      const deferredPrompt = e as Event & {
-        prompt: () => {};
-        userChoice: Promise<{ outcome: string }>;
-      };
+      const deferredPrompt = e as Event & { prompt: () => void; userChoice: Promise<void> };
 
       installPWA.value = async () => {
         deferredPrompt.prompt();
         const choice = await deferredPrompt.userChoice;
-        console.log('User choice: ', choice);
+        console.log(choice);
       };
-
-      globalThis.matchMedia('(display-mode: standalone)')
-        .addEventListener('change', () => isPWA.value = detectIsPWA());
-
-      isPWA.value = detectIsPWA();
     });
-  });
 
-  return { isPWA, installPWA };
+    globalThis.matchMedia('(display-mode: standalone)')
+      .addEventListener('change', () => isPWA.value = detectIsPWA());
+
+    isPWA.value = detectIsPWA();
+
+    (async () => {
+      worker.value = await loadServiceWorker();
+      pushSubscription.value = await getSubscription(worker.value);
+    })();
+
+  }, []);
+
+  return { isPWA, installPWA, worker, pushSubscription, requestSubscription };
 }

@@ -10,7 +10,7 @@ export const handler = define.handlers((ctx) => {
   if (!ctx.state.user || !ctx.state.auth) throw new HttpError(STATUS_CODE.Unauthorized);
 
   return StreamSSR({
-    async chunk(send) {
+    async onChunk(send) {
       const userKey: Deno.KvKey = ['users', ctx.state.user!.id];
 
       for await (const [user] of db.watch<[UserData]>([userKey])) {

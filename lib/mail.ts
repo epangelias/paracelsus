@@ -1,27 +1,32 @@
 import { MailOptions, UserData } from '@/lib/types.ts';
 import { site } from './site.ts';
-import { generateEmailVerification } from '@/lib/user.ts';
+import { generateEmailVerification } from './user-data.ts';
 import Mailjet from 'node-mailjet';
-import { HttpError } from 'fresh';
-import { STATUS_CODE } from '@std/http/status';
 import { asset } from 'fresh/runtime';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
+import { HttpError } from 'fresh';
+import { STATUS_CODE } from '@std/http/status';
+
+const limiter = new RateLimiter({ maxRequests: 2, interval: 60 }); // 2 per minute
 
 let mailjet: Mailjet.Client;
 
+if (!Deno.env.has('MJ_APIKEY_PUBLIC') || !Deno.env.has('MJ_APIKEY_PRIVATE')) {
+  throw new Error('Missing mailjet credentials');
+} else {
+  mailjet = new Mailjet.Client({
+    apiKey: Deno.env.get('MJ_APIKEY_PUBLIC'),
+    apiSecret: Deno.env.get('MJ_APIKEY_PRIVATE'),
+  });
+}
+
 export async function sendMail(options: MailOptions) {
-  if (!Deno.env.has('MJ_APIKEY_PUBLIC') || !Deno.env.has('MJ_APIKEY_PRIVATE')) {
-    throw new Error('Missing mailjet credentials');
-  }
+  limiter.request();
 
-  if (!mailjet) {
-    mailjet = new Mailjet.Client({
-      apiKey: Deno.env.get('MJ_APIKEY_PUBLIC'),
-      apiSecret: Deno.env.get('MJ_APIKEY_PRIVATE'),
-    });
-  }
+  if (!mailjet) throw new Error('Mail Disabled');
 
-  const req = await mailjet.post('send', { 'version': 'v3.1' }).request({
+  await mailjet;
+  await mailjet.post('send', { 'version': 'v3.1' }).request({
     Messages: [
       {
         From: { Email: options.from, Name: options.fromName },
@@ -32,15 +37,9 @@ export async function sendMail(options: MailOptions) {
       },
     ],
   });
-
-  console.log('EMAIL RESPONSE:', req.response.statusText, req.response.status);
 }
 
-const limiter = new RateLimiter({ maxRequests: 2, interval: 60 }); // 2 per minute
-
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
-  limiter.request();
-
   const code = await generateEmailVerification(user);
 
   const link = `${baseUrl}/user/verify-email?code=${code}`;
