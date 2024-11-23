@@ -26,6 +26,6 @@ export const handler = define.handlers({
 export default define.page<typeof handler>(({ data }) => (
   <Page>
     <h1>User Settings</h1>
-    <UserUI message={data?.message} error={data?.error} />
+    {/* <UserUI message={data?.message} error={data?.error} /> */}
   </Page>
 ));
