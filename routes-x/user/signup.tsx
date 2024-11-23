@@ -3,7 +3,7 @@ import { page } from 'fresh';
 import { authorizeUser, createUser } from '@/lib/user-data.ts';
 import { SignupForm } from '@/components/SiginupForm.tsx';
 import { sendEmailVerification } from '@/lib/mail.ts';
-import { SetAuthCookie } from '@/routes/user/signin.tsx';
+import { SetAuthCookie } from './signin.tsx';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
