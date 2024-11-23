@@ -43,7 +43,6 @@ export type GlobalData = {
   outOfTokens: Signal<boolean>;
 } & ReturnType<typeof usePWA>;
 
-
 export interface State {
   user?: UserData;
   auth?: string;

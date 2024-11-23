@@ -41,9 +41,7 @@ export function Banners() {
       name: 'pwa-install',
       condition: () => global.installPWA.value && !global.isPWA.value && !isIOSSafari(),
       canClose: true,
-      content: () => (
-        <a href='#' onClick={global.installPWA.value}>Install this app to your device</a>
-      ),
+      content: () => <a href='#' onClick={global.installPWA.value}>Install this app to your device</a>,
     },
   ];
 
@@ -71,7 +69,7 @@ export function Banner(
     hideBanner.value = true;
   }
 
-  function open() {
+  function onOpen() {
     localStorage.removeItem('hideBanner-' + name);
     hideBanner.value = false;
   }
@@ -80,7 +78,7 @@ export function Banner(
     <>
       <button
         class='banner-button'
-        onClick={open}
+        onClick={onOpen}
         data-hide={!hideBanner.value}
         aria-label='Open Banner'
       >

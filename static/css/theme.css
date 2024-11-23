@@ -25,8 +25,8 @@
   --red: color-mix(in srgb, red, var(--fg1) 25%);
 
   --monospace:
-    'Fira Code', 'JetBrains Mono', 'Source Code Pro', 'Hack', 'Ubuntu Mono', 'DejaVu Sans Mono',
-    'Monoid', 'Inconsolata', 'Courier New', monospace;
+    'Fira Code', 'JetBrains Mono', 'Source Code Pro', 'Hack', 'Ubuntu Mono', 'DejaVu Sans Mono', 'Monoid',
+    'Inconsolata', 'Courier New', monospace;
 }
 
 .theme-light {
@@ -287,8 +287,7 @@ button {
   }
 }
 
-:is(input, button, select, a, .textarea-container)
-  + :is(input, button, select, a, .textarea-container) {
+:is(input, button, select, a, .textarea-container) + :is(input, button, select, a, .textarea-container) {
   margin-left: var(--spacing);
 }
 

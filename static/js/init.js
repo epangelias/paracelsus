@@ -1,6 +1,5 @@
 const updateTheme = () => {
-  const colorScheme =
-    document.querySelector('meta[name="color-scheme"]')?.getAttribute('content') || 'light';
+  const colorScheme = document.querySelector('meta[name="color-scheme"]')?.getAttribute('content') || 'light';
   const prefersDark = globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
   const hasDark = colorScheme?.includes('dark');
   const hasLight = colorScheme?.includes('light');

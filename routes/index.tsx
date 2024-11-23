@@ -13,7 +13,7 @@ export const handler = define.handlers({
   },
 });
 
-export default define.page<typeof handler>(({ data }) => {
+export default define.page<typeof handler>(({ data, state }) => {
   return (
     <Page>
       {data?.chatData ? <ChatBox data={data.chatData} /> : (

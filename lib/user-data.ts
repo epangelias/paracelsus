@@ -5,6 +5,8 @@ import { State, UserData } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 
+// DB
+
 export async function getUserFromState(ctx: FreshContext<State>) {
   if (ctx.state.user) return ctx.state.user;
   const { auth } = getCookies(ctx.req.headers);
@@ -69,19 +71,12 @@ export async function authorizeUser(email: string, password: string) {
   return await CreateAuthCode(id);
 }
 
-function validateUser(user: UserData) {
-  // Email
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!regex.test(user.email)) throw new Error('Invalid email');
-  if (user.email.length > 320) throw new Error('Email must be less than 320 characters');
-  if (user.email.length < 5) throw new Error('Email must be at least 5 characters');
-
-  // Name
-  if (user.name.length < 3) throw new Error('Name must be at least 3 characters');
-  if (user.name.length > 100) throw new Error('Name must be less than 100 characters');
-  if (!/^[a-zA-Z\s]+$/.test(user.name)) {
-    throw new Error('Name must only contain letters and spaces');
-  }
+export async function generateEmailVerification(user: UserData) {
+  const code = Meth.code(12);
+  await db.set(['userVerification', code], { id: user.id, email: user.email }, {
+    expireIn: 1000 * 60 * 60, // One hour
+  });
+  return code;
 }
 
 export async function createUser(name: string, email: string, password: string) {
@@ -116,7 +111,7 @@ export async function createUser(name: string, email: string, password: string) 
     pushSubscriptions: [],
   };
 
-  validateUser(user);
+  validateUserData(user);
 
   const res = await db.atomic()
     .check({ key: ['users', user.id], versionstamp: null })
@@ -131,14 +126,6 @@ export async function createUser(name: string, email: string, password: string) 
   return user;
 }
 
-export async function generateEmailVerification(user: UserData) {
-  const code = Meth.code(12);
-  await db.set(['userVerification', code], { id: user.id, email: user.email }, {
-    expireIn: 1000 * 60 * 60, // One hour
-  });
-  return code;
-}
-
 export async function deleteUser(id: string | null) {
   if (!id) return;
   const user = await getUserById(id);
@@ -146,7 +133,7 @@ export async function deleteUser(id: string | null) {
   await db.delete(['users', id]);
   await db.delete(['usersByEmail', user.email]);
 
-  // User data
+  // Delete user related data
   await db.delete(['chat', id]);
 
   if (user.stripeCustomerId) {
@@ -168,7 +155,7 @@ export async function updateUser(changes: UserData) {
   changes.email = normalizeEmail(changes.email);
   changes.name = normalizeName(changes.name);
 
-  validateUser(changes);
+  validateUserData(changes);
 
   if (user.email != changes.email) {
     const { ok } = await db.atomic()
@@ -197,6 +184,23 @@ export async function getUserByVerificationCode(code: string) {
   return user;
 }
 
+// Validation
+
+function validateUserData(user: UserData) {
+  // Email
+  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!regexEmail.test(user.email)) throw new Error('Invalid email');
+  if (user.email.length > 320) throw new Error('Email must be less than 320 characters');
+  if (user.email.length < 5) throw new Error('Email must be at least 5 characters');
+
+  // Name
+  if (user.name.length < 3) throw new Error('Name must be at least 3 characters');
+  if (user.name.length > 100) throw new Error('Name must be less than 100 characters');
+  if (!/^[a-zA-Z\s]+$/.test(user.name)) {
+    throw new Error('Name must only contain letters and spaces');
+  }
+}
+
 export function normalizeName(name: string) {
   return name.trim().replace(/\s+/g, ' ').split(' ').map((word) =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
@@ -205,4 +209,18 @@ export function normalizeName(name: string) {
 
 export function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
+}
+
+// Strip user data for sending to client
+
+export function stripUserData(user?: UserData) {
+  if (!user) return undefined;
+  return {
+    name: user.name,
+    tokens: user.tokens,
+    isSubscribed: user.isSubscribed,
+    isEmailVerified: user.isEmailVerified,
+    email: user.email,
+    hasVerifiedEmail: user.hasVerifiedEmail,
+  } as Partial<UserData>;
 }

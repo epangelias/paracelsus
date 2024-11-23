@@ -7,15 +7,13 @@ export default define.page(() => (
     <div>
       <h1>CSS Theme Demo Page</h1>
       <p>
-        Welcome to the CSS theme demo page. Below are examples of common HTML elements for testing
-        your styles.
+        Welcome to the CSS theme demo page. Below are examples of common HTML elements for testing your styles.
       </p>
 
       <h2>Typography</h2>
       <p>This is a paragraph with normal text.</p>
       <p>
-        This is a paragraph with <strong>bold text</strong>, <em>italic text</em>, and{' '}
-        <a href='#'>a link</a>.
+        This is a paragraph with <strong>bold text</strong>, <em>italic text</em>, and <a href='#'>a link</a>.
       </p>
       <blockquote>
         "This is a blockquote. It's used to highlight text or quotes."

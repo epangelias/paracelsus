@@ -28,21 +28,8 @@ export function UserUI({ error, message }: { error?: string; message?: string })
       )}
 
       <form method='POST'>
-        <Field
-          name='name'
-          label='Name'
-          required
-          autofocus
-          defaultValue={global.user.value?.name}
-        />
-
-        <Field
-          name='email'
-          label='Email'
-          required
-          autofocus
-          defaultValue={global.user.value?.email}
-        />
+        <Field name='name' label='Name' required autofocus defaultValue={global.user.value?.name} />
+        <Field name='email' label='Email' required autofocus defaultValue={global.user.value?.email} />
 
         <div>
           <button>Save</button>

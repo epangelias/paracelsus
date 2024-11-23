@@ -12,7 +12,8 @@ AutoSendFollowUps();
 PushPlugin(app);
 
 app.use(async (ctx) => {
-  if (ctx.req.url.includes('?__frsh_c=')) await getUserFromState(ctx);
+  if (!ctx.req.url.includes('?__frsh_c='))
+    await getUserFromState(ctx);
   return await ctx.next();
 });
 

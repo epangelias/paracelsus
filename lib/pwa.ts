@@ -95,7 +95,6 @@ export function usePWA() {
       worker.value = await loadServiceWorker();
       pushSubscription.value = await getSubscription(worker.value);
     })();
-
   }, []);
 
   return { isPWA, installPWA, worker, pushSubscription, requestSubscription };

@@ -13,9 +13,7 @@ export function Global(
 ) {
   const global: GlobalData = {
     user: useSignal(user),
-    outOfTokens: useComputed(() =>
-      global.user.value?.tokens! <= 0 && !global.user.value?.isSubscribed
-    ),
+    outOfTokens: useComputed(() => global.user.value?.tokens! <= 0 && !global.user.value?.isSubscribed),
     ...usePWA(),
   };
 
@@ -26,15 +24,3 @@ export function Global(
 const GlobalContext = createContext<GlobalData | null>(null);
 
 export const useGlobal = () => useContext(GlobalContext) as GlobalData;
-
-export function stripUserData(user?: UserData) {
-  if (!user) return null;
-  return {
-    name: user.name,
-    tokens: user.tokens,
-    isSubscribed: user.isSubscribed,
-    isEmailVerified: user.isEmailVerified,
-    email: user.email,
-    hasVerifiedEmail: user.hasVerifiedEmail,
-  } as Partial<UserData>;
-}
