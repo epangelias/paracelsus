@@ -3,6 +3,7 @@ import { HttpError, page } from 'fresh';
 import { getUserByVerificationCode, updateUser } from '@/lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { Page } from '@/components/Page.tsx';
+import { Meth } from '@/lib/meth.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
@@ -21,7 +22,7 @@ export const handler = define.handlers({
       await updateUser(user);
       return page({ message: 'Email verified!' });
     } catch (e) {
-      return page({ message: e.message });
+      return page({ message: Meth.getErrorMessage(e) });
     }
   },
 });

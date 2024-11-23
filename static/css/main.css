@@ -21,12 +21,20 @@ body:not(.fade-out) {
 
 /* Page */
 
+.scrollable {
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 main {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  overflow-y: auto;
   margin: auto 0;
   padding: calc(var(--spacing) * 2) var(--spacing);
   max-width: var(--content-width);

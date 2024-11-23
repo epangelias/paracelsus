@@ -24,10 +24,10 @@ export const handler = define.handlers(async (ctx) => {
   }
 });
 
-export default define.page<typeof handler>((ctx) => {
+export default define.page((ctx) => {
   return (
     <Page>
-      <h1>{ctx.data.statusText}</h1>
+      <h1>{(ctx.data as unknown as { statusText: string }).statusText}</h1>
       <p>
         <a href='/'>Go Back</a>
       </p>

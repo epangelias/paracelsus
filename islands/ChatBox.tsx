@@ -5,8 +5,6 @@ import { useEffect, useRef } from 'preact/hooks';
 import { useGlobal } from '@/islands/Global.tsx';
 import { Textarea } from '@/islands/Textarea.tsx';
 
-const endpoint = '/api/chatdata';
-
 export default function ChatBox({ data }: { data: ChatData }) {
   const global = useGlobal();
   const chatData = useSignal<ChatData>(data);
@@ -18,7 +16,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
   if (!global.user.value) return <></>;
 
-  useEffect(() => syncSSE({ endpoint, data: chatData }), []);
+  useEffect(() => syncSSE('/api/chatdata', { data: chatData }), []);
 
   useEffect(() => {
     scrollToBottom();
@@ -46,7 +44,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
     addMessage({ role: 'user', content: inputRef.current.value });
     inputRef.current.value = '';
     scrollToBottom();
-    await sendSSE(endpoint, chatData.value);
+    await sendSSE('/api/chatdata', chatData.value);
     generateResponse();
   }
 
@@ -59,8 +57,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
     generating.value = true;
 
-    watchSSE({
-      endpoint: '/api/ai',
+    watchSSE('/api/ai', {
       onMessage(newMessage: AIMessage) {
         if (newMessage == null) return generating.value = false;
         message.content = newMessage.content;

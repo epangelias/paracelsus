@@ -9,7 +9,9 @@ export function Page(
     <div class='container'>
       {!props.hideHeader && <Header />}
       {!props.hideBanner && <Banners />}
-      <main>{props.children}</main>
+      <div className='scrollable'>
+        <main>{props.children}</main>
+      </div>
     </div>
   );
 }

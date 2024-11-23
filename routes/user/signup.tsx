@@ -30,7 +30,7 @@ export const handler = define.handlers({
 
       throw new Error('Error authorizing user');
     } catch (e) {
-      return page({ error: e.message, name, email });
+      return page({ error: Meth.getErrorMessage(e), name, email });
     }
   },
 });

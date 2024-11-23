@@ -27,3 +27,7 @@ paracelsus my-project
 - Go route to make all non app related routes to be in a plugin??
   - Or disconect modules from eachother and add seperate files for there implementation together in the app
 - Fix type errors
+
+## Fresh bugs
+
+- typeof handler does not work on handler catch all funcs

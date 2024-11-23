@@ -6,8 +6,6 @@ import { useComputed, useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/sse.ts';
 import { usePWA } from '@/lib/pwa.ts';
 
-const endpoint = '/api/userdata';
-
 export function Global(
   { children, user }: { children: ComponentChildren; user?: Partial<UserData> },
 ) {
@@ -17,7 +15,7 @@ export function Global(
     pwa: usePWA(),
   };
 
-  if (user) useEffect(() => syncSSE({ endpoint, data: global.user }), []);
+  if (user) useEffect(() => syncSSE('/api/userdata', { data: global.user }), []);
   return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
 }
 

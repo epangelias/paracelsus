@@ -31,10 +31,10 @@ export const site = {
 
 Deno.writeTextFile(getPath('lib/site.ts'), siteData);
 
-const envTemplate = await Deno.readTextFile(getPath('.template.env'));
+const envTemplate = await Deno.readTextFile(getPath('.env.template'));
 await Deno.writeTextFile(getPath('.env'), envTemplate);
 
-await Deno.remove(getPath('.template.env'));
+await Deno.remove(getPath('.env.template'));
 await Deno.remove(getPath('tasks/paracelsus.ts'));
 await Deno.remove(getPath('README.md'));
 await Deno.remove(getPath('.git'), { recursive: true });
