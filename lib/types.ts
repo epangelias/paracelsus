@@ -1,6 +1,6 @@
 import type { Signal } from '@preact/signals';
 import { ComponentChildren } from 'preact';
-import { usePWA } from './pwa.ts';
+import { usePWA } from "@/lib/pwa.ts";
 
 export interface CounterData {
   count: number;

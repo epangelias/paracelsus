@@ -1,10 +1,10 @@
 import { define } from '@/lib/utils.ts';
 import { AIMessage } from '@/lib/types.ts';
-import { StreamAI } from '../../lib/stream-ai.ts';
-import { updateUser, userHasTokens } from '../../lib/user-data.ts';
+import { StreamAI } from '@/lib/stream-ai.ts';
+import { updateUser } from '@/lib/user-data.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
-import { GetChatData, setChatData } from '../../lib/chat-data.ts';
+import { GetChatData, setChatData } from '@/lib/chat-data.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
@@ -21,12 +21,10 @@ export const handler = define.handlers({
     };
 
     return StreamAI({
-      options: {
-        messages: chatData.messages,
-        onError: saveMessages,
-        onCancel: saveMessages,
-        onEnd: saveMessages,
-      },
+      messages: chatData.messages,
+      onError: saveMessages,
+      onCancel: saveMessages,
+      onEnd: saveMessages,
     });
   },
 });

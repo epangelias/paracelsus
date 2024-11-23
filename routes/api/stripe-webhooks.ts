@@ -1,5 +1,5 @@
 import { define } from '@/lib/utils.ts';
-import { getUserByStripeCustomer, updateUser } from '../../lib/user-data.ts';
+import { getUserByStripeCustomer, updateUser } from "@/lib/user-data.ts";
 import { STATUS_CODE } from '@std/http/status';
 import { HttpError } from 'fresh';
 import { GetStripeWebhookEvent } from '@/lib/stripe.ts';

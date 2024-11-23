@@ -16,7 +16,7 @@ await exec(['git', 'clone', 'https://github.com/epangelias/fresh-tempalte.git', 
 
 Deno.chdir(projectName);
 
-const getPath = (path: string) => new URL(path, import.meta.url);
+const getPath = (path: string) => new URL("../" + path, import.meta.url);
 
 const siteData = `import { Meth } from "@/lib/meth.ts";\n
 export const site = {
@@ -38,5 +38,6 @@ await Deno.remove(getPath('.template.env'));
 await Deno.remove(getPath('tasks/paracelsus.ts'));
 await Deno.remove(getPath('README.md'));
 await Deno.remove(getPath('.git'), { recursive: true });
+await Deno.remove(getPath('.github'), { recursive: true });
 
 await exec(['deno', 'task', 'update']);

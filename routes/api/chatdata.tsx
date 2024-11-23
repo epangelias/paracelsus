@@ -1,5 +1,5 @@
 import { define } from '@/lib/utils.ts';
-import { StreamSSR } from '../../lib/stream-sse.ts';
+import { StreamSSR } from '@/lib/stream-sse.ts';
 import { db } from '@/lib/utils.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';

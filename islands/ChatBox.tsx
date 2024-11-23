@@ -3,7 +3,7 @@ import { sendSSE, syncSSE, watchSSE } from '@/lib/sse.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';
 import { useEffect, useRef } from 'preact/hooks';
 import { useGlobal } from '@/islands/Global.tsx';
-import { Textarea } from './Textarea.tsx';
+import { Textarea } from '@/islands/Textarea.tsx';
 
 const endpoint = '/api/chatdata';
 
@@ -14,7 +14,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   const messagesRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const checkCanGenerate = () => global.user && (global.user.tokens >= 0 || global.user.isSubscribed);
+  const checkCanGenerate = () => global.user.value && (global.user.value.tokens >= 0 || global.user.value.isSubscribed);
 
   if (!global.user.value) return <></>;
 

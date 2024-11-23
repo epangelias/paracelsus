@@ -1,11 +1,9 @@
 import { MailOptions, UserData } from '@/lib/types.ts';
-import { site } from './site.ts';
-import { generateEmailVerification } from './user-data.ts';
+import { site } from "@/lib/site.ts";
+import { generateEmailVerification } from "@/lib/user-data.ts";
 import Mailjet from 'node-mailjet';
 import { asset } from 'fresh/runtime';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
-import { HttpError } from 'fresh';
-import { STATUS_CODE } from '@std/http/status';
 
 const limiter = new RateLimiter({ maxRequests: 2, interval: 60 }); // 2 per minute
 
