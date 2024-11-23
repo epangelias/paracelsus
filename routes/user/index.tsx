@@ -1,9 +1,9 @@
 import { define } from '@/lib/utils.ts';
-// import { HttpError, page } from 'fresh';
-// import { updateUser } from '@/lib/user-data.ts';
+import { HttpError, page } from 'fresh';
+import { updateUser } from '@/lib/user-data.ts';
 // import { UserUI } from '@/islands/UserUI.tsx';
-// import { STATUS_CODE } from '@std/http/status';
-// import { Meth } from '@/lib/meth.ts';
+import { STATUS_CODE } from '@std/http/status';
+import { Meth } from '@/lib/meth.ts';
 // import { sendEmailVerification } from '@/lib/mail.ts';
 import { Page } from '@/components/Page.tsx';
 
