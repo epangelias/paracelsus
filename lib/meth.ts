@@ -31,15 +31,15 @@ export const Meth = {
     if (!(x instanceof Object) || !(y instanceof Object)) return false;
     if (x.constructor !== y.constructor) return false;
     for (var p in x) {
-      if (!x.hasOwnProperty(p)) continue;
-      if (!y.hasOwnProperty(p)) return false;
+      if (!(p in x)) continue;
+      if (!(p in y)) return false;
       if (x[p] === y[p]) continue;
       if (typeof (x[p]) !== 'object') return false;
       if (!Meth.objectEquals(x[p], y[p])) return false;
     }
 
     for (p in y) {
-      if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) return false;
+      if ((p in y) && !(p in x)) return false;
     }
 
     return true;
@@ -70,9 +70,7 @@ export const Meth = {
   },
   urlBase64ToUint8Array(base64String: string): Uint8Array {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
-    const base64 = (base64String + padding)
-      .replace(/\-/g, '+')
-      .replace(/_/g, '/');
+    const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
 
     const rawData = globalThis.atob(base64);
     const outputArray = new Uint8Array(rawData.length);
@@ -80,6 +78,7 @@ export const Meth = {
     for (let i = 0; i < rawData.length; ++i) {
       outputArray[i] = rawData.charCodeAt(i);
     }
+
     return outputArray;
   },
 };
