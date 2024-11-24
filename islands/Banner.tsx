@@ -86,7 +86,6 @@ export function Banner(
       </button>
       <div class='banner' role='status' aria-live='polite' data-hide={hideBanner.value}>
         {content()}
-        {canClose ? 'close' : 'no'}
         {canClose && <button onClick={onClose} aria-label='Close'>×</button>}
       </div>
     </>
