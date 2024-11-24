@@ -17,7 +17,6 @@ paracelsus my-project
 - Refactor and simplify, make bloated features more componential, easy to add/remove, plugins
 - Fix push notifications on all browsers, test
 - Fix sse errors logged to server
-- fix PWA msg ios safari
 - Puppeteer testing
 - test out banners
 - Separate folder for app specific modules, mod or app

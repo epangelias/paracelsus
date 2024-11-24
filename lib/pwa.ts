@@ -46,9 +46,13 @@ export async function loadServiceWorker() {
 
   let registration = await navigator.serviceWorker.getRegistration();
 
-  if (!registration) {
+  console.log(asset('/worker.js'), asset('/worker.js'), asset('/worker.js'))
+  const workerURL = asset('/worker.js');
+  const oldWorkerURL = registration?.active?.scriptURL;
+
+  if (!registration || oldWorkerURL != workerURL) {
     console.log('Creating registration...');
-    registration = await navigator.serviceWorker.register(asset('/worker.js'), { scope: '/' });
+    registration = await navigator.serviceWorker.register(workerURL, { scope: '/' });
   }
 
   console.log('Loaded registration: ', registration);
