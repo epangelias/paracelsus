@@ -33,7 +33,7 @@ export function Banners() {
     },
     {
       name: 'ios-install',
-      condition: () => global.pwa.isPWA.value && isIOSSafari(),
+      condition: () => !global.pwa.isPWA.value && isIOSSafari(),
       canClose: true,
       content: () => <a href='/install-guide-ios'>Install this app to your device</a>,
     },
