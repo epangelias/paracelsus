@@ -8,11 +8,15 @@ import { sendEmailVerification } from '@/lib/mail.ts';
 import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers({
-  GET: async (ctx) => {
+  GET: (ctx) => {
     const user = ctx.state.user;
     if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
-    if (ctx.req.method == 'GET') return page();
+    return page();
+  },
+  POST: async (ctx) => {
     try {
+      const user = ctx.state.user;
+      if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
       const { email, name } = Meth.formDataToObject(await ctx.req.formData());
       const newUser = await updateUser({ ...user, name, email });
       if (newUser.email != user.email) await sendEmailVerification(ctx.url.origin, user);
