@@ -1,6 +1,6 @@
 import { MailOptions, UserData } from '@/lib/types.ts';
-import { site } from "@/lib/site.ts";
-import { generateEmailVerification } from "@/lib/user-data.ts";
+import { site } from '@/lib/site.ts';
+import { generateEmailVerification } from '@/lib/user-data.ts';
 import Mailjet from 'node-mailjet';
 import { asset } from 'fresh/runtime';
 import { RateLimiter } from '@/lib/rate-limiter.ts';

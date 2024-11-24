@@ -132,7 +132,7 @@ header {
   border-radius: calc(var(--spacing) * 4);
   aspect-ratio: 1 / 1;
 
-  &>span {
+  & > span {
     display: block;
   }
 }

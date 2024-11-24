@@ -12,15 +12,15 @@ const projectPath = Deno.args[0];
 
 if (!projectPath) throw new Error('No project path provided');
 
-const projectName = projectPath.split("/")[-1];
+const projectName = projectPath.split('/')[-1];
 
 await exec(['git', 'clone', 'https://github.com/epangelias/fresh-tempalte.git', projectPath]);
 
 Deno.chdir(projectPath);
 
-const getPath = (path: string) => Deno.cwd() + "/" + path;
+const getPath = (path: string) => Deno.cwd() + '/' + path;
 
-console.log(getPath(""));
+console.log(getPath(''));
 
 const siteData = `import { Meth } from "@/lib/meth.ts";\n
 export const site = {

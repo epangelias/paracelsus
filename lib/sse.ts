@@ -2,9 +2,7 @@ import { Signal } from '@preact/signals';
 import { fetchOrError } from '@/lib/fetch.ts';
 import { Meth } from '@/lib/meth.ts';
 
-export function syncSSE<T>(endpoint: string,
-  { data, onError }: { data: Signal<T>; onError?: () => void },
-) {
+export function syncSSE<T>(endpoint: string, { data, onError }: { data: Signal<T>; onError?: () => void }) {
   return watchSSE(endpoint, {
     onError,
     onMessage(newData: T) {

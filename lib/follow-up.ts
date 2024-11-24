@@ -7,8 +7,8 @@ import { generateChatCompletion } from '@/lib/oai.ts';
 
 async function generateFollowUpMessage(user: UserData) {
   const chatData = await db.get<ChatData>(['chat', user.id]);
-  if (chatData.versionstamp === null) throw new Error("Chat data not found");
-  if (chatData.value.messages.at(-2)?.role == 'assistant') throw new Error("Already sent a follow up message");
+  if (chatData.versionstamp === null) throw new Error('Chat data not found');
+  if (chatData.value.messages.at(-2)?.role == 'assistant') throw new Error('Already sent a follow up message');
   const messages = chatData.value.messages.map(({ role, content }) => ({ role, content }));
   messages.push({
     role: 'system',
@@ -17,7 +17,7 @@ async function generateFollowUpMessage(user: UserData) {
   });
   const res = await generateChatCompletion(undefined, messages);
   const content = res.choices[0].message.content;
-  if (!content) throw new Error("No content generated");
+  if (!content) throw new Error('No content generated');
   chatData.value.messages.push({ role: 'assistant', content });
   await db.set(['chat', user.id], chatData.value);
   return content;
@@ -33,7 +33,7 @@ export async function sendFollowUp(user: UserData) {
 
 export function AutoSendFollowUps() {
   // Disable cron if running in github actions
-  if (Deno.env.get('GITHUB_ACTIONS') === "true") return;
+  if (Deno.env.get('GITHUB_ACTIONS') === 'true') return;
 
   Deno.cron(`follow-up`, { minute: { every: 5 } }, async () => {
     console.log('Following up...');

@@ -13,8 +13,9 @@ PushPlugin(app);
 
 app.use(async (ctx) => {
   // Skip static assets
-  if (!ctx.req.url.includes('?__frsh_c='))
+  if (!ctx.req.url.includes('?__frsh_c=')) {
     await getUserFromState(ctx);
+  }
   return await ctx.next();
 });
 

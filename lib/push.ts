@@ -4,7 +4,7 @@ import { State, UserData } from '@/lib/types.ts';
 import { site } from '@/lib/site.ts';
 import { asset } from 'fresh/runtime';
 import { STATUS_CODE } from '@std/http/status';
-import { updateUser } from "@/lib/user-data.ts";
+import { updateUser } from '@/lib/user-data.ts';
 
 // import * as webPushTypes from '@types/web-push';
 // const webPush = _webPush as typeof webPushTypes;

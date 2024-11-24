@@ -82,8 +82,8 @@ export const Meth = {
     return outputArray;
   },
   getErrorMessage(e: unknown) {
-    if (typeof e === "string") return e as string;
-    if ("message" in e) return e.message as string;
-    return "Unknown error";
-  }
+    if (typeof e === 'string') return e as string;
+    if ('message' in e) return e.message as string;
+    return 'Unknown error';
+  },
 };
