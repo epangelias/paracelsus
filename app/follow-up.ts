@@ -7,8 +7,8 @@ import { generateChatCompletion } from '@/lib/oai.ts';
 
 async function generateFollowUpMessage(user: UserData) {
   const chatData = await db.get<ChatData>(['chat', user.id]);
-  if (chatData.versionstamp === null) return null;
-  if (chatData.value.messages.at(-2)?.role == 'assistant') return; // Already sent follow up
+  if (chatData.versionstamp === null) throw new Error("Chat data not found");
+  if (chatData.value.messages.at(-2)?.role == 'assistant') throw new Error("Already sent a follow up message");
   const messages = chatData.value.messages.map(({ role, content }) => ({ role, content }));
   messages.push({
     role: 'system',
@@ -17,7 +17,7 @@ async function generateFollowUpMessage(user: UserData) {
   });
   const res = await generateChatCompletion(undefined, messages);
   const content = res.choices[0].message.content;
-  if (!content) return null;
+  if (!content) throw new Error("No content generated");
   chatData.value.messages.push({ role: 'assistant', content });
   await db.set(['chat', user.id], chatData.value);
   return content;
@@ -28,7 +28,6 @@ export async function sendFollowUp(user: UserData) {
     throw new HttpError(STATUS_CODE.BadRequest, 'No push subscriptions found');
   }
   const message = await generateFollowUpMessage(user);
-  if (!message) throw new HttpError(500, 'Error generating message');
   await sendNotificationToUser(user, 'Paracelsus Hath Spoken', message);
 }
 
