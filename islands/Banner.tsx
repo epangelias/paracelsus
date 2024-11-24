@@ -41,7 +41,17 @@ export function Banners() {
       name: 'pwa-install',
       condition: () => global.pwa.installPWA.value && !global.pwa.isPWA.value && !isIOSSafari(),
       canClose: true,
-      content: () => <a href='#' onClick={global.pwa.installPWA.value}>Install this app to your device</a>,
+      content: () => (
+        <a href='javascript:void(0);' onClick={global.pwa.installPWA.value}>
+          Install this app to your device
+        </a>
+      ),
+    },
+    {
+      name: 'notifications',
+      condition: () => global.pwa.worker.value && !global.pwa.pushSubscription.value,
+      canClose: true,
+      content: () => <a href='javascript:void(0);' onClick={global.pwa.requestSubscription}>Enable Notifications</a>,
     },
   ];
 

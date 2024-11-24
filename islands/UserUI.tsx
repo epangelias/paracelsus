@@ -15,7 +15,7 @@ export function UserUI({ error, message }: { error?: string; message?: string })
 
       {global.pwa.worker.value && !global.pwa.pushSubscription.value && (
         <div>
-          <a onClick={global.pwa.requestSubscription} href='javascript:void'>Enable Notifications</a>
+          <a onClick={global.pwa.requestSubscription} href='javascript:void(0);'>Enable Notifications</a>
         </div>
       )}
 
