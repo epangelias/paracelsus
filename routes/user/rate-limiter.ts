@@ -10,6 +10,8 @@ export class RateLimiter {
     this.maxRequests = maxRequests;
     this.interval = interval * 1000;
 
+    if (Deno.env.get('GITHUB_ACTIONS') === "true") return;
+
     setInterval(() => this.requests = 0, this.interval);
   }
 

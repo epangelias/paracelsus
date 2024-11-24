@@ -31,3 +31,4 @@ paracelsus my-project
 ## Fresh bugs
 
 - typeof handler does not work on handler catch all funcs
+- Github actions do not work if there is a interval or cron

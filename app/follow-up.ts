@@ -32,20 +32,20 @@ export async function sendFollowUp(user: UserData) {
   await sendNotificationToUser(user, 'Paracelsus Hath Spoken', message);
 }
 
-// export function AutoSendFollowUps() {
-//   // Prevent issue with github actions
-//   if (!Deno.env.has('CRON')) return console.warn('CRON is disabled');
-  
-//   Deno.cron(`follow-up`, { minute: { every: 5 } }, async () => {
-//     console.log('Following up...');
-//     for await (const res of db.list<UserData>({ prefix: ['users'] })) {
-//       const user = res.value;
-//       try {
-//         await sendFollowUp(user);
-//       } catch (e) {
-//         console.error(`Failed to send follow up to ${user.email}`, e);
-//       }
-//       console.log('Sent follow up to ' + res.value.name);
-//     }
-//   });
-// }
+export function AutoSendFollowUps() {
+  // Disable cron if running in github actions
+  if (Deno.env.get('GITHUB_ACTIONS') === "true") return;
+
+  Deno.cron(`follow-up`, { minute: { every: 5 } }, async () => {
+    console.log('Following up...');
+    for await (const res of db.list<UserData>({ prefix: ['users'] })) {
+      const user = res.value;
+      try {
+        await sendFollowUp(user);
+      } catch (e) {
+        console.error(`Failed to send follow up to ${user.email}`, e);
+      }
+      console.log('Sent follow up to ' + res.value.name);
+    }
+  });
+}
