@@ -1,33 +1,5 @@
 #!/usr/bin/env -S deno run -A --env
 
-
-/* AI GENERATED COMMENT
-Here is my feedback:
-
-Security issues:
-The code uses Deno's `Deno.readTextFile` and `Deno.writeTextFile` without proper error handling, which can lead to unexpected behavior or crashes if file operations fail.
-
-Performance issues:
-The code uses `setTimeout` to delay the execution of the next file processing by 10 seconds, which can lead to performance issues if the script needs to process a large number of files.
-
-Code style issues:
-The code uses inconsistent indentation and whitespace, making it hard to read.
-
-Best practices:
-The code mixes concerns, such as file processing and AI-generated comment creation, which makes it hard to maintain and test.
-
-Maintainability issues:
-The code uses magic strings and hardcoded values, making it hard to modify or extend.
-
-Readability issues:
-The code has long lines and complex logic, making it hard to understand.
-
-Refactoring suggestion:
-Consider separating concerns into different functions or modules, such as a file processor and an AI-generated comment creator. This will make the code more modular, maintainable, and testable.
-*/
-
-
-
 import { walk } from "jsr:@std/fs";
 import { generateChatCompletion } from '@/lib/oai.ts';
 

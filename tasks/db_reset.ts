@@ -37,12 +37,17 @@ import { db } from '@/lib/utils.ts';
 export async function clearDb() {
   const itemsReset: Record<string, number> = {};
 
-  const promises = [];
+  let promises = [];
 
   for await (const res of db.list({ prefix: [] })) {
     const key = res.key.slice(0, -1).join('/');
     itemsReset[key] = (key in itemsReset) ? itemsReset[key] + 1 : 1;
     promises.push(db.delete(res.key));
+
+    if (promises.length > 50) {
+      await Promise.all(promises);
+      promises = [];
+    }
   }
 
   console.log(itemsReset);
