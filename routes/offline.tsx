@@ -30,6 +30,6 @@ export default define.page(() => (
     <p>
       <a href='/'>Reload</a>
     </p>
-    <style dangerouslySetInnerHTML={{ __html: CSS }}></style>
+    {/* <style dangerouslySetInnerHTML={{ __html: CSS }}></style> */}
   </Page>
 ));
