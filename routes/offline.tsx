@@ -18,12 +18,11 @@ Readability issue: The variable name `CSS` is not descriptive and could be renam
 Let me know if you'd like me to elaborate on any of these points!
 */
 
-
 import { define } from '@/lib/utils.ts';
 import { Page } from '@/components/Page.tsx';
 
-const CSS = await Deno.readTextFile('static/css/main.css') +
-  await Deno.readTextFile('static/css/theme.css');
+// const CSS = await Deno.readTextFile('static/css/main.css') +
+//   await Deno.readTextFile('static/css/theme.css');
 
 export default define.page(() => (
   <Page hideHeader={true} hideBanner={true}>

@@ -14,7 +14,6 @@ Here is my feedback:
 Overall, the code looks clean and well-maintained, but there are some potential security and performance concerns that should be addressed.
 */
 
-
 import { site } from '@/lib/site.ts';
 import { define } from '@/lib/utils.ts';
 import { asset } from 'fresh/runtime';
@@ -48,6 +47,7 @@ export default define.page(({ Component, state }) => {
         <style dangerouslySetInnerHTML={{ __html: `:root{--primary: ${site.themeColor}` }}></style>
         <link rel='stylesheet' href={asset('/css/theme.css')} />
         <link rel='stylesheet' href={asset('/css/main.css')} />
+        <link rel='stylesheet' href={asset('/css/components.css')} />
         <link rel='icon' href={asset(site.favicon)} />
       </head>
       <body>

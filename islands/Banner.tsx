@@ -29,7 +29,6 @@
 * Consider using a more robust state management system instead of `useSignal` and `localStorage`.
 */
 
-
 import { IS_BROWSER } from 'fresh/runtime';
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal } from '@preact/signals';
