@@ -53,6 +53,8 @@ The code is easy to read, but some variables, such as `--transition`, are not cl
   --on-primary: #000;
 
   --radius: 4px;
+  --radius-05: calc(var(--radius) * 0.5);
+  --radius-2: calc(var(--radius) * 2);
   --border-color: var(--bg3);
   --border-width: 1px;
   --spacing: 10px;
@@ -344,7 +346,7 @@ a {
   color: var(--color);
   text-decoration: none;
   font-weight: 600;
-  border-radius: calc(var(--radius) / 2);
+  border-radius: var(--radius-05);
 
   &:hover {
     /* text-decoration: underline; */
@@ -409,7 +411,7 @@ td {
 main img {
   display: block;
   max-width: 100%;
-  border-radius: calc(var(--radius) * 2);
+  border-radius: var(--radius-2);
   box-shadow: var(--field-shadow);
 }
 

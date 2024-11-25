@@ -188,7 +188,7 @@ header {
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  border-radius: calc(var(--radius) * 2);
+  border-radius: var(--radius-2);
 
   form {
     line-height: 1;
@@ -241,11 +241,6 @@ header {
 /* Animations */
 
 @keyframes pageIn {
-  from {
-    scale: 0.95;
-    opacity: 0;
-  }
-
   to {
     scale: 1;
     opacity: 1;
