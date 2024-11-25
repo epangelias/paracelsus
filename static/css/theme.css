@@ -304,8 +304,10 @@ button {
   font: inherit;
   box-shadow: var(--field-shadow);
   resize: none;
+  color: var(--fg2);
 
-  &:focus-visible {
+  &:focus {
+    color: var(--fg1);
     border-color: transparent;
     box-shadow: none;
   }
