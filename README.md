@@ -21,11 +21,13 @@ paracelsus my-project
 - test out banners
 - Separate folder for app specific modules, mod or app
 - Rename global so no var conflict
-- Standardize nulls and undefined in singals
+- Standardize nulls and undefined in singals, make them nulls
 - spererate dir for hooks?
 - Go route to make all non app related routes to be in a plugin??
   - Or disconect modules from eachother and add seperate files for there implementation together in the app
 - Fix type errors
+- Create script to give recommendations for each file.
+- Decouple stripe and user system with an abstraction
 
 ## Fresh bugs
 

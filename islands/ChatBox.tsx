@@ -1,3 +1,33 @@
+/* AI GENERATED COMMENT
+Here is my feedback on the provided code:
+
+**Security Issues:**
+- The code uses `dangerouslySetInnerHTML` which can be a security risk if not properly sanitized. It's recommended to use a library like `dompurify` to sanitize the HTML.
+
+**Performance Issues:**
+- The `scrollToBottom` function uses `setTimeout` with a 0ms delay, which can be replaced with `requestAnimationFrame` for better performance.
+- The `onSubmit` function updates the `chatData` signal and then calls `scrollToBottom` which can cause unnecessary re-renders. Consider debouncing or batching updates.
+
+**Code Style Issues:**
+- The code has inconsistent indentation (sometimes 2 spaces, sometimes 4 spaces). It's recommended to use a consistent 2 spaces for indentation.
+- Some functions are not formatted correctly (e.g. `generateResponse` has inconsistent spacing).
+
+**Best Practices:**
+- The `useEffect` hook is used with an empty dependency array `[]`, which means it will only run once. Consider adding dependencies to ensure the effect runs when necessary.
+- The `onSubmit` function does not handle errors properly. Consider adding try-catch blocks or error boundaries.
+
+**Maintainability Issues:**
+- The `ChatBox` component has a lot of complex logic. Consider breaking it down into smaller components or extracting functions for better maintainability.
+
+**Readability Issues:**
+- Some variable names are not descriptive (e.g. `m` in `chatData.value.messages.filter((m: AIMessage) => ...)`). Consider using more descriptive names.
+
+**Refactoring Suggestions:**
+- The `addMessage` function can be simplified by using the spread operator instead of creating a new object.
+- The `generateResponse` function can be simplified by extracting the `watchSSE` logic into a separate function.
+*/
+
+
 import { useSignal } from '@preact/signals';
 import { sendSSE, syncSSE, watchSSE } from '@/lib/sse.ts';
 import { AIMessage, ChatData } from '@/lib/types.ts';

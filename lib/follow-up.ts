@@ -1,3 +1,32 @@
+/* AI GENERATED COMMENT
+Here is my feedback on the provided code:
+
+Security Issues:
+The code is vulnerable to SQL injection attacks due to the use of array notation in db.get and db.set methods.
+
+Performance Issues:
+The generateFollowUpMessage function makes multiple database queries which can be slow. 
+It would be better to batch these queries together if possible.
+
+Code Style Issues:
+The code is mostly well-formatted, but some lines exceed the 80 character limit.
+
+Best Practices:
+The AutoSendFollowUps function has a lot of responsibilities (cron scheduling, database querying, and notification sending). 
+It would be better to break it down into smaller functions each with a single responsibility.
+
+Maintainability Issues:
+The error handling in the sendFollowUp function is not ideal. 
+If an error occurs, it will propagate up to the caller and may cause unintended behavior.
+
+Readability Issues:
+Some variable names, such as `res`, are not very descriptive.
+
+Refactoring Suggestion:
+The generateFollowUpMessage function can be broken down into smaller functions, each responsible for a specific task (e.g., getting chat data, generating chat completion, updating chat data).
+*/
+
+
 import { HttpError } from 'https://jsr.io/@fresh/core/2.0.0-alpha.25/src/error.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { ChatData, UserData } from '@/lib/types.ts';
@@ -31,7 +60,7 @@ export async function sendFollowUp(user: UserData) {
   await sendNotificationToUser(user, 'Paracelsus Hath Spoken', message);
 }
 
-export function AutoSendFollowUps() {
+export function autoSendFollowUps() {
   // Disable cron if running in github actions
   if (Deno.env.get('GITHUB_ACTIONS') === 'true') return;
 

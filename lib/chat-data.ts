@@ -1,3 +1,28 @@
+/* AI GENERATED COMMENT
+Here is my feedback:
+
+There are no security issues in this code.
+
+The code is well-organized and easy to read.
+
+The function and variable names are descriptive and follow a consistent naming convention.
+
+The use of async/await is correct and makes the code more readable.
+
+The createSystemPrompt and createFirstMessage functions are well-separated and have a single responsibility.
+
+It would be good to add error handling in the GetChatData function, for example, if the data from the database is not in the expected format.
+
+The createSystemPrompt function is quite long and could be refactored into multiple smaller functions for better maintainability.
+
+The chatData object in the GetChatData function could be created using the object spread operator for better readability.
+
+It would be good to add type checks and validation for the user and chatData objects to ensure they have the expected properties.
+
+The setChatData function is simple and does not have any issues, but it would be good to add error handling.
+*/
+
+
 import { db } from '@/lib/utils.ts';
 import { ChatData, UserData } from '@/lib/types.ts';
 

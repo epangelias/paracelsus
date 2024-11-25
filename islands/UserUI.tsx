@@ -1,3 +1,31 @@
+/* AI GENERATED COMMENT
+Here is the feedback on the provided code:
+
+Security Issues:
+The code uses inline JavaScript in the `href` attribute, which can be a security risk if not properly sanitized.
+
+Performance Issues:
+The code uses multiple conditional statements, which can affect performance if the conditions are complex or the components are deeply nested.
+
+Code Style Issues:
+The code uses inconsistent indentation (mix of spaces and tabs) and lacks consistent whitespace between lines and around brackets.
+
+Best Practices:
+The code uses a consistent naming convention, but some variable names (e.g., `global`) could be more descriptive.
+
+Maintainability Issues:
+The code has a complex conditional logic, which can make it hard to maintain and debug.
+
+Readability Issues:
+The code has long lines and lacks whitespace, making it hard to read.
+
+Refactoring Suggestions:
+Consider extracting the conditional logic into separate components or functions to improve readability and maintainability.
+Consider using a consistent naming convention for variables and components.
+Consider using a linter and a code formatter to enforce consistent code style and formatting.
+*/
+
+
 import { useGlobal } from '@/islands/Global.tsx';
 import { Field } from '@/components/Field.tsx';
 

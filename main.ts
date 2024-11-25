@@ -2,14 +2,14 @@
 
 import { App, fsRoutes, staticFiles } from 'fresh';
 import { State } from '@/lib/types.ts';
-import { PushPlugin } from '@/lib/push.ts';
+import { pushPlugin } from '@/lib/push.ts';
 import { getUserFromState } from '@/lib/user-data.ts';
-import { AutoSendFollowUps } from './lib/follow-up.ts';
+import { autoSendFollowUps } from "@/lib/follow-up.ts";
 
 export const app = new App<State>();
 
-AutoSendFollowUps();
-PushPlugin(app);
+autoSendFollowUps();
+pushPlugin(app);
 
 app.use(async (ctx) => {
   // Skip static assets
