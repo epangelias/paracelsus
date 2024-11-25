@@ -1,11 +1,7 @@
 /* AI GENERATED COMMENT
-Here is my feedback on the provided CSS code:
-
-**Security Issues:** None found.
 
 **Performance Issues:**
 
-* Too many repetition of `calc(var(--spacing) * x)` and `var(--spacing)` can be optimized by defining a new variable.
 * `_scale` and _opacity_ are not necessary in keyframe animations, as they can be omitted for better performance.
 
 **Code Style Issues:**
@@ -53,7 +49,9 @@ body.fade-out {
 
 body:not(.fade-out) {
   main {
-    animation: pageIn 0.5s ease-in-out;
+    scale: 0.95;
+    opacity: 0;
+    animation: pageIn 0.5s ease-in-out forwards;
   }
 }
 
@@ -74,7 +72,7 @@ main {
   flex-direction: column;
   justify-content: center;
   margin: auto 0;
-  padding: calc(var(--spacing) * 2) var(--spacing);
+  padding: var(--spacing-2) var(--spacing);
   max-width: var(--content-width);
 
   &:has(.chat-box) {
@@ -102,20 +100,25 @@ main {
 header {
   display: flex;
   justify-content: space-between;
-  padding: calc(var(--spacing) / 2) calc(var(--spacing) * 2);
+  padding: var(--spacing-05) var(--spacing-2);
   padding-bottom: 0;
   border-bottom: 2px solid color-mix(in srgb, currentColor, transparent 80%);
   width: 100%;
 
-  .left,
-  .right,
-  a.logo {
+  .right {
     display: flex;
     align-items: center;
   }
 
-  a.logo {
-    --color: var(--primary);
+  .left {
+    display: flex;
+    align-items: center;
+
+    a.logo {
+      display: flex;
+      align-items: center;
+      --color: var(--primary);
+    }
   }
 
   /* Remove bottom border if there is a banner */
@@ -167,10 +170,10 @@ header {
   --color: var(--accent);
   margin-right: var(--spacing);
   margin-top: var(--spacing);
-  border-radius: calc(var(--spacing) * 4);
+  border-radius: calc(var(--radius) * 4);
   aspect-ratio: 1 / 1;
 
-  & > span {
+  &>span {
     display: block;
   }
 }
@@ -213,7 +216,7 @@ header {
   .messages {
     flex: 1;
     overflow-y: auto;
-    padding-top: calc(var(--spacing) * 2);
+    padding-top: var(--spacing-2);
 
     div {
       margin: var(--spacing);
@@ -250,12 +253,7 @@ header {
 }
 
 @keyframes fadeOut {
-  0% {
-    scale: 1;
-    opacity: 1;
-  }
-
-  100% {
+  to {
     scale: 0.95;
     opacity: 0;
   }
