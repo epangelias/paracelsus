@@ -42,7 +42,7 @@ Here is my feedback on the provided code:
 
 
 import { FreshContext } from 'fresh';
-import { getCookies } from 'jsr:@std/http/cookie';
+import { getCookies, setCookie } from 'jsr:@std/http/cookie';
 import { db } from '@/lib/utils.ts';
 import { State, UserData } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
@@ -266,4 +266,16 @@ export function stripUserData(user?: UserData) {
     email: user.email,
     hasVerifiedEmail: user.hasVerifiedEmail,
   } as Partial<UserData>;
+}
+
+export function setAuthCookie(ctx: FreshContext, authCode: string) {
+  const res = ctx.redirect('/');
+  setCookie(res.headers, {
+    name: 'auth',
+    value: authCode,
+    path: '/',
+    maxAge: 60 * 60 * 24 * 30,
+    secure: ctx.req.url.startsWith('https://'),
+  });
+  return res;
 }

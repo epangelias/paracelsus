@@ -20,14 +20,13 @@ The `handler` function is quite long and does multiple tasks; it might be better
 That's it!
 */
 
-
 import { define } from '@/lib/utils.ts';
 import { AIMessage } from '@/lib/types.ts';
 import { StreamAI } from '@/lib/stream-ai.ts';
 import { updateUser } from '@/lib/user-data.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
-import { GetChatData, setChatData } from '@/lib/chat-data.ts';
+import { getChatData, setChatData } from '@/lib/chat-data.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
@@ -35,7 +34,7 @@ export const handler = define.handlers({
 
     if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
     if (!(user.tokens >= 0 || user.isSubscribed)) throw new HttpError(STATUS_CODE.Unauthorized);
-    const chatData = await GetChatData(user);
+    const chatData = await getChatData(user);
     if (!chatData) throw new HttpError(STATUS_CODE.NotFound);
 
     const saveMessages = async (messages: AIMessage[]) => {

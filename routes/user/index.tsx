@@ -1,38 +1,3 @@
-/* AI GENERATED COMMENT
-Here is the feedback on the provided code:
-
-Error handling is good, but it would be better to log the error in the catch block for debugging purposes.
-
-It would be better to validate the `email` and `name` fields before updating the user.
-
-The `updateUser` function is not validated, it's assumed to always return a user. It would be better to handle the case where it returns an error.
-
-The `sendEmailVerification` function is also not validated, it's assumed to always send the email successfully. It would be better to handle the case where it returns an error.
-
-The `Meth.formDataToObject` function is not well-named. It would be better to rename it to something like `parseFormData`.
-
-The `Meth.getErrorMessage` function is not well-named. It would be better to rename it to something like `getErrorString`.
-
-The `define.page` function is not well-named. It would be better to rename it to something like `createPage`.
-
-The `handler` function is not well-named. It would be better to rename it to something like `userHandler`.
-
-The code is well-organized and easy to read.
-
-No security issues found.
-
-No performance issues found.
-
-No code style issues found.
-
-No maintainability issues found.
-
-No readability issues found.
-
-No refactoring opportunities found.
-*/
-
-
 import { define } from '@/lib/utils.ts';
 import { HttpError, page } from 'fresh';
 import { updateUser } from '@/lib/user-data.ts';

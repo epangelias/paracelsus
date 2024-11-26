@@ -34,7 +34,7 @@ const createSystemPrompt = (name: string) =>
 const createFirstMessage = (name: string) =>
   `Come forth, ${name}. Speak, and I shall unveil what lieth beyond mortal ken.`;
 
-export async function GetChatData(user: UserData) {
+export async function getChatData(user: UserData) {
   const path = ['chat', user.id];
   const data = await db.get<ChatData>(path);
   if (data.versionstamp == null) {

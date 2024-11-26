@@ -16,18 +16,17 @@ Refactoring suggestion: Consider separating the logic of the GET handler into a 
 Readability issue: The conditionals in the default export are complex and hard to read, consider breaking them down into separate components or functions.
 */
 
-
 import { define } from '@/lib/utils.ts';
 import ChatBox from '@/islands/ChatBox.tsx';
 import { page } from 'fresh';
 import { site } from '@/lib/site.ts';
 import { Page } from '@/components/Page.tsx';
-import { GetChatData } from '@/lib/chat-data.ts';
+import { getChatData } from '@/lib/chat-data.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
     if (!ctx.state.user) return page();
-    const chatData = await GetChatData(ctx.state.user);
+    const chatData = await getChatData(ctx.state.user);
     return page({ chatData });
   },
 });
@@ -37,7 +36,7 @@ export default define.page<typeof handler>(({ data }) => {
     <Page>
       {data?.chatData ? <ChatBox data={data.chatData} /> : (
         <>
-          <h1>Paracelsus</h1>
+          <h1>{site.name}</h1>
           <p>{site.description}</p>
           <p>
             <a href='/user/signin'>Sign In</a> to chat.
