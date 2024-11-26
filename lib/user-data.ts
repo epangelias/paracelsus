@@ -1,12 +1,3 @@
-/* AI G
-**Refactoring Suggestions:**
-
-* Consider breaking down the `createUser` function into smaller, more focused functions, such as `generateStripeCustomerId` and `saveUserToDatabase`.
-* Consider extracting the validation logic into separate functions, such as `validateEmail` and `validateName`.
-* Consider using a more efficient data structure, such as a cache, to store the user data instead of retrieving it from the database on every request.
-*/
-
-
 import { FreshContext } from 'fresh';
 import { getCookies, setCookie } from 'jsr:@std/http/cookie';
 import { db } from '@/lib/utils.ts';
@@ -195,11 +186,8 @@ export async function deleteUser(id: string | null) {
   const atomic = db.atomic()
     .delete(['users', id])
     .delete(['usersByEmail', user.email])
-    .delete(['chat', id]);
-
-  if (user.stripeCustomerId) {
-    atomic.delete(['usersByStripeCustomer', user.stripeCustomerId]);
-  }
+    .delete(['chat', id])
+    .delete(['usersByStripeCustomer', user.stripeCustomerId || '']);
 
   await atomic.commit();
 }
