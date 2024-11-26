@@ -48,7 +48,7 @@ import { State, UserData } from '@/lib/types.ts';
 import { site } from '@/lib/site.ts';
 import { asset } from 'fresh/runtime';
 import { STATUS_CODE } from '@std/http/status';
-import { updateUser } from '@/lib/user-data.ts';
+import { setUserData } from '@/lib/user-data.ts';
 
 // import * as webPushTypes from '@types/web-push';
 // const webPush = _webPush as typeof webPushTypes;
@@ -77,7 +77,7 @@ export async function sendNotificationToUser(user: UserData, title: string, mess
     }
   }
 
-  if (subscriptionRemoved) await updateUser(user);
+  if (subscriptionRemoved) await setUserData(user);
 }
 
 export function pushPlugin(app: App<State>) {
@@ -86,7 +86,7 @@ export function pushPlugin(app: App<State>) {
     if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
     const { subscription } = await ctx.req.json();
     ctx.state.user.pushSubscriptions.push(subscription);
-    await updateUser(ctx.state.user);
+    await setUserData(ctx.state.user);
     return Response.json({}, { status: 201 });
   });
 }

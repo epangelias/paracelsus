@@ -1,38 +1,4 @@
-/* AI GENERATED COMMENT
-Here is my feedback on the provided code:
-
-**Security Issues:**
-
-* The `Meth.hash` function is used to hash passwords, but it's not clear what hashing algorithm is being used. It's recommended to use a password hashing algorithm like bcrypt, scrypt, or Argon2.
-* The `CreateAuthCode` function generates a code that can be used to authenticate a user, but it's not clear how this code is protected from unauthorized access. It's recommended to use a secure token generation algorithm and to store the tokens securely.
-
-**Performance Issues:**
-
-* The `db.list` function is used to retrieve a list of codes, but it's not clear how this function performs when dealing with a large number of codes. It's recommended to consider using a more efficient data structure or query mechanism.
-* The `db.atomic` function is used to perform multiple operations atomically, but it's not clear how this function performs when dealing with a large number of operations. It's recommended to consider using a more efficient transaction mechanism.
-
-**Code Style Issues:**
-
-* The code uses inconsistent indentation and whitespace. It's recommended to use a consistent code style throughout the file.
-* Some function names, such as `CreateAuthCode`, are not following the conventional camelCase naming style. It's recommended to use a consistent naming convention throughout the file.
-
-**Best Practices:**
-
-* The code is not following the single responsibility principle, as some functions are performing multiple, unrelated tasks. It's recommended to break down these functions into smaller, more focused functions.
-* The code is not using error handling mechanisms consistently. It's recommended to use a consistent error handling mechanism throughout the file.
-* The code is not following the Don't Repeat Yourself (DRY) principle, as some logic is duplicated in multiple functions. It's recommended to extract this logic into separate functions.
-
-**Maintainability Issues:**
-
-* The code is not modular, as all functions are exported from a single file. It's recommended to break down the code into smaller, more focused modules.
-* The code is not following a consistent naming convention, which makes it harder to understand and maintain. It's recommended to use a consistent naming convention throughout the file.
-
-**Readability Issues:**
-
-* Some function names, such as `GetUserFromState`, are not descriptive. It's recommended to use more descriptive function names.
-* Some variable names, such as `res`, are not descriptive. It's recommended to use more descriptive variable names.
-* The code has a large number of comments, but some comments are not clear or concise. It's recommended to use clear and concise comments throughout the file.
-
+/* AI G
 **Refactoring Suggestions:**
 
 * Consider breaking down the `createUser` function into smaller, more focused functions, such as `generateStripeCustomerId` and `saveUserToDatabase`.
@@ -47,16 +13,16 @@ import { db } from '@/lib/utils.ts';
 import { State, UserData } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
+import { hashText } from '@/lib/crypto.ts';
 
 // DB
 
-export async function getUserFromState(ctx: FreshContext<State>) {
+export async function loadUserToContext(ctx: FreshContext<State>) {
   if (ctx.state.user) return ctx.state.user;
   const { auth } = getCookies(ctx.req.headers);
   ctx.state.auth = auth;
   const user = await getUserByAuth(auth);
   if (user) ctx.state.user = user;
-  return user;
 }
 
 export async function getUserByAuth(auth: string) {
@@ -97,7 +63,7 @@ export async function getUserByStripeCustomer(stripeCustomerId: string) {
   return await getUserById(id);
 }
 
-async function CreateAuthCode(id: string) {
+async function createAuthCode(id: string) {
   const code = Meth.code();
   await db.set(['usersByAuth', code], { id }, { expireIn: 1000 * 60 * 60 * 24 * 30 });
   return code;
@@ -109,9 +75,9 @@ export async function authorizeUser(email: string, password: string) {
   if (!id) return null;
   const user = await getUserById(id);
   if (!user) return null;
-  const passwordHash = await Meth.hash(`${user.salt}:${password}`);
+  const passwordHash = await hashText(`${user.salt}:${password}`);
   if (user.passwordHash != passwordHash) return null;
-  return await CreateAuthCode(id);
+  return await createAuthCode(id);
 }
 
 export async function generateEmailVerification(user: UserData) {
@@ -122,101 +88,10 @@ export async function generateEmailVerification(user: UserData) {
   return code;
 }
 
-export async function createUser(name: string, email: string, password: string) {
-  email = normalizeEmail(email);
-  name = normalizeName(name);
-
-  if (password.length < 6) throw new Error('Password must be at least 8 characters');
-  if (password.length > 100) throw new Error('Password must be less than 100 characters');
-
-  const salt = Meth.code();
-  const passwordHash = await Meth.hash(`${salt}:${password}`);
-
-  let stripeCustomerId;
-
-  if (isStripeEnabled()) {
-    const customer = await stripe.customers.create({ email, name });
-    stripeCustomerId = customer.id;
-  }
-
-  const user: UserData = {
-    id: Meth.code(),
-    created: Date.now(),
-    email,
-    passwordHash,
-    salt,
-    name,
-    stripeCustomerId,
-    isSubscribed: false,
-    tokens: 5,
-    isEmailVerified: false,
-    hasVerifiedEmail: false,
-    pushSubscriptions: [],
-  };
-
-  validateUserData(user);
-
-  const res = await db.atomic()
-    .check({ key: ['users', user.id], versionstamp: null })
-    .check({ key: ['usersByEmail', user.email], versionstamp: null })
-    .set(['users', user.id], user)
-    .set(['usersByEmail', user.email], { id: user.id })
-    .set(['usersByStripeCustomer', user.stripeCustomerId || ''], { id: user.id })
-    .commit();
-
-  if (!res.ok) throw new Error('User already exists');
-
-  return user;
-}
-
-export async function deleteUser(id: string | null) {
-  if (!id) return;
-  const user = await getUserById(id);
-  if (!user) return;
-  await db.delete(['users', id]);
-  await db.delete(['usersByEmail', user.email]);
-
-  // Delete user related data
-  await db.delete(['chat', id]);
-
-  if (user.stripeCustomerId) {
-    await db.delete(['usersByStripeCustomer', user.stripeCustomerId]);
-  }
-
-  const promises = [];
-  const codes = db.list<{ id: string }>({ prefix: ['usersByAuth'] });
-  for await (const res of codes) if (res.value.id == id) promises.push(db.delete(res.key));
-  await Promise.all(promises);
-}
-
-export async function updateUser(changes: UserData) {
-  changes = { ...changes };
-
-  const user = await getUserById(changes.id);
-  if (!user) throw new Error('User not found');
-
-  changes.email = normalizeEmail(changes.email);
-  changes.name = normalizeName(changes.name);
-
-  validateUserData(changes);
-
-  if (user.email != changes.email) {
-    const { ok } = await db.atomic()
-      .check({ key: ['usersByEmail', changes.email], versionstamp: null })
-      .delete(['usersByEmail', user.email])
-      .set(['usersByEmail', changes.email], { id: user.id })
-      .commit();
-    if (!ok) throw new Error('User already exists');
-    changes.isEmailVerified = false;
-  }
-
-  if (isStripeEnabled() && user.stripeCustomerId) {
-    stripe.customers.update(user.stripeCustomerId, { email: changes.email, name: changes.name });
-  }
-
-  await db.set(['users', changes.id], changes);
-
-  return changes;
+async function generateStripeCustomerId(name: string, email: string) {
+  if (!isStripeEnabled()) return;
+  const customer = await stripe.customers.create({ email, name });
+  return customer.id;
 }
 
 export async function getUserByVerificationCode(code: string) {
@@ -225,6 +100,108 @@ export async function getUserByVerificationCode(code: string) {
   const user = await getUserById(res.value.id);
   if (user?.email != res.value.email) return null;
   return user;
+}
+
+// User Data
+
+export async function createUser(name: string, email: string, password: string) {
+  if (password.length < 6) throw new Error('Password must be at least 8 characters');
+  if (password.length > 100) throw new Error('Password must be less than 100 characters');
+
+  const salt = Meth.code();
+  const passwordHash = await hashText(`${salt}:${password}`);
+
+  const user: UserData = {
+    id: Meth.code(),
+    created: Date.now(),
+    email,
+    passwordHash,
+    salt,
+    name,
+    isSubscribed: false,
+    tokens: 5,
+    isEmailVerified: false,
+    hasVerifiedEmail: false,
+    pushSubscriptions: [],
+  };
+
+  return setUserData(user, { isNew: true });
+}
+
+export async function setUserData(user: UserData, { isNew } = { isNew: false }) {
+  const atomic = db.atomic();
+  let errorMessage = 'Error updating user';
+
+  user = { ...user };
+  user.email = normalizeEmail(user.email);
+  user.name = normalizeName(user.name);
+
+  validateUserData(user);
+
+  if (isNew) {
+    // If new user, check that doesn't already exist
+    atomic.check({ key: ['users', user.id], versionstamp: null })
+      .check({ key: ['usersByEmail', user.email], versionstamp: null })
+      .set(['usersByEmail', user.email], { id: user.id })
+
+    errorMessage = 'User already exists';
+  } else {
+    const old = await db.get<UserData>(["users", user.id]);
+
+    if (old.versionstamp == null) throw new Error("User does not exist");
+
+    // Ensure user data hasn't changed
+    atomic.check({ key: ['users', user.id], versionstamp: old.versionstamp })
+    errorMessage = 'User data changed';
+
+    // Change email
+    if (old.value.email != user.email) {
+      user.isEmailVerified = false;
+
+      atomic.check({ key: ['usersByEmail', user.email], versionstamp: null })
+        .delete(['usersByEmail', old.value.email])
+        .set(['usersByEmail', user.email], { id: user.id })
+
+      errorMessage = 'User with email already exists';
+    }
+
+    if (isStripeEnabled() && old.value.stripeCustomerId) {
+      // If user data changed, update stripe account
+      if (user.email != old.value.email || user.name != old.value.name) {
+        await stripe.customers.update(old.value.stripeCustomerId, { email: user.email, name: user.name });
+      }
+    }
+  }
+
+  atomic.set(['users', user.id], user);
+
+  if (!user.stripeCustomerId && isStripeEnabled()) {
+    user.stripeCustomerId = await generateStripeCustomerId(user.name, user.email)
+    if (!user.stripeCustomerId) throw new Error("Failed to create stripe customer");
+    atomic.set(['usersByStripeCustomer', user.stripeCustomerId], { id: user.id });
+  }
+
+  const { ok } = await atomic.commit();
+  if (!ok) throw new Error(errorMessage);
+
+  return user;
+}
+
+export async function deleteUser(id: string | null) {
+  if (!id) return;
+  const user = await getUserById(id);
+  if (!user) return;
+
+  const atomic = db.atomic()
+    .delete(['users', id])
+    .delete(['usersByEmail', user.email])
+    .delete(['chat', id]);
+
+  if (user.stripeCustomerId) {
+    atomic.delete(['usersByStripeCustomer', user.stripeCustomerId]);
+  }
+
+  await atomic.commit();
 }
 
 // Validation

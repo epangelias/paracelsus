@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno run -A
+
 // npx puppeteer browsers install firefox
 
 import puppeteer from 'npm:puppeteer';
@@ -6,7 +8,7 @@ import { getUserIdByEmail } from '@/lib/user-data.ts';
 
 // Clean up test data
 await deleteUser(await getUserIdByEmail('test@test.test'));
-await deleteUser(await getUserIdByEmail('test@test.test2'));
+await deleteUser(await getUserIdByEmail('ztest@test.test'));
 
 console.log('Ensure app running locally at http://0.0.0.0:8000');
 
@@ -14,6 +16,7 @@ console.log('Ensure app running locally at http://0.0.0.0:8000');
 const browser = await puppeteer.launch({
     // browser: "firefox",
     headless: false,    // Enable non-headless mode for debugging
+    browser: "firefox",
 });
 
 const page = await browser.newPage();
@@ -35,31 +38,66 @@ await page.type('[name="name"]', 'Test');
 await page.type('[name="email"]', 'test@test.test');
 await page.type('[name="password"]', 'test@test.test');
 
-// Submit the signup form
-await Promise.all([
+Promise.all([
     page.click('form button'),
-    page.waitForNavigation({ waitUntil: 'networkidle0' }), // Wait for form submission to complete
-]);
+    page.waitForNavigation({ waitUntil: 'networkidle0' })
+])
+
+await new Promise(r => setTimeout(r, 3000));
 
 // Log out by clicking the header link
-await page.waitForSelector('header .right a');
-await page.click('header .right a');
+Promise.all([
+    page.click('header .right a'),
+    page.waitForNavigation({ waitUntil: 'networkidle0' })
+])
 
 // Fill in the signup form with a new user
 await page.waitForSelector('[name="name"]');
-await page.type('[name="name"]', 'New Name');
-await page.type('[name="email"]', 'test@test.test2');
-await page.type('[name="password"]', 'test@test.test2');
+await page.type('[name="name"]', 'z');
+await page.type('[name="email"]', 'z');
 
-// Submit the form again
-await Promise.all([
+Promise.all([
     page.click('form button'),
-    page.waitForNavigation({ waitUntil: 'networkidle0' }),
-]);
+    page.waitForNavigation({ waitUntil: 'networkidle0' })
+])
 
-// Click on a link to navigate (e.g., "main p + p a")
-await page.waitForSelector('main p + p a'); // Wait for the link to be visible
-await page.click('main p + p a');
+Promise.all([
+    page.click('[href="/user/resend-email"]'),
+    page.waitForNavigation({ waitUntil: 'networkidle0' })
+])
+
+Promise.all([
+    page.click('main a'),
+    page.waitForNavigation({ waitUntil: 'networkidle0' })
+])
+
+Promise.all([
+    page.click('.right a'),
+    page.waitForNavigation({ waitUntil: 'networkidle0' })
+])
+
+Promise.all([
+    page.click('[href="/user/signout"]'),
+    page.waitForNavigation({ waitUntil: 'networkidle0' })
+])
+
+
+Promise.all([
+    page.click('a'),
+    page.waitForNavigation({ waitUntil: 'networkidle0' })
+])
+
+browser.close();
+
+
+await page.type('[name="email"]', 'ztest@test.test');
+await page.type('[name="password"]', 'test@test.test');
+
+Promise.all([
+    page.click('form button'),
+    page.waitForNavigation({ waitUntil: 'networkidle0' })
+])
+
 
 // Close the browser
-await browser.close();
+// await browser.close();

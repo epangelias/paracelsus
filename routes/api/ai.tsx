@@ -23,7 +23,7 @@ That's it!
 import { define } from '@/lib/utils.ts';
 import { AIMessage } from '@/lib/types.ts';
 import { StreamAI } from '@/lib/stream-ai.ts';
-import { updateUser } from '@/lib/user-data.ts';
+import { setUserData } from '@/lib/user-data.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 import { getChatData, setChatData } from '@/lib/chat-data.ts';
@@ -39,7 +39,7 @@ export const handler = define.handlers({
 
     const saveMessages = async (messages: AIMessage[]) => {
       await setChatData({ ...chatData, messages });
-      await updateUser({ ...user, tokens: user.tokens - 1 });
+      await setUserData({ ...user, tokens: user.tokens - 1 });
     };
 
     return StreamAI({

@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils.ts';
 import { HttpError, page } from 'fresh';
-import { getUserByVerificationCode, updateUser } from '@/lib/user-data.ts';
+import { getUserByVerificationCode, setUserData } from '@/lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { Page } from '@/components/Page.tsx';
 
@@ -15,7 +15,7 @@ export const handler = define.handlers({
     if (!user.hasVerifiedEmail) user.tokens += 10;
     user.isEmailVerified = true;
     user.hasVerifiedEmail = true;
-    await updateUser(user);
+    await setUserData(user);
     return page();
   },
 });

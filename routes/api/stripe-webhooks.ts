@@ -26,7 +26,7 @@ an `HttpError` is thrown, to track and analyze these errors.
 
 
 import { define } from '@/lib/utils.ts';
-import { getUserByStripeCustomer, updateUser } from '@/lib/user-data.ts';
+import { getUserByStripeCustomer, setUserData } from '@/lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { HttpError } from 'fresh';
 import { GetStripeWebhookEvent } from '@/lib/stripe.ts';
@@ -44,11 +44,11 @@ export const handler = define.handlers({
 
     switch (event.type) {
       case 'customer.subscription.created': {
-        await updateUser({ ...user, isSubscribed: true });
+        await setUserData({ ...user, isSubscribed: true });
         return new Response(null, { status: STATUS_CODE.Created });
       }
       case 'customer.subscription.deleted': {
-        await updateUser({ ...user, isSubscribed: false });
+        await setUserData({ ...user, isSubscribed: false });
         return new Response(null, { status: STATUS_CODE.Accepted });
       }
       default: {
