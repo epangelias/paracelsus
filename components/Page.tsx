@@ -1,7 +1,7 @@
 /* AI GENERATED COMMENT
 Here is my feedback on the provided code:
 
-The code appears to be a React/Preact component written in TypeScript. 
+The code appears to be a React/Preact component written in TypeScript.
 
 It's good to see the use of type annotations and functional component syntax.
 
@@ -26,9 +26,8 @@ There is no error handling in this component, consider adding it if necessary.
 This code is easy to read and maintain.
 */
 
-
 import { Header } from '@/islands/Header.tsx';
-import { ComponentChildren, JSX } from 'preact';
+import { ComponentChildren } from 'preact';
 import { Banners } from '@/islands/Banner.tsx';
 
 export function Page(
