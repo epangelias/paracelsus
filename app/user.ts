@@ -1,0 +1,37 @@
+
+
+
+// Strip user data for sending to client
+
+import { UserData } from '@/app/types.ts';
+import { Meth } from '@/lib/meth.ts';
+import { createUserData } from '@/lib/user-data.ts';
+
+// This is the user data sent to the client
+export function stripUserData(user?: UserData) {
+    if (!user) return undefined;
+    return {
+        name: user.name,
+        tokens: user.tokens,
+        isSubscribed: user.isSubscribed,
+        isEmailVerified: user.isEmailVerified,
+        email: user.email,
+        hasVerifiedEmail: user.hasVerifiedEmail,
+    } as Partial<UserData>;
+}
+
+
+export function createUser(name: string, email: string, password: string) {
+    createUserData({
+        id: Meth.code(),
+        created: Date.now(),
+        name,
+        email,
+        password,
+        tokens: 5,
+        isSubscribed: false,
+        isEmailVerified: false,
+        hasVerifiedEmail: false,
+        pushSubscriptions: [],
+    });
+}

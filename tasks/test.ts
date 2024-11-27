@@ -3,12 +3,12 @@
 // npx puppeteer browsers install firefox
 
 import puppeteer from 'npm:puppeteer';
-import { deleteUser } from '@/lib/user-data.ts';
+import { deleteUserData } from '@/lib/user-data.ts';
 import { getUserIdByEmail } from '@/lib/user-data.ts';
 
 // Clean up test data
-await deleteUser(await getUserIdByEmail('test@test.test'));
-await deleteUser(await getUserIdByEmail('ztest@test.test'));
+await deleteUserData(await getUserIdByEmail('test@test.test'));
+await deleteUserData(await getUserIdByEmail('ztest@test.test'));
 
 console.log('Ensure app running locally at http://0.0.0.0:8000');
 

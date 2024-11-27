@@ -18,13 +18,12 @@ Consider adding error handling for cases where `global.user.value` is null or un
 Consider refactoring the `Global` component to use a more functional approach, as it's currently using a mix of functional and object-oriented programming styles.
 */
 
-
 import { useContext, useEffect } from 'preact/hooks';
 import { createContext } from 'preact';
 import { ComponentChildren } from 'preact';
 import { GlobalData, UserData } from '@/lib/types.ts';
 import { useComputed, useSignal } from '@preact/signals';
-import { syncSSE } from '@/lib/sse.ts';
+import { syncSSE } from '../lib/stream-client.ts';
 import { usePWA } from '@/lib/pwa.ts';
 
 export function Global(

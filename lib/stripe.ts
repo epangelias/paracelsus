@@ -29,9 +29,11 @@ It could be split into smaller functions, each with its own responsibility.
 */
 
 
-import { FreshContext, HttpError } from 'fresh';
+import { App, FreshContext, HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 import Stripe from 'stripe';
+import { getUserByStripeCustomer, setUserData } from '@/lib/user-data.ts';
+import { State } from '@/app/types.ts';
 
 const STRIPE_SECRET_KEY = Deno.env.get('STRIPE_SECRET_KEY') || 'X';
 
@@ -78,29 +80,29 @@ export async function GetStripeWebhookEvent(ctx: FreshContext) {
   }
 }
 
-// export function StripePlugin(app: App<State>) {
-//   app.post("/api/stripe-webhooks", async ctx => {
-//     const event = await GetStripeWebhookEvent(ctx);
+export function stripePlugin(app: App<State>) {
+  app.post("/api/stripe-webhooks", async ctx => {
+    const event = await GetStripeWebhookEvent(ctx);
 
-//     const { customer } = event.data.object;
+    const { customer } = event.data.object;
 
-//     console.log('Received hook: ' + event.type);
+    console.log('Received hook: ' + event.type);
 
-//     const user = await getUserByStripeCustomer(customer);
-//     if (!user) throw new HttpError(STATUS_CODE.NotFound, 'User not found');
+    const user = await getUserByStripeCustomer(customer);
+    if (!user) throw new HttpError(STATUS_CODE.NotFound, 'User not found');
 
-//     switch (event.type) {
-//       case 'customer.subscription.created': {
-//         await updateUser({ ...user, isSubscribed: true });
-//         return new Response(null, { status: STATUS_CODE.Created });
-//       }
-//       case 'customer.subscription.deleted': {
-//         await updateUser({ ...user, isSubscribed: false });
-//         return new Response(null, { status: STATUS_CODE.Accepted });
-//       }
-//       default: {
-//         throw new HttpError(STATUS_CODE.BadRequest, 'Event type not supported');
-//       }
-//     }
-//   })
-// }
+    switch (event.type) {
+      case 'customer.subscription.created': {
+        await setUserData({ ...user, isSubscribed: true });
+        return new Response(null, { status: STATUS_CODE.Created });
+      }
+      case 'customer.subscription.deleted': {
+        await setUserData({ ...user, isSubscribed: false });
+        return new Response(null, { status: STATUS_CODE.Accepted });
+      }
+      default: {
+        throw new HttpError(STATUS_CODE.BadRequest, 'Event type not supported');
+      }
+    }
+  })
+}

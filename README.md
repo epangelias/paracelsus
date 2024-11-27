@@ -29,6 +29,9 @@ paracelsus my-project
 - Create script to give recommendations for each file.
 - Decouple stripe and user system with an abstraction
 - Create universal loading screen
+- Seperate app specific code
+- effect instead of useEffect?
+- password reset
 
 ## Fresh bugs
 

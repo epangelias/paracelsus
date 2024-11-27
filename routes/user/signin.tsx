@@ -1,7 +1,7 @@
 import { define } from '@/lib/utils.ts';
 import { page } from 'fresh';
 import { SigninForm } from '@/components/SigininForm.tsx';
-import { authorizeUser, setAuthCookie } from '@/lib/user-data.ts';
+import { authorizeUserData, setAuthCookie } from '@/lib/user-data.ts';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
@@ -16,7 +16,7 @@ export const handler = define.handlers({
 
     const { email, password } = Meth.formDataToObject(await ctx.req.formData());
 
-    const authCode = await authorizeUser(email, password);
+    const authCode = await authorizeUserData(email, password);
     if (authCode) return setAuthCookie(ctx, authCode);
 
     return page({ error: 'Invalid credentials', email });

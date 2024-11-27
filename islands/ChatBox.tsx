@@ -27,13 +27,13 @@ Here is my feedback on the provided code:
 - The `generateResponse` function can be simplified by extracting the `watchSSE` logic into a separate function.
 */
 
-
 import { useSignal } from '@preact/signals';
-import { sendSSE, syncSSE, watchSSE } from '@/lib/sse.ts';
-import { AIMessage, ChatData } from '@/lib/types.ts';
+import { sendSSE, syncSSE, watchSSE } from '../lib/stream-client.ts';
+import { AIMessage } from '@/lib/types.ts';
 import { useEffect, useRef } from 'preact/hooks';
 import { useGlobal } from '@/islands/Global.tsx';
 import { Textarea } from '@/islands/Textarea.tsx';
+import { ChatData } from '@/app/types.ts';
 
 export default function ChatBox({ data }: { data: ChatData }) {
   const global = useGlobal();

@@ -1,5 +1,5 @@
 import { define } from '@/lib/utils.ts';
-import { site } from '@/lib/site.ts';
+import { site } from '../app/site.ts';
 import { asset } from 'fresh/runtime';
 
 export const handler = define.handlers(() => {

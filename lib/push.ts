@@ -44,11 +44,11 @@ Refactoring:
 
 import { App, HttpError } from 'fresh';
 import * as webPush from 'web-push';
-import { State, UserData } from '@/lib/types.ts';
-import { site } from '@/lib/site.ts';
+import { site } from "@/app/site.ts";
 import { asset } from 'fresh/runtime';
 import { STATUS_CODE } from '@std/http/status';
 import { setUserData } from '@/lib/user-data.ts';
+import { State, UserData } from '@/app/types.ts';
 
 // import * as webPushTypes from '@types/web-push';
 // const webPush = _webPush as typeof webPushTypes;
@@ -71,6 +71,7 @@ export async function sendNotificationToUser(user: UserData, title: string, mess
       const data = { body: message, icon: asset(site.appIcon), title };
       await webPush.sendNotification(subscription, JSON.stringify(data), { TTL: 60 });
     } catch (_e) {
+      // Removes subscription on error, change later
       subscriptionRemoved = true;
       const index = user.pushSubscriptions.indexOf(subscription);
       if (index > -1) user.pushSubscriptions.splice(index, 1);

@@ -34,7 +34,7 @@ import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal } from '@preact/signals';
 import { isIOSSafari } from '@/lib/pwa.ts';
 import { useMemo } from 'preact/hooks';
-import { BannerData } from '@/lib/types.ts';
+import { BannerData } from '@/app/types.ts';
 
 export function Banners() {
   const global = useGlobal();

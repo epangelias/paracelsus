@@ -34,7 +34,7 @@ import { ChatCompletionChunk } from 'https://deno.land/x/openai@v4.28.0/resource
 import { Stream } from 'https://deno.land/x/openai@v4.28.0/streaming.ts';
 import { AIMessage, OAIOptions } from '@/lib/types.ts';
 import { generateChatCompletionStream } from '@/lib/oai.ts';
-import { safelyRenderMarkdown } from '@/lib/md.ts';
+import { renderMarkdown } from '@/lib/md.ts';
 
 interface Options {
   messages: AIMessage[];
@@ -70,13 +70,13 @@ export function StreamAI({ messages, options, onChunk, onEnd, onError, onCancel 
         const deltaContent = token.choices[0].delta.content;
         if (typeof deltaContent == 'undefined') break;
         content += deltaContent;
-        const html = insertLoaderToHTML(await safelyRenderMarkdown(content));
+        const html = insertLoaderToHTML(await renderMarkdown(content));
         message.content = content;
         message.html = html;
         send(message);
       }
 
-      message.html = await safelyRenderMarkdown(content);
+      message.html = await renderMarkdown(content);
       send(message);
       stream.controller.abort();
       send(null);
@@ -84,7 +84,7 @@ export function StreamAI({ messages, options, onChunk, onEnd, onError, onCancel 
       if (onEnd) onEnd(messages);
     },
     async onCancel() {
-      message.html = await safelyRenderMarkdown(message.content);
+      message.html = await renderMarkdown(message.content);
       if (onCancel) onCancel(messages);
       stream?.controller?.abort();
     },

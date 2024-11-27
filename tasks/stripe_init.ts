@@ -1,7 +1,7 @@
 #!/usr/bin/env -S deno run -A
 
 import type Stripe from 'stripe';
-import { site } from '@/lib/site.ts';
+import { site } from '../app/site.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 
 async function createProduct(stripe: Stripe) {

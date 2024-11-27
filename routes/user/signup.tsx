@@ -1,11 +1,12 @@
 import { define } from '@/lib/utils.ts';
 import { page } from 'fresh';
-import { authorizeUser, createUser, setAuthCookie } from '@/lib/user-data.ts';
+import { authorizeUserData, createUserData, setAuthCookie } from '@/lib/user-data.ts';
 import { SignupForm } from '@/components/SiginupForm.tsx';
-import { sendEmailVerification } from '@/lib/mail.ts';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
+import { sendEmailVerification } from '@/app/verify-email.ts';
+import { createUser } from '@/app/user.ts';
 
 const limiter = new RateLimiter();
 
@@ -27,7 +28,7 @@ export const handler = define.handlers({
         console.error('Error sending verification email: ', e);
       }
 
-      const authCode = await authorizeUser(email, password);
+      const authCode = await authorizeUserData(email, password);
       if (authCode) return setAuthCookie(ctx, authCode);
 
       throw new Error('Error authorizing user');

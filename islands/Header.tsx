@@ -13,9 +13,8 @@ The img tag should have an alt text that is not empty.
 Consider adding a fallback for site.favicon and site.name in case they are not available.
 */
 
-
 import { useGlobal } from '@/islands/Global.tsx';
-import { site } from '@/lib/site.ts';
+import { site } from '../app/site.ts';
 import { Meth } from '@/lib/meth.ts';
 
 export function Header() {

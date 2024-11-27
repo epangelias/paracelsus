@@ -26,7 +26,7 @@ import { StreamAI } from '@/lib/stream-ai.ts';
 import { setUserData } from '@/lib/user-data.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
-import { getChatData, setChatData } from '@/lib/chat-data.ts';
+import { getChatData, setChatData } from '@/app/chat-data.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {

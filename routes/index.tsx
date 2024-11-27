@@ -19,9 +19,9 @@ Readability issue: The conditionals in the default export are complex and hard t
 import { define } from '@/lib/utils.ts';
 import ChatBox from '@/islands/ChatBox.tsx';
 import { page } from 'fresh';
-import { site } from '@/lib/site.ts';
+import { site } from '@/app/site.ts';
 import { Page } from '@/components/Page.tsx';
-import { getChatData } from '@/lib/chat-data.ts';
+import { getChatData } from '@/app/chat-data.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {

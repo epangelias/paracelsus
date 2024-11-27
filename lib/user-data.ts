@@ -1,33 +1,18 @@
 import { FreshContext } from 'fresh';
 import { getCookies, setCookie } from 'jsr:@std/http/cookie';
 import { db } from '@/lib/utils.ts';
-import { State, UserData } from '@/lib/types.ts';
 import { Meth } from '@/lib/meth.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 import { hashText } from '@/lib/crypto.ts';
+import { State, UserData } from '@/app/types.ts';
 
 // DB
 
-export async function loadUserToContext(ctx: FreshContext<State>) {
-  if (ctx.state.user) return ctx.state.user;
-  const { auth } = getCookies(ctx.req.headers);
-  ctx.state.auth = auth;
-  const user = await getUserByAuth(auth);
-  if (user) ctx.state.user = user;
-}
-
 export async function getUserByAuth(auth: string) {
-  if (!auth) return;
-  const id = await getUserIdByAuth(auth);
-  if (!id) return null;
-  return await getUserById(id);
-}
-
-async function getUserIdByAuth(auth?: string) {
-  if (!auth) return;
+  if (!auth) return null;
   const res = await db.get<{ id: string }>(['usersByAuth', auth]);
   if (res.versionstamp == null) return null;
-  return res.value?.id;
+  return await getUserById(res.value.id);
 }
 
 export async function getUserById(id: string) {
@@ -42,25 +27,9 @@ export async function getUserIdByEmail(id: string) {
   return res.value?.id;
 }
 
-async function getUserIdByStripeCustomer(stripeCustomerId: string) {
-  const res = await db.get<{ id: string }>(['usersByStripeCustomer', stripeCustomerId]);
-  if (res.versionstamp == null) return null;
-  return res.value?.id;
-}
+// User session
 
-export async function getUserByStripeCustomer(stripeCustomerId: string) {
-  const id = await getUserIdByStripeCustomer(stripeCustomerId);
-  if (!id) return null;
-  return await getUserById(id);
-}
-
-async function createAuthCode(id: string) {
-  const code = Meth.code();
-  await db.set(['usersByAuth', code], { id }, { expireIn: 1000 * 60 * 60 * 24 * 30 });
-  return code;
-}
-
-export async function authorizeUser(email: string, password: string) {
+export async function authorizeUserData(email: string, password: string) {
   email = normalizeEmail(email);
   const id = await getUserIdByEmail(email);
   if (!id) return null;
@@ -68,21 +37,17 @@ export async function authorizeUser(email: string, password: string) {
   if (!user) return null;
   const passwordHash = await hashText(`${user.salt}:${password}`);
   if (user.passwordHash != passwordHash) return null;
-  return await createAuthCode(id);
+  const code = Meth.code();
+  await db.set(['usersByAuth', code], { id }, { expireIn: 1000 * 60 * 60 * 24 * 30 });
+  return code;
 }
 
-export async function generateEmailVerification(user: UserData) {
+export async function generateEmailVerificationCode(user: UserData) {
   const code = Meth.code(12);
   await db.set(['userVerification', code], { id: user.id, email: user.email }, {
     expireIn: 1000 * 60 * 60, // One hour
   });
   return code;
-}
-
-async function generateStripeCustomerId(name: string, email: string) {
-  if (!isStripeEnabled()) return;
-  const customer = await stripe.customers.create({ email, name });
-  return customer.id;
 }
 
 export async function getUserByVerificationCode(code: string) {
@@ -93,27 +58,53 @@ export async function getUserByVerificationCode(code: string) {
   return user;
 }
 
+export function setAuthCookie(ctx: FreshContext, authCode: string) {
+  const res = ctx.redirect('/');
+  setCookie(res.headers, {
+    name: 'auth',
+    value: authCode,
+    path: '/',
+    maxAge: 60 * 60 * 24 * 30,
+    secure: ctx.req.url.startsWith('https://'),
+  });
+  return res;
+}
+
+export async function loadUserToContext(ctx: FreshContext<State>) {
+  if (ctx.state.user) return ctx.state.user;
+  const { auth } = getCookies(ctx.req.headers);
+  ctx.state.auth = auth;
+  const user = await getUserByAuth(auth);
+  if (user) ctx.state.user = user;
+}
+
+// Stripe
+
+export async function getUserByStripeCustomer(stripeCustomerId: string) {
+  const res = await db.get<{ id: string }>(['usersByStripeCustomer', stripeCustomerId]);
+  if (res.versionstamp == null) return null;
+  return await getUserById(res.value.id);
+}
+
+async function generateStripeCustomerId(name: string, email: string) {
+  if (!isStripeEnabled()) return;
+  const customer = await stripe.customers.create({ email, name });
+  return customer.id;
+}
+
+
 // User Data
 
-export async function createUser(name: string, email: string, password: string) {
-  if (password.length < 6) throw new Error('Password must be at least 8 characters');
-  if (password.length > 100) throw new Error('Password must be less than 100 characters');
+export async function createUserData(data: Omit<UserData, 'passwordHash' | 'salt'> & { password: string }) {
+  validatePassword(data.password);
 
   const salt = Meth.code();
-  const passwordHash = await hashText(`${salt}:${password}`);
+  const passwordHash = await hashText(`${salt}:${data.password}`);
 
   const user: UserData = {
-    id: Meth.code(),
-    created: Date.now(),
-    email,
-    passwordHash,
+    ...data,
     salt,
-    name,
-    isSubscribed: false,
-    tokens: 5,
-    isEmailVerified: false,
-    hasVerifiedEmail: false,
-    pushSubscriptions: [],
+    passwordHash
   };
 
   return setUserData(user, { isNew: true });
@@ -178,7 +169,7 @@ export async function setUserData(user: UserData, { isNew } = { isNew: false }) 
   return user;
 }
 
-export async function deleteUser(id: string | null) {
+export async function deleteUserData(id: string | null) {
   if (!id) return;
   const user = await getUserById(id);
   if (!user) return;
@@ -186,7 +177,7 @@ export async function deleteUser(id: string | null) {
   const atomic = db.atomic()
     .delete(['users', id])
     .delete(['usersByEmail', user.email])
-    .delete(['chat', id])
+    .delete(['chat', id]) // User related data
     .delete(['usersByStripeCustomer', user.stripeCustomerId || '']);
 
   await atomic.commit();
@@ -209,6 +200,11 @@ function validateUserData(user: UserData) {
   }
 }
 
+function validatePassword(password: string) {
+  if (password.length < 6) throw new Error('Password must be at least 8 characters');
+  if (password.length > 100) throw new Error('Password must be less than 100 characters');
+}
+
 export function normalizeName(name: string) {
   return name.trim().replace(/\s+/g, ' ').split(' ').map((word) =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
@@ -219,28 +215,5 @@ export function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
 }
 
-// Strip user data for sending to client
 
-export function stripUserData(user?: UserData) {
-  if (!user) return undefined;
-  return {
-    name: user.name,
-    tokens: user.tokens,
-    isSubscribed: user.isSubscribed,
-    isEmailVerified: user.isEmailVerified,
-    email: user.email,
-    hasVerifiedEmail: user.hasVerifiedEmail,
-  } as Partial<UserData>;
-}
 
-export function setAuthCookie(ctx: FreshContext, authCode: string) {
-  const res = ctx.redirect('/');
-  setCookie(res.headers, {
-    name: 'auth',
-    value: authCode,
-    path: '/',
-    maxAge: 60 * 60 * 24 * 30,
-    secure: ctx.req.url.startsWith('https://'),
-  });
-  return res;
-}

@@ -1,8 +1,8 @@
-import { site } from '@/lib/site.ts';
+import { site } from '../app/site.ts';
 import { define } from '@/lib/utils.ts';
 import { asset } from 'fresh/runtime';
-import { stripUserData } from '@/lib/user-data.ts';
 import { Global } from '@/islands/Global.tsx';
+import { stripUserData } from '@/app/user.ts';
 
 export default define.page(({ Component, state }) => {
   return (

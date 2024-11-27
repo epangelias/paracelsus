@@ -13,13 +13,12 @@ Consider adding a try-catch block around the `db.set` operation to handle any po
 It's good to see the use of TypeScript, but consider adding more type annotations and interfaces to improve code readability.
 */
 
-
 import { define } from '@/lib/utils.ts';
 import { StreamSSR } from '@/lib/stream-sse.ts';
 import { db } from '@/lib/utils.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
-import { ChatData } from '@/lib/types.ts';
+import { ChatData } from '@/app/types.ts';
 
 export const handler = define.handlers(async (ctx) => {
   if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
