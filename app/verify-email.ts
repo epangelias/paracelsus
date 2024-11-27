@@ -1,8 +1,8 @@
 import { generateEmailVerificationCode } from '@/lib/user-data.ts';
-import { UserData } from '@/lib/types.ts';
 import { sendMail } from '@/lib/mail.ts';
-import { site } from './site.ts';
+import { site } from "@/app/site.ts";
 import { asset } from 'fresh/runtime';
+import { UserData } from '@/app/types.ts';
 
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
   const code = await generateEmailVerificationCode(user);

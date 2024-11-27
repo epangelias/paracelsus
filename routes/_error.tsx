@@ -7,29 +7,25 @@ export const handler = define.handlers(async (ctx) => {
   const isAPI = !!ctx.url.pathname.match(/^\/api\//);
 
   try {
-    if (ctx.error) throw ctx.error;
-    return await ctx.next();
-  } catch (e) {
-    try {
-      if (e instanceof HttpError) throw e;
-      else if (typeof e === 'string') {
-        console.error(e);
-        throw new HttpError(STATUS_CODE.InternalServerError);
-      } else if (e instanceof Error) {
-        console.error(e);
-        throw new HttpError(STATUS_CODE.InternalServerError);
-      } else {
-        console.error(e);
-        throw new HttpError(STATUS_CODE.NotFound);
-      }
-    } catch (e) {
-      const { status, message } = e as HttpError;
-      if (isAPI) {
-        return new Response(message, { statusText: STATUS_TEXT[status as StatusCode], status });
-      }
-      if (status == STATUS_CODE.Unauthorized) return ctx.redirect('/user/signin');
-      return page({ status, statusText: message });
+    const e = ctx.error;
+    if (e instanceof HttpError) throw e;
+    else if (typeof e === 'string') {
+      console.error(e);
+      throw new HttpError(STATUS_CODE.InternalServerError);
+    } else if (e instanceof Error) {
+      console.error(e);
+      throw new HttpError(STATUS_CODE.InternalServerError);
+    } else {
+      console.error(e);
+      throw new HttpError(STATUS_CODE.NotFound);
     }
+  } catch (e) {
+    const { status, message } = e as HttpError;
+    if (isAPI) {
+      return new Response(message, { statusText: STATUS_TEXT[status as StatusCode], status });
+    }
+    if (status == STATUS_CODE.Unauthorized) return ctx.redirect('/user/signin');
+    return page({ status, statusText: message });
   }
 });
 

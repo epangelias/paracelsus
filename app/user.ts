@@ -17,7 +17,7 @@ export function stripUserData(user?: UserData) {
 }
 
 export function createUser(name: string, email: string, password: string) {
-    createUserData({
+    return createUserData({
         name,
         email,
         password,

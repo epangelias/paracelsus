@@ -2,24 +2,17 @@
 
 import { App, fsRoutes, staticFiles } from 'fresh';
 import { pushPlugin } from '@/lib/push.ts';
-import { loadUserToContext } from '@/lib/user-data.ts';
-import { autoSendFollowUps } from './app/follow-up.ts';
-import { stripePlugin } from '@/lib/stripe.ts';
+import { autoSendFollowUps } from "@/app/follow-up.ts";
 import { State } from '@/app/types.ts';
+import { stripePlugin } from '@/lib/stripe-plugin.ts';
+import { userPlugin } from '@/lib/user-plugin.tsx';
 
 export const app = new App<State>();
 
 autoSendFollowUps();
 stripePlugin(app);
 pushPlugin(app);
-
-app.use(async (ctx) => {
-  // Skip static assets
-  if (!ctx.req.url.includes('?__frsh_c=')) {
-    await loadUserToContext(ctx);
-  }
-  return await ctx.next();
-});
+userPlugin(app);
 
 app.use(staticFiles());
 
