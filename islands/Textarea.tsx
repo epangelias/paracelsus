@@ -26,7 +26,6 @@ Code could be improved by:
 Using a consistent naming convention, and adding type annotations for function `OnInput`.
 */
 
-
 import { useEffect, useRef } from 'preact/hooks';
 import { JSX, RefObject } from 'preact';
 

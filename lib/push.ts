@@ -2,49 +2,48 @@
 Here is my feedback on the provided code:
 
 Security issues:
-- The VAPID private key is stored as an environment variable, which may not be secure. 
+- The VAPID private key is stored as an environment variable, which may not be secure.
   Consider using a secrets manager or an encrypted storage.
-- The `generateVAPIDKeys()` function is called when the VAPID keys are not set, 
+- The `generateVAPIDKeys()` function is called when the VAPID keys are not set,
   but the generated keys are not stored or used anywhere.
 
 Performance issues:
-- In the `sendNotificationToUser` function, if a user has many subscriptions and 
-  an error occurs while sending a notification, the function will remove the 
+- In the `sendNotificationToUser` function, if a user has many subscriptions and
+  an error occurs while sending a notification, the function will remove the
   subscription and update the user data, which could be inefficient.
 
 Code style issues:
-- The code uses both single and double quotes for strings, 
+- The code uses both single and double quotes for strings,
   it's better to stick to a single convention throughout the code.
 - Some lines are quite long and could be broken up for better readability.
 
 Best practices:
-- It's a good practice to handle errors more explicitly instead of catching 
+- It's a good practice to handle errors more explicitly instead of catching
   a general `_e` error. This can help to debug issues more efficiently.
-- The `PushPlugin` function is not explicitly exported as a plugin, 
+- The `PushPlugin` function is not explicitly exported as a plugin,
   consider adding a clearer indication of its purpose.
 
 Maintainability issues:
-- The `sendNotificationToUser` function has multiple responsibilities: 
-  sending notifications and updating user data. 
+- The `sendNotificationToUser` function has multiple responsibilities:
+  sending notifications and updating user data.
   Consider breaking this down into separate functions.
-- The `PushPlugin` function is not easily testable due to its tight coupling 
+- The `PushPlugin` function is not easily testable due to its tight coupling
   with the `ApushPlugintate` objects.
 
 Readability issues:
-- The `sendNotificationToUser` function could be renamed to something more 
+- The `sendNotificationToUser` function could be renamed to something more
   descriptive, such as `sendNotificationsToUserSubscriptions`.
-- The `PushPlugin` function could be renamed to something more descriptive, 
+- The `PushPlugin` function could be renamed to something more descriptive,
   such as `NotificationSubscriptionPlugin`.
 
 Refactoring:
-- The `sendNotificationToUser` function could be refactored to use `await Promise.all()` 
+- The `sendNotificationToUser` function could be refactored to use `await Promise.all()`
   to send notifications in parallel, which could improve performance.
 */
 
-
 import { App, HttpError } from 'fresh';
 import * as webPush from 'web-push';
-import { site } from "@/app/site.ts";
+import { site } from '@/app/site.ts';
 import { asset } from 'fresh/runtime';
 import { STATUS_CODE } from '@std/http/status';
 import { setUserData } from '@/lib/user-data.ts';

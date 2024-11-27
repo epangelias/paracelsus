@@ -11,14 +11,14 @@ export const handler = define.handlers(async (ctx) => {
     return await ctx.next();
   } catch (e) {
     try {
-      if (typeof e === 'string') {
+      if (e instanceof HttpError) throw e;
+      else if (typeof e === 'string') {
         console.error(e);
         throw new HttpError(STATUS_CODE.InternalServerError);
       } else if (e instanceof Error) {
         console.error(e);
         throw new HttpError(STATUS_CODE.InternalServerError);
-      } else if (e instanceof HttpError) throw e;
-      else {
+      } else {
         console.error(e);
         throw new HttpError(STATUS_CODE.NotFound);
       }

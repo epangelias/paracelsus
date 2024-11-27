@@ -1,15 +1,4 @@
 export const Meth = {
-  code(length = 0) {
-    const randomBytes = new Uint8Array(32);
-    crypto.getRandomValues(randomBytes);
-    let hexString = '';
-    for (let i = 0; i < randomBytes.length; i++) {
-      const byte = randomBytes[i].toString(16).padStart(2, '0');
-      hexString += byte;
-    }
-    if (!length) return hexString;
-    return hexString.slice(0, length);
-  },
   objectEquals(x: unknown, y: unknown) {
     if (x === y) return true;
     if (!(x instanceof Object) || !(y instanceof Object)) return false;

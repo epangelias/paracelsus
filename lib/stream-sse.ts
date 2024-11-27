@@ -18,7 +18,6 @@ One minor suggestion for readability is to consider adding more whitespace betwe
 No refactoring suggestions at this time.
 */
 
-
 import { db } from '@/lib/utils.ts';
 
 interface Options {

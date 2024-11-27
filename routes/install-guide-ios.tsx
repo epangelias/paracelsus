@@ -18,7 +18,6 @@ Refactoring suggestion: Consider adding a descriptive title or header to the pag
 Alt text for the image is empty, consider adding a descriptive text for screen readers and accessibility.
 */
 
-
 import { define } from '@/lib/utils.ts';
 import { Page } from '@/components/Page.tsx';
 

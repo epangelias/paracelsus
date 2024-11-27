@@ -1,7 +1,7 @@
 /* AI GENERATED COMMENT
 Here is my feedback on the provided code:
 
-Code is simple and easy to read. 
+Code is simple and easy to read.
 
 No security issues found.
 
@@ -17,7 +17,6 @@ Consider using a constants file or a configuration file instead of hardcoding th
 
 Consider adding type definitions for the site object.
 */
-
 
 export const site = {
   name: 'Paracelsus',

@@ -22,7 +22,6 @@ The class could be refactored to use a separate timer instance instead of relyin
 It would be beneficial to add type annotations for the class properties.
 */
 
-
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 

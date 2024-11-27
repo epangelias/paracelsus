@@ -25,7 +25,6 @@ Consider using a consistent naming convention for variables and components.
 Consider using a linter and a code formatter to enforce consistent code style and formatting.
 */
 
-
 import { useGlobal } from '@/islands/Global.tsx';
 import { Field } from '@/components/Field.tsx';
 

@@ -28,7 +28,6 @@ The variable `stream` is defined at the top of the function, but it's only used 
 The function can be broken down into smaller functions, each with a single responsibility, to improve readability and maintainability.
 */
 
-
 import { StreamSSR } from '@/lib/stream-sse.ts';
 import { ChatCompletionChunk } from 'https://deno.land/x/openai@v4.28.0/resources/mod.ts';
 import { Stream } from 'https://deno.land/x/openai@v4.28.0/streaming.ts';

@@ -22,7 +22,6 @@ It would be good to add type checks and validation for the user and chatData obj
 The setChatData function is simple and does not have any issues, but it would be good to add error handling.
 */
 
-
 import { db } from '@/lib/utils.ts';
 import { ChatData, UserData } from '@/app/types.ts';
 

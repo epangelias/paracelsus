@@ -3,14 +3,14 @@
 import { App, fsRoutes, staticFiles } from 'fresh';
 import { pushPlugin } from '@/lib/push.ts';
 import { loadUserToContext } from '@/lib/user-data.ts';
-import { autoSendFollowUps } from "./app/follow-up.ts";
+import { autoSendFollowUps } from './app/follow-up.ts';
 import { stripePlugin } from '@/lib/stripe.ts';
 import { State } from '@/app/types.ts';
 
 export const app = new App<State>();
 
 autoSendFollowUps();
-stripePlugin(app)
+stripePlugin(app);
 pushPlugin(app);
 
 app.use(async (ctx) => {

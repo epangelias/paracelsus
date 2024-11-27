@@ -24,7 +24,6 @@ The code style is generally good, but some lines are a bit long, consider breaki
 Overall, the code is well-structured and easy to follow.
 */
 
-
 export async function fetchOrError<T>(
   url: string,
   init?: { method: 'POST' | 'PATCH'; body: unknown } | { method: 'DELETE' },

@@ -24,7 +24,6 @@ The `Meth.objectEquals` function is not a standard JavaScript function, and its 
 Consider adding JSDoc comments or TypeScript documentation comments to provide additional information about the functions and their parameters.
 */
 
-
 import { Signal } from '@preact/signals';
 import { fetchOrError } from '@/lib/fetch.ts';
 import { Meth } from '@/lib/meth.ts';

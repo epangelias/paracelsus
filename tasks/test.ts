@@ -14,9 +14,9 @@ console.log('Ensure app running locally at http://0.0.0.0:8000');
 
 // Launch browser
 const browser = await puppeteer.launch({
-    // browser: "firefox",
-    headless: false,    // Enable non-headless mode for debugging
-    browser: "firefox",
+  // browser: "firefox",
+  headless: false, // Enable non-headless mode for debugging
+  browser: 'firefox',
 });
 
 const page = await browser.newPage();
@@ -39,17 +39,17 @@ await page.type('[name="email"]', 'test@test.test');
 await page.type('[name="password"]', 'test@test.test');
 
 Promise.all([
-    page.click('form button'),
-    page.waitForNavigation({ waitUntil: 'networkidle0' })
-])
+  page.click('form button'),
+  page.waitForNavigation({ waitUntil: 'networkidle0' }),
+]);
 
-await new Promise(r => setTimeout(r, 3000));
+await new Promise((r) => setTimeout(r, 3000));
 
 // Log out by clicking the header link
 Promise.all([
-    page.click('header .right a'),
-    page.waitForNavigation({ waitUntil: 'networkidle0' })
-])
+  page.click('header .right a'),
+  page.waitForNavigation({ waitUntil: 'networkidle0' }),
+]);
 
 // Fill in the signup form with a new user
 await page.waitForSelector('[name="name"]');
@@ -57,47 +57,44 @@ await page.type('[name="name"]', 'z');
 await page.type('[name="email"]', 'z');
 
 Promise.all([
-    page.click('form button'),
-    page.waitForNavigation({ waitUntil: 'networkidle0' })
-])
+  page.click('form button'),
+  page.waitForNavigation({ waitUntil: 'networkidle0' }),
+]);
 
 Promise.all([
-    page.click('[href="/user/resend-email"]'),
-    page.waitForNavigation({ waitUntil: 'networkidle0' })
-])
+  page.click('[href="/user/resend-email"]'),
+  page.waitForNavigation({ waitUntil: 'networkidle0' }),
+]);
 
 Promise.all([
-    page.click('main a'),
-    page.waitForNavigation({ waitUntil: 'networkidle0' })
-])
+  page.click('main a'),
+  page.waitForNavigation({ waitUntil: 'networkidle0' }),
+]);
 
 Promise.all([
-    page.click('.right a'),
-    page.waitForNavigation({ waitUntil: 'networkidle0' })
-])
+  page.click('.right a'),
+  page.waitForNavigation({ waitUntil: 'networkidle0' }),
+]);
 
 Promise.all([
-    page.click('[href="/user/signout"]'),
-    page.waitForNavigation({ waitUntil: 'networkidle0' })
-])
-
+  page.click('[href="/user/signout"]'),
+  page.waitForNavigation({ waitUntil: 'networkidle0' }),
+]);
 
 Promise.all([
-    page.click('a'),
-    page.waitForNavigation({ waitUntil: 'networkidle0' })
-])
+  page.click('a'),
+  page.waitForNavigation({ waitUntil: 'networkidle0' }),
+]);
 
 browser.close();
-
 
 await page.type('[name="email"]', 'ztest@test.test');
 await page.type('[name="password"]', 'test@test.test');
 
 Promise.all([
-    page.click('form button'),
-    page.waitForNavigation({ waitUntil: 'networkidle0' })
-])
-
+  page.click('form button'),
+  page.waitForNavigation({ waitUntil: 'networkidle0' }),
+]);
 
 // Close the browser
 // await browser.close();

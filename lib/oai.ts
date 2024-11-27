@@ -24,7 +24,6 @@ The `defaultTestOptions` object can be a constant instead of a variable.
 There is no error handling for the case where the environment variables are not set.
 */
 
-
 import OpenAI from 'https://deno.land/x/openai@v4.28.0/mod.ts';
 import { ChatCompletionMessageParam } from 'https://deno.land/x/openai@v4.28.0/resources/mod.ts';
 import { Stream } from 'https://deno.land/x/openai@v4.28.0/streaming.ts';
