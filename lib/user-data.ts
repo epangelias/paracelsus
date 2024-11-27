@@ -5,6 +5,7 @@ import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 import { generateCode, hashText } from '@/lib/crypto.ts';
 import { State, UserData } from '@/app/types.ts';
 import { validation } from '@/lib/validation.ts';
+import { deleteUserRelatedData } from '@/app/user.ts';
 
 // DB
 
@@ -21,8 +22,9 @@ export async function getUserById(id: string) {
   return res.value;
 }
 
-export async function getUserIdByEmail(id: string) {
-  const res = await db.get<{ id: string }>(['usersByEmail', id]);
+export async function getUserIdByEmail(email: string) {
+  email = normalizeEmail(email);
+  const res = await db.get<{ id: string }>(['usersByEmail', email]);
   if (res.versionstamp == null) return null;
   return res.value?.id;
 }
@@ -30,7 +32,6 @@ export async function getUserIdByEmail(id: string) {
 // User session
 
 export async function authorizeUserData(email: string, password: string) {
-  email = normalizeEmail(email);
   const id = await getUserIdByEmail(email);
   if (!id) return null;
   const user = await getUserById(id);
@@ -95,7 +96,7 @@ async function generateStripeCustomerId(name: string, email: string) {
 // User Data
 type OmittedUserData = Omit<UserData, 'passwordHash' | 'salt' | 'id' | 'created'> & { password: string };
 export async function createUserData(data: OmittedUserData) {
-  validatePassword(data.password);
+  validation('password', data.password, { min: 6, max: 100 });
 
   const salt = generateCode();
   const passwordHash = await hashText(`${salt}:${data.password}`);
@@ -119,8 +120,8 @@ export async function setUserData(user: UserData, { isNew } = { isNew: false }) 
   user.email = normalizeEmail(user.email);
   user.name = normalizeName(user.name);
 
-  validation({ type: 'Email', value: user.email, email: true, min: 5, max: 320 });
-  validation({ type: 'Name', value: user.name, textAndSpaces: true, min: 3, max: 100 });
+  validation('email', user.email, { email: true, min: 5, max: 320 });
+  validation('name', user.name, { textAndSpaces: true, min: 3, max: 100 });
 
   if (isNew) {
     // If new user, check that doesn't already exist
@@ -180,15 +181,11 @@ export async function deleteUserData(id: string | null) {
   const atomic = db.atomic()
     .delete(['users', id])
     .delete(['usersByEmail', user.email])
-    .delete(['chat', id]) // User related data
     .delete(['usersByStripeCustomer', user.stripeCustomerId || '']);
 
-  await atomic.commit();
-}
+  deleteUserRelatedData(atomic, user);
 
-function validatePassword(password: string) {
-  if (password.length < 6) throw new Error('Password must be at least 6 characters');
-  if (password.length > 100) throw new Error('Password must be less than 100 characters');
+  await atomic.commit();
 }
 
 // Normalize data
