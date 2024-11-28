@@ -19,6 +19,7 @@ export const site = {
   name: "${projectName}",
   favicon: Meth.emojiToUrl("${prompt('Emoji Icon [🔥]') || '🔥'}"),
   appIcon: "/img/app.png",
+  previewImage: '/img/screenshot.jpg',
   themeColor: "#eb9a52",
   description: "${prompt('Project Description') || ''}",
   email: "vaza@vaza.app",
