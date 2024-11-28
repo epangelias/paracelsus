@@ -8,7 +8,7 @@ const projectName = projectPath.split('/').pop();
 // Clone the repository
 await new Deno.Command('git', {
   args: ['clone', 'https://github.com/epangelias/fresh-tempalte.git', projectPath],
-  // stdin: "inherit", stdout: "inherit", stderr: "inherit",
+  stdin: "inherit", stdout: "inherit", stderr: "inherit",
 }).output();
 
 Deno.chdir(projectPath);
@@ -17,16 +17,16 @@ Deno.chdir(projectPath);
 const siteData = `import { Meth } from "@/lib/meth.ts";\n
 export const site = {
   name: "${projectName}",
-  favicon: Meth.emojiToUrl("${prompt('Emoji Icon [🔥]') || '🔥'}"),
+  favicon: Meth.emojiToUrl('🔥'),
   appIcon: "/img/app.png",
   previewImage: '/img/screenshot.jpg',
   themeColor: "#eb9a52",
-  description: "${prompt('Project Description') || ''}",
-  email: "vaza@vaza.app",
+  description: 'A new project made with Paracelsus.',
+  email: "you@example.com",
   lang: "en-US"
 };`;
 
-await Deno.writeTextFile('lib/site.ts', siteData);
+await Deno.writeTextFile('app/site.ts', siteData);
 
 // Copy .env.template to .env
 const envTemplate = await Deno.readTextFile('.env.template');
@@ -42,5 +42,6 @@ await Deno.remove('.github', { recursive: true });
 // Run the update task
 await new Deno.Command('deno', {
   args: ['task', 'update'],
-  // stdin: "inherit", stdout: "inherit", stderr: "inherit",
+  stdin: "inherit", stdout: "inherit",
+  // stderr: "inherit",
 }).output();
