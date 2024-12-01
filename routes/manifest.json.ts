@@ -10,7 +10,7 @@ export const handler = define.handlers(() => {
     start_url: '/',
     lang: site.lang,
     theme_color: site.themeColor,
-    background_color: '#000000',
+    background_color: site.backgroundColor,
     display: 'standalone',
     description: site.description,
     handle_links: 'preferred',
