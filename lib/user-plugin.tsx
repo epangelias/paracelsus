@@ -7,7 +7,6 @@ export function userPlugin(app: App<State>) {
   app.use(async (ctx) => {
     // Skip static assets
     if (!ctx.req.url.includes('?__frsh_c=') && !ctx.req.url.includes('/_fresh')) {
-      console.log(ctx.req.url);
       await loadUserToContext(ctx);
     }
     return await ctx.next();

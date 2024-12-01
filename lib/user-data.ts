@@ -96,10 +96,7 @@ async function generateStripeCustomerId(name: string, email: string) {
 // User Data
 type OmittedUserData = Omit<UserData, 'passwordHash' | 'salt' | 'id' | 'created'> & { password: string };
 export async function createUserData(data: OmittedUserData) {
-  validation('password', data.password, { min: 6, max: 100 });
-
-  const salt = generateCode();
-  const passwordHash = await hashText(`${salt}:${data.password}`);
+  const { salt, passwordHash } = await generatePassword(data.password);
 
   const user: UserData = {
     id: generateCode(),
@@ -110,6 +107,15 @@ export async function createUserData(data: OmittedUserData) {
   };
 
   return setUserData(user, { isNew: true });
+}
+
+export async function generatePassword(password: string) {
+  validation('password', password, { min: 6, max: 100 });
+
+  const salt = generateCode();
+  const passwordHash = await hashText(`${salt}:${password}`);
+
+  return { salt, passwordHash };
 }
 
 export async function setUserData(user: UserData, { isNew } = { isNew: false }) {

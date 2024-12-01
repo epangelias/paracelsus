@@ -28,6 +28,9 @@ export default define.page<typeof handler>(({ data }) => (
     <div>
       <h1>Sign In</h1>
       <SigninForm error={data?.error} email={data?.email} />
+      <p style={{ fontSize: '0.8em', textAlign: 'center' }}>
+        <a href='/user/lost-password'>Lost your password?</a>
+      </p>
     </div>
   </Page>
 ));
