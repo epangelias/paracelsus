@@ -26,11 +26,8 @@ paracelsus my-project
 - Go route to make all non app related routes to be in a plugin??
   - Or disconect modules from eachother and add seperate files for there implementation together in the app
 - Fix type errors
-- Create script to give recommendations for each file.
 - Decouple stripe and user system with an abstraction
-- Seperate app specific code
-- effect instead of useEffect?
-- password reset
+- Go through ai comments
 
 ## Fresh bugs
 
