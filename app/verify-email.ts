@@ -1,13 +1,13 @@
-import { generateEmailVerificationCode } from '@/lib/user-data.ts';
+import { generateEmailVerificationCode, generatePasswordResetCode } from '@/lib/user-data.ts';
 import { sendMail } from '@/lib/mail.ts';
 import { site } from "@/app/site.ts";
 import { asset } from 'fresh/runtime';
 import { UserData } from '@/app/types.ts';
-import { generatePasswordResetCode } from '@/lib/password-reset.ts';
 
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
   const code = await generateEmailVerificationCode(user);
 
+  const logo = site.icon.startsWith("/") ? baseUrl + asset(site.icon) : site.icon;
   const link = `${baseUrl}/user/verify-email?code=${code}`;
   console.log(link);
 
@@ -19,7 +19,7 @@ export async function sendEmailVerification(baseUrl: string, user: UserData) {
     subject: `Verify your email - ${site.name}`,
     text:
       `Welcome to ${site.name}, ${user.name}!\nValidate your email for ${site.name} by proceeding to the following link.\n${link}`,
-    html: verifyEmailTemplate({ user, link, logo: baseUrl + asset(site.icon) }),
+    html: verifyEmailTemplate({ user, link, logo }),
   });
 }
 
@@ -60,6 +60,8 @@ export async function sendPasswordVerification(baseUrl: string, user: UserData) 
   const link = `${baseUrl}/user/reset-password?code=${code}`;
   console.log(link);
 
+  const logo = site.icon.startsWith("/") ? baseUrl + asset(site.icon) : site.icon;
+
   await sendMail({
     fromName: `${site.name}`,
     from: site.email,
@@ -68,7 +70,7 @@ export async function sendPasswordVerification(baseUrl: string, user: UserData) 
     subject: `Reset your password - ${site.name}`,
     text:
       `Welcome to ${site.name}, ${user.name}!\nReset your password for ${site.name} by proceeding to the following link.\n${link}`,
-    html: resetPasswordTemplate({ user, link, logo: baseUrl + asset(site.icon) }),
+    html: resetPasswordTemplate({ user, link, logo }),
   });
 }
 

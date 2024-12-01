@@ -2,10 +2,9 @@ import { Page } from '@/components/Page.tsx';
 import { define } from '@/lib/utils.ts';
 import { Field } from '@/lib/components/Field.tsx';
 import { HttpError, page } from 'fresh';
-import { generatePassword, getUserByVerificationCode, setUserData } from '@/lib/user-data.ts';
+import { generatePassword, getUserByPasswordResetCode, removePasswordResetCode, setUserData } from '@/lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { Meth } from '@/lib/meth.ts';
-import { getUserByPasswordResetCode, removePasswordResetCode } from '@/lib/password-reset.ts';
 
 export const handler = define.handlers({
   GET: (ctx) => {
