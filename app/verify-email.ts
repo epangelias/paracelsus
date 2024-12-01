@@ -18,7 +18,7 @@ export async function sendEmailVerification(baseUrl: string, user: UserData) {
     subject: `Verify your email - ${site.name}`,
     text:
       `Welcome to ${site.name}, ${user.name}!\nValidate your email for ${site.name} by proceeding to the following link.\n${link}`,
-    html: verifyEmailTemplate({ user, link, logo: baseUrl + asset(site.appIcon) }),
+    html: verifyEmailTemplate({ user, link, logo: baseUrl + asset(site.icon) }),
   });
 }
 

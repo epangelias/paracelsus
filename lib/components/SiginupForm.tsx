@@ -16,7 +16,7 @@ There is no error handling for the form validation or submission process.
 Consider adding Zustand or Redux for state management and validation.
 */
 
-import { Field } from '@/components/Field.tsx';
+import { Field } from '@/lib/components/Field.tsx';
 
 export function SignupForm(
   { error, name, email }: { error: string; name: string; email: string },

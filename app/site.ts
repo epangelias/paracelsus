@@ -18,12 +18,13 @@ Consider using a constants file or a configuration file instead of hardcoding th
 Consider adding type definitions for the site object.
 */
 
+import { Meth } from '@/lib/meth.ts';
+
 export const site = {
   name: 'Paracelsus',
-  favicon: '/img/favicon.png',
-  appIcon: '/img/app.png',
-  previewImage: '/img/screenshot.jpg',
+  icon: Meth.emojiToUrl('🧙‍♂️'),
   themeColor: '#eb9a52',
+  backgroundColor: '#000000',
   description: 'Talk to Paracelsus',
   email: 'vaza@vaza.app',
   lang: 'en',

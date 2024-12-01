@@ -26,7 +26,7 @@ Consider using a linter and a code formatter to enforce consistent code style an
 */
 
 import { useGlobal } from '@/islands/Global.tsx';
-import { Field } from '@/components/Field.tsx';
+import { Field } from '../lib/components/Field.tsx';
 
 export function UserUI({ error, message }: { error?: string; message?: string }) {
   const global = useGlobal();

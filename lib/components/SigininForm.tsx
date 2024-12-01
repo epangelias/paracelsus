@@ -14,7 +14,7 @@ Maintainability issue: The error message is not accessible to screen readers as 
 Refactoring suggestion: Consider separating the form fields into a separate component for better reusability.
 */
 
-import { Field } from '@/components/Field.tsx';
+import { Field } from '@/lib/components/Field.tsx';
 
 export function SigninForm({ error, email }: { error: string; email: string }) {
   return (

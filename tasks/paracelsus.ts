@@ -17,9 +17,7 @@ Deno.chdir(projectPath);
 const siteData = `import { Meth } from "@/lib/meth.ts";\n
 export const site = {
   name: "${projectName}",
-  favicon: Meth.emojiToUrl('🔥'),
-  appIcon: "/img/app.png",
-  previewImage: '/img/screenshot.jpg',
+  icon: Meth.emojiToUrl('🔥'),
   themeColor: "#eb9a52",
   description: 'A new project made with Paracelsus.',
   email: "you@example.com",

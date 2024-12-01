@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils.ts';
 import { page } from 'fresh';
-import { SigninForm } from '@/components/SigininForm.tsx';
+import { SigninForm } from '../../lib/components/SigininForm.tsx';
 import { authorizeUserData, setAuthCookie } from '@/lib/user-data.ts';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';

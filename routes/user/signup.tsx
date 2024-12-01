@@ -1,7 +1,7 @@
 import { define } from '@/lib/utils.ts';
 import { page } from 'fresh';
 import { authorizeUserData, createUserData, setAuthCookie } from '@/lib/user-data.ts';
-import { SignupForm } from '@/components/SiginupForm.tsx';
+import { SignupForm } from '../../lib/components/SiginupForm.tsx';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
