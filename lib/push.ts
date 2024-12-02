@@ -27,11 +27,13 @@ export async function sendNotificationToUser(user: UserData, title: string, mess
       const data = { body: message, icon: asset(site.icon), title };
       await webPush.sendNotification(subscription, JSON.stringify(data), { TTL: 60 });
     } catch (e) {
-      console.error("Error sending to " + subscription.endpoint, e);
-      // Removes subscription on error, change later
-      // subscriptionRemoved = true;
-      // const index = user.pushSubscriptions.indexOf(subscription);
-      // if (index > -1) user.pushSubscriptions.splice(index, 1);
+      if (e?.statusCode == STATUS_CODE.Gone) {
+        // Removes subscription on error, change later
+        console.log("Subscription gone, removing it", subscription);
+        subscriptionRemoved = true;
+        const index = user.pushSubscriptions.indexOf(subscription);
+        if (index > -1) user.pushSubscriptions.splice(index, 1);
+      } else console.error("Error sending to " + subscription.endpoint, e);
     }
   }
 
