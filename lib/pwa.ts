@@ -67,7 +67,7 @@ export async function requestPushSubscription(worker?: ServiceWorkerRegistration
 
 export async function getSubscription(worker: ServiceWorkerRegistration | null) {
   if (!worker) return null;
-  if (Notification.permission !== 'granted') null;
+  // if (Notification.permission !== 'granted') null;
   return await worker.pushManager.getSubscription();
 }
 

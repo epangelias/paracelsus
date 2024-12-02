@@ -80,7 +80,8 @@ export function Banners() {
     },
     {
       name: 'notifications',
-      condition: () => !global.pwa.pushSubscription.value && global.pwa.isPWA.value,
+      condition: () =>
+        Notification.permission === 'default' && !global.pwa.pushSubscription.value && global.pwa.isPWA.value,
       canClose: true,
       content: () => <a href='javascript:void(0);' onClick={global.pwa.requestSubscription}>Enable Notifications</a>,
     },
