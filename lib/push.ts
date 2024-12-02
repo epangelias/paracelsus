@@ -24,7 +24,7 @@ export async function sendNotificationToUser(user: UserData, title: string, mess
 
   for (const subscription of user.pushSubscriptions) {
     try {
-      const data = { body: message, icon: asset(site.icon), title };
+      const data = { body: message, icon: site.icon, title };
       await webPush.sendNotification(subscription, JSON.stringify(data), { TTL: 60 });
     } catch (e) {
       if (e?.statusCode == STATUS_CODE.Gone) {
