@@ -5,8 +5,10 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+  const isAPI = url.pathname.startsWith('/api');
   event.respondWith(
-    fetch(event.request).catch(() => caches.match('/offline')),
+    fetch(event.request).catch((e) => isAPI ? e : caches.match('/offline')),
   );
 });
 
