@@ -18,7 +18,6 @@ paracelsus my-project
 - Fix push notifications on all browsers, test
 - Fix sse errors logged to server
 - Puppeteer testing
-- test out banners
 - Separate folder for app specific modules, mod or app
 - Rename global so no var conflict
 - Standardize nulls and undefined in singals, make them nulls
@@ -28,6 +27,8 @@ paracelsus my-project
 - Fix type errors
 - Decouple stripe and user system with an abstraction
 - Go through ai comments
+- Build a box menu for the user
+- Improve error handling
 
 ## Fresh bugs
 

@@ -103,10 +103,10 @@ export function Banners() {
 export function Banner(
   { data: { name, canClose, content } }: { data: BannerData },
 ) {
-  const hideBanner = useSignal(!!localStorage.getItem('hideBanner-' + name));
+  const hideBanner = useSignal(localStorage.getItem('hideBanner-' + name) === 'true');
 
   function onClose() {
-    localStorage.setItem('hideBanner-' + name, '1');
+    localStorage.setItem('hideBanner-' + name, 'true');
     hideBanner.value = true;
   }
 
