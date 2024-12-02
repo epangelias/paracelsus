@@ -1,33 +1,3 @@
-/* AI GENERATED COMMENT
-Here is the feedback on the provided code:
-
-Security issues:
-The Stripe secret key is hardcoded as 'X' if the environment variable is not set.
-This is a security risk as it allows unauthorized access to the Stripe account.
-
-Performance issues:
-None
-
-Code style issues:
-The code is mostly consistent with a good coding style, but some lines are too long.
-For example, the line where the Stripe object is created is too long and should be split.
-
-Best practices:
-It's good to see that environment variables are used to store sensitive data like API keys.
-However, it would be better to use a secrets manager like Deno's built-in secret manager.
-
-Maintainability issues:
-The code is mostly modular and easy to maintain, but the GetStripeWebhookEvent function does too much.
-It would be better to split it into smaller functions, each with its own responsibility.
-
-Readability issues:
-The code is mostly readable, but some variable names like 'ctx' could be more descriptive.
-
-Refactoring:
-The GetStripeWebhookEvent function could be refactored to be more modular and easier to read.
-It could be split into smaller functions, each with its own responsibility.
-*/
-
 import { FreshContext, HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 import Stripe from 'stripe';
