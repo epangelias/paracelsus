@@ -11,16 +11,19 @@ async function takeScreenshot() {
     console.log('Ensure app running locally at http://0.0.0.0:8000');
 
     const path = Path.join(import.meta.dirname!, '../static/img/screenshot.jpg');
-
     const browser = await puppeteer.launch({ browser: 'firefox', headless: true });
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1200, height: 630 });
-    await page.goto('http://0.0.0.0:8000', { waitUntil: 'networkidle0' });
-    await page.evaluate(() => {
-        document.body.style.zoom = '2';
-        document.body.style.fontSize = '1rem';
-    });
-    await page.screenshot({ path });
+
+    try {
+        const page = await browser.newPage();
+        await page.setViewport({ width: 1200, height: 630 });
+        await page.goto('http://0.0.0.0:8000', { waitUntil: 'networkidle0' });
+        await page.evaluate(() => {
+            document.body.style.zoom = '2';
+            document.body.style.fontSize = '1rem';
+        });
+        await page.screenshot({ path });
+    } catch (_e) { }
+
     await browser.close();
 }
 
@@ -32,7 +35,7 @@ async function generateAssets(inputIcon: string, outputDir: string) {
     const result = await generateImages(inputIcon, outputDir, {
         background: site.backgroundColor,
         favicon: true,
-        // padding: "0%",
+        padding: "20%",
         pathOverride: '/img/gen',
     });
 

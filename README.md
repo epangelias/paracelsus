@@ -24,10 +24,13 @@ paracelsus my-project
 - spererate dir for hooks?
 - Go route to make all non app related routes to be in a plugin??
   - Or disconect modules from eachother and add seperate files for there implementation together in the app
-- Fix type errors
-- Decouple stripe and user system with an abstraction
-- Go through ai comments
 - Build a box menu for the user
+- Decouple stripe and user system with an abstraction
+
+Going through
+
+- Go through ai comments
+- Fix type errors
 - Improve error handling
 
 ## Fresh bugs

@@ -3,7 +3,7 @@ import { define } from '@/lib/utils.ts';
 import { asset } from 'fresh/runtime';
 import { Global } from '@/islands/Global.tsx';
 import { stripUserData } from '@/app/user.ts';
-import { WebappTags } from '../lib/components/WebappTags.tsx';
+import { PWATags } from '../lib/components/PWATags.tsx';
 
 export default define.page(({ Component, state }) => {
   return (
@@ -24,7 +24,7 @@ export default define.page(({ Component, state }) => {
         {/* Modify this to change the theme */}
         <meta name='color-scheme' content='light dark' />
 
-        <WebappTags />
+        <PWATags />
 
         <style dangerouslySetInnerHTML={{ __html: `:root{--primary: ${site.themeColor}` }}></style>
         <link rel='stylesheet' href={asset('/css/theme.css')} />
