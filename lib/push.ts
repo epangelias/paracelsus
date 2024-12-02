@@ -1,13 +1,13 @@
 import { App, HttpError } from 'fresh';
-import * as webPush from 'web-push';
+import * as _webPush from 'web-push';
 import { site } from '@/app/site.ts';
 import { asset } from 'fresh/runtime';
 import { STATUS_CODE } from '@std/http/status';
 import { setUserData } from '@/lib/user-data.ts';
 import { State, UserData } from '@/app/types.ts';
 
-// import * as webPushTypes from '@types/web-push';
-// const webPush = _webPush as typeof webPushTypes;
+import * as webPushTypes from 'npm:@types/web-push';
+const webPush = _webPush as typeof webPushTypes;
 
 const VAPID_PUBLIC_KEY = Deno.env.get('VAPID_PUBLIC_KEY');
 const VAPID_PRIVATE_KEY = Deno.env.get('VAPID_PRIVATE_KEY');
