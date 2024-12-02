@@ -9,21 +9,19 @@ const updateTheme = () => {
   document.body.classList.add(`theme-${isDark ? 'dark' : 'light'}`);
 };
 
-function initTheme() {
-  updateTheme();
+globalThis.addEventListener('load', updateTheme);
 
-  globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
+globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
 
-  new MutationObserver(updateTheme).observe(
-    document.querySelector('meta[name="color-scheme"]'),
-    { attributes: true, attributeFilter: ['content'] },
-  );
-}
-
-initTheme();
+new MutationObserver(updateTheme).observe(
+  document.querySelector('meta[name="color-scheme"]'),
+  { attributes: true, attributeFilter: ['content'] },
+);
 
 // iOS active state
 document.addEventListener('touchstart', () => {}, { passive: true });
 
-// Page transition out
-globalThis.addEventListener('beforeunload', () => document.body.classList.add('fade-out'));
+// Hide placeholder banner depending on whether it was last up there
+if (localStorage.getItem('hidePlaceholderBanner') === 'true') {
+  document.documentElement.classList.add('hidePlaceholderBanner');
+}

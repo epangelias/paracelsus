@@ -2,13 +2,12 @@ import { IS_BROWSER } from 'fresh/runtime';
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal } from '@preact/signals';
 import { isIOSSafari } from '@/lib/pwa.ts';
-import { useMemo } from 'preact/hooks';
+import { useEffect, useMemo } from 'preact/hooks';
 import { BannerData } from '@/app/types.ts';
 
 export function Banners() {
   const global = useGlobal();
-
-  if (!IS_BROWSER) return <></>;
+  const banner = useSignal<BannerData>();
 
   const banners: BannerData[] = [
     {
@@ -56,18 +55,29 @@ export function Banners() {
     },
   ];
 
-  const banner = useMemo(() => banners.find((b) => b.condition()), [
+  const ready = useSignal(false);
+  setTimeout(() => ready.value = true, 300);
+
+  useEffect(() => {
+    banner.value = banners.find((b) => b.condition());
+  }, [
     global.pwa.installPWA.value,
     global.pwa.isPWA.value,
     global.outOfTokens.value,
     global.pwa.pushSubscription.value,
     global.pwa.worker.value,
     global.user.value,
+    ready.value,
   ]);
 
-  if (!banner) return <></>;
+  if (!IS_BROWSER || !ready.value) return <div class='banner placeholder' style={{ color: 'transparent' }}>x</div>;
 
-  return <Banner data={banner} />;
+  if (!banner.value) {
+    localStorage.setItem('hidePlaceholderBanner', 'true');
+    return <></>;
+  }
+
+  return <Banner data={banner.value} />;
 }
 
 export function Banner(
@@ -77,7 +87,8 @@ export function Banner(
 
   hideBanner.value = localStorage.getItem('hideBanner-' + name) === 'true';
 
-  function onClose() {
+  function onClose(e: Event) {
+    e.stopPropagation();
     localStorage.setItem('hideBanner-' + name, 'true');
     hideBanner.value = true;
   }
@@ -86,6 +97,11 @@ export function Banner(
     localStorage.removeItem('hideBanner-' + name);
     hideBanner.value = false;
   }
+
+  useEffect(
+    () => localStorage.setItem('hidePlaceholderBanner', hideBanner.value ? 'true' : 'false'),
+    [hideBanner.value],
+  );
 
   return (
     <>

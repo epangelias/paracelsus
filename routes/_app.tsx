@@ -31,13 +31,13 @@ export default define.page(({ Component, state }) => {
         <link rel='stylesheet' href={asset('/css/main.css')} />
         <link rel='stylesheet' href={asset('/css/components.css')} />
         <link rel='icon' href={asset(site.icon)} />
+
+        <script src={asset('/js/init.js')}></script>
       </head>
       <body>
         <Global user={stripUserData(state.user)}>
           <Component />
         </Global>
-
-        <script src={asset('/js/init.js')}></script>
       </body>
     </html>
   );

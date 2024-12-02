@@ -6,15 +6,56 @@
 
 /* Page Transitions */
 
-body.fade-out {
-  main {
-    animation: pageOut 0.3s ease-in-out forwards;
+@view-transition {
+  navigation: auto;
+}
+
+main {
+  view-transition-name: page;
+}
+
+::view-transition-group(page) {
+  animation-duration: 1s;
+}
+
+::view-transition-old(page) {
+  animation: .5s ease-in both move-out;
+
+}
+
+::view-transition-new(page) {
+  animation: .5s ease-in both move-in;
+}
+
+@keyframes move-out {
+  from {
+    /* transform: translateY(0%); */
+  }
+
+  50% {
+    opacity: 0;
+    /* transform: translateY(-100%); */
+  }
+
+  to {
+    opacity: 0;
   }
 }
 
-body:not(.fade-out) {
-  main {
-    animation: pageIn 0.5s ease-in-out;
+@keyframes move-in {
+
+  from {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+    /* transform: translateY(100%); */
+  }
+
+  to {
+    opacity: 1;
+    /* transform: translateY(0%); */
   }
 }
 
@@ -92,10 +133,14 @@ header {
     }
   }
 
-  /* Remove bottom border if there is a banner */
-  &:has(+ .banner) {
-    border-bottom: none;
-  }
+}
+
+/* Remove bottom border if there is a banner */
+
+
+html:not(.hidePlaceholderBanner:has(.banner.placeholder)) header:has(~ .banner:not([data-hide="true"])) {
+  border-bottom: none;
+  margin-bottom: var(--spacing-05);
 }
 
 /* Banner */
@@ -124,6 +169,10 @@ header {
   }
 }
 
+.hidePlaceholderBanner .banner.placeholder {
+  display: none;
+}
+
 /* Button to show banner after its been closed */
 .banner-button {
   position: absolute;
@@ -135,30 +184,8 @@ header {
   margin-right: var(--spacing);
   margin-top: var(--spacing);
   border-radius: calc(var(--radius) * 4);
-  aspect-ratio: 1 / 1;
 
   span {
     display: block;
-  }
-}
-
-/* Animations */
-
-@keyframes pageIn {
-  from {
-    scale: 0.95;
-    opacity: 0;
-  }
-
-  to {
-    scale: 1;
-    opacity: 1;
-  }
-}
-
-@keyframes pageOut {
-  to {
-    scale: 0.95;
-    opacity: 0;
   }
 }
