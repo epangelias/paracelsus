@@ -5,11 +5,11 @@ const updateTheme = () => {
   const hasLight = colorScheme?.includes('light');
   const isDark = (hasDark && hasLight) ? prefersDark : hasDark;
 
-  document.body.classList.remove('theme-light', 'theme-dark');
-  document.body.classList.add(`theme-${isDark ? 'dark' : 'light'}`);
+  document.documentElement.classList.remove('theme-light', 'theme-dark');
+  document.documentElement.classList.add(`theme-${isDark ? 'dark' : 'light'}`);
 };
 
-globalThis.addEventListener('load', updateTheme);
+updateTheme();
 
 globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
 

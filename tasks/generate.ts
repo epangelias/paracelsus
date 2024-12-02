@@ -35,7 +35,7 @@ async function generateAssets(inputIcon: string, outputDir: string) {
     const result = await generateImages(inputIcon, outputDir, {
         background: site.backgroundColor,
         favicon: true,
-        padding: "20%",
+        padding: "15%",
         pathOverride: '/img/gen',
     });
 

@@ -49,14 +49,17 @@ export function Banners() {
     {
       name: 'notifications',
       condition: () =>
-        Notification.permission === 'default' && !global.pwa.pushSubscription.value && global.pwa.isPWA.value,
+        Notification.permission === 'default' && !global.pwa.pushSubscription.value && global.pwa.isPWA.value &&
+        global.user.value,
       canClose: true,
       content: () => <a href='javascript:void(0);' onClick={global.pwa.requestSubscription}>Enable Notifications</a>,
     },
   ];
 
+  // Delay until rendered after placeholder banner
+  // This is to prevent banner jumping after pwa signals change
   const ready = useSignal(false);
-  setTimeout(() => ready.value = true, 300);
+  setTimeout(() => ready.value = true, 500);
 
   useEffect(() => {
     banner.value = banners.find((b) => b.condition());

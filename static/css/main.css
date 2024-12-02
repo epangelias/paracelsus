@@ -165,7 +165,11 @@ html:not(.hidePlaceholderBanner:has(.banner.placeholder)) header:has(~ .banner:n
     padding: 0 var(--spacing);
     position: absolute;
     right: 1rem;
-    scale: 1.5;
+
+    &,
+    &:active {
+      scale: 1.5;
+    }
   }
 }
 
