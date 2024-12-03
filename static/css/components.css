@@ -71,7 +71,6 @@
   .dropdown {
     z-index: 100;
     position: absolute;
-    /* top: anchor-bottom; */
     right: 0;
     top: 100%;
     width: 150px;
@@ -99,6 +98,15 @@
     }
 
     transition: all 0.1s;
+    pointer-events: none;
+    visibility: hidden;
+
+    &[data-open="true"] {
+      pointer-events: auto;
+      visibility: visible;
+      scale: 1;
+      opacity: 1;
+    }
 
     &[data-open="false"] {
       scale: 0.8;

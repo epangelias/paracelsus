@@ -1,56 +1,28 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal, useSignalEffect } from '@preact/signals';
 import { useRef } from 'preact/hooks';
+import { useMenu } from '@/lib/useMenu.ts';
 
 export function UserMenu() {
   const global = useGlobal();
-  const open = useSignal(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const { isOpen, menuRef } = useMenu();
 
   function toggle(e: Event) {
     e.stopPropagation();
-    open.value = !open.value;
+    isOpen.value = !isOpen.value;
   }
-
-  useSignalEffect(() => {
-    // Handle clicking outside the menu
-    function handleClickOutside(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        open.value = false;
-      }
-    }
-
-    // Handle Escape key press
-    function handleEscapeKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        open.value = false;
-      }
-    }
-
-    // Add event listeners when menu is open
-    if (open.value) {
-      document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('keydown', handleEscapeKey);
-    }
-
-    // Cleanup event listeners
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEscapeKey);
-    };
-  });
 
   return (
     <div ref={menuRef} class='menu user-menu'>
       {global.user.value
         ? (
           <a href='javascript:void(0)' onClick={toggle} class='trigger'>
-            {open.value ? '▾' : '▸'} {global.user.value?.name}
+            {isOpen.value ? '▾' : '▸'} {global.user.value?.name}
           </a>
         )
         : <a href='/user/signin'>Sign In</a>}
       {global.user.value && (
-        <div class='dropdown' data-open={open.value} aria-hidden={!open.value}>
+        <div class='dropdown' data-open={isOpen.value} aria-hidden={!isOpen.value}>
           <ul>
             <li>
               <a href='/user'>Settings</a>
