@@ -26,7 +26,7 @@ export function StreamAI({ messages, options, onChunk, onEnd, onError, onCancel 
       // Prevents server crashing
       console.error(e);
     }
-  }
+  };
 
   return StreamSSR({
     async onChunk(send) {

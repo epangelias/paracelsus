@@ -19,12 +19,11 @@ main {
 }
 
 ::view-transition-old(page) {
-  animation: .5s ease-in both move-out;
-
+  animation: 0.5s ease-in both move-out;
 }
 
 ::view-transition-new(page) {
-  animation: .5s ease-in both move-in;
+  animation: 0.5s ease-in both move-in;
 }
 
 @keyframes move-out {
@@ -43,7 +42,6 @@ main {
 }
 
 @keyframes move-in {
-
   from {
     opacity: 0;
   }
@@ -132,13 +130,11 @@ header {
       }
     }
   }
-
 }
 
 /* Remove bottom border if there is a banner */
 
-
-html:not(.hidePlaceholderBanner:has(.banner.placeholder)) header:has(~ .banner:not([data-hide="true"])) {
+html:not(.hidePlaceholderBanner:has(.banner.placeholder)) header:has(~ .banner:not([data-hide='true'])) {
   border-bottom: none;
   margin-bottom: var(--spacing-05);
 }

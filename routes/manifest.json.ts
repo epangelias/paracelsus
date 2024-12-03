@@ -1,7 +1,7 @@
 import { define } from '@/lib/utils.ts';
 import { site } from '../app/site.ts';
 import { asset } from 'fresh/runtime';
-import icons from "@/static/img/gen/icons.json" with {type: "json"};
+import icons from '@/static/img/gen/icons.json' with { type: 'json' };
 
 export const handler = define.handlers(() => {
   return Response.json({

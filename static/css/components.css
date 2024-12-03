@@ -58,10 +58,7 @@
   }
 }
 
-
-
 /* Menu */
-
 
 .menu {
   position: relative;
@@ -101,14 +98,14 @@
     pointer-events: none;
     visibility: hidden;
 
-    &[data-open="true"] {
+    &[data-open='true'] {
       pointer-events: auto;
       visibility: visible;
       scale: 1;
       opacity: 1;
     }
 
-    &[data-open="false"] {
+    &[data-open='false'] {
       scale: 0.8;
       opacity: 0;
     }

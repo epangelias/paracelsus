@@ -29,11 +29,11 @@ export async function sendNotificationToUser(user: UserData, title: string, mess
     } catch (e) {
       if (e?.statusCode == STATUS_CODE.Gone) {
         // Removes subscription on error, change later
-        console.log("Subscription gone, removing it", subscription, e);
+        console.log('Subscription gone, removing it', subscription, e);
         subscriptionRemoved = true;
         const index = user.pushSubscriptions.indexOf(subscription);
         if (index > -1) user.pushSubscriptions.splice(index, 1);
-      } else console.error("Error sending to " + subscription.endpoint, e);
+      } else console.error('Error sending to ' + subscription.endpoint, e);
     }
   }
 

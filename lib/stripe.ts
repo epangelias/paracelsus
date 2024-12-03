@@ -47,5 +47,3 @@ export async function GetStripeWebhookEvent(ctx: FreshContext) {
     throw new HttpError(STATUS_CODE.InternalServerError, 'Error handling stripe webhook');
   }
 }
-
-

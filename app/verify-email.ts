@@ -1,13 +1,13 @@
 import { generateEmailVerificationCode, generatePasswordResetCode } from '@/lib/user-data.ts';
 import { sendMail } from '@/lib/mail.ts';
-import { site } from "@/app/site.ts";
+import { site } from '@/app/site.ts';
 import { asset } from 'fresh/runtime';
 import { UserData } from '@/app/types.ts';
 
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
   const code = await generateEmailVerificationCode(user);
 
-  const logo = site.icon.startsWith("/") ? baseUrl + asset(site.icon) : site.icon;
+  const logo = site.icon.startsWith('/') ? baseUrl + asset(site.icon) : site.icon;
   const link = `${baseUrl}/user/verify-email?code=${code}`;
   console.log(link);
 
@@ -53,14 +53,13 @@ const verifyEmailTemplate = (
           </table>
         </div>`;
 
-
 export async function sendPasswordVerification(baseUrl: string, user: UserData) {
   const code = await generatePasswordResetCode(user);
 
   const link = `${baseUrl}/user/reset-password?code=${code}`;
   console.log(link);
 
-  const logo = site.icon.startsWith("/") ? baseUrl + asset(site.icon) : site.icon;
+  const logo = site.icon.startsWith('/') ? baseUrl + asset(site.icon) : site.icon;
 
   await sendMail({
     fromName: `${site.name}`,

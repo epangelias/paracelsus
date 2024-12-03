@@ -195,21 +195,20 @@ function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
 }
 
-
 // Password reset
 
 export async function generatePasswordResetCode(user: UserData) {
   const code = generateCode();
-  await db.set(["passwordResets", code], { id: user.id }, { expireIn: 1000 * 60 * 60 }); // One hour
+  await db.set(['passwordResets', code], { id: user.id }, { expireIn: 1000 * 60 * 60 }); // One hour
   return code;
 }
 
 export async function getUserByPasswordResetCode(code: string) {
-  const res = await db.get<{ id: string }>(["passwordResets", code]);
+  const res = await db.get<{ id: string }>(['passwordResets', code]);
   if (res.versionstamp == null) return null;
   return await getUserById(res.value.id);
 }
 
 export async function removePasswordResetCode(code: string) {
-  await db.delete(["passwordResets", code]);
+  await db.delete(['passwordResets', code]);
 }

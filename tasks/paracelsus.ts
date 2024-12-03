@@ -8,7 +8,9 @@ const projectName = projectPath.split('/').pop();
 // Clone the repository
 await new Deno.Command('git', {
   args: ['clone', 'https://github.com/epangelias/fresh-tempalte.git', projectPath],
-  stdin: "inherit", stdout: "inherit", stderr: "inherit",
+  stdin: 'inherit',
+  stdout: 'inherit',
+  stderr: 'inherit',
 }).output();
 
 Deno.chdir(projectPath);
@@ -40,6 +42,7 @@ await Deno.remove('.github', { recursive: true });
 // Run the update task
 await new Deno.Command('deno', {
   args: ['task', 'update'],
-  stdin: "inherit", stdout: "inherit",
+  stdin: 'inherit',
+  stdout: 'inherit',
   // stderr: "inherit",
 }).output();
