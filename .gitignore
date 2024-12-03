@@ -1,10 +1,8 @@
-.env
-
 _fresh/
 
 node_modules/
 vendor/
 
 .archive
-
+.env
 .github

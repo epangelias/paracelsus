@@ -6,9 +6,9 @@ import { AIMessage, OAIOptions } from '@/lib/types.ts';
 const backends: Record<string, OpenAI> = {};
 
 const defaultTestOptions = {
-  apiKey: Deno.env.get('AI_API_KEY') || 'ollama',
-  baseURL: Deno.env.get('AI_URL') || 'http://localhost:11434/v1',
-  model: Deno.env.get('AI_MODEL') || 'llama3.2:1b-instruct-q4_K_M',
+  apiKey: Deno.env.get('OAI_API_KEY') || 'ollama',
+  baseURL: Deno.env.get('OAI_URL') || 'http://localhost:11434/v1',
+  model: Deno.env.get('OAI_MODEL') || 'llama3.2:1b',
 };
 
 export async function generateChatCompletionStream(
