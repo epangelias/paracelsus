@@ -22,7 +22,9 @@ async function takeScreenshot() {
             document.body.style.fontSize = '1rem';
         });
         await page.screenshot({ path });
-    } catch (_e) { }
+    } catch (e) {
+        console.error(e);
+    }
 
     await browser.close();
 }
