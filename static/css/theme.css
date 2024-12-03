@@ -23,7 +23,7 @@
   --spacing: 10px;
   --spacing-05: calc(var(--spacing) * 0.5);
   --spacing-2: calc(var(--spacing) * 2);
-  --transition: 0.2s ease-in-out;
+  --transition: 0.2s ease-in;
   --field-shadow: 0 1px 4px #0002;
 
   --red: color-mix(in srgb, red, var(--fg1) 25%);

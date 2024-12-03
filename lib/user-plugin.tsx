@@ -1,13 +1,19 @@
 import { State } from '@/app/types.ts';
-import { App } from 'fresh';
-import { loadUserToContext } from '@/lib/user-data.ts';
+import { App, FreshContext } from 'fresh';
 import { define } from '@/lib/utils.ts';
+import { getCookies, setCookie } from '@std/http/cookie';
+import { getUserByAuth } from '@/lib/user-data.ts';
 
 export function userPlugin(app: App<State>) {
   app.use(async (ctx) => {
     // Skip static assets
     if (!ctx.req.url.includes('?__frsh_c=') && !ctx.req.url.includes('/_fresh')) {
-      await loadUserToContext(ctx);
+      const { auth } = getCookies(ctx.req.headers);
+      ctx.state.auth = auth;
+      if (auth) {
+        const user = await getUserByAuth(auth);
+        if (user) ctx.state.user = user;
+      }
     }
     return await ctx.next();
   });

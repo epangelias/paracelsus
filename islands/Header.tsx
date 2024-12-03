@@ -1,6 +1,7 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { site } from '../app/site.ts';
 import { Meth } from '@/lib/meth.ts';
+import { UserMenu } from '@/islands/UserMenu.tsx';
 
 export function Header() {
   const global = useGlobal();
@@ -23,7 +24,7 @@ export function Header() {
             </span>
           )}
 
-          {global.user.value ? <a href='/user'>{name}</a> : <a href='/user/signin'>Sign In</a>}
+          <UserMenu />
         </div>
       </header>
     </>

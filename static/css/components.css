@@ -57,3 +57,52 @@
     }
   }
 }
+
+
+
+/* Menu */
+
+
+.menu {
+  position: relative;
+
+  .trigger {}
+
+  .dropdown {
+    z-index: 100;
+    position: absolute;
+    /* top: anchor-bottom; */
+    right: 0;
+    top: 100%;
+    width: 150px;
+    background-color: var(--bg2);
+    border-radius: var(--radius-2);
+    padding: var(--spacing-05);
+    box-shadow: var(--field-shadow);
+    border: var(--border-width) solid var(--border-color);
+    margin-top: var(--spacing-05);
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+
+      a {
+        display: block;
+        padding: var(--spacing-05) var(--spacing);
+        border-radius: var(--radius);
+
+        &:hover {
+          background-color: var(--bg3);
+        }
+      }
+    }
+
+    transition: all 0.1s;
+
+    &[data-open="false"] {
+      scale: 0.8;
+      opacity: 0;
+    }
+  }
+}

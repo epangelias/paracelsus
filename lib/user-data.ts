@@ -1,11 +1,11 @@
 import { FreshContext } from 'fresh';
-import { getCookies, setCookie } from 'jsr:@std/http/cookie';
+import { setCookie } from 'jsr:@std/http/cookie';
 import { db } from '@/lib/utils.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 import { generateCode, hashText } from '@/lib/crypto.ts';
-import { State, UserData } from '@/app/types.ts';
+import { UserData } from '@/app/types.ts';
 import { validation } from '@/lib/validation.ts';
-import { deleteUserRelatedData } from '@/app/user.ts';
+import { deleteUser } from '@/app/user.ts';
 
 // DB
 
@@ -31,12 +31,12 @@ export async function getUserIdByEmail(email: string) {
 
 // User session
 
-export async function authorizeUserData(email: string, password: string) {
+export async function authorizeUser(email: string, password: string) {
   const id = await getUserIdByEmail(email);
   if (!id) return null;
   const user = await getUserById(id);
   if (!user) return null;
-  const passwordHash = await hashText(`${user.salt}:${password}`);
+  const { passwordHash } = await generatePassword(password, user.salt);
   if (user.passwordHash != passwordHash) return null;
   const code = generateCode();
   await db.set(['usersByAuth', code], { id }, { expireIn: 1000 * 60 * 60 * 24 * 30 });
@@ -71,14 +71,6 @@ export function setAuthCookie(ctx: FreshContext, authCode: string) {
   return res;
 }
 
-export async function loadUserToContext(ctx: FreshContext<State>) {
-  if (ctx.state.user) return ctx.state.user;
-  const { auth } = getCookies(ctx.req.headers);
-  ctx.state.auth = auth;
-  const user = await getUserByAuth(auth);
-  if (user) ctx.state.user = user;
-}
-
 // Stripe
 
 export async function getUserByStripeCustomer(stripeCustomerId: string) {
@@ -109,10 +101,9 @@ export async function createUserData(data: OmittedUserData) {
   return setUserData(user, { isNew: true });
 }
 
-export async function generatePassword(password: string) {
+export async function generatePassword(password: string, salt = generateCode()) {
   validation('password', password, { min: 6, max: 100 });
 
-  const salt = generateCode();
   const passwordHash = await hashText(`${salt}:${password}`);
 
   return { salt, passwordHash };
@@ -188,8 +179,6 @@ export async function deleteUserData(id: string | null) {
     .delete(['users', id])
     .delete(['usersByEmail', user.email])
     .delete(['usersByStripeCustomer', user.stripeCustomerId || '']);
-
-  deleteUserRelatedData(atomic, user);
 
   await atomic.commit();
 }

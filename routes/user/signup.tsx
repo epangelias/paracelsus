@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils.ts';
 import { page } from 'fresh';
-import { authorizeUserData, createUserData, setAuthCookie } from '@/lib/user-data.ts';
+import { authorizeUser, createUserData, setAuthCookie } from '@/lib/user-data.ts';
 import { SignupForm } from '../../lib/components/SiginupForm.tsx';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
@@ -28,7 +28,7 @@ export const handler = define.handlers({
         console.error('Error sending verification email: ', e);
       }
 
-      const authCode = await authorizeUserData(email, password);
+      const authCode = await authorizeUser(email, password);
       if (authCode) return setAuthCookie(ctx, authCode);
 
       throw new Error('Error authorizing user');

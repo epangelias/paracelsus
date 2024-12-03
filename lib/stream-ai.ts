@@ -19,17 +19,20 @@ export function StreamAI({ messages, options, onChunk, onEnd, onError, onCancel 
 
   const message = { role: 'assistant', content: '', html: '' };
 
+  const trigger = async (fn?: (msgs: AIMessage[]) => void) => {
+    try {
+      if (fn) await fn(messages);
+    } catch (e) {
+      // Prevents server crashing
+      console.error(e);
+    }
+  }
+
   return StreamSSR({
     async onChunk(send) {
-      try {
-        stream = await generateChatCompletionStream(options, messages);
-        if (stream instanceof Stream == false) throw new Error('Invalid stream');
-        if (onChunk) onChunk(messages);
-      } catch (e) {
-        if (onError) onError(messages);
-        stream?.controller.abort();
-        console.error(e);
-      }
+      stream = await generateChatCompletionStream(options, messages);
+      if (stream instanceof Stream == false) throw new Error('Invalid stream');
+      await trigger(onChunk);
 
       let content = '';
 
@@ -49,12 +52,11 @@ export function StreamAI({ messages, options, onChunk, onEnd, onError, onCancel 
       send(message);
       stream.controller.abort();
       send(null);
-
-      if (onEnd) onEnd(messages);
+      await trigger(onEnd);
     },
     async onCancel() {
       message.html = await renderMarkdown(message.content);
-      if (onCancel) onCancel(messages);
+      await trigger(onCancel);
       stream?.controller?.abort();
     },
   });

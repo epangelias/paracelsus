@@ -1,11 +1,12 @@
 // Strip user data for sending to client
 
 import { UserData } from '@/app/types.ts';
-import { createUserData } from '@/lib/user-data.ts';
+import { createUserData, deleteUserData } from '@/lib/user-data.ts';
+import { db } from '@/lib/utils.ts';
 
-// This is the user data sent to the client
 export function stripUserData(user?: UserData) {
     if (!user) return undefined;
+    // This is the user data sent to the client
     return {
         name: user.name,
         tokens: user.tokens,
@@ -29,6 +30,7 @@ export function createUser(name: string, email: string, password: string) {
     });
 }
 
-export function deleteUserRelatedData(atomic: Deno.AtomicOperation, user: UserData) {
-    return atomic.delete(['chat', user.id]);
+export async function deleteUser(userId: string) {
+    await db.delete(['chat', userId]);
+    await deleteUserData(userId);
 }

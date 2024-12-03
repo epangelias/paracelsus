@@ -13,7 +13,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   const messagesRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const checkCanGenerate = () => global.user.value && (global.user.value.tokens >= 0 || global.user.value.isSubscribed);
+  const checkCanGenerate = () => global.user.value && (global.user.value.tokens! > 0 || global.user.value.isSubscribed);
 
   if (!global.user.value) return <></>;
 
@@ -38,7 +38,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   async function onSubmit(e: SubmitEvent) {
     e.preventDefault();
 
-    if (!checkCanGenerate()) return alert('Your out of tokens now pay');
+    if (!checkCanGenerate()) return alert('You are out of tokens!');
     if (!inputRef.current) return;
 
     generating.value = true;

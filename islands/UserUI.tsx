@@ -6,19 +6,6 @@ export function UserUI({ error, message }: { error?: string; message?: string })
 
   return (
     <>
-      <p>
-        <a href='/user/signout'>Sign Out</a>
-        {global.user.value?.isSubscribed
-          ? <a href='/user/subscription' target='_blank'>Manage Subscription</a>
-          : <a href='/user/subscribe' target='_blank'>Subscribe</a>}
-      </p>
-
-      {global.pwa.worker.value && !global.pwa.pushSubscription.value && (
-        <div>
-          <a onClick={global.pwa.requestSubscription} href='javascript:void(0);'>Enable Notifications</a>
-        </div>
-      )}
-
       {!global.user.value?.isEmailVerified && (
         <p>
           Please verify your email address. <a href='/user/resend-email'>Resend email</a>

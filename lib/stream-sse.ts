@@ -18,7 +18,12 @@ export function StreamSSR({ onChunk, onCancel, watchKey }: Options) {
         }
       };
 
-      if (onChunk) onChunk(send);
+      try {
+        if (onChunk) await onChunk(send);
+      } catch (e) {
+        console.error(e);
+        controller.error(e);
+      }
 
       if (watchKey) {
         for await (const event of db.watch([watchKey])) {

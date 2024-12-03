@@ -23,7 +23,8 @@ paracelsus my-project
 - Go route to make all non app related routes to be in a plugin??
   - Or disconect modules from eachother and add seperate files for there implementation together in the app
 - Build a box menu for the user
-- Decouple stripe and user system with an abstraction
+- Simplify banner system so can remove bloat code
+- Go fix all error handling in ai streaming
 
 Going through
 
