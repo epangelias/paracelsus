@@ -1,7 +1,7 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal, useSignalEffect } from '@preact/signals';
 import { useRef } from 'preact/hooks';
-import { useMenu } from '@/lib/useMenu.ts';
+import { useMenu } from '../lib/hooks/useMenu.ts';
 
 export function UserMenu() {
   const global = useGlobal();

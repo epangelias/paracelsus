@@ -1,7 +1,7 @@
 import { IS_BROWSER } from 'fresh/runtime';
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal } from '@preact/signals';
-import { isIOSSafari } from '@/lib/pwa.ts';
+import { isIOSSafari } from '../lib/hooks/usePWA.ts';
 import { useEffect, useMemo } from 'preact/hooks';
 import { BannerData } from '@/app/types.ts';
 
