@@ -7,9 +7,8 @@ export function UserUI({ error, message }: { error?: string; message?: string })
   return (
     <>
       <p>
-        {global.user.value?.isSubscribed
-          ? <a href='/user/subscription' target='_blank'>Manage Subscription</a>
-          : <a href='/user/subscribe' target='_blank'>Subscribe</a>}
+        {global.user.value?.hasSubscribed && <a href='/user/subscription' target='_blank'>Manage Subscription</a>}
+        {!global.user.value?.isSubscribed && <a href='/user/subscribe' target='_blank'>Subscribe</a>}
       </p>
 
       <p>

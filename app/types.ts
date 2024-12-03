@@ -19,6 +19,7 @@ export interface UserData {
   name: string;
   stripeCustomerId?: string;
   isSubscribed: boolean;
+  hasSubscribed: boolean;
   tokens: number;
   isEmailVerified: boolean;
   hasVerifiedEmail: boolean;

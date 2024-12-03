@@ -17,7 +17,7 @@ export function stripePlugin(app: App<State>) {
 
         switch (event.type) {
             case 'customer.subscription.created': {
-                await setUserData({ ...user, isSubscribed: true });
+                await setUserData({ ...user, isSubscribed: true, hasSubscribed: true });
                 return new Response(null, { status: STATUS_CODE.Created });
             }
             case 'customer.subscription.deleted': {
