@@ -10,7 +10,7 @@ import { userPlugin } from '@/lib/user-plugin.tsx';
 export const app = new App<State>();
 
 // Plugins
-autoSendFollowUps();
+autoSendFollowUps(app);
 stripePlugin(app);
 pushPlugin(app);
 userPlugin(app);
