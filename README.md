@@ -27,7 +27,6 @@ paracelsus my-project
 
 Going through
 
-- Go through ai comments
 - Fix type errors
 - Improve error handling
 

@@ -11,7 +11,7 @@ export const handler = define.handlers({
     const user = ctx.state.user;
 
     if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
-    if (!(user.tokens >= 0 || user.isSubscribed)) throw new HttpError(STATUS_CODE.Unauthorized);
+    if (user.tokens <= 0 && !user.isSubscribed) throw new HttpError(STATUS_CODE.Unauthorized);
     const chatData = await getChatData(user);
     if (!chatData) throw new HttpError(STATUS_CODE.NotFound);
 

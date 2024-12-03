@@ -46,7 +46,7 @@ export async function authorizeUserData(email: string, password: string) {
 export async function generateEmailVerificationCode(user: UserData) {
   const code = generateCode();
   await db.set(['userVerification', code], { id: user.id, email: user.email }, {
-    expireIn: 1000 * 60 * 60, // One hour
+    expireIn: 1000 * 60 * 60 * 24 * 7, // One week
   });
   return code;
 }
