@@ -25,6 +25,7 @@ paracelsus my-project
 - Build a box menu for the user
 - Simplify banner system so can remove bloat code
 - Go fix all error handling in ai streaming
+- add hasSubscribed boolean to user
 
 Going through
 

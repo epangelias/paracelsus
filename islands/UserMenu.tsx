@@ -49,26 +49,21 @@ export function UserMenu() {
           </a>
         )
         : <a href='/user/signin'>Sign In</a>}
-      <div class='dropdown' data-open={open.value} aria-hidden={!open.value}>
-        <ul>
-          <li>
-            {global.pwa.worker.value && !global.pwa.pushSubscription.value && (
-              <a onClick={global.pwa.requestSubscription} href='javascript:void(0);'>Enable Notifications</a>
-            )}
-          </li>
-          <li>
-            {global.user.value?.isSubscribed
-              ? <a href='/user/subscription' target='_blank'>Manage Subscription</a>
-              : <a href='/user/subscribe' target='_blank'>Subscribe</a>}
-          </li>
-          <li>
-            <a href='/user'>Settings</a>
-          </li>
-          <li>
-            <a href='/user/signout'>Sign Out</a>
-          </li>
-        </ul>
-      </div>
+      {global.user.value && (
+        <div class='dropdown' data-open={open.value} aria-hidden={!open.value}>
+          <ul>
+            <li>
+              <a href='/user'>Settings</a>
+            </li>
+            <li>
+              {!global.user.value?.isSubscribed && <a href='/user/subscribe' target='_blank'>Subscribe</a>}
+            </li>
+            <li>
+              <a href='/user/signout'>Sign Out</a>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
