@@ -31,6 +31,8 @@ Going through
 
 - Customize site options at `app/site.ts`
 - Customize theme variables at `static/css/theme.css`
+- Generate assets `deno task generate`
+  - Note: Ensure that server is running at localhost before generating
 - Enable MailJet
   - Create mailjet account, include API keys in `.env`
 - Enable Stripe
