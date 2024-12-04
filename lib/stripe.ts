@@ -12,10 +12,16 @@ export function getStripePremiumPlanPriceId() {
   return Deno.env.get('STRIPE_PREMIUM_PLAN_PRICE_ID');
 }
 
-export const stripe = new Stripe(STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-10-28.acacia',
-  httpClient: Stripe.createFetchHttpClient(),
-});
+let _stripe: Stripe;
+
+if (isStripeEnabled()) {
+  _stripe = new Stripe(STRIPE_SECRET_KEY!, {
+    apiVersion: '2024-11-20.acacia',
+    httpClient: Stripe.createFetchHttpClient(),
+  });
+}
+
+export const stripe = _stripe;
 
 const cryptoProvider = Stripe.createSubtleCryptoProvider();
 

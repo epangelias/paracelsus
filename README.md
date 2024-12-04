@@ -18,6 +18,8 @@ paracelsus my-project
 - Puppeteer testing
 - Simplify banner system so can remove bloat code
 - Go fix all error handling in ai streaming
+- Create basic pricing page
+- Create steps in readme below
 
 Going through
 
@@ -25,7 +27,18 @@ Going through
 - Fix type errors
 - Improve error handling
 
-## Fresh bugs
+## Steps
 
-- typeof handler does not work on handler catch all funcs
-- Github actions do not work if there is a interval or cron
+- Customize site options at `app/site.ts`
+- Customize theme variables at `static/css/theme.css`
+- Enable MailJet
+  - Create mailjet account, include API keys in `.env`
+- Enable Stripe
+  - Include API keys
+  - Generate default price
+    - `deno task stripe:init`
+  - Setup Webhook and add `.env` secret
+  - Local testing
+    - `stripe listen --forward-to localhost:8000/api/stripe-webhooks --events=customer.subscription.created,customer.subscription.deleted`
+- Enable OpenAI
+  - Create OpenAI api account and insert env variables

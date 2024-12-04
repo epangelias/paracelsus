@@ -2,7 +2,7 @@
 
 import { App, fsRoutes, staticFiles } from 'fresh';
 import { pushPlugin } from '@/lib/push.ts';
-import { autoSendFollowUps } from "@/app/follow-up.ts";
+import { autoSendFollowUps } from '@/app/follow-up.ts';
 import { State } from '@/app/types.ts';
 import { stripePlugin } from '@/lib/stripe-plugin.ts';
 import { userPlugin } from '@/lib/user-plugin.tsx';

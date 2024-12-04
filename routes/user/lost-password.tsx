@@ -5,7 +5,7 @@ import { HttpError, page } from 'fresh';
 import { Meth } from '@/lib/meth.ts';
 import { getUserById, getUserIdByEmail } from '@/lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
-import { sendPasswordVerification } from '@/app/verify-email.ts';
+import { sendPasswordVerification } from '../../app/email.ts';
 
 export const handler = define.handlers({
   POST: async (ctx) => {

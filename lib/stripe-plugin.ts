@@ -5,7 +5,7 @@ import { getUserByStripeCustomer, setUserData } from '@/lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 
 export function stripePlugin(app: App<State>) {
-  app.post('/api/stripe-webhooks', async (ctx) => {
+  app.post('/api/stripe/webhooks', async (ctx) => {
     const event = await GetStripeWebhookEvent(ctx);
 
     const { customer } = event.data.object;

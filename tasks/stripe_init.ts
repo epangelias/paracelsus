@@ -1,7 +1,7 @@
 #!/usr/bin/env -S deno run -A
 
-import type Stripe from 'stripe';
-import { site } from '../app/site.ts';
+import Stripe from 'stripe';
+import { site } from '@/app/site.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
 
 async function createProduct(stripe: Stripe) {
@@ -9,12 +9,13 @@ async function createProduct(stripe: Stripe) {
     name: 'Premium',
     description: 'Unlock premium features.',
     default_price_data: {
-      unit_amount: 470,
+      unit_amount: 500, // $5.00
       currency: 'usd',
       recurring: {
         interval: 'month',
       },
     },
+    expand: ['default_price'],
   });
 }
 
@@ -57,4 +58,4 @@ await createPortal(stripe, {
   product: product.id,
 });
 
-console.log('Set the ENV key: STRIPE_PREMIUM_PLAN_PRICE_ID=' + product.default_price);
+console.log('Set the ENV variable: STRIPE_PREMIUM_PLAN_PRICE_ID=' + product.default_price);

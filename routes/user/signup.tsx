@@ -5,7 +5,7 @@ import { SignupForm } from '../../lib/components/SiginupForm.tsx';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
-import { sendEmailVerification } from '@/app/verify-email.ts';
+import { sendEmailVerification } from '../../app/email.ts';
 import { createUser } from '@/app/user.ts';
 
 const limiter = new RateLimiter();

@@ -29,7 +29,7 @@
     "lib": ["dom", "dom.asynciterable", "deno.ns"],
     "jsx": "precompile",
     "jsxImportSource": "preact",
-    "jsxPrecompileSkipElements": ["img", "source", "body", "html", "head"]
+    "jsxPrecompileSkipElements": ["a", "img", "source", "body", "html", "head"]
   },
   "unstable": ["kv", "cron"],
   "lock": false,
