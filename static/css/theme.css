@@ -155,13 +155,13 @@ p {
 
 /* Fields */
 
-label:has(+ :is(button, input, select, textarea, .textarea-container)) {
+label:has(+ :is(button, input, select, textarea)) {
   display: block;
   margin-top: var(--spacing);
   margin-bottom: var(--spacing-05);
   color: var(--fg3);
 
-  & + * {
+  &+* {
     margin-bottom: var(--spacing);
     display: block;
   }
@@ -248,10 +248,8 @@ button {
 
 /* Inputs */
 
-:is(
-  input:not([type]),
-  input:is(
-    [type='text'],
+:is(input:not([type]),
+  input:is([type='text'],
     [type='password'],
     [type='email'],
     [type='number'],
@@ -260,11 +258,9 @@ button {
     [type='search'],
     [type='date'],
     [type='file'],
-    [type='color']
-  ),
+    [type='color']),
   select,
-  textarea
-) {
+  textarea) {
   max-width: 100%;
   padding: var(--spacing) var(--spacing-2);
   border: var(--border-width) solid var(--border-color);
@@ -292,11 +288,15 @@ button {
   }
 }
 
-:is(input, button, select, a, .textarea-container) + :is(input, button, select, a, .textarea-container) {
+textarea {
+  field-sizing: content;
+}
+
+:is(input, button, select, a)+ :is(input, button, select, a) {
   margin-left: var(--spacing);
 }
 
-:is(button, select) ~ a {
+:is(button, select)~a {
   padding: var(--spacing);
 }
 
@@ -341,7 +341,7 @@ a {
 }
 
 /* Spacing when message adjacent */
-:is(button, input, select) + :is(.message, .error-message) {
+:is(button, input, select)+ :is(.message, .error-message) {
   margin-left: var(--spacing);
 }
 

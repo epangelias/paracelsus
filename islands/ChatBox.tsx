@@ -91,11 +91,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
       </div>
 
       <form onSubmit={onSubmit}>
-        <Textarea
-          autofocus
-          required
-          inputRef={inputRef}
-        />
+        <textarea rows={1} autocomplete='off' autofocus required ref={inputRef}></textarea>
         <button disabled={generating.value}>
           <span>◉</span>
         </button>

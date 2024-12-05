@@ -17,12 +17,8 @@
     font-size: 1em;
     padding: var(--spacing);
 
-    .textarea-container {
+    textarea {
       flex: 1;
-
-      textarea {
-        width: 100%;
-      }
     }
 
     button {
