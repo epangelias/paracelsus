@@ -134,7 +134,7 @@ header {
 
 /* Remove bottom border if there is a banner */
 
-html:not(.hidePlaceholderBanner:has(.banner.placeholder)) header:has(~ .banner:not([data-hide='true'])) {
+header:has(~ .banner:not([data-hide='true'])) {
   border-bottom: none;
   margin-bottom: var(--spacing-05);
 }

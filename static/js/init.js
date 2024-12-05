@@ -20,8 +20,3 @@ new MutationObserver(updateTheme).observe(
 
 // iOS active state
 document.addEventListener('touchstart', () => {}, { passive: true });
-
-// Hide placeholder banner depending on whether it was last up there
-if (localStorage.getItem('hidePlaceholderBanner') === 'true') {
-  document.documentElement.classList.add('hidePlaceholderBanner');
-}

@@ -4,6 +4,7 @@ import { AIMessage } from '@/lib/types.ts';
 import { useEffect, useRef } from 'preact/hooks';
 import { useGlobal } from '@/islands/Global.tsx';
 import { ChatData } from '@/app/types.ts';
+import { showOutOfTokensDialog } from './OutOfTokensDialog.tsx';
 
 export default function ChatBox({ data }: { data: ChatData }) {
   const global = useGlobal();
@@ -37,7 +38,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   async function onSubmit(e: SubmitEvent) {
     e.preventDefault();
 
-    if (!checkCanGenerate()) return alert('You are out of tokens!');
+    if (!checkCanGenerate()) return showOutOfTokensDialog();
     if (!inputRef.current) return;
 
     generating.value = true;
@@ -84,17 +85,20 @@ export default function ChatBox({ data }: { data: ChatData }) {
   }
 
   return (
-    <div class='chat-box'>
-      <div class='messages' ref={messagesRef}>
-        {chatData.value.messages.filter((m: AIMessage) => m.role !== 'system').map(ChatMessage)}
-      </div>
+    <>
+      <div class='chat-box'>
+        <div class='messages' ref={messagesRef}>
+          {chatData.value.messages.filter((m: AIMessage) => m.role !== 'system').map(ChatMessage)}
+        </div>
 
-      <form onSubmit={onSubmit}>
-        <textarea rows={1} autocomplete='off' autofocus required ref={inputRef} aria-label='Type a message'></textarea>
-        <button disabled={generating.value}>
-          <span>◉</span>
-        </button>
-      </form>
-    </div>
+        <form onSubmit={onSubmit}>
+          <textarea rows={1} autocomplete='off' autofocus required ref={inputRef} aria-label='Type a message'>
+          </textarea>
+          <button disabled={generating.value}>
+            <span>◉</span>
+          </button>
+        </form>
+      </div>
+    </>
   );
 }

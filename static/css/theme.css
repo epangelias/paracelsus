@@ -444,6 +444,95 @@ pre {
   display: none;
 }
 
+/* Dropdowns */
+
+.dropdown {
+  background-color: var(--bg2);
+  border-radius: var(--radius-2);
+  padding: var(--spacing-05);
+  box-shadow: var(--field-shadow);
+  border: var(--border-width) solid var(--border-color);
+  margin-top: var(--spacing-05);
+  width: 150px;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    a,
+    button {
+      display: block;
+      padding: var(--spacing-05) var(--spacing);
+      border-radius: var(--radius);
+
+      &:hover {
+        background-color: var(--bg3);
+      }
+    }
+  }
+}
+
+@supports (anchor-name: --anchor) {
+  .dropdown {
+    position: absolute;
+    position-anchor: var(--anchor);
+    top: anchor(var(--anchor) bottom);
+    right: anchor(var(--anchor) right);
+    left: calc(anchor(var(--anchor) right) - 150px);
+  }
+}
+
+/* [popover] {
+  transition: opacity .2s, scale .2s, display .2s allow-discrete;
+  scale: 0.8;
+  opacity: 0;
+}
+
+@starting-style {
+  [popover] {
+    scale: 0.8;
+    opacity: 0;
+  }
+}
+
+[popover]:popover-open {
+  opacity: 1;
+  scale: 1;
+} */
+
+/* Dialogs */
+
+/* Dialog Styles */
+dialog {
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--radius-2);
+  padding: var(--spacing-2);
+  background-color: var(--bg2);
+  box-shadow: var(--field-shadow);
+  max-width: 400px;
+  width: 90%;
+  margin: auto;
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  [method="dialog"] {
+    float: right;
+    margin: calc(-1 * var(--spacing));
+
+    button {
+      padding: 0 var(--spacing);
+      font-size: 1.2em;
+      --color: var(--red);
+      border-radius: 100%;
+      aspect-ratio: 1/1;
+    }
+  }
+}
+
+
 /* Animations */
 
 @keyframes spin {

@@ -16,6 +16,7 @@
     clear: both;
     font-size: 1em;
     padding: var(--spacing);
+    gap: var(--spacing);
 
     textarea {
       flex: 1;
@@ -56,59 +57,10 @@
 
 /* Menu */
 
-.menu {
-  position: relative;
-
-  .trigger {
-    anchor-name: --trigger;
-  }
-
-  .dropdown {
-    position: absolute;
-    position-anchor: --trigger;
-    top: anchor(--trigger bottom);
-    right: anchor(--trigger right);
-    left: calc(anchor(--trigger right) - 150px);
-    width: 150px;
-    background-color: var(--bg2);
-    border-radius: var(--radius-2);
-    padding: var(--spacing-05);
-    box-shadow: var(--field-shadow);
-    border: var(--border-width) solid var(--border-color);
-    margin-top: var(--spacing-05);
-
-    ul {
-      padding: 0;
-      margin: 0;
-      list-style: none;
-
-      a {
-        display: block;
-        padding: var(--spacing-05) var(--spacing);
-        border-radius: var(--radius);
-
-        &:hover {
-          background-color: var(--bg3);
-        }
-      }
-    }
-  }
+[popovertarget="user-menu-dropdown"] {
+  anchor-name: --user-menu-dropdown;
 }
 
-/* [popover] {
-  transition: opacity .2s, scale .2s, display .2s allow-discrete;
-  scale: 0.8;
-  opacity: 0;
+#user-menu-dropdown {
+  --anchor: --user-menu-dropdown;
 }
-
-@starting-style {
-  [popover] {
-    scale: 0.8;
-    opacity: 0;
-  }
-}
-
-[popover]:popover-open {
-  opacity: 1;
-  scale: 1;
-} */

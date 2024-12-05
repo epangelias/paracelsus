@@ -16,7 +16,7 @@ export function UserMenu() {
   }, [popover.current]);
 
   return (
-    <div class='menu user-menu'>
+    <>
       {global.user.value
         ? (
           <button class='trigger link' popovertarget='user-menu-dropdown'>
@@ -39,6 +39,6 @@ export function UserMenu() {
           </ul>
         </div>
       )}
-    </div>
+    </>
   );
 }
