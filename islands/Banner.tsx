@@ -22,7 +22,11 @@ export function Banners() {
       banner.value = banners.find((b) => b.name === currentBanner);
     } else {
       banner.value = banners.find((b) => b.condition());
-      localStorage.setItem('currentBanner', banner.value.name);
+      if (banner.value) {
+        localStorage.setItem('currentBanner', banner.value.name);
+      } else {
+        localStorage.removeItem('currentBanner');
+      }
     }
   }, [
     global.pwa.installPWA.value,
