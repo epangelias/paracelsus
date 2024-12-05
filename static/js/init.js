@@ -25,9 +25,3 @@ document.addEventListener('touchstart', () => {}, { passive: true });
 if (localStorage.getItem('hidePlaceholderBanner') === 'true') {
   document.documentElement.classList.add('hidePlaceholderBanner');
 }
-
-// Polyfill
-if (!('anchorName' in document.documentElement.style)) {
-  console.log('loading polyfill');
-  import('https://unpkg.com/@oddbird/css-anchor-positioning');
-}
