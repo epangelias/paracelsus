@@ -3,7 +3,6 @@ import { sendSSE, syncSSE, watchSSE } from '../lib/stream-client.ts';
 import { AIMessage } from '@/lib/types.ts';
 import { useEffect, useRef } from 'preact/hooks';
 import { useGlobal } from '@/islands/Global.tsx';
-import { Textarea } from '@/islands/Textarea.tsx';
 import { ChatData } from '@/app/types.ts';
 
 export default function ChatBox({ data }: { data: ChatData }) {

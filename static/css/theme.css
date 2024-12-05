@@ -213,7 +213,7 @@ a {
 
 /* Buttons */
 
-button {
+button:not(.link) {
   --color: var(--accent);
   background-color: var(--color);
   border-radius: var(--radius);
@@ -308,12 +308,17 @@ textarea {
 
 /* Links */
 
-a {
+a,
+button.link {
   --color: var(--accent);
   color: var(--color);
   text-decoration: none;
+  border: none;
+  font: inherit;
+  background: none;
   font-weight: 600;
   border-radius: var(--radius-05);
+  cursor: pointer;
 
   &:hover {
     /* text-decoration: underline; */
@@ -326,6 +331,7 @@ a {
     color: color-mix(in srgb, var(--color), currentColor 20%);
   }
 }
+
 
 /* Error */
 

@@ -59,13 +59,16 @@
 .menu {
   position: relative;
 
-  .trigger {}
+  .trigger {
+    anchor-name: --trigger;
+  }
 
   .dropdown {
-    z-index: 100;
     position: absolute;
-    right: 0;
-    top: 100%;
+    position-anchor: --trigger;
+    top: anchor(--trigger bottom);
+    right: anchor(--trigger right);
+    left: calc(anchor(--trigger right) - 150px);
     width: 150px;
     background-color: var(--bg2);
     border-radius: var(--radius-2);
@@ -89,21 +92,23 @@
         }
       }
     }
-
-    transition: all 0.1s;
-    pointer-events: none;
-    visibility: hidden;
-
-    &[data-open='true'] {
-      pointer-events: auto;
-      visibility: visible;
-      scale: 1;
-      opacity: 1;
-    }
-
-    &[data-open='false'] {
-      scale: 0.8;
-      opacity: 0;
-    }
   }
 }
+
+/* [popover] {
+  transition: opacity .2s, scale .2s, display .2s allow-discrete;
+  scale: 0.8;
+  opacity: 0;
+}
+
+@starting-style {
+  [popover] {
+    scale: 0.8;
+    opacity: 0;
+  }
+}
+
+[popover]:popover-open {
+  opacity: 1;
+  scale: 1;
+} */

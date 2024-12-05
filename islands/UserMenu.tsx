@@ -1,28 +1,31 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal, useSignalEffect } from '@preact/signals';
-import { useRef } from 'preact/hooks';
-import { useMenu } from '../lib/hooks/useMenu.ts';
+import { useEffect, useRef } from 'preact/hooks';
 
 export function UserMenu() {
   const global = useGlobal();
-  const { isOpen, menuRef } = useMenu();
+  const popover = useRef<HTMLDivElement>(null);
+  const isOpen = useSignal(false);
 
-  function toggle(e: Event) {
-    e.stopPropagation();
-    isOpen.value = !isOpen.value;
-  }
+  const checkPopoverState = () => {
+    isOpen.value = !!popover.current?.matches(':popover-open');
+  };
+  useEffect(() => {
+    popover.current?.addEventListener('toggle', checkPopoverState);
+    return () => popover.current?.removeEventListener('toggle', checkPopoverState);
+  }, [popover.current]);
 
   return (
-    <div ref={menuRef} class='menu user-menu'>
+    <div class='menu user-menu'>
       {global.user.value
         ? (
-          <a href='javascript:void(0)' onClick={toggle} class='trigger'>
+          <button class='trigger link' popovertarget='user-menu-dropdown'>
             {isOpen.value ? '▾' : '▸'} {global.user.value?.name}
-          </a>
+          </button>
         )
         : <a href='/user/signin'>Sign In</a>}
       {global.user.value && (
-        <div class='dropdown' data-open={isOpen.value} aria-hidden={!isOpen.value}>
+        <div popover ref={popover} class='dropdown' id='user-menu-dropdown'>
           <ul>
             <li>
               <a href='/user'>Settings</a>

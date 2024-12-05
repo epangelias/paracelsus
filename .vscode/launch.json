@@ -24,12 +24,7 @@
         "DENO_FUTURE": "1"
       },
       "runtimeExecutable": "/home/jaden/.deno/bin/deno",
-      "runtimeArgs": [
-        "run",
-        "--unstable",
-        "--inspect-wait",
-        "--allow-all"
-      ],
+      "runtimeArgs": ["run", "-A", "--env", "--inspect-wait"],
       "attachSimplePort": 9229
     }
   ]
