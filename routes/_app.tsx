@@ -33,6 +33,7 @@ export default define.page(({ Component, state }) => {
         <link rel='icon' href={asset(site.icon)} />
 
         <script type='module' src={asset('/js/init.js')}></script>
+        <script src={asset('/js/view-transitions-polyfill.js')}></script>
       </head>
       <body>
         <Global user={stripUserData(state.user)}>
