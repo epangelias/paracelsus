@@ -4,7 +4,7 @@ import { ComponentChildren } from 'preact';
 import { GlobalData, UserData } from '@/app/types.ts';
 import { useComputed, useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/stream-client.ts';
-import { usePWA } from '../lib/hooks/usePWA.ts';
+import { usePWA } from '../lib/usePWA.ts';
 
 export function Global(
   { children, user }: { children: ComponentChildren; user?: Partial<UserData> },

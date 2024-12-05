@@ -463,6 +463,7 @@ pre {
     a,
     button {
       display: block;
+      width: 100%;
       padding: var(--spacing-05) var(--spacing);
       border-radius: var(--radius);
 
@@ -515,7 +516,7 @@ dialog {
   margin: auto;
 
   &::backdrop {
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   [method="dialog"] {
