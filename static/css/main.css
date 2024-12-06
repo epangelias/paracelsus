@@ -124,10 +124,6 @@ header {
       display: flex;
       align-items: center;
       --color: var(--primary);
-
-      img {
-        scale: 1.15;
-      }
     }
   }
 }

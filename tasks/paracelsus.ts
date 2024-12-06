@@ -21,6 +21,7 @@ export const site = {
   name: "${projectName}",
   icon: Meth.emojiToUrl('🔥'),
   themeColor: "#eb9a52",
+  backgroundColor: "#222222",
   description: 'A new project made with Paracelsus.',
   email: "you@example.com",
   lang: "en-US"

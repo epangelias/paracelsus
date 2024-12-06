@@ -21,7 +21,7 @@ export default define.page<typeof handler>(({ data }) => {
           <h1>{site.name}</h1>
           <p>{site.description}</p>
           <p>
-            <a href='/user/signin'>Sign In</a> to chat.
+            <a href='/user/signup'>Sign Up</a> to chat.
           </p>
         </>
       )}
