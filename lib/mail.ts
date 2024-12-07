@@ -15,6 +15,10 @@ if (!Deno.env.has('MJ_APIKEY_PUBLIC') || !Deno.env.has('MJ_APIKEY_PRIVATE')) {
   });
 }
 
+export function isMailEnabled() {
+  return mailjet !== undefined;
+}
+
 export async function sendMail(options: MailOptions) {
   limiter.request();
 

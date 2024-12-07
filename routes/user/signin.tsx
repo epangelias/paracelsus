@@ -5,6 +5,7 @@ import { authorizeUser, setAuthCookie } from '@/lib/user-data.ts';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
+import { isMailEnabled } from '@/lib/mail.ts';
 
 const limiter = new RateLimiter();
 
@@ -28,9 +29,11 @@ export default define.page<typeof handler>(({ data }) => (
     <div>
       <h1>Sign In</h1>
       <SigninForm error={data?.error} email={data?.email} />
-      <p style={{ fontSize: '0.8em', textAlign: 'center' }}>
-        <a href='/user/lost-password'>Lost your password?</a>
-      </p>
+      {isMailEnabled() && (
+        <p style={{ fontSize: '0.8em', textAlign: 'center' }}>
+          <a href='/user/lost-password'>Lost your password?</a>
+        </p>
+      )}
     </div>
   </Page>
 ));
