@@ -7,7 +7,7 @@ const limiter = new RateLimiter({ maxRequests: 2, interval: 60 }); // 2 per minu
 let mailjet: Mailjet.Client;
 
 if (!Deno.env.has('MJ_APIKEY_PUBLIC') || !Deno.env.has('MJ_APIKEY_PRIVATE')) {
-  console.warn('Missing mailjet credentials');
+  console.warn('Mailjet disabled. Missing environment variables.');
 } else {
   mailjet = new Mailjet.Client({
     apiKey: Deno.env.get('MJ_APIKEY_PUBLIC'),
@@ -20,11 +20,10 @@ export function isMailEnabled() {
 }
 
 export async function sendMail(options: MailOptions) {
+  if (!isMailEnabled()) return;
+
   limiter.request();
 
-  if (!mailjet) throw new Error('Mail Disabled');
-
-  await mailjet;
   await mailjet.post('send', { 'version': 'v3.1' }).request({
     Messages: [
       {

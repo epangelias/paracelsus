@@ -6,6 +6,7 @@ import { autoSendFollowUps } from '@/app/follow-up.ts';
 import { State } from '@/app/types.ts';
 import { stripePlugin } from '@/lib/stripe-plugin.ts';
 import { userPlugin } from '@/lib/user-plugin.tsx';
+import { testingPlugin } from '@/lib/testingPlugin.ts';
 
 export const app = new App<State>();
 
@@ -14,6 +15,8 @@ autoSendFollowUps(app);
 stripePlugin(app);
 pushPlugin(app);
 userPlugin(app);
+
+testingPlugin(app); // Remove for production
 
 app.use(staticFiles());
 

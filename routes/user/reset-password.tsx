@@ -5,14 +5,17 @@ import { HttpError, page } from 'fresh';
 import { generatePassword, getUserByPasswordResetCode, removePasswordResetCode, setUserData } from '@/lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { Meth } from '@/lib/meth.ts';
+import { isMailEnabled } from '@/lib/mail.ts';
 
 export const handler = define.handlers({
   GET: (ctx) => {
+    if (!isMailEnabled()) throw new HttpError(STATUS_CODE.NotFound);
     const code = ctx.url.searchParams.get('code');
     if (!code) throw new HttpError(STATUS_CODE.Unauthorized);
     return page();
   },
   POST: async (ctx) => {
+    if (!isMailEnabled()) throw new HttpError(STATUS_CODE.NotFound);
     try {
       const code = ctx.url.searchParams.get('code');
       const { password } = Meth.formDataToObject(await ctx.req.formData());

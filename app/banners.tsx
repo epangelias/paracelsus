@@ -5,7 +5,7 @@ export function createBannerData(global: GlobalData) {
   return [
     {
       name: 'verify-email',
-      condition: () => !global.user.value?.hasVerifiedEmail && global.outOfTokens.value,
+      condition: () => !global.user.value?.hasVerifiedEmail && global.outOfTokens.value && global.mailEnabled,
       canClose: false,
       content: () => (
         <>
@@ -15,7 +15,7 @@ export function createBannerData(global: GlobalData) {
     },
     {
       name: 'subscribe',
-      condition: () => global.user.value?.hasVerifiedEmail && global.outOfTokens.value,
+      condition: () => global.user.value?.hasVerifiedEmail && global.outOfTokens.value && global.stripeEnabled,
       canClose: true,
       content: () => (
         <>
@@ -42,7 +42,8 @@ export function createBannerData(global: GlobalData) {
     {
       name: 'notifications',
       condition: () =>
-        Notification.permission === 'default' && !global.pwa.pushSubscription.value && global.pwa.isPWA.value &&
+        global.pushEnabled && Notification.permission === 'default' && !global.pwa.pushSubscription.value &&
+        global.pwa.isPWA.value &&
         global.user.value,
       canClose: true,
       content: () => <a href='javascript:void(0);' onClick={global.pwa.requestSubscription}>Enable Notifications</a>,

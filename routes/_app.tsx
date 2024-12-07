@@ -4,6 +4,9 @@ import { asset } from 'fresh/runtime';
 import { Global } from '@/islands/Global.tsx';
 import { stripUserData } from '@/app/user.ts';
 import { PWATags } from '../lib/components/PWATags.tsx';
+import { isMailEnabled } from '@/lib/mail.ts';
+import { isStripeEnabled } from '@/lib/stripe.ts';
+import { isPushEnabled } from '@/lib/push.ts';
 
 export default define.page(({ Component, state }) => {
   return (
@@ -35,7 +38,12 @@ export default define.page(({ Component, state }) => {
         <script type='module' src={asset('/js/init.js')}></script>
       </head>
       <body>
-        <Global user={stripUserData(state.user)}>
+        <Global
+          user={stripUserData(state.user)}
+          mailEnabled={isMailEnabled()}
+          stripeEnabled={isStripeEnabled()}
+          pushEnabled={isPushEnabled()}
+        >
           <Component />
         </Global>
       </body>

@@ -30,6 +30,9 @@ export type GlobalData = {
   user: Signal<Partial<UserData> | null | undefined>;
   outOfTokens: Signal<boolean>;
   pwa: ReturnType<typeof usePWA>;
+  mailEnabled: boolean;
+  stripeEnabled: boolean;
+  pushEnabled: boolean;
 };
 
 export interface State {

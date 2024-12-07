@@ -19,6 +19,10 @@ if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
   console.log(webPush.generateVAPIDKeys());
 }
 
+export function isPushEnabled() {
+  return VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY;
+}
+
 export async function sendNotificationToUser(user: UserData, title: string, message: string) {
   let subscriptionRemoved = false;
 

@@ -6,9 +6,11 @@ import { Meth } from '@/lib/meth.ts';
 import { getUserById, getUserIdByEmail } from '@/lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { sendPasswordVerification } from '../../app/email.ts';
+import { isMailEnabled } from '@/lib/mail.ts';
 
 export const handler = define.handlers({
   POST: async (ctx) => {
+    if (!isMailEnabled()) throw new HttpError(STATUS_CODE.NotFound);
     const { email } = Meth.formDataToObject(await ctx.req.formData());
     const userId = await getUserIdByEmail(email);
     if (!userId) throw new HttpError(STATUS_CODE.NotFound, 'User not found');

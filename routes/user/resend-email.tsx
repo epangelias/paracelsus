@@ -4,9 +4,11 @@ import { page } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 import { Page } from '@/components/Page.tsx';
 import { sendEmailVerification } from '../../app/email.ts';
+import { isMailEnabled } from '@/lib/mail.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
+    if (!isMailEnabled()) throw new HttpError(STATUS_CODE.NotFound);
     if (!ctx.state.user || ctx.state.user.isEmailVerified) {
       throw new HttpError(STATUS_CODE.Unauthorized);
     }

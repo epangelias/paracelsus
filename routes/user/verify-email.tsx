@@ -3,9 +3,11 @@ import { HttpError, page } from 'fresh';
 import { getUserByVerificationCode, setUserData } from '@/lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { Page } from '@/components/Page.tsx';
+import { isMailEnabled } from '@/lib/mail.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
+    if (!isMailEnabled()) throw new HttpError(STATUS_CODE.NotFound);
     const code = ctx.url.searchParams.get('code') as string;
     if (!code) throw new HttpError(STATUS_CODE.BadRequest, 'Missing verification code');
     const user = await getUserByVerificationCode(code);
