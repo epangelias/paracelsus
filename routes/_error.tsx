@@ -3,7 +3,7 @@ import { STATUS_CODE, STATUS_TEXT, StatusCode } from '@std/http/status';
 import { HttpError, page } from 'fresh';
 import { Page } from '@/components/Page.tsx';
 
-export const handler = define.handlers(async (ctx) => {
+export const handler = define.handlers((ctx) => {
   const isAPI = !!ctx.url.pathname.match(/^\/api\//);
 
   try {

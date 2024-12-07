@@ -57,7 +57,7 @@
 
 /* Menu */
 
-[popovertarget="user-menu-dropdown"] {
+[popovertarget='user-menu-dropdown'] {
   anchor-name: --user-menu-dropdown;
 }
 

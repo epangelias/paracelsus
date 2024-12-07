@@ -27,7 +27,7 @@ export function createBannerData(global: GlobalData) {
       name: 'ios-install',
       condition: () => !global.pwa.isPWA.value && isIOSSafari(),
       canClose: true,
-      content: () => <a href='/install-guide-ios'>Install this app to your device</a>,
+      content: () => <a href='/user/install-guide-ios'>Install this app to your device</a>,
     },
     {
       name: 'pwa-install',
