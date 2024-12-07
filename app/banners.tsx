@@ -34,9 +34,9 @@ export function createBannerData(global: GlobalData) {
       condition: () => global.pwa.installPWA.value && !global.pwa.isPWA.value && !isIOSSafari(),
       canClose: true,
       content: () => (
-        <a href='javascript:void(0);' onClick={global.pwa.installPWA.value}>
+        <button class='link' onClick={global.pwa.installPWA.value}>
           Install this app to your device
-        </a>
+        </button>
       ),
     },
     {

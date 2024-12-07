@@ -66,7 +66,7 @@ function Banner(
   return (
     <>
       <button
-        class='banner-button'
+        class='banner-closed-button'
         onClick={onOpen}
         data-hide={!hideBanner.value}
         aria-label='Open Banner'
@@ -75,7 +75,7 @@ function Banner(
       </button>
       <div class='banner' role='status' aria-live='polite' data-hide={hideBanner.value}>
         {banner.content()}
-        {banner.canClose && <button onClick={onClose} aria-label='Close'>×</button>}
+        {banner.canClose && <button onClick={onClose} aria-label='Close' class='close'>×</button>}
       </div>
     </>
   );

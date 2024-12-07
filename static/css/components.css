@@ -64,3 +64,58 @@
 #user-menu-dropdown {
   --anchor: --user-menu-dropdown;
 }
+
+
+
+
+/* Banner */
+
+.banner {
+  text-align: center;
+  background-color: var(--accent);
+  padding: 0.5rem;
+  color: var(--on-accent);
+  width: calc(100% - 8px * 2);
+  margin: 2px 8px;
+  border-radius: var(--radius);
+  margin-right: var(--spacing);
+  position: relative;
+
+  a,
+  .link {
+    --color: var(--on-accent);
+    text-decoration: underline;
+  }
+
+  button.close {
+    padding: 0 var(--spacing);
+    position: absolute;
+    right: 1rem;
+
+    &,
+    &:active {
+      scale: 1.5;
+    }
+  }
+}
+
+.hidePlaceholderBanner .banner.placeholder {
+  display: none;
+}
+
+/* Button to show banner after its been closed */
+.banner-closed-button {
+  position: absolute;
+  top: 63px;
+  right: var(--spacing);
+  float: right;
+  padding: 0 var(--spacing);
+  --color: var(--accent);
+  margin-right: var(--spacing);
+  margin-top: var(--spacing);
+  border-radius: calc(var(--radius) * 4);
+
+  span {
+    display: block;
+  }
+}
