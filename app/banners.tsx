@@ -46,7 +46,7 @@ export function createBannerData(global: GlobalData) {
         global.pwa.isPWA.value &&
         global.user.value,
       canClose: true,
-      content: () => <a href='javascript:void(0);' onClick={global.pwa.requestSubscription}>Enable Notifications</a>,
+      content: () => <button class='link' onClick={global.pwa.requestSubscription}>Enable Notifications</button>,
     },
   ];
 }
