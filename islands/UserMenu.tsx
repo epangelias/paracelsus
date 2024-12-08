@@ -1,6 +1,7 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal, useSignalEffect } from '@preact/signals';
 import { useEffect, useRef } from 'preact/hooks';
+import { Meth } from '@/lib/meth.ts';
 
 export function UserMenu() {
   const global = useGlobal();
@@ -20,7 +21,7 @@ export function UserMenu() {
       {global.user.value
         ? (
           <button class='trigger link' popovertarget='user-menu-dropdown'>
-            {isOpen.value ? '▾' : '▸'} {global.user.value?.name}
+            {isOpen.value ? '▾' : '▸'} {Meth.limitText(global.user.value?.name, 15)}
           </button>
         )
         : <a href='/user/signin'>Sign In</a>}
