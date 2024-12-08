@@ -39,14 +39,5 @@ export function createBannerData(global: GlobalData): BannerData[] {
         </button>
       ),
     },
-    {
-      name: 'notifications',
-      condition: () =>
-        global.pushEnabled && Notification.permission === 'default' && !global.pwa.pushSubscription.value &&
-        global.pwa.isPWA.value &&
-        global.user.value,
-      canClose: true,
-      content: () => <button class='link' onClick={global.pwa.requestSubscription}>Enable Notifications</button>,
-    },
   ];
 }

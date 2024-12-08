@@ -20,6 +20,10 @@ paracelsus my-project
 - Go fix all error handling in ai streaming
 - Create basic pricing page
 - Create steps in readme below
+- Customizable select boxes, for bai
+-
+
+https://developer.chrome.com/docs/
 
 Going through
 

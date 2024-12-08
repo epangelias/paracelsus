@@ -18,12 +18,6 @@ export function UserUI({ error, message }: { error?: string; message?: string })
         </p>
       )}
 
-      {global.pwa.worker.value && !global.pwa.pushSubscription.value && (
-        <p>
-          <button onClick={global.pwa.requestSubscription} class='link'>Enable Notifications</button>
-        </p>
-      )}
-
       {!global.user.value?.isEmailVerified && global.mailEnabled && (
         <p>
           Please verify your email address. <a href='/user/resend-email'>Resend email</a>
