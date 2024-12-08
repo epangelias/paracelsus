@@ -15,7 +15,7 @@ const VAPID_PRIVATE_KEY = Deno.env.get('VAPID_PRIVATE_KEY') as string;
 let waiting: void | true = true;
 
 export function isPushEnabled() {
-  return VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY;
+  return !!(VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY);
 }
 
 

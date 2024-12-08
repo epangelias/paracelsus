@@ -43,7 +43,7 @@
   --fg3: var(--dark3);
   --fg4: var(--dark4);
 
-  --accent: #3885ea;
+  --accent: #146ee4;
   --on-accent: #fff;
 }
 
@@ -63,6 +63,7 @@
 .theme-dark,
 .theme-light {
   --red: color-mix(in srgb, red, var(--fg1) 25%);
+  --primary: color-mix(in srgb, var(--_primary), var(--fg1) 10%);
 }
 
 /* General Styles */
