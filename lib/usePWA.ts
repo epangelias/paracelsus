@@ -99,6 +99,10 @@ export function usePWA() {
     })();
   }, []);
 
+  useEffect(() => {
+    requestPushSubscription(worker.value);
+  }, [worker.value])
+
   return {
     isPWA,
     installPWA,
