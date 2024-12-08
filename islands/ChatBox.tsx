@@ -38,6 +38,8 @@ export default function ChatBox({ data }: { data: ChatData }) {
   async function onSubmit(e: SubmitEvent) {
     e.preventDefault();
 
+    global.pwa.requestSubscription();
+
     if (!checkCanGenerate()) return showOutOfTokensDialog();
     if (!inputRef.current) return;
 
