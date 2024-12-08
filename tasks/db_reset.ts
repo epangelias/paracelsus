@@ -18,8 +18,9 @@ export async function clearDb() {
     }
   }
 
-  console.log(itemsReset);
   await Promise.all(promises);
+
+  return itemsReset;
 }
 
-if (import.meta.main) await clearDb();
+if (import.meta.main) console.log(await clearDb());
