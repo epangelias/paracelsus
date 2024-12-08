@@ -96,19 +96,6 @@ export function usePWA() {
     })();
   }, []);
 
-  useEffect(() => {
-    document.querySelectorAll("a").forEach(el => {
-      el.addEventListener('click', async (e) => {
-        if (worker.value && el.href && el.href.startsWith(location.origin)) {
-          e.preventDefault();
-          await requestPushSubscription(worker.value);
-          location.href = el.href;
-        }
-      });
-
-    });
-  }, [worker.value])
-
   return {
     isPWA,
     installPWA,
