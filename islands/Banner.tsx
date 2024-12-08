@@ -19,12 +19,12 @@ export function Banners() {
     const currentBanner = localStorage.getItem('currentBanner');
     if (currentBanner && !ready.value) {
       banner.value = banners.find((b) => b.name === currentBanner);
-    } else {
+    } else if (ready.value) {
       banner.value = banners.find((b) => b.condition());
       if (banner.value) {
         localStorage.setItem('currentBanner', banner.value.name);
       } else {
-        localStorage.setItem('currentBanner', '');
+        localStorage.removeItem('currentBanner');
       }
     }
   }, [
