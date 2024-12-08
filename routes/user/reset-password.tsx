@@ -1,6 +1,6 @@
 import { Page } from '@/components/Page.tsx';
 import { define } from '@/lib/utils.ts';
-import { Field } from '@/lib/components/Field.tsx';
+import { Field } from '@/lib/Field.tsx';
 import { HttpError, page } from 'fresh';
 import { generatePassword, getUserByPasswordResetCode, removePasswordResetCode, setUserData } from '@/lib/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';

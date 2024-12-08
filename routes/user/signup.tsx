@@ -1,12 +1,12 @@
 import { define } from '@/lib/utils.ts';
 import { page } from 'fresh';
-import { authorizeUser, createUserData, setAuthCookie } from '@/lib/user-data.ts';
-import { SignupForm } from '../../lib/components/SiginupForm.tsx';
+import { authorizeUser, setAuthCookie } from '@/lib/user-data.ts';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
-import { sendEmailVerification } from '../../app/email.ts';
+import { sendEmailVerification } from '@/app/email.ts';
 import { createUser } from '@/app/user.ts';
+import { Field } from '@/lib/Field.tsx';
 
 const limiter = new RateLimiter();
 
@@ -42,7 +42,18 @@ export default define.page<typeof handler>(({ data }) => (
   <Page>
     <div>
       <h1>Sign Up</h1>
-      <SignupForm error={data?.error} email={data?.email} name={data?.name} />
+      <form method='POST'>
+        <Field name='name' label='Name' required autofocus value={data?.name} />
+        <Field name='email' label='Email' type='email' required value={data?.email} />
+        <Field name='password' label='Password' type='password' required />
+
+        {data?.error && <p class='error-message' role='alert' aria-live='assertive'>{data?.error}</p>}
+
+        <div>
+          <button>Sign Up</button>
+          <a href='/user/signin'>Sign In</a>
+        </div>
+      </form>
     </div>
   </Page>
 ));

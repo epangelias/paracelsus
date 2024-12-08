@@ -1,11 +1,11 @@
 import { define } from '@/lib/utils.ts';
 import { page } from 'fresh';
-import { SigninForm } from '../../lib/components/SigininForm.tsx';
 import { authorizeUser, setAuthCookie } from '@/lib/user-data.ts';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
 import { isMailEnabled } from '@/lib/mail.ts';
+import { Field } from '@/lib/Field.tsx';
 
 const limiter = new RateLimiter();
 
@@ -28,7 +28,18 @@ export default define.page<typeof handler>(({ data }) => (
   <Page>
     <div>
       <h1>Sign In</h1>
-      <SigninForm error={data?.error} email={data?.email} />
+      <form method='POST'>
+        <Field name='email' type='email' label='Email' value={data?.email} required autofocus />
+        <Field name='password' type='password' label='Password' required />
+
+        {data?.error && <p class='error-message' role='alert' aria-live='assertive'>{data?.error}</p>}
+
+        <div>
+          <button>Sign In</button>
+          <a href='/user/signup'>Sign Up</a>
+        </div>
+      </form>
+
       {isMailEnabled() && (
         <p style={{ fontSize: '0.8em', textAlign: 'center' }}>
           <a href='/user/lost-password'>Lost your password?</a>

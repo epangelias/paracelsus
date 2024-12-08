@@ -3,7 +3,7 @@ import { define } from '@/lib/utils.ts';
 import { asset } from 'fresh/runtime';
 import { Global } from '@/islands/Global.tsx';
 import { stripUserData } from '@/app/user.ts';
-import { PWATags } from '../lib/components/PWATags.tsx';
+import { PWATags } from '../lib/PWATags.tsx';
 import { isMailEnabled } from '@/lib/mail.ts';
 import { isStripeEnabled } from '@/lib/stripe.ts';
 import { isPushEnabled } from '@/lib/push.ts';

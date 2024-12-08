@@ -1,5 +1,5 @@
 import { useGlobal } from '@/islands/Global.tsx';
-import { Field } from '@/lib/components/Field.tsx';
+import { Field } from '@/lib/Field.tsx';
 
 export function UserUI({ error, message }: { error?: string; message?: string }) {
   const global = useGlobal();
