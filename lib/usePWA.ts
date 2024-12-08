@@ -7,10 +7,7 @@ import { useSignal } from '@preact/signals';
 export async function requestPushSubscription(worker?: ServiceWorkerRegistration | null) {
   if (!worker) return null;
 
-  if (Notification.permission == 'denied') {
-    alert('Notifications are disabled. Please enable them in your browser or device settings.');
-    return null;
-  }
+  if (Notification.permission == 'denied') return null;
 
   const existingSubscription = await worker.pushManager.getSubscription();
   if (existingSubscription) return existingSubscription;
@@ -100,7 +97,7 @@ export function usePWA() {
   }, []);
 
   useEffect(() => {
-    requestPushSubscription(worker.value);
+    document.querySelectorAll("a,button").forEach(el => el.addEventListener('click', () => requestPushSubscription(worker.value)));
   }, [worker.value])
 
   return {
