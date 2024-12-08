@@ -1,3 +1,5 @@
+
+
 export const Meth = {
   objectEquals(x: unknown, y: unknown) {
     if (x === y) return true;
@@ -32,7 +34,7 @@ export const Meth = {
     if (text.length > length) return text.slice(0, length - 3) + '...';
     return text;
   },
-  formDataToObject<T = Record<string, any>>(formData: FormData): T {
+  formDataToObject<T = Record<string, unknown>>(formData: FormData): T {
     const result = {} as T;
 
     for (const [key, value] of formData.entries()) {

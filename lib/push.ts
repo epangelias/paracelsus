@@ -9,21 +9,26 @@ import { State, UserData } from '@/app/types.ts';
 import * as webPushTypes from 'npm:@types/web-push';
 const webPush = _webPush as typeof webPushTypes;
 
-const VAPID_PUBLIC_KEY = Deno.env.get('VAPID_PUBLIC_KEY');
-const VAPID_PRIVATE_KEY = Deno.env.get('VAPID_PRIVATE_KEY');
+const VAPID_PUBLIC_KEY = Deno.env.get('VAPID_PUBLIC_KEY') as string;
+const VAPID_PRIVATE_KEY = Deno.env.get('VAPID_PRIVATE_KEY') as string;
 
-if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
-  webPush.setVapidDetails('mailto:' + site.email, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
-} else {
-  console.log('To enable notifications, set the VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY');
-  console.log(webPush.generateVAPIDKeys());
-}
+let waiting: void | true = true;
 
 export function isPushEnabled() {
   return VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY;
 }
 
+
+if (!isPushEnabled()) {
+  console.warn('Notifications disabled, set the VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY');
+  // console.log(webPush.generateVAPIDKeys());
+}
+
 export async function sendNotificationToUser(user: UserData, title: string, message: string) {
+  if (waiting) waiting = webPush.setVapidDetails('mailto:' + site.email, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
+
+  if (!isPushEnabled()) return;
+
   let subscriptionRemoved = false;
 
   for (const subscription of user.pushSubscriptions) {

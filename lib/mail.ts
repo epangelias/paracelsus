@@ -6,21 +6,21 @@ const limiter = new RateLimiter({ maxRequests: 2, interval: 60 }); // 2 per minu
 
 let mailjet: Mailjet.Client;
 
-if (!Deno.env.has('MJ_APIKEY_PUBLIC') || !Deno.env.has('MJ_APIKEY_PRIVATE')) {
-  console.warn('Mailjet disabled. Missing environment variables.');
-} else {
-  mailjet = new Mailjet.Client({
-    apiKey: Deno.env.get('MJ_APIKEY_PUBLIC'),
-    apiSecret: Deno.env.get('MJ_APIKEY_PRIVATE'),
-  });
-}
-
 export function isMailEnabled() {
   return mailjet !== undefined;
 }
 
+if (!isMailEnabled()) console.warn('Mailjet disabled. Missing environment variables.');
+
 export async function sendMail(options: MailOptions) {
   if (!isMailEnabled()) return;
+
+  if (!mailjet) {
+    mailjet = new Mailjet.Client({
+      apiKey: Deno.env.get('MJ_APIKEY_PUBLIC'),
+      apiSecret: Deno.env.get('MJ_APIKEY_PRIVATE'),
+    });
+  }
 
   limiter.request();
 

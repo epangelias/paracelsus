@@ -19,9 +19,9 @@ if (isStripeEnabled()) {
     apiVersion: '2024-11-20.acacia',
     httpClient: Stripe.createFetchHttpClient(),
   });
-}
+} else console.warn('Stripe disabled. Missing environment variables.');
 
-export const stripe = _stripe;
+export const stripe = _stripe!;
 
 const cryptoProvider = Stripe.createSubtleCryptoProvider();
 
