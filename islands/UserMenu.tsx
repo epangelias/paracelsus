@@ -31,7 +31,9 @@ export function UserMenu() {
               <a href='/user'>Settings</a>
             </li>
             <li>
-              {!global.user.value?.isSubscribed && <a href='/user/subscribe' target='_blank'>Subscribe</a>}
+              {!global.user.value?.isSubscribed && global.stripeEnabled && (
+                <a href='/user/subscribe' target='_blank'>Subscribe</a>
+              )}
             </li>
             <li>
               <a href='/user/signout'>Sign Out</a>
