@@ -1,7 +1,7 @@
-import { GlobalData } from '@/app/types.ts';
+import { BannerData, GlobalData } from '@/app/types.ts';
 import { isIOSSafari } from '../lib/usePWA.ts';
 
-export function createBannerData(global: GlobalData) {
+export function createBannerData(global: GlobalData): BannerData[] {
   return [
     {
       name: 'verify-email',

@@ -9,9 +9,8 @@ export function Banners() {
   const global = useGlobal();
   const banner = useSignal<BannerData>();
 
-  const banners: BannerData[] = createBannerData(global);
+  const banners = createBannerData(global);
 
-  // Delay until rendered after placeholder banner
   // This is to prevent banner jumping after pwa signals change
   const ready = useSignal(false);
   setTimeout(() => ready.value = true, 500);
@@ -25,7 +24,7 @@ export function Banners() {
       if (banner.value) {
         localStorage.setItem('currentBanner', banner.value.name);
       } else {
-        localStorage.removeItem('currentBanner');
+        localStorage.setItem('currentBanner', '');
       }
     }
   }, [
