@@ -57,7 +57,9 @@ export function pushPlugin(app: App<State>) {
     const { subscription } = await ctx.req.json();
     console.log("Received subscription", subscription);
     ctx.state.user.pushSubscriptions.push(subscription);
-    await setUserData(ctx.state.user);
+    console.log("before", ctx.state.user);
+    const dataAfterSave = await setUserData(ctx.state.user);
+    console.log("after", dataAfterSave);
     return Response.json({}, { status: 201 });
   });
 }
