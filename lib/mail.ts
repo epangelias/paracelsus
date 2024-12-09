@@ -6,8 +6,11 @@ const limiter = new RateLimiter({ maxRequests: 2, interval: 60 }); // 2 per minu
 
 let mailjet: Mailjet.Client;
 
+const MJ_APIKEY_PUBLIC = Deno.env.get('MJ_APIKEY_PUBLIC');
+const MJ_APIKEY_PRIVATE = Deno.env.get('MJ_APIKEY_PRIVATE');
+
 export function isMailEnabled() {
-  return mailjet !== undefined;
+  return !!MJ_APIKEY_PUBLIC && !!MJ_APIKEY_PRIVATE
 }
 
 if (!isMailEnabled()) console.warn('Mailjet disabled. Missing environment variables.');
