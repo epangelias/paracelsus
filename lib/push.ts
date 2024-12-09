@@ -35,6 +35,7 @@ export async function sendNotificationToUser(user: UserData, title: string, mess
     try {
       const data = { body: message, icon: site.icon, title };
       await webPush.sendNotification(subscription, JSON.stringify(data), { TTL: 60 });
+      console.log('Sent!', { subscription, data });
     } catch (e) {
       if (e?.statusCode == STATUS_CODE.Gone) {
         // Removes subscription on error, change later
@@ -54,6 +55,7 @@ export function pushPlugin(app: App<State>) {
   app.post('/api/subscribe-notifications', async (ctx) => {
     if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
     const { subscription } = await ctx.req.json();
+    console.log("Received subscription", subscription);
     ctx.state.user.pushSubscriptions.push(subscription);
     await setUserData(ctx.state.user);
     return Response.json({}, { status: 201 });

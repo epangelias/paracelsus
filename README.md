@@ -21,7 +21,6 @@ paracelsus my-project
 - Create basic pricing page
 - Create steps in readme below
 - Customizable select boxes, for bai
--
 
 https://developer.chrome.com/docs/
 

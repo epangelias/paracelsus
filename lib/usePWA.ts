@@ -21,9 +21,7 @@ export async function requestPushSubscription(worker?: ServiceWorkerRegistration
     applicationServerKey: convertedVapidKey,
   });
 
-  console.log(subscription);
-
-  console.log('Subscribed.');
+  console.log('Subscribed.', subscription);
 
   await fetchOrError('/api/subscribe-notifications', { method: 'POST', body: { subscription } });
 
