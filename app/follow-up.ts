@@ -10,9 +10,9 @@ async function generateFollowUpMessage(user: UserData) {
   if (chatData.value.messages.at(-2)?.role == 'assistant') throw new Error('Already sent a follow up message');
   const messages = chatData.value.messages.map(({ role, content }) => ({ role, content }));
   messages.push({
-    role: 'system',
+    role: 'user',
     content:
-      `Follow up to ${user.name} in one sentence to start a conversation with them, you may ask them a question too.`,
+      `SYSTEM COMMAND: Follow up to ${user.name} in one sentence to start a conversation with them, you may ask them a question too.`,
   });
   const res = await generateChatCompletion(undefined, messages);
   const content = res.choices[0].message.content;
