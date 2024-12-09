@@ -14,7 +14,7 @@ const actions = [
       const user = ctx.state.user;
       if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
       await sendFollowUp(user);
-      return `${user.pushSubscriptions} push subscriptions`;
+      return user.pushSubscriptions;
     }
   },
 ];

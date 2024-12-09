@@ -23,8 +23,10 @@ async function generateFollowUpMessage(user: UserData) {
 }
 
 export async function sendFollowUp(user: UserData) {
+  console.log("Sending follow ups to " + user.name);
   if (user.pushSubscriptions.length === 0) return;
   const message = await generateFollowUpMessage(user);
+  console.log({ message });
   await sendNotificationToUser(user, 'Paracelsus Hath Spoken', message);
 }
 
