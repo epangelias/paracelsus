@@ -101,6 +101,8 @@ export function usePWA() {
     pushSubscription,
 
     async requestSubscription() {
+      // Disallow recreating push subscription, causes old to expire
+      if (pushSubscription.value) return pushSubscription.value;
       return pushSubscription.value = await requestPushSubscription(worker.value);
     },
   };
