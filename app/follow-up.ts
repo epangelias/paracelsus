@@ -16,7 +16,7 @@ async function generateFollowUpMessage(user: UserData) {
   });
   const res = await generateChatCompletion(undefined, messages);
   const content = res.choices[0].message.content;
-  if (!content) throw new Error('No content generated');
+  if (!content) throw new Error('No content generated: ' + JSON.stringify(res));
   chatData.value.messages.push({ role: 'assistant', content });
   await db.set(['chat', user.id], chatData.value);
   return content;
