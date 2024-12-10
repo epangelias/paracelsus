@@ -31,7 +31,9 @@ export async function requestPushSubscription(worker?: ServiceWorkerRegistration
 export async function getSubscription(worker: ServiceWorkerRegistration | null) {
   if (!worker) return null;
   // if (Notification.permission !== 'granted') null;
-  return await worker.pushManager.getSubscription();
+  const sub = await worker.pushManager.getSubscription();
+  console.log("Loaded subscription");
+  return sub;
 }
 
 export async function loadServiceWorker() {
