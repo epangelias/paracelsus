@@ -47,3 +47,9 @@ Going through
     - `stripe listen --forward-to localhost:8000/api/stripe-webhooks --events=customer.subscription.created,customer.subscription.deleted`
 - Enable OpenAI
   - Create OpenAI api account and insert env variables
+- Enable Push Notifications
+  - Generate keys with
+    ```ts
+    import * as webPush from 'npm:web-push';
+    webPush.generateVAPIDKeys();
+    ```

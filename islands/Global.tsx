@@ -26,12 +26,13 @@ export function Global({ children, user, mailEnabled, stripeEnabled, pushEnabled
   // Synchronize user data with server
   if (user) useEffect(() => syncSSE('/api/userdata', { data: global.user }), []);
 
+  // Unregister when logged out
   useEffect(() => {
     if (global.pwa.pushSubscription.value && !global.user.value) {
       console.log('Unsubscribing push notifications logout');
       global.pwa.pushSubscription.value.unsubscribe();
     }
-  }, [global.pwa.pushSubscription.value]);
+  }, [global.pwa.pushSubscription.value, global.user.value]);
 
   return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
 }

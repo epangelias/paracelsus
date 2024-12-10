@@ -46,6 +46,8 @@ export async function loadServiceWorker() {
   const oldWorkerURL = registration?.active?.scriptURL;
 
   if (!registration || oldWorkerURL != workerURL) {
+    console.log({ oldWorkerURL, workerURL })
+    console.log("Unloading and loading service worker");
     if (registration) await registration.unregister();
     registration = await navigator.serviceWorker.register(workerURL, { scope: '/' });
   }
