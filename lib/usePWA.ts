@@ -43,7 +43,8 @@ export async function loadServiceWorker() {
   let registration = await navigator.serviceWorker.getRegistration();
 
   const workerURL = asset('/worker.js');
-  const oldWorkerURL = registration?.active?.scriptURL;
+  const _oldWorkerURL = new URL(registration?.active?.scriptURL!);
+  const oldWorkerURL = _oldWorkerURL.pathname + _oldWorkerURL.search;
 
   if (!registration || oldWorkerURL != workerURL) {
     console.log({ oldWorkerURL, workerURL })
