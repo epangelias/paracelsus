@@ -45,10 +45,11 @@ export async function loadServiceWorker() {
   let registration = await navigator.serviceWorker.getRegistration();
 
   const workerURL = asset('/worker.js');
-  const _oldWorkerURL = new URL(registration?.active?.scriptURL!);
+  const scriptURL = registration?.active?.scriptURL!;
+  const _oldWorkerURL = scriptURL ? new URL(scriptURL) : undefined;
   // Remove domain so can compare urls
   // Need to fix so that the notifications re-register when the worker changes
-  const oldWorkerURL = _oldWorkerURL.pathname + _oldWorkerURL.search;
+  const oldWorkerURL = _oldWorkerURL?.pathname! + _oldWorkerURL?.search;
 
   if (!registration || oldWorkerURL != workerURL) {
     console.log({ oldWorkerURL, workerURL })
