@@ -162,7 +162,7 @@ label:has(+ :is(button, input, select, textarea)) {
   margin-bottom: var(--spacing-05);
   color: var(--fg3);
 
-  & + * {
+  &+* {
     margin-bottom: var(--spacing);
     display: block;
   }
@@ -249,10 +249,8 @@ button:not(.link) {
 
 /* Inputs */
 
-:is(
-  input:not([type]),
-  input:is(
-    [type='text'],
+:is(input:not([type]),
+  input:is([type='text'],
     [type='password'],
     [type='email'],
     [type='number'],
@@ -261,11 +259,9 @@ button:not(.link) {
     [type='search'],
     [type='date'],
     [type='file'],
-    [type='color']
-  ),
+    [type='color']),
   select,
-  textarea
-) {
+  textarea) {
   max-width: 100%;
   padding: var(--spacing) var(--spacing-2);
   border: var(--border-width) solid var(--border-color);
@@ -297,11 +293,11 @@ textarea {
   field-sizing: content;
 }
 
-:is(input, button, select, a) + :is(input, button, select, a) {
+:is(input, button, select, a)+ :is(input, button, select, a) {
   margin-left: var(--spacing);
 }
 
-:is(button, select) ~ a {
+:is(button, select)~a {
   padding: var(--spacing);
 }
 
@@ -351,7 +347,7 @@ button.link {
 }
 
 /* Spacing when message adjacent */
-:is(button, input, select) + :is(.message, .error-message) {
+:is(button, input, select)+ :is(.message, .error-message) {
   margin-left: var(--spacing);
 }
 
@@ -532,9 +528,11 @@ dialog {
     margin: calc(-1 * var(--spacing));
 
     button {
+      /* --color: var(--red); */
+      --color: transparent;
+      color: var(--fg2);
       padding: 0 var(--spacing);
       font-size: 1.2em;
-      --color: var(--red);
       border-radius: 100%;
       aspect-ratio: 1/1;
     }

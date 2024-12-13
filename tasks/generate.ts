@@ -7,15 +7,15 @@ import { generateImages } from 'npm:pwa-asset-generator';
 import { site } from '@/app/site.ts';
 import puppeteer from 'npm:puppeteer';
 
-async function takeScreenshot() {
+async function takeScreenshot(filename: string, width: number, height: number) {
   console.log('Ensure app running locally at http://0.0.0.0:8000');
 
-  const path = Path.join(import.meta.dirname!, '../static/img/screenshot.jpg');
+  const path = Path.join(import.meta.dirname!, '../static/img/' + filename);
   const browser = await puppeteer.launch({ browser: 'firefox', headless: true });
 
   try {
     const page = await browser.newPage();
-    await page.setViewport({ width: 1200, height: 630 });
+    await page.setViewport({ width, height });
     await page.goto('http://0.0.0.0:8000', { waitUntil: 'networkidle0' });
     await page.evaluate(() => {
       document.body.style.zoom = '2';
@@ -29,13 +29,14 @@ async function takeScreenshot() {
   await browser.close();
 }
 
-takeScreenshot();
+takeScreenshot("screenshot-wide.jpg", 1280, 720);
+takeScreenshot("screenshot-narrow.jpg", 750, 1280);
 
 async function generateAssets(inputIcon: string, outputDir: string) {
   const result = await generateImages(inputIcon, outputDir, {
     background: site.backgroundColor,
     favicon: true,
-    padding: '15%',
+    padding: '20%',
     pathOverride: '/img/gen',
   });
 

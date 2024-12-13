@@ -13,7 +13,7 @@ export function Banners() {
 
   // This is to prevent banner jumping after pwa signals change
   const ready = useSignal(false);
-  setTimeout(() => ready.value = true, 500);
+  setTimeout(() => ready.value = true, 1000);
 
   useEffect(() => {
     const currentBanner = localStorage.getItem('currentBanner');

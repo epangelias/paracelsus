@@ -22,7 +22,8 @@ export function manifestPlugin(app: App<State>) {
       orientation: 'any',
       icons,
       screenshots: [
-        { src: asset('/img/screenshot.jpg'), form_factor: 'wide' },
+        { src: asset('/img/screenshot-wide.jpg'), form_factor: 'wide', sizes: '1280x720' },
+        { src: asset('/img/screenshot-narrow.jpg'), form_factor: 'narrow', sizes: '750x1280' },
       ],
     });
   });

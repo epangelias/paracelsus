@@ -16,7 +16,7 @@ export default define.page(({ Component, state }) => {
         <meta content={site.name} property='og:title'></meta>
         <meta content={site.description} name='description' />
         <meta content={site.description} property='og:description' />
-        <meta content={asset('/img/screenshot.jpg')} property='og:image' />
+        <meta content={asset('/img/screenshot-wide.jpg')} property='og:image' />
         <meta property='og:type' content='website' />
         <meta charset='utf-8' />
         <meta

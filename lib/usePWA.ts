@@ -57,9 +57,12 @@ export async function loadServiceWorker() {
     if (registration) {
       const subscription = await registration.pushManager.getSubscription();
       if (subscription) subscription.unsubscribe();
-      await registration.unregister();
+      const unregistered = await registration.unregister();
+      if (!unregistered) throw new Error('Failed to unregister service worker');
+      else console.log("Service worker unregistered");
     }
     registration = await navigator.serviceWorker.register(workerURL, { scope: '/' });
+    return null;
   }
 
   return registration;
