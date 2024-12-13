@@ -21,7 +21,9 @@ export function isPushEnabled() {
 
 if (!isPushEnabled()) {
   console.warn('Notifications disabled, set the VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY');
-  // console.log(webPush.generateVAPIDKeys());
+  const { publicKey, privateKey } = webPush.generateVAPIDKeys();
+  console.log(`VAPID_PUBLIC_KEY=${publicKey}`);
+  console.log(`VAPID_PRIVATE_KEY=${privateKey}`);
 }
 
 export async function sendNotificationToUser(user: UserData, title: string, message: string) {

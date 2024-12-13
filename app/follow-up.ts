@@ -35,7 +35,7 @@ export function autoSendFollowUps(_app: App<State>) {
   // Disable cron if running in github actions
   if (Deno.env.get('GITHUB_ACTIONS') === 'true' || !isPushEnabled()) return;
 
-  Deno.cron(`follow-up`, { minute: { every: 5 } }, async () => {
+  Deno.cron(`follow-up`, { minute: { every: 1 } }, async () => {
     console.log('Following up...');
     for await (const res of db.list<UserData>({ prefix: ['users'] })) {
       const user = res.value;
