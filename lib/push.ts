@@ -18,7 +18,6 @@ export function isPushEnabled() {
   return !!(VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY);
 }
 
-
 if (!isPushEnabled()) {
   console.warn('Notifications disabled, set the VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY');
   const { publicKey, privateKey } = webPush.generateVAPIDKeys();
@@ -57,7 +56,7 @@ export function pushPlugin(app: App<State>) {
   app.post('/api/subscribe-notifications', async (ctx) => {
     if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
     const { subscription } = await ctx.req.json();
-    console.log("Received subscription", subscription);
+    console.log('Received subscription', subscription);
     ctx.state.user.pushSubscriptions.push(subscription);
     await setUserData(ctx.state.user);
     return Response.json({}, { status: 201 });

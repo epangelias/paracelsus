@@ -32,7 +32,7 @@ export async function getSubscription(worker: ServiceWorkerRegistration | null) 
   if (!worker) return null;
   // if (Notification.permission !== 'granted') null;
   const sub = await worker.pushManager.getSubscription();
-  console.log("Loaded subscription");
+  console.log('Loaded subscription');
   return sub;
 }
 
@@ -52,8 +52,8 @@ export async function loadServiceWorker() {
   const oldWorkerURL = _oldWorkerURL?.pathname! + _oldWorkerURL?.search;
 
   if (!registration || oldWorkerURL != workerURL) {
-    console.log({ oldWorkerURL, workerURL })
-    console.log("Unloading and loading service worker");
+    console.log({ oldWorkerURL, workerURL });
+    console.log('Unloading and loading service worker');
     if (registration) {
       const subscription = await registration.pushManager.getSubscription();
       if (subscription) subscription.unsubscribe();
@@ -115,7 +115,7 @@ export function usePWA() {
     async requestSubscription() {
       // Disallow recreating push subscription, causes old to expire
       if (pushSubscription.value) return pushSubscription.value;
-      alert("Subscribed!");
+      alert('Subscribed!');
       return pushSubscription.value = await requestPushSubscription(worker.value);
     },
   };

@@ -1,5 +1,3 @@
-
-
 export const Meth = {
   objectEquals(x: unknown, y: unknown) {
     if (x === y) return true;

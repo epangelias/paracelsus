@@ -10,7 +10,7 @@ const MJ_APIKEY_PUBLIC = Deno.env.get('MJ_APIKEY_PUBLIC');
 const MJ_APIKEY_PRIVATE = Deno.env.get('MJ_APIKEY_PRIVATE');
 
 export function isMailEnabled() {
-  return !!MJ_APIKEY_PUBLIC && !!MJ_APIKEY_PRIVATE
+  return !!MJ_APIKEY_PUBLIC && !!MJ_APIKEY_PRIVATE;
 }
 
 if (!isMailEnabled()) console.warn('Mailjet disabled. Missing environment variables.');

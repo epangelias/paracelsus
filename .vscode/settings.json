@@ -17,5 +17,8 @@
   "cSpell.words": [
     "anybutton",
     "anyfield"
-  ]
+  ],
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
 }

@@ -9,13 +9,15 @@ import { Meth } from '@/lib/meth.ts';
 const actions = [
   { name: 'Clear Database', route: 'clear-db', action: async () => await clearDb() },
   {
-    name: 'Test Push Notifications', route: 'test-push', action: async (ctx: FreshContext<State>) => {
+    name: 'Test Push Notifications',
+    route: 'test-push',
+    action: async (ctx: FreshContext<State>) => {
       if (!isPushEnabled()) throw new HttpError(STATUS_CODE.NotFound, 'Push notifications not enabled');
       const user = ctx.state.user;
       if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
       await sendFollowUp(user);
       return user.pushSubscriptions;
-    }
+    },
   },
 ];
 
@@ -43,13 +45,15 @@ const adminPageHtml = `
   <meta name="color-scheme" content="light dark" />
   <meta name="viewport="width=device-width, initial-scale=1" />
   <h1>Admin</h1>
-    ${actions.map(action => `
+    ${
+  actions.map((action) => `
       <div>
         <a href="/admin/${action.route}">
           <button>${action.name}</button>
         </a>
       </div>
-    `).join('')}
+    `).join('')
+}
 `;
 
 export function adminPlugin(app: App<State>) {
@@ -71,7 +75,7 @@ export function adminPlugin(app: App<State>) {
     if (!isAdminEnabled()) throw new HttpError(STATUS_CODE.NotFound);
 
     const actionName = ctx.params.action;
-    const action = actions.find(a => a.route === actionName);
+    const action = actions.find((a) => a.route === actionName);
 
     if (!action) {
       throw new HttpError(STATUS_CODE.NotFound);

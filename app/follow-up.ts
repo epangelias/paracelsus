@@ -24,7 +24,7 @@ async function generateFollowUpMessage(user: UserData) {
 }
 
 export async function sendFollowUp(user: UserData) {
-  console.log("Sending follow ups to " + user.name, ` x${user.pushSubscriptions.length}`);
+  console.log('Sending follow ups to ' + user.name, ` x${user.pushSubscriptions.length}`);
   if (user.pushSubscriptions.length === 0) return;
   const message = await generateFollowUpMessage(user);
   console.log({ message });

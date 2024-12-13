@@ -10,8 +10,17 @@
     "db:reset": "deno run -A --env tasks/db_reset.ts",
     "stripe:init": "deno run -A --env tasks/stripe_init.ts"
   },
-  "lint": { "rules": { "tags": ["fresh", "recommended"] } },
-  "exclude": ["**/_fresh/*"],
+  "lint": {
+    "rules": {
+      "tags": [
+        "fresh",
+        "recommended"
+      ]
+    }
+  },
+  "exclude": [
+    "**/_fresh/*"
+  ],
   "imports": {
     "@/": "./",
     "@fresh/plugin-tailwind": "jsr:@fresh/plugin-tailwind@^0.0.1-alpha.7",
@@ -26,13 +35,32 @@
     "web-push": "npm:web-push@^3.6.7"
   },
   "compilerOptions": {
-    "lib": ["dom", "dom.asynciterable", "deno.ns"],
+    "lib": [
+      "dom",
+      "dom.asynciterable",
+      "deno.ns"
+    ],
     "jsx": "precompile",
     "jsxImportSource": "preact",
-    "jsxPrecompileSkipElements": ["a", "img", "source", "body", "html", "head"]
+    "jsxPrecompileSkipElements": [
+      "a",
+      "img",
+      "source",
+      "body",
+      "html",
+      "head"
+    ]
   },
-  "unstable": ["kv", "cron"],
+  "unstable": [
+    "kv",
+    "cron"
+  ],
   "lock": false,
-  "fmt": { "lineWidth": 120, "semiColons": true, "singleQuote": true, "proseWrap": "preserve" },
+  "fmt": {
+    "lineWidth": 120,
+    "semiColons": true,
+    "singleQuote": true,
+    "proseWrap": "preserve"
+  },
   "nodeModulesDir": "none"
 }
