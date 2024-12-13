@@ -7,7 +7,7 @@ import { isMailEnabled } from '@/lib/mail.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
-    if (!isMailEnabled()) throw new HttpError(STATUS_CODE.NotFound);
+    // if (!isMailEnabled()) throw new HttpError(STATUS_CODE.NotFound);
     const code = ctx.url.searchParams.get('code') as string;
     if (!code) throw new HttpError(STATUS_CODE.BadRequest, 'Missing verification code');
     const user = await getUserByVerificationCode(code);

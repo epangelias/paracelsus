@@ -6,9 +6,11 @@ import { autoSendFollowUps } from '@/app/follow-up.ts';
 import { State } from '@/app/types.ts';
 import { stripePlugin } from '@/lib/stripe-plugin.ts';
 import { userPlugin } from '@/lib/user-plugin.tsx';
-import { adminPlugin } from './lib/admin-plugin.ts';
+import { adminPlugin } from "@/lib/admin-plugin.ts";
 import { manifestPlugin } from '@/lib/manifest-plugin.ts';
+
 export const app = new App<State>();
+export const isProduction = import.meta.main;
 
 // Plugins
 autoSendFollowUps(app);

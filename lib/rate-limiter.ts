@@ -1,5 +1,6 @@
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
+import { isProduction } from '@/main.ts';
 
 export class RateLimiter {
   requests = 0;
@@ -12,6 +13,7 @@ export class RateLimiter {
 
     // Prevent from issue on github actions
     if (Deno.env.get('GITHUB_ACTIONS') === 'true') return;
+    if (!isProduction) return;
 
     setInterval(() => this.requests = 0, this.interval);
   }

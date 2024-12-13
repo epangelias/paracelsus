@@ -1,3 +1,5 @@
+// test 5
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open('offline-cache').then((cache) => cache.addAll(['/offline'])),
