@@ -20,13 +20,13 @@ export function OutOfTokensDialog() {
         <button>×</button>
       </form>
       <h2>You are out of tokens!</h2>
-      {global.user.value?.isSubscribed || !global.user.value?.hasVerifiedEmail
+      {global.user.value?.isSubscribed || !global.user.value?.hasVerifiedEmail && global.mailEnabled
         ? (
           <p>
             Please verify your email address to receive more tokens. <a href='/user/resend-email'>Resend email</a>
           </p>
         )
-        : (
+        : global.stripeEnabled && (
           <p>
             Subscribe for unlimited tokens. <a href='/user/subscribe'>Subscribe</a>
           </p>

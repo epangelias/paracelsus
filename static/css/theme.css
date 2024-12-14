@@ -63,7 +63,6 @@
 .theme-dark,
 .theme-light {
   --red: color-mix(in srgb, red, var(--fg1) 25%);
-  --primary: color-mix(in srgb, var(--_primary), var(--fg1) 10%);
 }
 
 /* General Styles */
