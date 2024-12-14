@@ -5,6 +5,8 @@ import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 
 export async function requestPushSubscription(worker?: ServiceWorkerRegistration | null) {
+  console.log("Requesting subscription...");
+
   if (!worker) return null;
 
   if (Notification.permission == 'denied') return null;
@@ -119,7 +121,6 @@ export function usePWA() {
     async requestSubscription() {
       // Disallow recreating push subscription, causes old to expire
       if (pushSubscription.value) return pushSubscription.value;
-      alert('Subscribed!');
       return pushSubscription.value = await requestPushSubscription(worker.value);
     },
   };

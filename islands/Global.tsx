@@ -5,8 +5,6 @@ import { GlobalData, UserData } from '@/app/types.ts';
 import { useComputed, useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/stream-client.ts';
 import { usePWA } from '../lib/usePWA.ts';
-import { getSubscription } from '@/lib/usePWA.ts';
-import { PWATags } from '@/lib/PWATags.tsx';
 
 interface Props {
   children: ComponentChildren;

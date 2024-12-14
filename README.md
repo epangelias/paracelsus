@@ -21,6 +21,7 @@ paracelsus my-project
 - Create basic pricing page
 - Create steps in readme below
 - Customizable select boxes, for bai
+- Perhaps make the editing the user argumentn be a func that sets user from old data so doesnt override changes
 
 https://developer.chrome.com/docs/
 

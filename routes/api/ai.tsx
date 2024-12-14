@@ -17,7 +17,7 @@ export const handler = define.handlers({
 
     const saveMessages = async (messages: AIMessage[]) => {
       await setChatData({ ...chatData, messages });
-      await setUserData({ ...user, tokens: user.tokens - 1 });
+      await setUserData(user.id, (u) => u.tokens--);
     };
 
     return StreamAI({

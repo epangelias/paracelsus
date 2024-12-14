@@ -32,6 +32,8 @@ export async function sendNotificationToUser(user: UserData, title: string, mess
 
   let subscriptionRemoved = false;
 
+  const subscriptions = user.pushSubscriptions;
+
   for (const subscription of user.pushSubscriptions) {
     try {
       const data = { body: message, icon: site.icon, title };
@@ -42,23 +44,24 @@ export async function sendNotificationToUser(user: UserData, title: string, mess
         // Removes subscription on error, change later
         console.log('Subscription gone, removing it', subscription, e);
         subscriptionRemoved = true;
-        const index = user.pushSubscriptions.indexOf(subscription);
-        if (index > -1) user.pushSubscriptions.splice(index, 1);
+        const index = subscriptions.indexOf(subscription);
+        if (index > -1) subscriptions.splice(index, 1);
       } else console.error('Error sending to ' + subscription.endpoint, e);
     }
   }
 
-  if (subscriptionRemoved) await setUserData(user);
+  if (subscriptionRemoved) await setUserData(user.id, u => u.pushSubscriptions = subscriptions);
 }
 
 export function pushPlugin(app: App<State>) {
   app.get('/api/vapid-public-key', () => Response.json(VAPID_PUBLIC_KEY));
   app.post('/api/subscribe-notifications', async (ctx) => {
-    if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
+    const user = ctx.state.user;
+    if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
     const { subscription } = await ctx.req.json();
     console.log('Received subscription', subscription);
-    ctx.state.user.pushSubscriptions.push(subscription);
-    await setUserData(ctx.state.user);
+    const resultUser = await setUserData(user.id, u => u.pushSubscriptions.push(subscription));
+    console.log({ resultUser }); // rm
     return Response.json({}, { status: 201 });
   });
 }

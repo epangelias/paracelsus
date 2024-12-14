@@ -6,6 +6,7 @@ import { generateCode, hashText } from '@/lib/crypto.ts';
 import { UserData } from '@/app/types.ts';
 import { validation } from '@/lib/validation.ts';
 import { deleteUser } from '@/app/user.ts';
+import { Meth } from '@/lib/meth.ts';
 
 // DB
 
@@ -86,8 +87,81 @@ async function generateStripeCustomerId(name: string, email: string) {
 }
 
 // User Data
+
+
+export async function generatePassword(password: string, salt = generateCode()) {
+  validation('password', password, { min: 6, max: 100 });
+
+  const passwordHash = await hashText(`${salt}:${password}`);
+
+  return { salt, passwordHash };
+}
+
+export async function setUserData(userId: string, getNewUser: (user: UserData) => unknown) {
+  const atomic = db.atomic();
+  let errorMessage = 'Error updating user';
+
+  const old = await db.get<UserData>(['users', userId]);
+
+  if (old.versionstamp == null) throw new Error('User does not exist');
+
+
+  const user = { ...old.value };
+  await getNewUser(user);
+
+
+  user.email = normalizeEmail(user.email);
+  user.name = normalizeName(user.name);
+
+  validation('email', user.email, { email: true, min: 5, max: 320 });
+  validation('name', user.name, { textAndSpaces: true, min: 3, max: 100 });
+
+  const emailChanged = old.value.email != user.email;
+  const nameChanged = old.value.name != user.name;
+
+  // Ensure user data hasn't changed during atomic operation
+  atomic.check({ key: ['users', user.id], versionstamp: old.versionstamp });
+  errorMessage = 'User data changed';
+
+  if (emailChanged) {
+    user.isEmailVerified = false;
+
+    atomic.check({ key: ['usersByEmail', user.email], versionstamp: null })
+      .delete(['usersByEmail', old.value.email])
+      .set(['usersByEmail', user.email], { id: user.id });
+
+    errorMessage = 'User with email already exists';
+  }
+
+  if (isStripeEnabled()) {
+
+    if (old.value.stripeCustomerId && (emailChanged || nameChanged)) {
+      // If user data changed, update stripe account
+      await stripe.customers.update(old.value.stripeCustomerId, { email: user.email, name: user.name });
+    }
+
+    // Create Stripe customer
+    if (!user.stripeCustomerId) {
+      user.stripeCustomerId = await generateStripeCustomerId(user.name, user.email);
+      if (!user.stripeCustomerId) throw new Error('Failed to create stripe customer');
+      atomic.set(['usersByStripeCustomer', user.stripeCustomerId], { id: user.id });
+    }
+  }
+
+
+  atomic.set(['users', user.id], user);
+
+  const { ok } = await atomic.commit();
+  if (!ok) throw new Error(errorMessage);
+
+  return user;
+}
+
 type OmittedUserData = Omit<UserData, 'passwordHash' | 'salt' | 'id' | 'created'> & { password: string };
+
 export async function createUserData(data: OmittedUserData) {
+  const atomic = db.atomic();
+
   const { salt, passwordHash } = await generatePassword(data.password);
 
   const user: UserData = {
@@ -98,62 +172,16 @@ export async function createUserData(data: OmittedUserData) {
     ...data,
   };
 
-  return setUserData(user, { isNew: true });
-}
-
-export async function generatePassword(password: string, salt = generateCode()) {
-  validation('password', password, { min: 6, max: 100 });
-
-  const passwordHash = await hashText(`${salt}:${password}`);
-
-  return { salt, passwordHash };
-}
-
-export async function setUserData(user: UserData, { isNew } = { isNew: false }) {
-  const atomic = db.atomic();
-  let errorMessage = 'Error updating user';
-
-  user = { ...user };
   user.email = normalizeEmail(user.email);
   user.name = normalizeName(user.name);
 
   validation('email', user.email, { email: true, min: 5, max: 320 });
   validation('name', user.name, { textAndSpaces: true, min: 3, max: 100 });
 
-  if (isNew) {
-    // If new user, check that doesn't already exist
-    atomic.check({ key: ['users', user.id], versionstamp: null })
-      .check({ key: ['usersByEmail', user.email], versionstamp: null })
-      .set(['usersByEmail', user.email], { id: user.id });
-
-    errorMessage = 'User already exists';
-  } else {
-    const old = await db.get<UserData>(['users', user.id]);
-
-    if (old.versionstamp == null) throw new Error('User does not exist');
-
-    const emailChanged = old.value.email != user.email;
-    const nameChanged = old.value.name != user.name;
-
-    // Ensure user data hasn't changed during atomic operation
-    atomic.check({ key: ['users', user.id], versionstamp: old.versionstamp });
-    errorMessage = 'User data changed';
-
-    if (emailChanged) {
-      user.isEmailVerified = false;
-
-      atomic.check({ key: ['usersByEmail', user.email], versionstamp: null })
-        .delete(['usersByEmail', old.value.email])
-        .set(['usersByEmail', user.email], { id: user.id });
-
-      errorMessage = 'User with email already exists';
-    }
-
-    if (isStripeEnabled() && old.value.stripeCustomerId && (emailChanged || nameChanged)) {
-      // If user data changed, update stripe account
-      await stripe.customers.update(old.value.stripeCustomerId, { email: user.email, name: user.name });
-    }
-  }
+  // If new user, check that doesn't already exist
+  atomic.check({ key: ['users', user.id], versionstamp: null })
+    .check({ key: ['usersByEmail', user.email], versionstamp: null })
+    .set(['usersByEmail', user.email], { id: user.id });
 
   // Create Stripe customer
   if (!user.stripeCustomerId && isStripeEnabled()) {
@@ -165,7 +193,7 @@ export async function setUserData(user: UserData, { isNew } = { isNew: false }) 
   atomic.set(['users', user.id], user);
 
   const { ok } = await atomic.commit();
-  if (!ok) throw new Error(errorMessage);
+  if (!ok) throw new Error("User already exists");
 
   return user;
 }

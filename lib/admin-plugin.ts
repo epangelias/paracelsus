@@ -5,6 +5,7 @@ import { STATUS_CODE } from '@std/http/status';
 import { sendFollowUp } from '@/app/follow-up.ts';
 import { isPushEnabled } from '@/lib/push.ts';
 import { Meth } from '@/lib/meth.ts';
+import { db } from '@/lib/utils.ts';
 
 const actions = [
   { name: 'Clear Database', route: 'clear-db', action: async () => await clearDb() },
@@ -19,6 +20,14 @@ const actions = [
       return user.pushSubscriptions;
     },
   },
+  {
+    name: 'Get User Data',
+    route: 'get-user-data',
+    action: async (ctx: FreshContext<State>) => {
+      if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);
+      return (await db.get(['users', ctx.state.user.id])).value;
+    },
+  }
 ];
 
 const ADMIN_USERNAME = Deno.env.get('ADMIN_USERNAME');
@@ -45,15 +54,14 @@ const adminPageHtml = `
   <meta name="color-scheme" content="light dark" />
   <meta name="viewport="width=device-width, initial-scale=1" />
   <h1>Admin</h1>
-    ${
-  actions.map((action) => `
+    ${actions.map((action) => `
       <div>
         <a href="/admin/${action.route}">
           <button>${action.name}</button>
         </a>
       </div>
     `).join('')
-}
+  }
 `;
 
 export function adminPlugin(app: App<State>) {

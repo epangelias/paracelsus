@@ -14,10 +14,11 @@ export const handler = define.handlers({
     if (!user) {
       throw new HttpError(STATUS_CODE.NotFound, 'Verification code expired. Request a new one in the user settings');
     }
-    if (!user.hasVerifiedEmail) user.tokens += 10;
-    user.isEmailVerified = true;
-    user.hasVerifiedEmail = true;
-    await setUserData(user);
+    await setUserData(user.id, (u) => {
+      u.isEmailVerified = true;
+      u.hasVerifiedEmail = true;
+      if (!user.hasVerifiedEmail) u.tokens += 10;
+    });
     return page();
   },
 });

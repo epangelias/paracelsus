@@ -22,8 +22,12 @@ export const handler = define.handlers({
       if (!code || !password) throw new HttpError(STATUS_CODE.BadRequest, 'Missing code or password');
       const user = await getUserByPasswordResetCode(code);
       if (!user) throw new HttpError(STATUS_CODE.NotFound, 'Invalid reset code');
-      const hashed = await generatePassword(password);
-      await setUserData({ ...user, ...hashed });
+      const { salt, passwordHash } = await generatePassword(password);
+      await setUserData(user.id, (u) => {
+        u.salt = salt;
+        u.passwordHash = passwordHash;
+      });
+
       await removePasswordResetCode(code);
       return ctx.redirect('/user/signin');
     } catch (e) {
