@@ -9,10 +9,11 @@ import { stripePlugin } from '@/lib/stripe-plugin.ts';
 import { userPlugin } from '@/lib/user-plugin.tsx';
 import { adminPlugin } from "@/lib/admin-plugin.ts";
 import { manifestPlugin } from '@/lib/manifest-plugin.ts';
+import { setProductionMode } from '@/lib/utils.ts';
 
 export const app = new App<State>();
 
-if (import.meta.main) Deno.env.set("PROD", "true");
+if (import.meta.main) setProductionMode();
 
 // Plugins
 autoSendFollowUps(app);
