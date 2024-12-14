@@ -1,3 +1,4 @@
+#!/usr/bin/env -S deno run -A --env
 /// <reference lib="deno.unstable" />
 
 import { App, fsRoutes, staticFiles } from 'fresh';
@@ -10,7 +11,8 @@ import { adminPlugin } from "@/lib/admin-plugin.ts";
 import { manifestPlugin } from '@/lib/manifest-plugin.ts';
 
 export const app = new App<State>();
-export const isProduction = import.meta.main;
+
+if (import.meta.main) Deno.env.set("PROD", "true");
 
 // Plugins
 autoSendFollowUps(app);

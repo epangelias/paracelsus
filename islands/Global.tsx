@@ -5,6 +5,8 @@ import { GlobalData, UserData } from '@/app/types.ts';
 import { useComputed, useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/stream-client.ts';
 import { usePWA } from '../lib/usePWA.ts';
+import { getSubscription } from '@/lib/usePWA.ts';
+import { PWATags } from '@/lib/PWATags.tsx';
 
 interface Props {
   children: ComponentChildren;
@@ -28,11 +30,12 @@ export function Global({ children, user, mailEnabled, stripeEnabled, pushEnabled
 
   // Unregister push when logged out
   useEffect(() => {
+    if (!global.pwa.worker.value) return;
     if (global.pwa.pushSubscription.value && !global.user.value) {
       console.log('Unsubscribing push notifications logout');
       global.pwa.pushSubscription.value.unsubscribe();
     }
-  }, [global.pwa.pushSubscription.value, global.user.value]);
+  }, [global.pwa.pushSubscription.value, global.user.value, global.pwa.worker.value]);
 
   return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
 }

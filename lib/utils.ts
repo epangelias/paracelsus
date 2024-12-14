@@ -3,3 +3,5 @@ import { State } from '@/app/types.ts';
 
 export const define = createDefine<State>();
 export const db = await Deno.openKv();
+
+export const isProduction = () => Deno.env.get("PROD") === "true"

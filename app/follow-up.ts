@@ -1,9 +1,8 @@
 import { ChatData, State, UserData } from '@/app/types.ts';
 import { isPushEnabled, sendNotificationToUser } from '@/lib/push.ts';
-import { db } from '@/lib/utils.ts';
+import { db, isProduction } from '@/lib/utils.ts';
 import { generateChatCompletion } from '@/lib/oai.ts';
 import { App } from 'fresh';
-import { isProduction } from '@/main.ts';
 
 async function generateFollowUpMessage(user: UserData) {
   const chatData = await db.get<ChatData>(['chat', user.id]);
@@ -33,7 +32,7 @@ export async function sendFollowUp(user: UserData) {
 }
 
 export function autoSendFollowUps(_app: App<State>) {
-  if (!isProduction) return;
+  if (!isProduction()) return;
 
   // Disable cron if running in github actions
   if (Deno.env.get('GITHUB_ACTIONS') === 'true' || !isPushEnabled()) return;

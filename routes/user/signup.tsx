@@ -12,8 +12,6 @@ const limiter = new RateLimiter();
 
 export const handler = define.handlers({
   POST: async (ctx) => {
-    await new Promise((r) => setTimeout(r, 1000));
-
     limiter.request();
 
     const { name, email, password } = Meth.formDataToObject(await ctx.req.formData());

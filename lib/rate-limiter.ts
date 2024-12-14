@@ -1,24 +1,41 @@
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
-import { isProduction } from '@/main.ts';
+import { isProduction } from '@/lib/utils.ts';
+
+const defaultOptions: Options = {
+  maxRequests: 10,
+  interval: 60,
+}
+
+interface Options {
+  maxRequests: number;
+  interval: number;
+}
 
 export class RateLimiter {
   requests = 0;
   maxRequests: number;
   interval: number;
+  enabled = false;
 
-  constructor({ maxRequests, interval } = { maxRequests: 10, interval: 60 }) {
-    this.maxRequests = maxRequests;
-    this.interval = interval * 1000;
+  constructor(_options: Partial<Options> = {}) {
+    const options = { ...defaultOptions, ..._options };
+
+    this.maxRequests = options.maxRequests;
+    this.interval = options.interval * 1000;
 
     // Prevent from issue on github actions
     if (Deno.env.get('GITHUB_ACTIONS') === 'true') return;
-    if (!isProduction) return;
+    // if (!isProduction) return; // THIS IS THE CULPRIT< GETTING ISPRODUCTIN BREAKS IT
+    if (!isProduction()) return;
 
+    this.enabled = true;
     setInterval(() => this.requests = 0, this.interval);
   }
 
   request() {
+    if (!this.enabled) return;
+
     if (this.requests >= this.maxRequests) {
       throw new HttpError(
         STATUS_CODE.TooManyRequests,
