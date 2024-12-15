@@ -2,6 +2,7 @@
 
 import { walk } from 'jsr:@std/fs';
 import { generateChatCompletion } from '@/lib/oai.ts';
+import { delay } from 'jsr:@std/async/delay';
 
 const path = new URL('../', import.meta.url);
 
@@ -52,4 +53,5 @@ for await (const file of walk(path)) {
   console.log(`Generated file ${file.path.split('\n').at(-1)}`);
 
   await new Promise((r) => setTimeout(r, 10000));
+  await delay(10000);
 }

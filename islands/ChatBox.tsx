@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'preact/hooks';
 import { useGlobal } from '@/islands/Global.tsx';
 import { ChatData } from '@/app/types.ts';
 import { showOutOfTokensDialog } from './OutOfTokensDialog.tsx';
+import { delay } from '@std/async/delay';
 
 export default function ChatBox({ data }: { data: ChatData }) {
   const global = useGlobal();
@@ -30,7 +31,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   }
 
   async function scrollToBottom() {
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await delay(100);
     if (!messagesRef.current) return;
     messagesRef.current.scrollTo(0, messagesRef.current.scrollHeight);
   }

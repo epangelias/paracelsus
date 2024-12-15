@@ -2,8 +2,9 @@ import OpenAI from 'https://deno.land/x/openai@v4.28.0/mod.ts';
 import { ChatCompletionMessageParam } from 'https://deno.land/x/openai@v4.28.0/resources/mod.ts';
 import { Stream } from 'https://deno.land/x/openai@v4.28.0/streaming.ts';
 import { AIMessage, OAIOptions } from '@/lib/types.ts';
+import { LruCache } from "jsr:@std/cache";
 
-const backends: Record<string, OpenAI> = {};
+const cache = new LruCache<string, OpenAI>(100);
 
 const defaultTestOptions = {
   apiKey: Deno.env.get('OAI_API_KEY') || 'ollama',
@@ -29,12 +30,14 @@ export async function generateChatCompletion(
 
   const backendId = `${options.baseURL}:${options.apiKey}`;
 
-  backends[backendId] = backends[backendId] || new OpenAI({
-    apiKey: options.apiKey,
-    baseURL: options.baseURL,
-  });
+  const backend = cache.has(backendId) ?
+    cache.get(backendId)! :
+    cache.set(backendId, new OpenAI({
+      apiKey: options.apiKey,
+      baseURL: options.baseURL,
+    })).get(backendId)!
 
-  return await backends[backendId].chat.completions.create({
+  return await backend.chat.completions.create({
     model: options.model,
     messages: messages as ChatCompletionMessageParam[],
     stream,
