@@ -50,7 +50,7 @@ export async function sendNotificationToUser(user: UserData, title: string, mess
     }
   }
 
-  if (subscriptionRemoved) await setUserData(user.id, u => u.pushSubscriptions = subscriptions);
+  if (subscriptionRemoved) await setUserData(user.id, (u) => u.pushSubscriptions = subscriptions);
 }
 
 export function pushPlugin(app: App<State>) {
@@ -60,7 +60,7 @@ export function pushPlugin(app: App<State>) {
     if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
     const { subscription } = await ctx.req.json();
     console.log('Received subscription', subscription);
-    const resultUser = await setUserData(user.id, u => u.pushSubscriptions.push(subscription));
+    const resultUser = await setUserData(user.id, (u) => u.pushSubscriptions.push(subscription));
     console.log({ resultUser }); // rm
     return Response.json({}, { status: 201 });
   });

@@ -88,7 +88,6 @@ async function generateStripeCustomerId(name: string, email: string) {
 
 // User Data
 
-
 export async function generatePassword(password: string, salt = generateCode()) {
   validation('password', password, { min: 6, max: 100 });
 
@@ -105,10 +104,8 @@ export async function setUserData(userId: string, getNewUser: (user: UserData) =
 
   if (old.versionstamp == null) throw new Error('User does not exist');
 
-
   const user = { ...old.value };
   await getNewUser(user);
-
 
   user.email = normalizeEmail(user.email);
   user.name = normalizeName(user.name);
@@ -134,7 +131,6 @@ export async function setUserData(userId: string, getNewUser: (user: UserData) =
   }
 
   if (isStripeEnabled()) {
-
     if (old.value.stripeCustomerId && (emailChanged || nameChanged)) {
       // If user data changed, update stripe account
       await stripe.customers.update(old.value.stripeCustomerId, { email: user.email, name: user.name });
@@ -147,7 +143,6 @@ export async function setUserData(userId: string, getNewUser: (user: UserData) =
       atomic.set(['usersByStripeCustomer', user.stripeCustomerId], { id: user.id });
     }
   }
-
 
   atomic.set(['users', user.id], user);
 
@@ -193,7 +188,7 @@ export async function createUserData(data: OmittedUserData) {
   atomic.set(['users', user.id], user);
 
   const { ok } = await atomic.commit();
-  if (!ok) throw new Error("User already exists");
+  if (!ok) throw new Error('User already exists');
 
   return user;
 }

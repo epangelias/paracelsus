@@ -17,14 +17,14 @@ export function stripePlugin(app: App<State>) {
 
     switch (event.type) {
       case 'customer.subscription.created': {
-        await setUserData(user.id, u => {
+        await setUserData(user.id, (u) => {
           u.isSubscribed = true;
           u.hasSubscribed = true;
         });
         return new Response(null, { status: STATUS_CODE.Created });
       }
       case 'customer.subscription.deleted': {
-        await setUserData(user.id, u => u.isSubscribed = false);
+        await setUserData(user.id, (u) => u.isSubscribed = false);
         return new Response(null, { status: STATUS_CODE.Accepted });
       }
       default: {

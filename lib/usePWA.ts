@@ -5,7 +5,7 @@ import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 
 export async function requestPushSubscription(worker?: ServiceWorkerRegistration | null) {
-  console.log("Requesting subscription...");
+  console.log('Requesting subscription...');
 
   if (!worker) return null;
 
@@ -62,7 +62,7 @@ export async function loadServiceWorker() {
       if (subscription) subscription.unsubscribe();
       const unregistered = await registration.unregister();
       if (!unregistered) throw new Error('Failed to unregister service worker');
-      else console.log("Service worker unregistered");
+      else console.log('Service worker unregistered');
     }
     registration = await navigator.serviceWorker.register(workerURL, { scope: '/' });
     return null;

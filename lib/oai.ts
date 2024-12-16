@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { Stream } from 'openai/streaming.ts';
 import { AIMessage, OAIOptions } from '@/lib/types.ts';
-import { LruCache } from "jsr:@std/cache";
+import { LruCache } from 'jsr:@std/cache';
 
 const cache = new LruCache<string, OpenAI>(100);
 
@@ -30,12 +30,13 @@ export async function generateChatCompletion(
 
   const backendId = `${options.baseURL}:${options.apiKey}`;
 
-  const backend = cache.has(backendId) ?
-    cache.get(backendId)! :
-    cache.set(backendId, new OpenAI({
+  const backend = cache.has(backendId) ? cache.get(backendId)! : cache.set(
+    backendId,
+    new OpenAI({
       apiKey: options.apiKey,
       baseURL: options.baseURL,
-    })).get(backendId)!
+    }),
+  ).get(backendId)!;
 
   return await backend.chat.completions.create({
     model: options.model,

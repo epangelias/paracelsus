@@ -5,7 +5,7 @@ import { isProduction } from '@/lib/utils.ts';
 const defaultOptions: Options = {
   maxRequests: 10,
   interval: 60,
-}
+};
 
 interface Options {
   maxRequests: number;

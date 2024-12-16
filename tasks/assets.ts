@@ -27,8 +27,8 @@ async function takeScreenshot(filename: string, width: number, height: number) {
   await browser.close();
 }
 
-takeScreenshot("screenshot-wide.jpg", 1280, 720);
-takeScreenshot("screenshot-narrow.jpg", 750, 1280);
+takeScreenshot('screenshot-wide.jpg', 1280, 720);
+takeScreenshot('screenshot-narrow.jpg', 750, 1280);
 
 async function generateAssets(inputIcon: string, outputDir: string) {
   const result = await generateImages(inputIcon, outputDir, {

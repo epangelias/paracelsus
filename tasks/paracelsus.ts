@@ -1,16 +1,15 @@
 #!/usr/bin/env -S deno run -A
 
 import { move } from 'jsr:@std/fs@1/move';
-import { parseArgs } from "jsr:@std/cli/parse-args";
-import { Spinner } from "jsr:@std/cli/unstable-spinner";
+import { parseArgs } from 'jsr:@std/cli/parse-args';
+import { Spinner } from 'jsr:@std/cli/unstable-spinner';
 import { exists } from 'jsr:@std/fs@1/exists';
 
-const spinner = new Spinner({ message: "Loading..." });
+const spinner = new Spinner({ message: 'Loading...' });
 
 const args = parseArgs(Deno.args);
 
 if (args.help || args.h) {
-
   console.log(`Usage: paracelsus <project-path>`);
   console.log(`Example: paracelsus ~/Projects/my-project`);
 
@@ -34,7 +33,7 @@ await new Deno.Command('git', {
   args: ['clone', 'https://github.com/epangelias/fresh-tempalte.git', projectPath],
 }).output();
 
-const cloned = await exists(projectPath + "/.git");
+const cloned = await exists(projectPath + '/.git');
 if (!cloned) throw new Error(`Failed to clone repository to ${projectPath}`);
 
 Deno.chdir(projectPath);
@@ -56,7 +55,7 @@ spinner.message = `Getting ready...`;
 await Deno.writeTextFile('app/site.ts', siteData);
 
 // Copy .env.template to .env
-await move(".env.template", ".env");
+await move('.env.template', '.env');
 
 // Remove unnecessary files and folders
 await Deno.remove('tasks/paracelsus.ts');
