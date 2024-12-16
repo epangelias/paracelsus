@@ -1,10 +1,10 @@
 import { useSignal } from '@preact/signals';
-import { sendSSE, syncSSE, watchSSE } from '../lib/stream-client.ts';
+import { sendSSE, syncSSE, watchSSE } from '@/lib/stream-client.ts';
 import { AIMessage } from '@/lib/types.ts';
 import { useEffect, useRef } from 'preact/hooks';
 import { useGlobal } from '@/islands/Global.tsx';
 import { ChatData } from '@/app/types.ts';
-import { showOutOfTokensDialog } from './OutOfTokensDialog.tsx';
+import { showOutOfTokensDialog } from '@/islands/OutOfTokensDialog.tsx';
 import { delay } from '@std/async/delay';
 
 export default function ChatBox({ data }: { data: ChatData }) {

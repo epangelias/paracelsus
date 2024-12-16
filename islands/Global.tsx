@@ -4,7 +4,7 @@ import { ComponentChildren } from 'preact';
 import { GlobalData, UserData } from '@/app/types.ts';
 import { useComputed, useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/stream-client.ts';
-import { usePWA } from '../lib/usePWA.ts';
+import { usePWA } from '@/lib/usePWA.ts';
 
 interface Props {
   children: ComponentChildren;

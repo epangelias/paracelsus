@@ -1,5 +1,5 @@
 import { useGlobal } from '@/islands/Global.tsx';
-import { site } from '../app/site.ts';
+import { site } from '@/app/site.ts';
 import { Meth } from '@/lib/meth.ts';
 import { UserMenu } from '@/islands/UserMenu.tsx';
 

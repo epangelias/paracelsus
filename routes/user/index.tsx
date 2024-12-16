@@ -5,7 +5,7 @@ import { UserUI } from '@/islands/UserUI.tsx';
 import { STATUS_CODE } from '@std/http/status';
 import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
-import { sendEmailVerification } from '../../app/email.ts';
+import { sendEmailVerification } from '@/app/email.ts';
 
 export const handler = define.handlers({
   GET: (ctx) => {
