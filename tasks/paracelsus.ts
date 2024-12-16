@@ -3,7 +3,6 @@
 import { move } from 'jsr:@std/fs@1/move';
 import { parseArgs } from "jsr:@std/cli/parse-args";
 import { Spinner } from "jsr:@std/cli/unstable-spinner";
-import { ensureDir } from 'jsr:@std/fs@1/ensure-dir';
 import { exists } from 'jsr:@std/fs@1/exists';
 
 const spinner = new Spinner({ message: "Loading..." });

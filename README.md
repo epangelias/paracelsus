@@ -14,8 +14,6 @@ paracelsus my-project
 
 ## TODO
 
-- Fix push notifications on all browsers, test
-- Puppeteer testing
 - Simplify banner system so can remove bloat code
 - Go fix all error handling in ai streaming
 - Create basic pricing page
@@ -36,6 +34,7 @@ Going through
 - Customize site options at `app/site.ts`
 - Customize theme variables at `static/css/theme.css`
 - Generate assets `deno task generate`
+  - Install browser first `$ npx puppeteer browsers install firefox`
   - Note: Ensure that server is running at localhost before generating
 - Enable MailJet
   - Create mailjet account, include API keys in `.env`

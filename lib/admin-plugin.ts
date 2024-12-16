@@ -1,6 +1,5 @@
 import { App, FreshContext, HttpError } from 'fresh';
 import { State } from '@/app/types.ts';
-import { clearDb } from '@/tasks/db_reset.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { sendFollowUp } from '@/app/follow-up.ts';
 import { isPushEnabled } from '@/lib/push.ts';
@@ -8,7 +7,28 @@ import { Meth } from '@/lib/meth.ts';
 import { db } from '@/lib/utils.ts';
 
 const actions = [
-  { name: 'Clear Database', route: 'clear-db', action: async () => await clearDb() },
+  {
+    name: 'Clear Database', route: 'clear-db', action: async () => {
+      const itemsReset: Record<string, number> = {};
+
+      let promises = [];
+
+      for await (const res of db.list({ prefix: [] })) {
+        const key = res.key.slice(0, -1).join('/');
+        itemsReset[key] = (key in itemsReset) ? itemsReset[key] + 1 : 1;
+        promises.push(db.delete(res.key));
+
+        if (promises.length > 50) {
+          await Promise.all(promises);
+          promises = [];
+        }
+      }
+
+      await Promise.all(promises);
+
+      return itemsReset;
+    }
+  },
   {
     name: 'Test Push Notifications',
     route: 'test-push',
