@@ -27,7 +27,7 @@ export interface UserData {
 }
 
 export type GlobalData = {
-  user: Signal<Partial<UserData> | null | undefined>;
+  user: Signal<Partial<UserData> | null>;
   outOfTokens: Signal<boolean>;
   pwa: ReturnType<typeof usePWA>;
   mailEnabled: boolean;
