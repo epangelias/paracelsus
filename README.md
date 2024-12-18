@@ -83,3 +83,4 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 - [ ] Create steps in readme below
 - [ ] Customizable select boxes, for bai
 - [ ] Fix type errors
+- [ ] Fix error on ai streaming in deployment

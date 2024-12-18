@@ -21,7 +21,7 @@ stripePlugin(app);
 pushPlugin(app);
 userPlugin(app);
 manifestPlugin(app);
-adminPlugin(app); // Remove for production
+adminPlugin(app);
 
 app.use(async (ctx) => {
   const res = await ctx.next();
