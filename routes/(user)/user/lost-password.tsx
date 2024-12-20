@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils.ts';
 import { Page } from '@/components/Page.tsx';
-import { Field } from '@/lib/Field.tsx';
+import { Field } from '../../../components/Field.tsx';
 import { HttpError, page } from 'fresh';
 import { Meth } from '@/lib/meth.ts';
 import { getUserById, getUserIdByEmail } from '@/lib/user-data.ts';

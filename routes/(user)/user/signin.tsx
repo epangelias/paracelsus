@@ -5,7 +5,7 @@ import { Meth } from '@/lib/meth.ts';
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
 import { isMailEnabled } from '@/lib/mail.ts';
-import { Field } from '@/lib/Field.tsx';
+import { Field } from '../../../components/Field.tsx';
 
 const limiter = new RateLimiter();
 

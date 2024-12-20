@@ -6,7 +6,7 @@ import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/rate-limiter.ts';
 import { sendEmailVerification } from '@/app/email.ts';
 import { createUser } from '@/app/user.ts';
-import { Field } from '@/lib/Field.tsx';
+import { Field } from '../../../components/Field.tsx';
 
 const limiter = new RateLimiter();
 
