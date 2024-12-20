@@ -32,9 +32,9 @@ app.use(async (ctx) => {
 app.use(staticFiles());
 
 await fsRoutes(app, {
-  dir: './',
-  loadIsland: (path) => import(`./islands/${path}`),
-  loadRoute: (path) => import(`./routes/${path}`),
+  dir: './src',
+  loadIsland: (path) => import(`./src/islands/${path}`),
+  loadRoute: (path) => import(`./src/routes/${path}`),
 });
 
 if (import.meta.main) await app.listen();
