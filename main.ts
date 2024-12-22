@@ -9,25 +9,18 @@ import { stripePlugin } from './lib/stripe/stripe-plugin.ts';
 import { userPlugin } from './lib/user/user-plugin.tsx';
 import { adminPlugin } from './lib/user/admin-plugin.ts';
 import { manifestPlugin } from './lib/pwa/manifest-plugin.ts';
-import { setProductionMode } from '@/lib/utils/utils.ts';
+import { isProduction, setProduction } from '@/lib/utils/utils.ts';
 
 export const app = new App<State>();
 
-if (import.meta.main) setProductionMode();
+setProduction(import.meta.main);
 
-// Plugins
 autoSendFollowUps(app);
 stripePlugin(app);
 pushPlugin(app);
 userPlugin(app);
 manifestPlugin(app);
 adminPlugin(app);
-
-app.use(async (ctx) => {
-  const res = await ctx.next();
-  if (ctx.config.mode == 'development') res.headers.set('Access-Control-Allow-Origin', '*');
-  return res;
-});
 
 app.use(staticFiles());
 
@@ -37,4 +30,4 @@ await fsRoutes(app, {
   loadRoute: (path) => import(`./routes/${path}`),
 });
 
-if (import.meta.main) await app.listen();
+if (isProduction()) await app.listen();

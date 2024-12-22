@@ -6,4 +6,4 @@ export const db = await Deno.openKv();
 
 export const isProduction = () => Deno.env.get('PROD') === 'true';
 
-export const setProductionMode = () => Deno.env.set('PROD', 'true');
+export const setProduction = (mode: boolean) => Deno.env.set('PROD', mode ? 'true' : 'false');

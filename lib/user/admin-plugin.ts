@@ -76,18 +76,24 @@ const adminPageHtml = `
   <meta name="color-scheme" content="light dark" />
   <meta name="viewport="width=device-width, initial-scale=1" />
   <h1>Admin</h1>
-    ${
-  actions.map((action) => `
+    ${actions.map((action) => `
       <div>
         <a href="/admin/${action.route}">
           <button>${action.name}</button>
         </a>
       </div>
     `).join('')
-}
+  }
 `;
 
 export function adminPlugin(app: App<State>) {
+  // Disable CORS for development mode
+  app.use(async (ctx) => {
+    const res = await ctx.next();
+    if (ctx.config.mode == 'development') res.headers.set('Access-Control-Allow-Origin', '*');
+    return res;
+  });
+
   app.get('/admin', (ctx) => {
     if (!isAdminEnabled()) throw new HttpError(STATUS_CODE.NotFound);
 
