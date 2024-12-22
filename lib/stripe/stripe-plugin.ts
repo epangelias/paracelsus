@@ -1,7 +1,7 @@
 import { App, HttpError } from 'fresh';
 import { State } from '@/app/types.ts';
-import { getStripePremiumPlanPriceId, GetStripeWebhookEvent, isStripeEnabled, stripe } from '@/lib/stripe.ts';
-import { getUserByStripeCustomer, setUserData } from '@/lib/user-data.ts';
+import { getStripePremiumPlanPriceId, GetStripeWebhookEvent, isStripeEnabled, stripe } from "@/lib/stripe/stripe.ts";
+import { getUserByStripeCustomer, setUserData } from '../user/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 
 export function stripePlugin(app: App<State>) {

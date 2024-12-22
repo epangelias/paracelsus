@@ -1,4 +1,4 @@
-import { define } from '@/lib/utils.ts';
+import { define } from '@/lib/utils/utils.ts';
 import { STATUS_CODE, STATUS_TEXT, StatusCode } from '@std/http/status';
 import { HttpError, page } from 'fresh';
 import { Page } from '@/components/Page.tsx';

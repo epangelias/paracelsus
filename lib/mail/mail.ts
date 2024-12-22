@@ -1,6 +1,15 @@
 import Mailjet from 'node-mailjet';
-import { RateLimiter } from '@/lib/rate-limiter.ts';
-import { MailOptions } from '@/lib/types.ts';
+import { RateLimiter } from '../utils/rate-limiter.ts';
+
+export interface MailOptions {
+  fromName: string;
+  toName: string;
+  from: string;
+  to: string;
+  subject: string;
+  text: string;
+  html: string;
+}
 
 const limiter = new RateLimiter({ maxRequests: 2, interval: 60 }); // 2 per minute
 

@@ -1,12 +1,12 @@
 import { site } from '@/app/site.ts';
-import { define } from '@/lib/utils.ts';
+import { define } from '@/lib/utils/utils.ts';
 import { asset } from 'fresh/runtime';
 import { Global } from '@/islands/Global.tsx';
 import { stripUserData } from '@/app/user.ts';
-import { PWATags } from '@/lib/PWATags.tsx';
-import { isMailEnabled } from '@/lib/mail.ts';
-import { isStripeEnabled } from '@/lib/stripe.ts';
-import { isPushEnabled } from '@/lib/push.ts';
+import { PWATags } from '../lib/pwa/PWATags.tsx';
+import { isMailEnabled } from '../lib/mail/mail.ts';
+import { isStripeEnabled } from '../lib/stripe/stripe.ts';
+import { isPushEnabled } from '../lib/pwa/push.ts';
 
 export default define.page(({ Component, state }) => {
   return (

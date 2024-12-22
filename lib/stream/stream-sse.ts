@@ -1,4 +1,4 @@
-import { db } from '@/lib/utils.ts';
+import { db } from '@/lib/utils/utils.ts';
 
 interface Options {
   watchKey?: Deno.KvKey;

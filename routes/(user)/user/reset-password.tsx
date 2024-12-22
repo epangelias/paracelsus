@@ -1,11 +1,16 @@
 import { Page } from '@/components/Page.tsx';
-import { define } from '@/lib/utils.ts';
+import { define } from '@/lib/utils/utils.ts';
 import { Field } from '../../../components/Field.tsx';
 import { HttpError, page } from 'fresh';
-import { generatePassword, getUserByPasswordResetCode, removePasswordResetCode, setUserData } from '@/lib/user-data.ts';
+import {
+  generatePassword,
+  getUserByPasswordResetCode,
+  removePasswordResetCode,
+  setUserData,
+} from '../../../lib/user/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
-import { Meth } from '@/lib/meth.ts';
-import { isMailEnabled } from '@/lib/mail.ts';
+import { Meth } from '@/lib/utils/meth.ts';
+import { isMailEnabled } from '../../../lib/mail/mail.ts';
 
 export const handler = define.handlers({
   GET: (ctx) => {

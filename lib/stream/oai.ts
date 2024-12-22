@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { Stream } from 'openai/streaming.ts';
-import { AIMessage, OAIOptions } from '@/lib/types.ts';
+import { AIMessage, OAIOptions } from '@/lib/stream/types.ts';
 import { LruCache } from 'jsr:@std/cache';
 
 const cache = new LruCache<string, OpenAI>(100);

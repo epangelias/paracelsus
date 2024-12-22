@@ -1,4 +1,4 @@
-import { Meth } from '@/lib/meth.ts';
+import { Meth } from '@/lib/utils/meth.ts';
 
 export const site = {
   name: 'Paracelsus',

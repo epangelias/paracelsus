@@ -1,6 +1,6 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { site } from '@/app/site.ts';
-import { Meth } from '@/lib/meth.ts';
+import { Meth } from '@/lib/utils/meth.ts';
 import { UserMenu } from '@/islands/UserMenu.tsx';
 
 export function Header() {

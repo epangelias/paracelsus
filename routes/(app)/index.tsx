@@ -1,4 +1,4 @@
-import { define } from '@/lib/utils.ts';
+import { define } from '@/lib/utils/utils.ts';
 import ChatBox from '@/islands/ChatBox.tsx';
 import { page } from 'fresh';
 import { site } from '@/app/site.ts';

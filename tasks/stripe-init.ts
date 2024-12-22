@@ -2,7 +2,7 @@
 
 import Stripe from 'stripe';
 import { site } from '@/app/site.ts';
-import { isStripeEnabled, stripe } from '@/lib/stripe.ts';
+import { isStripeEnabled, stripe } from '../lib/stripe/stripe.ts';
 
 async function createProduct(stripe: Stripe) {
   return await stripe.products.create({

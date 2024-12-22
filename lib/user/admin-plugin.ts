@@ -2,9 +2,9 @@ import { App, FreshContext, HttpError } from 'fresh';
 import { State } from '@/app/types.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { sendFollowUp } from '@/app/follow-up.ts';
-import { isPushEnabled } from '@/lib/push.ts';
-import { Meth } from '@/lib/meth.ts';
-import { db } from '@/lib/utils.ts';
+import { isPushEnabled } from '../pwa/push.ts';
+import { Meth } from '@/lib/utils/meth.ts';
+import { db } from '@/lib/utils/utils.ts';
 
 const actions = [
   {
@@ -76,15 +76,14 @@ const adminPageHtml = `
   <meta name="color-scheme" content="light dark" />
   <meta name="viewport="width=device-width, initial-scale=1" />
   <h1>Admin</h1>
-    ${
-  actions.map((action) => `
+    ${actions.map((action) => `
       <div>
         <a href="/admin/${action.route}">
           <button>${action.name}</button>
         </a>
       </div>
     `).join('')
-}
+  }
 `;
 
 export function adminPlugin(app: App<State>) {

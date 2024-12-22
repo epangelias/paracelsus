@@ -1,6 +1,6 @@
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
-import { isProduction } from '@/lib/utils.ts';
+import { isProduction } from '@/lib/utils/utils.ts';
 
 const defaultOptions: Options = {
   maxRequests: 10,

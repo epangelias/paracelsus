@@ -1,7 +1,7 @@
 import { ComponentChildren } from 'preact';
-import { usePWA } from '@/lib/usePWA.ts';
+import { usePWA } from '../lib/pwa/usePWA.ts';
 import { Signal } from '@preact/signals';
-import { AIMessage } from '@/lib/types.ts';
+import { AIMessage } from '@/lib/stream/types.ts';
 
 export interface BannerData {
   name: string;

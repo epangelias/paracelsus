@@ -1,9 +1,9 @@
-import { StreamSSR } from '@/lib/stream-sse.ts';
+import { StreamSSR } from "@/lib/stream/stream-sse.ts";
 import { ChatCompletionChunk } from 'https://deno.land/x/openai@v4.28.0/resources/mod.ts';
 import { Stream } from 'https://deno.land/x/openai@v4.28.0/streaming.ts';
-import { AIMessage, OAIOptions } from '@/lib/types.ts';
-import { generateChatCompletionStream } from '@/lib/oai.ts';
-import { renderMarkdown } from '@/lib/md.ts';
+import { AIMessage, OAIOptions } from '@/lib/stream/types.ts';
+import { generateChatCompletionStream } from './oai.ts';
+import { renderMarkdown } from '../utils/md.ts';
 
 interface Options {
   messages: AIMessage[];

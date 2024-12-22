@@ -1,10 +1,10 @@
-import { define } from '@/lib/utils.ts';
+import { define } from '@/lib/utils/utils.ts';
 import { page } from 'fresh';
-import { authorizeUser, setAuthCookie } from '@/lib/user-data.ts';
-import { Meth } from '@/lib/meth.ts';
+import { authorizeUser, setAuthCookie } from '../../../lib/user/user-data.ts';
+import { Meth } from '@/lib/utils/meth.ts';
 import { Page } from '@/components/Page.tsx';
-import { RateLimiter } from '@/lib/rate-limiter.ts';
-import { isMailEnabled } from '@/lib/mail.ts';
+import { RateLimiter } from '../../../lib/utils/rate-limiter.ts';
+import { isMailEnabled } from '../../../lib/mail/mail.ts';
 import { Field } from '../../../components/Field.tsx';
 
 const limiter = new RateLimiter();

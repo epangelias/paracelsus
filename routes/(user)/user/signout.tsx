@@ -1,6 +1,6 @@
-import { define } from '@/lib/utils.ts';
+import { define } from '@/lib/utils/utils.ts';
 import { deleteCookie, getCookies } from 'jsr:@std/http/cookie';
-import { db } from '@/lib/utils.ts';
+import { db } from '@/lib/utils/utils.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {

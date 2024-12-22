@@ -10,12 +10,4 @@ export interface OAIOptions {
   model: string;
 }
 
-export interface MailOptions {
-  fromName: string;
-  toName: string;
-  from: string;
-  to: string;
-  subject: string;
-  text: string;
-  html: string;
-}
+

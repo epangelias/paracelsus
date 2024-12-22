@@ -1,5 +1,5 @@
-import { Meth } from '@/lib/meth.ts';
-import { fetchOrError } from '@/lib/fetch.ts';
+import { Meth } from '@/lib/utils/meth.ts';
+import { fetchOrError } from '@/lib/utils/fetch.ts';
 import { asset, IS_BROWSER } from 'fresh/runtime';
 import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';

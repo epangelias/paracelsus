@@ -1,4 +1,4 @@
-import { db } from '@/lib/utils.ts';
+import { db } from '@/lib/utils/utils.ts';
 import { ChatData, UserData } from '@/app/types.ts';
 
 const createSystemPrompt = (name: string) =>

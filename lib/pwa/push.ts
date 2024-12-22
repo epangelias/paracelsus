@@ -3,7 +3,7 @@ import * as _webPush from 'web-push';
 import { site } from '@/app/site.ts';
 import { asset } from 'fresh/runtime';
 import { STATUS_CODE } from '@std/http/status';
-import { setUserData } from '@/lib/user-data.ts';
+import { setUserData } from '../user/user-data.ts';
 import { State, UserData } from '@/app/types.ts';
 
 import * as webPushTypes from 'npm:@types/web-push';

@@ -1,4 +1,4 @@
-import { define } from '@/lib/utils.ts';
+import { define } from '@/lib/utils/utils.ts';
 import { Page } from '@/components/Page.tsx';
 
 export default define.page(() => (
