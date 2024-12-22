@@ -14,10 +14,6 @@
   "[javascript]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
   },
-  "cSpell.words": [
-    "anybutton",
-    "anyfield"
-  ],
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   }

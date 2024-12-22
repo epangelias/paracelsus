@@ -9,5 +9,3 @@ export interface OAIOptions {
   apiKey: string;
   model: string;
 }
-
-

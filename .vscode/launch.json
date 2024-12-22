@@ -2,19 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Chrome",
-      "request": "launch",
-      "type": "chrome",
-      "url": "http://0.0.0.0:8000"
-    },
-    {
-      "type": "firefox",
-      "request": "launch",
-      "reAttach": true,
-      "name": "Launch firefox",
-      "url": "http://0.0.0.0:8000"
-    },
-    {
       "request": "launch",
       "name": "Launch Program",
       "type": "node",
@@ -24,7 +11,12 @@
         "DENO_FUTURE": "1"
       },
       "runtimeExecutable": "/home/jaden/.deno/bin/deno",
-      "runtimeArgs": ["run", "-A", "--env", "--inspect-wait"],
+      "runtimeArgs": [
+        "run",
+        "-A",
+        "--env",
+        "--inspect-wait"
+      ],
       "attachSimplePort": 9229
     }
   ]
