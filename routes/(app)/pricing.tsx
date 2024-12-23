@@ -12,7 +12,7 @@ export default define.page((ctx) => (
         <div>
           <h2>Free</h2>
           <p>
-            Use {site.name} for free
+            Use {site.name} for free.
           </p>
         </div>
         <p>
