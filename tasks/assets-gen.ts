@@ -27,9 +27,6 @@ async function takeScreenshot(filename: string, width: number, height: number) {
   await browser.close();
 }
 
-takeScreenshot('screenshot-wide.jpg', 1280, 720);
-takeScreenshot('screenshot-narrow.jpg', 750, 1280);
-
 async function generateAssets(inputIcon: string, outputDir: string) {
   const result = await generateImages(inputIcon, outputDir, {
     background: site.backgroundColor,
@@ -59,4 +56,6 @@ async function prepareIconPath(iconPath: string): Promise<string> {
 const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');
 const iconPath = await prepareIconPath(site.icon);
 
+await takeScreenshot('screenshot-wide.jpg', 1280, 720);
+await takeScreenshot('screenshot-narrow.jpg', 750, 1280);
 await generateAssets(iconPath, outputDir);

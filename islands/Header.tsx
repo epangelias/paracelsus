@@ -2,6 +2,7 @@ import { useGlobal } from '@/islands/Global.tsx';
 import { site } from '@/app/site.ts';
 import { Meth } from '@/lib/utils/meth.ts';
 import { UserMenu } from '@/islands/UserMenu.tsx';
+import IconBolt from 'tabler-icons/bolt.tsx';
 
 export function Header() {
   const global = useGlobal();
@@ -20,7 +21,8 @@ export function Header() {
         <div class='right'>
           {global.user.value && (
             <span class='tokens'>
-              ⚡️{global.user.value.isSubscribed ? '∞' : global.user.value.tokens}
+              <IconBolt />
+              {global.user.value.isSubscribed ? '∞' : global.user.value.tokens}
             </span>
           )}
 

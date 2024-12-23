@@ -6,6 +6,7 @@ import { useGlobal } from '@/islands/Global.tsx';
 import { ChatData } from '@/app/types.ts';
 import { showOutOfTokensDialog } from '@/islands/OutOfTokensDialog.tsx';
 import { delay } from '@std/async/delay';
+import IconSend from 'tabler-icons/send.tsx';
 
 export default function ChatBox({ data }: { data: ChatData }) {
   const global = useGlobal();
@@ -98,7 +99,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
           <textarea rows={1} autocomplete='off' autofocus required ref={inputRef} aria-label='Type a message'>
           </textarea>
           <button disabled={generating.value}>
-            <span>◉</span>
+            <IconSend />
           </button>
         </form>
       </div>
