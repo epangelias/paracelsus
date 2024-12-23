@@ -73,4 +73,8 @@ await Deno.remove('.github', { recursive: true });
 spinner.message = `Updating project...`;
 await new Deno.Command(Deno.execPath(), { args: ['task', 'update'], stderr: 'piped' }).output();
 
+spinner.message = `Generating assets...`;
+
+await new Deno.Command(Deno.execPath(), { args: ['task', 'generate'], stderr: 'piped' }).output();
+
 spinner.stop();

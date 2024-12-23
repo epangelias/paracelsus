@@ -5,7 +5,7 @@
     "build": "deno run -A --env tasks/build.ts",
     "start": "deno run -A --env main.ts",
     "update": "deno run -A --env -r jsr:@fresh/update .",
-    "assets": "deno run -A --env tasks/assets-gen.ts",
+    "generate": "deno run -A --env tasks/generate.ts",
     "stripe-init": "deno run -A --env tasks/stripe-init.ts"
   },
   "lint": {

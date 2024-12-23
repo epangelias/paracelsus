@@ -37,7 +37,7 @@ $ npx puppeteer browsers install firefox`
 Generate assets. Ensure running locally.
 
 ```sh
-$ deno task assets
+$ deno task generate
 ```
 
 ## Enable MailJet

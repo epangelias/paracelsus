@@ -4,10 +4,20 @@ import * as Path from 'jsr:@std/path@1';
 import { generateImages } from 'npm:pwa-asset-generator';
 import { site } from '@/app/site.ts';
 import puppeteer from 'npm:puppeteer';
+import { Builder } from 'fresh/dev';
+import { app } from '@/main.ts';
+import { delay } from '@std/async/delay';
+
+try {
+  await fetch("http://0.0.0.0:8000")
+} catch (_e) {
+  console.warn("Running app locally...");
+  const builder = new Builder()
+  builder.listen(app);
+  await delay(1000);
+}
 
 async function takeScreenshot(filename: string, width: number, height: number) {
-  console.log('Ensure app running locally at http://0.0.0.0:8000');
-
   const path = Path.join(import.meta.dirname!, '../static/img/' + filename);
   const browser = await puppeteer.launch({ browser: 'firefox', headless: true });
 
@@ -35,7 +45,7 @@ async function generateAssets(inputIcon: string, outputDir: string) {
     pathOverride: '/img/gen',
   });
 
-  const iconsJSON = Path.join(import.meta.dirname!, '../static/img/gen/icons.json');
+  const iconsJSON = new URL('../static/img/gen/icons.json', import.meta.url);
   await Deno.writeTextFile(iconsJSON, JSON.stringify(result.manifestJsonContent, null, 2));
 }
 
@@ -59,3 +69,5 @@ const iconPath = await prepareIconPath(site.icon);
 await takeScreenshot('screenshot-wide.jpg', 1280, 720);
 await takeScreenshot('screenshot-narrow.jpg', 750, 1280);
 await generateAssets(iconPath, outputDir);
+
+Deno.exit();
