@@ -7,9 +7,17 @@ import puppeteer from 'npm:puppeteer';
 import { Builder } from 'fresh/dev';
 import { app } from '@/main.ts';
 import { delay } from '@std/async/delay';
+import { Spinner } from 'jsr:@std/cli@1.0.9/unstable-spinner';
+
+const localURL = "http://0.0.0.0:8000";
+
+const spinner = new Spinner({ color: 'green' });
+
+spinner.start();
+spinner.message = "Ensure app running locally..."
 
 try {
-  await fetch("http://0.0.0.0:8000")
+  await fetch(localURL)
 } catch (_e) {
   console.warn("Running app locally...");
   const builder = new Builder()
@@ -18,13 +26,15 @@ try {
 }
 
 async function takeScreenshot(filename: string, width: number, height: number) {
+  spinner.message = "Generating screenshot...";
+
   const path = Path.join(import.meta.dirname!, '../static/img/' + filename);
   const browser = await puppeteer.launch({ browser: 'firefox', headless: true });
 
   try {
     const page = await browser.newPage();
     await page.setViewport({ width, height });
-    await page.goto('http://0.0.0.0:8000', { waitUntil: 'networkidle0' });
+    await page.goto(localURL, { waitUntil: 'networkidle0' });
     await page.evaluate(() => {
       document.body.style.zoom = '2.5';
       document.body.style.fontSize = '1rem';
@@ -38,6 +48,8 @@ async function takeScreenshot(filename: string, width: number, height: number) {
 }
 
 async function generateAssets(inputIcon: string, outputDir: string) {
+  spinner.message = "Generating assets...";
+
   const result = await generateImages(inputIcon, outputDir, {
     background: site.backgroundColor,
     favicon: true,
@@ -49,12 +61,7 @@ async function generateAssets(inputIcon: string, outputDir: string) {
   await Deno.writeTextFile(iconsJSON, JSON.stringify(result.manifestJsonContent, null, 2));
 }
 
-async function prepareIconPath(iconPath: string): Promise<string> {
-  if (iconPath.startsWith('/')) {
-    return Path.join(import.meta.dirname!, '../static/', iconPath);
-  }
-
-  // Download icon if url
+async function URLtoPath(url: string) {
   const res = await fetch(iconPath);
   const contentType = res.headers.get('content-type')?.split('/')[1].split('+')[0];
   const filePath = Path.join(import.meta.dirname!, `../static/img/gen/icon.${contentType}`);
@@ -63,11 +70,21 @@ async function prepareIconPath(iconPath: string): Promise<string> {
   return filePath;
 }
 
+async function prepareIconPath(iconPath: string) {
+  if (iconPath.startsWith('/') || iconPath.startsWith("file:"))
+    return Path.join(import.meta.dirname!, '../static/', iconPath);
+  return URLtoPath(iconPath);
+}
+
 const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');
 const iconPath = await prepareIconPath(site.icon);
 
 await takeScreenshot('screenshot-wide.jpg', 1280, 720);
 await takeScreenshot('screenshot-narrow.jpg', 750, 1280);
 await generateAssets(iconPath, outputDir);
+
+spinner.stop();
+
+console.log('"Assets generated!')
 
 Deno.exit();

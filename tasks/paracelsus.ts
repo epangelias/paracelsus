@@ -4,46 +4,37 @@ import { move } from 'jsr:@std/fs@1/move';
 import { parseArgs } from 'jsr:@std/cli@1.0.9/parse-args';
 import { Spinner } from 'jsr:@std/cli@1.0.9/unstable-spinner';
 import { exists } from 'jsr:@std/fs@1/exists';
-import * as Color from 'jsr:@std/fmt/colors';
+import { $, helpCLI, throwCLI } from '@/lib/cli/cli.ts';
 
-const spinner = new Spinner({ message: 'Loading...', color: 'green' });
+const spinner = new Spinner({ color: 'green' });
 const args = parseArgs(Deno.args);
 const projectPath = args._[0] as string;
 const projectName = projectPath?.split('/').pop();
-const helpMessage = `
-${Color.green('Paracelsus')}: A deno fresh webapp generator
-
-${Color.blue('Usage:')} paracelsus <project-path>
-
-${Color.blue('Options:')}
-  -h, --help    Show this help message
-`;
-
-function error(message: string) {
-  spinner.stop();
-  console.error(`${Color.red(Color.bold('error'))}: ${message}`);
-  Deno.exit(1);
-}
 
 if (args.help || args.h || projectPath === undefined) {
-  console.log(helpMessage);
+  helpCLI({
+    name: 'paracelsus',
+    description: 'A deno fresh webapp generator',
+    usage: 'paracelsus <project-path>',
+    options: [
+      { flag: '-h, --help', usage: 'Show this help message' },
+    ],
+  });
   Deno.exit();
 }
 
 spinner.start();
+throwCLI("test");
 
 const projectExists = await exists(projectPath);
-if (projectExists) error(`Project already exists at ${projectPath}`);
+if (projectExists) throwCLI(`Project already exists at ${projectPath}`);
 
 spinner.message = `Cloning repository...`;
 
 // Clone the repository
-const res = await new Deno.Command('git', {
-  args: ['clone', 'https://github.com/epangelias/fresh-tempalte.git', projectPath],
-  stderr: 'piped',
-}).output();
+const cloned = await $('git', 'clone', 'https://github.com/epangelias/fresh-tempalte.git', projectPath);
 
-if (!res.success) error(`Failed to clone repository to "${projectPath}"`);
+if (!cloned.ok) throwCLI(`Failed to clone repository to "${projectPath}"`);
 
 Deno.chdir(projectPath);
 
@@ -71,10 +62,10 @@ await Deno.remove('.git', { recursive: true });
 await Deno.remove('.github', { recursive: true });
 
 spinner.message = `Updating project...`;
-await new Deno.Command(Deno.execPath(), { args: ['task', 'update'], stderr: 'piped' }).output();
+await $(Deno.execPath(), 'task', 'update');
 
 spinner.message = `Generating assets...`;
 
-await new Deno.Command(Deno.execPath(), { args: ['task', 'generate'], stderr: 'piped' }).output();
+await $(Deno.execPath(), 'task', 'generate');
 
 spinner.stop();
