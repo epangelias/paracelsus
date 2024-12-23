@@ -7,6 +7,7 @@ export function UserMenu() {
   const global = useGlobal();
   const popover = useRef<HTMLDivElement>(null);
   const isOpen = useSignal(false);
+  const name = Meth.limitText(global.user.value?.name?.split(' ')[0], 15);
 
   const checkPopoverState = () => {
     isOpen.value = !!popover.current?.matches(':popover-open');
@@ -21,7 +22,7 @@ export function UserMenu() {
       {global.user.value
         ? (
           <button class='trigger link' popovertarget='user-menu-dropdown'>
-            {isOpen.value ? '▾' : '▸'} {Meth.limitText(global.user.value?.name, 15)}
+            {isOpen.value ? '▾' : '▸'} {name}
           </button>
         )
         : <a href='/user/signin'>Sign In</a>}
@@ -32,9 +33,7 @@ export function UserMenu() {
               <a href='/user'>Settings</a>
             </li>
             <li>
-              {!global.user.value?.isSubscribed && global.stripeEnabled && (
-                <a href='/user/pricing' target='_blank'>Subscribe</a>
-              )}
+              {!global.user.value?.isSubscribed && global.stripeEnabled && <a href='/user/pricing'>Subscribe</a>}
             </li>
             <li>
               <a href='/user/signout'>Sign Out</a>

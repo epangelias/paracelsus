@@ -203,11 +203,13 @@ textarea {
   transition: background-color var(--transition);
 }
 
-button {
+button:not(.link),
+.button {
   transition: background-color var(--transition), box-shadow var(--transition);
 }
 
-a:not(.button) {
+a:not(.button),
+.link {
   transition: color var(--transition);
 }
 
@@ -226,6 +228,8 @@ button:not(.link),
   color: var(--on-accent);
   box-shadow: var(--field-shadow);
   text-decoration: none;
+  display: inline-block;
+  text-align: center;
 
   &:hover:not(:disabled) {
     background-color: color-mix(in srgb, var(--color), var(--on-accent) 15%);

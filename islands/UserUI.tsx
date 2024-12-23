@@ -14,7 +14,7 @@ export function UserUI({ error, message }: { error?: string; message?: string })
 
       {!global.user.value?.isSubscribed && global.stripeEnabled && (
         <p>
-          <a href='/user/pricing' target='_blank'>Subscribe</a>
+          <a href='/user/pricing'>Subscribe</a>
         </p>
       )}
 

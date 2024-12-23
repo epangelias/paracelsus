@@ -58,9 +58,15 @@ header {
   .right {
     display: flex;
     align-items: center;
+    color: var(--primary);
+    font-weight: bold;
 
     .tokens {
+      display: flex;
+      align-items: center;
       margin-right: var(--spacing);
+
+      svg {}
     }
   }
 

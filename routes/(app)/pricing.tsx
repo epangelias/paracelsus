@@ -1,44 +1,58 @@
 import { define } from '@/lib/utils/utils.ts';
 import { Page } from '@/components/Page.tsx';
 import IconCheckCircle from 'tabler-icons/circle-check-filled.tsx';
+import { site } from '@/app/site.ts';
 
 export default define.page((ctx) => (
   <Page hideBanner={true}>
     <h1>Pricing</h1>
 
-    <div class=''>
-      <div>
-        <h2>Free</h2>
+    <div class='pricings'>
+      <div class='pricing'>
+        <div>
+          <h2>Free</h2>
+          <p>
+            Use {site.name} for free
+          </p>
+        </div>
         <p>
-          Use Paracelsus for free
+          <span class='cost'>$0</span>
         </p>
+        <div class='features'>
+          <p>
+            <IconCheckCircle />
+            Limited tokens
+          </p>
+        </div>
+        {ctx.state.user?.isSubscribed
+          ? <a href='/user/subscription' class='button'>Unsubscribe</a>
+          : <a href={ctx.state.user ? '/' : '/user/signup'} class='button'>Get Started</a>}
       </div>
-      <p>
-        $0
-      </p>
-      <p>
-        <IconCheckCircle />
-        Limited tokens
-      </p>
 
-      <a href='/' class='button'>Get Started</a>
-    </div>
-
-    <div class=''>
-      <div>
-        <h2>Premium</h2>
+      <div class='pricing premium'>
+        <div>
+          <h2>Premium</h2>
+          <p>
+            Unlock all features of {site.name}.
+          </p>
+        </div>
         <p>
-          Unlock all features of Paracelsus.
+          <span class='cost'>$5</span> / month
         </p>
+        <div class='features'>
+          <p>
+            <IconCheckCircle />
+            Unlimited tokens
+          </p>
+          <p>
+            <IconCheckCircle />
+            Support the project
+          </p>
+        </div>
+        {ctx.state.user?.isSubscribed
+          ? <button disabled>Subscribed</button>
+          : <a href='/user/subscribe' class='button' aria-disabled>Subscribe</a>}
       </div>
-      <p>
-        $5 / month
-      </p>
-      <p>
-        <IconCheckCircle />
-        Unlimited tokens
-      </p>
-      <a href='/user/subscribe' class='button'>Subscribe</a>
     </div>
   </Page>
 ));

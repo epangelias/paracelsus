@@ -79,8 +79,6 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 ## TODO
 
 - [ ] Go fix all error handling in ai streaming
-- [ ] Create basic pricing page
-- [ ] Create steps in readme below
-- [ ] Customizable select boxes, for bai
 - [ ] Fix type errors
 - [ ] Fix error on ai streaming in deployment
+- [ ] Refactor islands buy creating smaller islands
