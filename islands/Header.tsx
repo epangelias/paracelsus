@@ -15,7 +15,7 @@ export function Header() {
         <div class='left'>
           <a href='/' class='logo' aria-label='Go to home page'>
             <img src={site.icon} width={48} height={48} alt='' />
-            <span>{site.name}</span>
+            <span>{name}</span>
           </a>
         </div>
         <div class='right'>
