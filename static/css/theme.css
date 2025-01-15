@@ -116,7 +116,6 @@ body {
     'Helvetica Neue',
     sans-serif;
   height: 100%;
-  max-height: 100vh;
   background: var(--bg1);
   color: var(--fg2);
   overscroll-behavior: none;
