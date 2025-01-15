@@ -77,11 +77,12 @@ export default function ChatBox({ data }: { data: ChatData }) {
     });
   }
 
-  function ChatMessage(message: AIMessage) {
+  function ChatMessage(message: AIMessage, key: number) {
     return (
       <div
         data-role={message.role}
         dangerouslySetInnerHTML={message.html ? { __html: message.html } : undefined}
+        key={`message:${key}`}
       >
         {message.content}
       </div>

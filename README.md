@@ -80,5 +80,10 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 
 - [ ] Go fix all error handling in ai streaming
 - [ ] Fix type errors
-- [ ] Fix error on ai streaming in deployment
 - [ ] Refactor islands buy creating smaller islands
+- [ ] Create auth form island, ideas from nextjs
+  - [ ] Create Form island
+- [ ] Compare styles with nextjs proj theme
+- [ ] Look into vercel blob storage
+- [ ] Use nextjs ai for use of other apis
+- [ ] Try the useSWR hook from next

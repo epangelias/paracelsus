@@ -24,7 +24,7 @@ if (args.help || args.h || projectPath === undefined) {
 }
 
 spinner.start();
-throwCLI("test");
+throwCLI('test');
 
 const projectExists = await exists(projectPath);
 if (projectExists) throwCLI(`Project already exists at ${projectPath}`);

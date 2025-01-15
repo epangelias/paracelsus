@@ -9,24 +9,24 @@ import { app } from '@/main.ts';
 import { delay } from '@std/async/delay';
 import { Spinner } from 'jsr:@std/cli@1.0.9/unstable-spinner';
 
-const localURL = "http://0.0.0.0:8000";
+const localURL = 'http://0.0.0.0:8000';
 
 const spinner = new Spinner({ color: 'green' });
 
 spinner.start();
-spinner.message = "Ensure app running locally..."
+spinner.message = 'Ensure app running locally...';
 
 try {
-  await fetch(localURL)
+  await fetch(localURL);
 } catch (_e) {
-  console.warn("Running app locally...");
-  const builder = new Builder()
+  console.warn('Running app locally...');
+  const builder = new Builder();
   builder.listen(app);
   await delay(1000);
 }
 
 async function takeScreenshot(filename: string, width: number, height: number) {
-  spinner.message = "Generating screenshot...";
+  spinner.message = 'Generating screenshot...';
 
   const path = Path.join(import.meta.dirname!, '../static/img/' + filename);
   const browser = await puppeteer.launch({ browser: 'firefox', headless: true });
@@ -48,7 +48,7 @@ async function takeScreenshot(filename: string, width: number, height: number) {
 }
 
 async function generateAssets(inputIcon: string, outputDir: string) {
-  spinner.message = "Generating assets...";
+  spinner.message = 'Generating assets...';
 
   const result = await generateImages(inputIcon, outputDir, {
     background: site.backgroundColor,
@@ -71,8 +71,9 @@ async function URLtoPath(url: string) {
 }
 
 async function prepareIconPath(iconPath: string) {
-  if (iconPath.startsWith('/') || iconPath.startsWith("file:"))
+  if (iconPath.startsWith('/') || iconPath.startsWith('file:')) {
     return Path.join(import.meta.dirname!, '../static/', iconPath);
+  }
   return URLtoPath(iconPath);
 }
 
@@ -85,6 +86,6 @@ await generateAssets(iconPath, outputDir);
 
 spinner.stop();
 
-console.log('"Assets generated!')
+console.log('"Assets generated!');
 
 Deno.exit();

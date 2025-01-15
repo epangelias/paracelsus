@@ -20,7 +20,7 @@
   --radius-2: calc(var(--radius) * 2);
   --border-color: var(--bg3);
   --border-width: 1px;
-  --spacing: 10px;
+  --spacing: 8px;
   --spacing-05: calc(var(--spacing) * 0.5);
   --spacing-2: calc(var(--spacing) * 2);
   --transition: 0.2s ease-in;
@@ -530,21 +530,30 @@ dialog {
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
+    /* backdrop-filter: blur(12px); */
+    /* -webkit-backdrop-filter: blur(12px); */
   }
 
   [method='dialog'] {
     float: right;
     margin: calc(-1 * var(--spacing));
+  }
+}
 
-    button {
-      /* --color: var(--red); */
-      --color: transparent;
-      color: var(--fg2);
-      padding: 0 var(--spacing);
-      font-size: 1.2em;
-      border-radius: 100%;
-      aspect-ratio: 1/1;
-    }
+/* Used in dialog */
+button.close {
+  /* --color: var(--red); */
+  --color: transparent;
+  color: var(--fg2);
+  padding: 0 var(--spacing);
+  font-size: 1.2em;
+  border-radius: 100%;
+  aspect-ratio: 1/1;
+
+  &::after {
+    display: inline-block;
+    content: '×';
+    scale: 1.5;
   }
 }
 
