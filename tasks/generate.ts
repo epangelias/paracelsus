@@ -62,7 +62,7 @@ async function generateAssets(inputIcon: string, outputDir: string) {
 }
 
 async function URLtoPath(url: string) {
-  const res = await fetch(iconPath);
+  const res = await fetch(url);
   const contentType = res.headers.get('content-type')?.split('/')[1].split('+')[0];
   const filePath = Path.join(import.meta.dirname!, `../static/img/gen/icon.${contentType}`);
   const imageData = new Uint8Array(await res.arrayBuffer());

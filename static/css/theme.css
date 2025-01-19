@@ -242,13 +242,20 @@ button:not(.link),
   }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.3;
     cursor: default;
+    box-shadow: none;
   }
 
   &:focus-visible {
     outline-offset: 2px;
     box-shadow: none;
+  }
+
+  &:has(.icon) {
+    padding: var(--spacing);
+    border-radius: 100%;
+    aspect-ratio: 1;
   }
 }
 
@@ -544,7 +551,7 @@ button.close {
   padding: 0 var(--spacing);
   font-size: 1.2em;
   border-radius: 100%;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1;
 
   &::after {
     display: inline-block;
