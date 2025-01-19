@@ -228,7 +228,6 @@ button:not(.link),
   color: var(--on-accent);
   box-shadow: var(--field-shadow);
   text-decoration: none;
-  display: inline-block;
   text-align: center;
 
   &:hover:not(:disabled) {
@@ -339,7 +338,6 @@ button.link {
   }
 
   &:active {
-    display: inline-block;
     scale: 1.05;
     color: color-mix(in srgb, var(--color), currentColor 20%);
   }
