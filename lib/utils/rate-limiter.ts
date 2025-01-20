@@ -1,6 +1,6 @@
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
-import { isProduction } from '@/lib/utils/utils.ts';
+import { isProductionMode } from '@/lib/utils/utils.ts';
 
 const defaultOptions: Options = {
   maxRequests: 10,
@@ -27,7 +27,7 @@ export class RateLimiter {
     // Prevent from issue on github actions
     if (Deno.env.get('GITHUB_ACTIONS') === 'true') return;
     // if (!isProduction) return; // THIS IS THE CULPRIT< GETTING ISPRODUCTIN BREAKS IT
-    if (!isProduction()) return;
+    if (!isProductionMode()) return;
 
     this.enabled = true;
     setInterval(() => this.requests = 0, this.interval);

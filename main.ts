@@ -9,11 +9,11 @@ import { stripePlugin } from './lib/stripe/stripe-plugin.ts';
 import { userPlugin } from './lib/user/user-plugin.tsx';
 import { adminPlugin } from './lib/user/admin-plugin.ts';
 import { manifestPlugin } from './lib/pwa/manifest-plugin.ts';
-import { isProduction, setProduction } from '@/lib/utils/utils.ts';
+import { isProductionMode, setProductionMode } from '@/lib/utils/utils.ts';
 
 export const app = new App<State>();
 
-setProduction(import.meta.main);
+setProductionMode(import.meta.main);
 
 autoSendFollowUps(app);
 stripePlugin(app);
@@ -30,4 +30,4 @@ await fsRoutes(app, {
   loadRoute: (path) => import(`./routes/${path}`),
 });
 
-if (isProduction()) await app.listen();
+if (isProductionMode()) await app.listen();

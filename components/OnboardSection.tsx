@@ -6,8 +6,8 @@ export function OnboardSection() {
       <img src={site.icon} alt='' height={84} />
       <h1>Welcome to {site.name}!</h1>
       <p>{site.description}</p>
-
-      <a href='/user/signup' class='button'>Sign Up</a>
+      <br />
+      <a href='/user/signup' class='button'>Get Started</a>
     </div>
   );
 }

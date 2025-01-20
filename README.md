@@ -87,4 +87,5 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 - [ ] Look into vercel blob storage
 - [ ] Use nextjs ai for use of other apis
 - [ ] Try the useSWR hook from next
-- [ ] Make a App container ui instead of just chatbox in index.tsx
+- [ ] Simplify the CSS with the fields and spacing and all
+  - I think best approach is no helper classes and reduce complex spacings on fields since it causes problems
