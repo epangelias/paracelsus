@@ -4,7 +4,7 @@ import { move } from 'jsr:@std/fs@1/move';
 import { parseArgs } from 'jsr:@std/cli@1.0.9/parse-args';
 import { Spinner } from 'jsr:@std/cli@1.0.9/unstable-spinner';
 import { exists } from 'jsr:@std/fs@1/exists';
-import { $, helpCLI, throwCLI } from '@/lib/cli/cli.ts';
+import { $, helpCLI, throwCLI } from '../lib/utils/cli.ts';
 
 const spinner = new Spinner({ color: 'green' });
 const args = parseArgs(Deno.args);

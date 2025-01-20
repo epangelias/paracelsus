@@ -2,7 +2,7 @@ import { define } from '@/lib/utils/utils.ts';
 import { page } from 'fresh';
 import { Page } from '@/components/Page.tsx';
 import { getChatData } from '@/app/chat-data.ts';
-import { OnboardSection } from '@/components/OnboardSection.tsx';
+import { WelcomeSection } from '../../components/WelcomeSection.tsx';
 import { AppUI } from '@/islands/AppUI.tsx';
 
 export const handler = define.handlers({
@@ -16,7 +16,7 @@ export const handler = define.handlers({
 export default define.page<typeof handler>(({ data }) => {
   return (
     <Page hideHeader={data?.hideHeader}>
-      {data?.chatData ? <AppUI chatData={data?.chatData} /> : <OnboardSection />}
+      {data?.chatData ? <AppUI chatData={data?.chatData} /> : <WelcomeSection />}
     </Page>
   );
 });

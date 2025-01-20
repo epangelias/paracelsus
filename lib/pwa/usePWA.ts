@@ -88,6 +88,8 @@ export function usePWA() {
   const worker = useSignal<ServiceWorkerRegistration | null>(null);
   const pushSubscription = useSignal<PushSubscription | null>(null);
 
+
+
   useEffect(() => {
     globalThis.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();

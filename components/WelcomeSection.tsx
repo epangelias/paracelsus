@@ -1,6 +1,6 @@
 import { site } from '@/app/site.ts';
 
-export function OnboardSection() {
+export function WelcomeSection() {
   return (
     <div class='onboard-section'>
       <img src={site.icon} alt='' height={84} />
