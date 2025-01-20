@@ -7,15 +7,15 @@ import { AppUI } from '@/islands/AppUI.tsx';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
-    if (!ctx.state.user) return page({ chatData: null, hideHeader: true });
+    if (!ctx.state.user) return page();
     const chatData = await getChatData(ctx.state.user);
-    return page({ chatData, hideHeader: false });
+    return page({ chatData });
   },
 });
 
 export default define.page<typeof handler>(({ data }) => {
   return (
-    <Page hideHeader={data?.hideHeader}>
+    <Page hideHeader={!data?.chatData} hideBanner={!data?.chatData}>
       {data?.chatData ? <AppUI chatData={data?.chatData} /> : <WelcomeSection />}
     </Page>
   );
