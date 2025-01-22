@@ -21,7 +21,7 @@ export function Alert({ message, type, id }: { message: string; type: 'error' | 
       role='alert'
       data-hide={hide.value}
     >
-      <InfoIcon height='28' />
+      <InfoIcon height='16' />
       {message}
       {/* <button class='close' onClick={(e) => hide.value = true}></button> */}
     </div>

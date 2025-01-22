@@ -200,10 +200,10 @@
   width: 300px;
   max-width: 100%;
   position: fixed;
-  top: 20px;
+  top: 15px;
   left: 50%;
   translate: -50% 0;
-  padding: var(--spacing-2);
+  padding: var(--spacing) var(--spacing-2);
   border-radius: var(--radius);
   background-color: var(--bg2);
   color: var(--fg1);
@@ -216,6 +216,10 @@
   border: var(--border-width) solid var(--bg3);
   font-weight: 600;
   pointer-events: none;
+
+  svg {
+    scale: 1.5;
+  }
 
   &.error {
     background-color: var(--red);
@@ -273,4 +277,13 @@
     opacity: 0;
   }
 
+}
+
+
+
+
+/* Onboard section */
+
+.onboard-section {
+  padding: var(--spacing-2);
 }
