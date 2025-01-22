@@ -37,7 +37,7 @@ export default define.page<typeof handler>(() => (
       </Form>
 
       {isMailEnabled() && (
-        <p style={{ fontSize: '0.8em', textAlign: 'center' }}>
+        <p style={{ fontSize: '0.8rem', textAlign: 'center' }}>
           <a href='/user/lost-password'>Lost your password?</a>
         </p>
       )}
