@@ -32,7 +32,7 @@
     "preact": "npm:preact@^10.24.3",
     "stripe": "npm:stripe@^17.3.1",
     "web-push": "npm:web-push@^3.6.7",
-    "tabler-icons/": "https://deno.land/x/tabler_icons_tsx@0.0.4/tsx/"
+    "tabler-icons/": "https://icons.church/tabler/"
   },
   "compilerOptions": {
     "lib": [

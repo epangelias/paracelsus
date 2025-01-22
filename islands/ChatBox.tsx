@@ -6,7 +6,7 @@ import { useGlobal } from '@/islands/Global.tsx';
 import { ChatData } from '@/app/types.ts';
 import { showOutOfTokensDialog } from '@/islands/OutOfTokensDialog.tsx';
 import { delay } from '@std/async/delay';
-import ArrowUp from 'tabler-icons/arrow-up.tsx';
+import ArrowUp from 'tabler-icons/arrow-up';
 
 export default function ChatBox({ data }: { data: ChatData }) {
   const global = useGlobal();

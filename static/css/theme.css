@@ -634,10 +634,6 @@ form {
   flex-wrap: wrap;
 }
 
-main h1 {
-  text-align: center;
-}
-
 button.wide,
 a.wide {
   display: block;

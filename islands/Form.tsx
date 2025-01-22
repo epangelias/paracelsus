@@ -46,7 +46,7 @@ export function Form(props: JSX.HTMLAttributes<HTMLFormElement> & { method?: str
       }
 
       if (!res.ok) {
-        alertMessage.value = { message: `Error: ${await res.text()}`, type: 'error', id: Math.random() };
+        alertMessage.value = { message: `${await res.text()}`, type: 'error', id: Math.random() };
         return;
       }
 

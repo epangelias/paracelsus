@@ -1,5 +1,6 @@
 import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
+import InfoIcon from 'tabler-icons/alert-circle-filled';
 
 export function Alert({ message, type, id }: { message: string; type: 'error' | 'success'; id: number }) {
   const hide = useSignal(false);
@@ -20,8 +21,9 @@ export function Alert({ message, type, id }: { message: string; type: 'error' | 
       role='alert'
       data-hide={hide.value}
     >
+      <InfoIcon height='28' />
       {message}
-      <button class='close' onClick={(e) => hide.value = true}></button>
+      {/* <button class='close' onClick={(e) => hide.value = true}></button> */}
     </div>
   );
 }

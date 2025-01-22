@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils/utils.ts';
 import { Page } from '@/components/Page.tsx';
-import IconShare2 from 'tabler-icons/share-2.tsx';
+import IconShare2 from 'tabler-icons/share-2';
 
 export default define.page(() => (
   <Page hideBanner={true}>
