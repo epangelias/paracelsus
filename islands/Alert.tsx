@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 
 export function Alert({ message, type, id }: { message: string; type: 'error' | 'success'; id: number }) {
