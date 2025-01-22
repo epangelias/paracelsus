@@ -100,7 +100,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
           <textarea rows={1} autocomplete='off' autofocus required ref={inputRef} aria-label='Type a message'>
           </textarea>
           <button disabled={generating.value}>
-            <ArrowUp />
+            <ArrowUp class='icon' />
           </button>
         </form>
       </div>
