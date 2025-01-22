@@ -10,7 +10,7 @@ export function Alert({ message, type, id }: { message: string; type: 'error' | 
 
     const timer = setTimeout(() => {
       hide.value = true;
-    }, 5000); // Auto-dismiss after 5 seconds
+    }, 5000);
     return () => clearTimeout(timer);
   }, [message, type, id]);
 
@@ -19,11 +19,12 @@ export function Alert({ message, type, id }: { message: string; type: 'error' | 
       popover='auto'
       class={`alert ${type}`}
       role='alert'
+      aria-live='assertive'
+      aria-atomic='true'
       data-hide={hide.value}
     >
-      <InfoIcon height='16' />
-      {message}
-      {/* <button class='close' onClick={(e) => hide.value = true}></button> */}
+      <InfoIcon height='16' aria-hidden='true' />
+      <p id={`alert-${id}`}>{message}</p>
     </div>
   );
 }
