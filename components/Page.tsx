@@ -13,7 +13,6 @@ export function Page(
       <div class='scrollable'>
         <main>{props.children}</main>
       </div>
-      <OutOfTokensDialog />
     </div>
   );
 }
