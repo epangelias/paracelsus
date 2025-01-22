@@ -1,5 +1,7 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { Field } from '../components/Field.tsx';
+import { Form } from '@/islands/Form.tsx';
+import { FormButton } from '@/components/FormButton.tsx';
 
 export function UserUI({ error, message }: { error?: string; message?: string }) {
   const global = useGlobal();
@@ -24,16 +26,14 @@ export function UserUI({ error, message }: { error?: string; message?: string })
         </p>
       )}
 
-      <form method='POST'>
+      <Form method='POST'>
         <Field name='name' label='Name' required autofocus defaultValue={global.user.value?.name} />
         <Field name='email' label='Email' required autofocus defaultValue={global.user.value?.email} />
 
-        <div>
-          <button>Save</button>
-          {message && <span class='message' role='status' aria-live='polite'>{message}</span>}
-          {error && <span class='error-message' role='alert' aria-live='assertive'>{error}</span>}
-        </div>
-      </form>
+        <FormButton class='wide'>Save</FormButton>
+        {message && <span class='message' role='status' aria-live='polite'>{message}</span>}
+        {error && <span class='error-message' role='alert' aria-live='assertive'>{error}</span>}
+      </Form>
     </>
   );
 }

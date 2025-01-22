@@ -4,7 +4,7 @@ import { HttpError, page } from 'fresh';
 import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers((ctx) => {
-  const isAPI = !!ctx.url.pathname.match(/^\/api\//);
+  const isAPI = !!ctx.url.pathname.match(/^\/api\//) || ctx.req.headers.get('accept') === 'text/plain';
 
   try {
     const e = ctx.error;

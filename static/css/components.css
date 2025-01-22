@@ -17,6 +17,7 @@
     font-size: 1em;
     padding: var(--spacing);
     gap: var(--spacing);
+    flex-direction: row;
 
     textarea {
       flex: 1;

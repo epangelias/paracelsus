@@ -90,3 +90,5 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 - [ ] Simplify the CSS with the fields and spacing and all
   - I think best approach is no helper classes and reduce complex spacings on fields since it causes problems
   - Instead of spacing, use flex gaps
+- [ ] Switch to use https://icons.church/
+- [ ] On error handling, if not accept text/html, respond in text or json error as with apis

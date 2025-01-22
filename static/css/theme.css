@@ -155,16 +155,10 @@ p {
 
 /* Fields */
 
-label:has(+ :is(button, input, select, textarea)) {
+label {
   display: block;
-  margin-top: var(--spacing);
   margin-bottom: var(--spacing-05);
   color: var(--fg3);
-
-  &+* {
-    margin-bottom: var(--spacing);
-    display: block;
-  }
 }
 
 /* Checkbox and radio */
@@ -304,9 +298,9 @@ textarea {
   field-sizing: content;
 }
 
-:is(input, button, select, a)+ :is(input, button, select, a) {
+/* :is(input, button, select, a)+ :is(input, button, select, a) {
   margin-left: var(--spacing);
-}
+} */
 
 :is(button, select)~a {
   padding: var(--spacing);
@@ -354,11 +348,6 @@ button.link {
 .message {
   margin: var(--spacing) 0;
   animation: fadeIn 0.5s ease-in-out;
-}
-
-/* Spacing when message adjacent */
-:is(button, input, select)+ :is(.message, .error-message) {
-  margin-left: var(--spacing);
 }
 
 /* Tables */
@@ -625,5 +614,54 @@ main {
   to {
     opacity: 1;
     /* transform: translateY(0%); */
+  }
+}
+
+
+
+/* Helpers */
+
+.spaced {
+  display: flex;
+  gap: var(--spacing);
+  flex-wrap: wrap;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+main h1 {
+  text-align: center;
+}
+
+button.wide,
+a.wide {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+
+button:has(.loader-icon) {
+  position: relative;
+
+  .loader-icon {
+    position: absolute;
+    top: 50%;
+    right: var(--spacing-05);
+    transform: translateX(-50%) translateY(-50%);
+    width: 20px;
+    display: none;
+  }
+}
+
+form[data-loading="true"] {
+  button:has(.loader-icon) {
+    .loader-icon {
+      display: block;
+    }
   }
 }

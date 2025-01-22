@@ -22,17 +22,18 @@ export const handler = define.handlers({
         u.name = name;
         u.email = email;
       });
+
       if (newUser.email != user.email) await sendEmailVerification(ctx.url.origin, user);
-      return page({ message: 'Saved!', error: undefined });
+      return new Response('Saved!');
     } catch (e) {
-      return page({ message: undefined, error: Meth.getErrorMessage(e) });
+      throw new HttpError(400, Meth.getErrorMessage(e));
     }
   },
 });
 
-export default define.page<typeof handler>(({ data }) => (
+export default define.page<typeof handler>(() => (
   <Page>
     <h1>User Settings</h1>
-    <UserUI message={data?.message} error={data?.error} />
+    <UserUI />
   </Page>
 ));

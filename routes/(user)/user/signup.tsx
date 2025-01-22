@@ -1,5 +1,5 @@
 import { define } from '@/lib/utils/utils.ts';
-import { page } from 'fresh';
+import { HttpError, page } from 'fresh';
 import { authorizeUser, setAuthCookie } from '../../../lib/user/user-data.ts';
 import { Meth } from '@/lib/utils/meth.ts';
 import { Page } from '@/components/Page.tsx';
@@ -7,6 +7,8 @@ import { RateLimiter } from '../../../lib/utils/rate-limiter.ts';
 import { sendEmailVerification } from '@/app/email.ts';
 import { createUser } from '@/app/user.ts';
 import { Field } from '../../../components/Field.tsx';
+import { Form } from '@/islands/Form.tsx';
+import { FormButton } from '@/components/FormButton.tsx';
 
 const limiter = new RateLimiter();
 
@@ -31,27 +33,23 @@ export const handler = define.handlers({
 
       throw new Error('Error authorizing user');
     } catch (e) {
-      return page({ error: Meth.getErrorMessage(e), name, email });
+      throw new HttpError(400, Meth.getErrorMessage(e));
     }
   },
 });
 
-export default define.page<typeof handler>(({ data }) => (
+export default define.page<typeof handler>(() => (
   <Page>
     <div>
       <h1>Sign Up</h1>
-      <form method='POST'>
-        <Field name='name' label='Name' required autofocus value={data?.name} />
-        <Field name='email' label='Email' type='email' required value={data?.email} />
+      <Form method='POST'>
+        <Field name='name' label='Name' required autofocus />
+        <Field name='email' label='Email' type='email' required />
         <Field name='password' label='Password' type='password' required />
 
-        {data?.error && <p class='error-message' role='alert' aria-live='assertive'>{data?.error}</p>}
-
-        <div>
-          <button>Sign Up</button>
-          <a href='/user/signin'>Sign In</a>
-        </div>
-      </form>
+        <FormButton class='wide'>Sign Up</FormButton>
+        <a class='wide' href='/user/signin'>Sign In</a>
+      </Form>
     </div>
   </Page>
 ));

@@ -10,7 +10,7 @@ import { isPushEnabled } from '../lib/pwa/push.ts';
 
 export default define.page(({ Component, state }) => {
   return (
-    <html lang={site.lang}>
+    <html lang={site.lang} class='theme-light'>
       <head>
         <title>{site.name}</title>
         <meta content={site.name} property='og:title'></meta>
