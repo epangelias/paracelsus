@@ -215,6 +215,7 @@
   animation: slideIn 0.3s ease-out;
   border: var(--border-width) solid var(--bg3);
   font-weight: 600;
+  pointer-events: none;
 
   &.error {
     background-color: var(--red);
