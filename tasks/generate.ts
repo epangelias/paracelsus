@@ -29,7 +29,7 @@ async function takeScreenshot(filename: string, width: number, height: number) {
   spinner.message = 'Generating screenshot...';
 
   const path = Path.join(import.meta.dirname!, '../static/img/' + filename);
-  const browser = await puppeteer.launch({ browser: 'chrome', headless: false });
+  const browser = await puppeteer.launch({ browser: 'firefox', headless: false });
 
   try {
     const page = await browser.newPage();
