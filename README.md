@@ -80,14 +80,6 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 
 - [ ] Go fix all error handling in ai streaming
 - [ ] Fix type errors
-- [ ] Refactor islands buy creating smaller islands
-- [ ] Create auth form island, ideas from nextjs
-  - [ ] Create Form island
-- [ ] Compare styles with nextjs proj theme
-- [ ] Look into vercel blob storage
 - [ ] Use nextjs ai for use of other apis
 - [ ] Try the useSWR hook from next
-- [ ] Simplify the CSS with the fields and spacing and all
-  - I think best approach is no helper classes and reduce complex spacings on fields since it causes problems
-  - Instead of spacing, use flex gaps
-- [ ] Switch to use https://icons.church/
+- [ ] Simplify the CSS

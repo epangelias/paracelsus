@@ -29,14 +29,14 @@ async function takeScreenshot(filename: string, width: number, height: number) {
   spinner.message = 'Generating screenshot...';
 
   const path = Path.join(import.meta.dirname!, '../static/img/' + filename);
-  const browser = await puppeteer.launch({ browser: 'firefox', headless: false });
+  const browser = await puppeteer.launch({ browser: 'firefox', headless: true });
 
   try {
     const page = await browser.newPage();
     await page.setViewport({ width, height });
     await page.goto(localURL, { waitUntil: 'networkidle0' });
     await page.evaluate(() => {
-      document.body.style.zoom = '2.5';
+      document.body.style.zoom = '2';
       document.body.style.fontSize = '1rem';
     });
     await page.screenshot({ path });
