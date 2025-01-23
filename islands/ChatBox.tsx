@@ -14,7 +14,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   const global = useGlobal();
   const chatData = useSignal<ChatData>(data);
   const generating = useSignal(false);
-  const messagesRef = useRef<HTMLDivElement>(null);
+  const scrollableRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { showError, AlertBox } = useAlert();
 
@@ -25,7 +25,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   useEffect(() => syncSSE('/api/chatdata', { data: chatData }), []);
 
   useEffect(() => {
-    scrollToBottom();
+    scrollToBottom(50);
   }, [chatData.value]);
 
   function addMessage(message: AIMessage) {
@@ -34,10 +34,16 @@ export default function ChatBox({ data }: { data: ChatData }) {
     return message;
   }
 
-  async function scrollToBottom() {
+  async function scrollToBottom(maxDist = 0) {
     await delay(100);
-    if (!messagesRef.current) return;
-    messagesRef.current.scrollTo(0, messagesRef.current.scrollHeight);
+    if (!scrollableRef.current) return;
+
+    const { scrollHeight, scrollTop, clientHeight } = scrollableRef.current;
+    const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+
+    if (maxDist == 0 || distanceFromBottom <= maxDist) {
+      scrollableRef.current.scrollTo(0, scrollHeight);
+    }
   }
 
   async function onSubmit(e: SubmitEvent) {
@@ -71,7 +77,6 @@ export default function ChatBox({ data }: { data: ChatData }) {
         message.content = newMessage.content;
         message.html = newMessage.html;
         chatData.value = { ...chatData.value };
-        scrollToBottom();
       },
       onError() {
         showError('Error generating response');
@@ -107,8 +112,8 @@ export default function ChatBox({ data }: { data: ChatData }) {
   return (
     <>
       <div class='chat-box'>
-        <div className='scrollable'>
-          <div class='messages centered' ref={messagesRef}>
+        <div className='scrollable' ref={scrollableRef}>
+          <div class='messages centered'>
             {chatData.value.messages.filter((m: AIMessage) => m.role !== 'system').map(ChatMessage)}
           </div>
         </div>

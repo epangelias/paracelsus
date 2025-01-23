@@ -20,3 +20,31 @@ new MutationObserver(updateTheme).observe(
 
 // iOS active state
 document.addEventListener('touchstart', () => {}, { passive: true });
+
+// Field sizing polyfill
+
+(() => {
+  if (CSS.supports('field-sizing', 'content')) return;
+
+  const adjustSize = (textarea) => {
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
+
+  const polyfillFieldSizing = () => {
+    document.querySelectorAll('textarea').forEach(adjustSize);
+
+    document.querySelectorAll('textarea').forEach((textarea) => {
+      textarea.addEventListener('input', () => adjustSize(textarea));
+    });
+  };
+
+  const observer = new MutationObserver(() => polyfillFieldSizing());
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  document.addEventListener('DOMContentLoaded', polyfillFieldSizing);
+})();

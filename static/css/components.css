@@ -12,7 +12,6 @@
   align-items: center;
 
   form {
-    line-height: 1;
     display: flex;
     clear: both;
     font-size: 1em;
@@ -27,8 +26,9 @@
 
     button {
       border-radius: var(--radius) !important;
+      aspect-ratio: unset !important;
 
-      padding: 0;
+      padding: 0 12px !important;
 
       & svg {
         width: 1rem;
@@ -38,10 +38,14 @@
     }
   }
 
+  .scrollable {
+    overflow-y: auto;
+  }
+
   .messages {
     flex: 1;
-    overflow-y: auto;
     padding-top: var(--spacing-2);
+    height: 100%;
 
     div {
       margin: var(--spacing);
