@@ -20,7 +20,7 @@ export default define.page((ctx) => (
         </p>
         <div class='features'>
           <p>
-            <IconCheckCircle />
+            <IconCheckCircle height={36} />
             Limited tokens
           </p>
         </div>
@@ -41,11 +41,11 @@ export default define.page((ctx) => (
         </p>
         <div class='features'>
           <p>
-            <IconCheckCircle />
+            <IconCheckCircle height={36} />
             Unlimited tokens
           </p>
           <p>
-            <IconCheckCircle />
+            <IconCheckCircle height={36} />
             Support the project
           </p>
         </div>
