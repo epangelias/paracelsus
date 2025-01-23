@@ -34,13 +34,12 @@ export default define.page<typeof handler>(() => (
 
         <FormButton class='wide'>Sign In</FormButton>
         <a href='/user/signup' class='wide'>Sign Up</a>
+        {isMailEnabled() && (
+          <p style={{ fontSize: '0.8rem', textAlign: 'center' }}>
+            <a href='/user/lost-password'>Lost your password?</a>
+          </p>
+        )}
       </Form>
-
-      {isMailEnabled() && (
-        <p style={{ fontSize: '0.8rem', textAlign: 'center' }}>
-          <a href='/user/lost-password'>Lost your password?</a>
-        </p>
-      )}
     </div>
   </Page>
 ));
