@@ -1,10 +1,10 @@
 import { FreshContext } from 'fresh';
 import { setCookie } from 'jsr:@std/http/cookie';
 import { db } from '@/lib/utils/utils.ts';
-import { isStripeEnabled, stripe } from '../stripe/stripe.ts';
-import { generateCode, hashText } from '../utils/crypto.ts';
+import { isStripeEnabled, stripe } from "@/lib/stripe/stripe.ts";
+import { generateCode, hashText } from "@/lib/utils/crypto.ts";
 import { UserData } from '@/app/types.ts';
-import { validation } from './validation.ts';
+import { validation } from "@/lib/user/validation.ts";
 
 // DB
 

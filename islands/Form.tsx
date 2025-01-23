@@ -27,7 +27,7 @@ export function Form(props: JSX.HTMLAttributes<HTMLFormElement> & { method?: str
 
       let res;
       if (method === 'get') {
-        const params = new URLSearchParams(formData);
+        const params = new URLSearchParams(formData as unknown as string);
         url = `${url}${url.includes('?') ? '&' : '?'}${params}`;
         res = await fetch(url, {
           method: 'GET',

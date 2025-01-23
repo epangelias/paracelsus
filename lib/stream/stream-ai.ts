@@ -1,9 +1,9 @@
 import { StreamSSR } from '@/lib/stream/stream-sse.ts';
 import { ChatCompletionChunk } from 'https://deno.land/x/openai@v4.28.0/resources/mod.ts';
 import { Stream } from 'https://deno.land/x/openai@v4.28.0/streaming.ts';
-import { AIMessage, OAIOptions } from '@/lib/stream/types.ts';
-import { generateChatCompletionStream } from './oai.ts';
-import { renderMarkdown } from '../utils/md.ts';
+import { AIMessage, OAIOptions } from '@/lib/ai/oai.ts';
+import { generateChatCompletionStream } from '@/lib/ai/oai.ts';
+import { renderMarkdown } from '@/lib/utils/md.ts';
 
 interface Options {
   messages: AIMessage[];
@@ -14,7 +14,7 @@ interface Options {
   onCancel?: (messages: AIMessage[]) => void;
 }
 
-export function StreamAI({ messages, options, onChunk, onEnd, onError, onCancel }: Options) {
+export function StreamAI({ messages, options, onChunk, onEnd, onCancel }: Options) {
   let stream: Stream<ChatCompletionChunk>;
 
   const message = { role: 'assistant', content: '', html: '' };

@@ -1,9 +1,8 @@
 import { define } from '@/lib/utils/utils.ts';
 import { HttpError, page } from 'fresh';
-import { getUserByVerificationCode, setUserData } from '../../../lib/user/user-data.ts';
+import { getUserByVerificationCode, setUserData } from '@/lib/user/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { Page } from '@/components/Page.tsx';
-import { isMailEnabled } from '../../../lib/mail/mail.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {

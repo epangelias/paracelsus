@@ -1,8 +1,8 @@
 import { State } from '@/app/types.ts';
-import { App, FreshContext } from 'fresh';
+import { App } from 'fresh';
 import { define } from '@/lib/utils/utils.ts';
-import { getCookies, setCookie } from '@std/http/cookie';
-import { getUserByAuth } from './user-data.ts';
+import { getCookies } from '@std/http/cookie';
+import { getUserByAuth } from '@/lib/user/user-data.ts';
 
 export function userPlugin(app: App<State>) {
   app.use(async (ctx) => {

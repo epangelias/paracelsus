@@ -3,8 +3,8 @@ import { createContext } from 'preact';
 import { ComponentChildren } from 'preact';
 import { GlobalData, UserData } from '@/app/types.ts';
 import { useComputed, useSignal } from '@preact/signals';
-import { syncSSE } from '../lib/stream/stream-client.ts';
-import { usePWA } from '../lib/pwa/usePWA.ts';
+import { syncSSE } from '@/lib/stream/stream-client.ts';
+import { usePWA } from '@/lib/pwa/usePWA.ts';
 
 interface Props {
   children: ComponentChildren;

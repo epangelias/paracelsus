@@ -1,11 +1,11 @@
 // Strip user data for sending to client
 
 import { UserData } from '@/app/types.ts';
-import { createUserData, deleteUserData } from '../lib/user/user-data.ts';
+import { createUserData, deleteUserData } from "@/lib/user/user-data.ts";
 import { db } from '@/lib/utils/utils.ts';
 
 export function stripUserData(user?: UserData) {
-  if (!user) return undefined;
+  if (!user) return null;
   // This is the user data sent to the client
   return {
     name: user.name,

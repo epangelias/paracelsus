@@ -1,6 +1,6 @@
 import { define } from '@/lib/utils/utils.ts';
 import { HttpError, page } from 'fresh';
-import { setUserData } from '../../../lib/user/user-data.ts';
+import { setUserData } from '@/lib/user/user-data.ts';
 import { UserUI } from '@/islands/UserUI.tsx';
 import { STATUS_CODE } from '@std/http/status';
 import { Meth } from '@/lib/utils/meth.ts';

@@ -1,5 +1,5 @@
 import { BannerData, GlobalData } from '@/app/types.ts';
-import { isIOSSafari } from '../lib/pwa/usePWA.ts';
+import { isIOSSafari } from '@/lib/pwa/usePWA.ts';
 
 export function createBannerData(global: GlobalData): BannerData[] {
   return [

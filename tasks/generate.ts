@@ -74,7 +74,7 @@ async function prepareIconPath(iconPath: string) {
   if (iconPath.startsWith('/') || iconPath.startsWith('file:')) {
     return Path.join(import.meta.dirname!, '../static/', iconPath);
   }
-  return URLtoPath(iconPath);
+  return await URLtoPath(iconPath);
 }
 
 const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');

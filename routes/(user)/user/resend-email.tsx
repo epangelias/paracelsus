@@ -4,7 +4,7 @@ import { page } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 import { Page } from '@/components/Page.tsx';
 import { sendEmailVerification } from '@/app/email.ts';
-import { isMailEnabled } from '../../../lib/mail/mail.ts';
+import { isMailEnabled } from '@/lib/mail/mail.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {

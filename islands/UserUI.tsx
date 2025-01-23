@@ -1,5 +1,5 @@
 import { useGlobal } from '@/islands/Global.tsx';
-import { Field } from '../components/Field.tsx';
+import { Field } from '@/components/Field.tsx';
 import { Form } from '@/islands/Form.tsx';
 import { FormButton } from '@/components/FormButton.tsx';
 

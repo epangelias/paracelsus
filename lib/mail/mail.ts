@@ -1,5 +1,5 @@
 import Mailjet from 'node-mailjet';
-import { RateLimiter } from '../utils/rate-limiter.ts';
+import { RateLimiter } from "@/lib/utils/rate-limiter.ts";
 
 export interface MailOptions {
   fromName: string;

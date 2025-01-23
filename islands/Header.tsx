@@ -1,6 +1,5 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { site } from '@/app/site.ts';
-import { Meth } from '@/lib/utils/meth.ts';
 import { UserMenu } from '@/islands/UserMenu.tsx';
 import IconBolt from 'tabler-icons/bolt';
 import IconBoltOff from 'tabler-icons/bolt-off';
@@ -21,10 +20,10 @@ export function Header() {
           {global.user.value && (
             <span class='tokens'>
               {}
-              {global.user.value.tokens > 0
+              {global.user.value?.tokens! > 0
                 ? <IconBolt width='24' height='24' />
                 : <IconBoltOff width='24' height='24' />}
-              {global.user.value.isSubscribed ? '∞' : (global.user.value.tokens > 0 && global.user.value.tokens)}
+              {global.user.value.isSubscribed ? '∞' : (global.user.value?.tokens! > 0 && global.user.value.tokens)}
             </span>
           )}
 

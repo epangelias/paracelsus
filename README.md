@@ -78,6 +78,5 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 
 ## TODO
 
-- [ ] Go fix all error handling in ai streaming
 - [ ] Fix type errors
 - [ ] Simplify the CSS

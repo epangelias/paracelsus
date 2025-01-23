@@ -1,5 +1,5 @@
 import { useGlobal } from '@/islands/Global.tsx';
-import { useSignal, useSignalEffect } from '@preact/signals';
+import { useSignal } from '@preact/signals';
 import { useEffect, useRef } from 'preact/hooks';
 import { Meth } from '@/lib/utils/meth.ts';
 

@@ -16,7 +16,7 @@ let _stripe: Stripe;
 
 if (isStripeEnabled()) {
   _stripe = new Stripe(STRIPE_SECRET_KEY!, {
-    apiVersion: '2024-11-20.acacia',
+    apiVersion: '2024-12-18.acacia',
     httpClient: Stripe.createFetchHttpClient(),
   });
 } else console.warn('Stripe disabled. Missing environment variables.');

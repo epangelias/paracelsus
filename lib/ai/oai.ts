@@ -1,14 +1,25 @@
 import OpenAI from 'openai';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { Stream } from 'openai/streaming.ts';
-import { AIMessage, OAIOptions } from '@/lib/stream/types.ts';
 import { LruCache } from 'jsr:@std/cache';
+
+export interface AIMessage {
+  role: string;
+  content: string;
+  html?: string;
+}
+
+export interface OAIOptions {
+  baseURL?: string;
+  apiKey?: string;
+  model: string;
+}
 
 const cache = new LruCache<string, OpenAI>(100);
 
 const defaultTestOptions: OAIOptions = {
-  model: Deno.env.get('OPENAI_MODEL') || 'llama3.2:1b',
-  baseURL: Deno.env.get('OPENAI_BASE_URL'),
+  model: Deno.env.get('OPENAI_MODEL') || '4o-mini',
+  baseURL: Deno.env.get('OPENAI_API_BASE'),
   apiKey: Deno.env.get('OPENAI_API_KEY'),
 };
 

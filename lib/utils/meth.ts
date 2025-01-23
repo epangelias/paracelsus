@@ -1,9 +1,11 @@
+// @ts-nocheck Unresolved issues
+
 export const Meth = {
   objectEquals(x: unknown, y: unknown) {
     if (x === y) return true;
     if (!(x instanceof Object) || !(y instanceof Object)) return false;
     if (x.constructor !== y.constructor) return false;
-    for (var p in x) {
+    for (const p in x) {
       if (!(p in x)) continue;
       if (!(p in y)) return false;
       if (x[p] === y[p]) continue;

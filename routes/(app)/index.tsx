@@ -2,7 +2,7 @@ import { define } from '@/lib/utils/utils.ts';
 import { page } from 'fresh';
 import { Page } from '@/components/Page.tsx';
 import { getChatData } from '@/app/chat-data.ts';
-import { WelcomeSection } from '../../components/WelcomeSection.tsx';
+import { WelcomeSection } from '@/components/WelcomeSection.tsx';
 import { AppUI } from '@/islands/AppUI.tsx';
 
 export const handler = define.handlers({

@@ -1,13 +1,12 @@
 import { App, HttpError } from 'fresh';
-import * as _webPush from 'web-push';
+import * as webPush from 'web-push';
 import { site } from '@/app/site.ts';
-import { asset } from 'fresh/runtime';
 import { STATUS_CODE } from '@std/http/status';
-import { setUserData } from '../user/user-data.ts';
+import { setUserData } from '@/lib/user/user-data.ts';
 import { State, UserData } from '@/app/types.ts';
 
-import * as webPushTypes from 'npm:@types/web-push';
-const webPush = _webPush as typeof webPushTypes;
+// import * as webPushTypes from 'npm:@types/web-push';
+// const webPush = _webPush as typeof webPushTypes;
 
 const VAPID_PUBLIC_KEY = Deno.env.get('VAPID_PUBLIC_KEY') as string;
 const VAPID_PRIVATE_KEY = Deno.env.get('VAPID_PRIVATE_KEY') as string;
@@ -39,7 +38,8 @@ export async function sendNotificationToUser(user: UserData, title: string, mess
       const data = { body: message, icon: site.icon, title };
       await webPush.sendNotification(subscription, JSON.stringify(data), { TTL: 60 });
       console.log('Sent!', { subscription, data });
-    } catch (e) {
+    } catch (_e) {
+      const e = _e as { statusCode: number };
       if (e?.statusCode == STATUS_CODE.Gone) {
         // Removes subscription on error, change later
         console.log('Subscription gone, removing it', subscription, e);

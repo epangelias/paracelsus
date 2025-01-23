@@ -1,7 +1,7 @@
 import { define } from '@/lib/utils/utils.ts';
-import { AIMessage } from '@/lib/stream/types.ts';
-import { StreamAI } from '../../../lib/stream/stream-ai.ts';
-import { setUserData } from '../../../lib/user/user-data.ts';
+import { AIMessage } from '@/lib/ai/oai.ts';
+import { StreamAI } from '@/lib/stream/stream-ai.ts';
+import { setUserData } from '@/lib/user/user-data.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 import { getChatData, setChatData } from '@/app/chat-data.ts';
