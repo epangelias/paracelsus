@@ -3,14 +3,14 @@ import { ComponentChildren } from 'preact';
 import { Banners } from '@/islands/Banner.tsx';
 
 export function Page(
-  props: { children: ComponentChildren; hideHeader?: boolean; hideBanner?: boolean },
+  props: { children: ComponentChildren; hideHeader?: boolean; hideBanner?: boolean; fullWidth?: boolean },
 ) {
   return (
     <div class='container'>
       {!props.hideHeader && <Header />}
       {!props.hideBanner && <Banners />}
       <div class='scrollable'>
-        <main>{props.children}</main>
+        <main class={props.fullWidth ? '' : 'centered'}>{props.children}</main>
       </div>
     </div>
   );

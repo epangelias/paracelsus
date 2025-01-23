@@ -15,7 +15,7 @@ export const handler = define.handlers({
 
 export default define.page<typeof handler>(({ data }) => {
   return (
-    <Page hideHeader={!data?.chatData} hideBanner={!data?.chatData}>
+    <Page hideHeader={!data?.chatData} hideBanner={!data?.chatData} fullWidth={!!data?.chatData}>
       {data?.chatData ? <AppUI chatData={data?.chatData} /> : <WelcomeSection />}
     </Page>
   );

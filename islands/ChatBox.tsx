@@ -107,11 +107,13 @@ export default function ChatBox({ data }: { data: ChatData }) {
   return (
     <>
       <div class='chat-box'>
-        <div class='messages' ref={messagesRef}>
-          {chatData.value.messages.filter((m: AIMessage) => m.role !== 'system').map(ChatMessage)}
+        <div className='scrollable'>
+          <div class='messages centered' ref={messagesRef}>
+            {chatData.value.messages.filter((m: AIMessage) => m.role !== 'system').map(ChatMessage)}
+          </div>
         </div>
 
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} class='centered'>
           <textarea
             rows={1}
             autocomplete='off'

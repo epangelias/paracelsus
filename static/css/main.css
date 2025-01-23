@@ -20,9 +20,8 @@ main {
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  margin: auto 0;
   padding: var(--spacing-2) var(--spacing);
-  max-width: var(--content-width);
+  width: 100% !important;
 
   /* Full width if contains chat box */
   &:has(.chat-box) {
@@ -31,6 +30,12 @@ main {
     height: 100%;
     width: 100%;
   }
+}
+
+.centered {
+  max-width: var(--content-width);
+  margin: auto 0;
+  width: 100%;
 }
 
 .container {
