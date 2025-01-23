@@ -1,12 +1,11 @@
 // ./repos/paracelsus/islands/Form.tsx
 import { JSX } from 'preact';
 import { useSignal } from '@preact/signals';
-import { delay } from '@std/async/delay';
-import { Alert } from '@/islands/Alert.tsx';
+import { useAlert } from '@/islands/Alert.tsx';
 
 export function Form(props: JSX.HTMLAttributes<HTMLFormElement> & { method?: string }) {
   const isLoading = useSignal(false);
-  const alertMessage = useSignal<{ message: string; type: 'error' | 'success'; id: number } | null>(null);
+  const { showError, showSuccess, hideAlert, AlertBox } = useAlert();
 
   const handleSubmit = async (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
     e.preventDefault();
@@ -15,12 +14,12 @@ export function Form(props: JSX.HTMLAttributes<HTMLFormElement> & { method?: str
     const form = e.currentTarget;
     isLoading.value = true;
 
+    hideAlert();
+
     const buttons = form.querySelectorAll('button');
     buttons.forEach((button) => (button.disabled = true));
 
     try {
-      await delay(1000); // For testing
-
       const formData = new FormData(form);
       const method = (form.method || 'get').toLowerCase();
       let url = form.action || globalThis.location.href;
@@ -45,8 +44,8 @@ export function Form(props: JSX.HTMLAttributes<HTMLFormElement> & { method?: str
         });
       }
 
-      if (!res.ok) {
-        alertMessage.value = { message: `${await res.text()}`, type: 'error', id: Math.random() };
+      if (!res.ok && !res.redirected) {
+        showError(await res.text());
         return;
       }
 
@@ -58,15 +57,9 @@ export function Form(props: JSX.HTMLAttributes<HTMLFormElement> & { method?: str
 
       const text = await res.text();
 
-      if (text) {
-        alertMessage.value = { message: text, type: 'success', id: Math.random() };
-      }
+      if (text && !res.redirected) showSuccess(text);
     } catch (err) {
-      alertMessage.value = {
-        message: err instanceof Error ? err.message : 'An error occurred',
-        type: 'error',
-        id: Math.random(),
-      };
+      showError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       isLoading.value = false;
       buttons.forEach((button) => (button.disabled = false));
@@ -78,9 +71,7 @@ export function Form(props: JSX.HTMLAttributes<HTMLFormElement> & { method?: str
       <form onSubmit={handleSubmit} data-loading={isLoading.value} {...props}>
         {props.children}
       </form>
-      {alertMessage.value && (
-        <Alert message={alertMessage.value.message} type={alertMessage.value.type} id={alertMessage.value.id} />
-      )}
+      <AlertBox />
     </>
   );
 }

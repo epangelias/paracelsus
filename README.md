@@ -24,11 +24,13 @@ $ deno task dev
 
 Customize the site options at `app/site.ts`
 
-Customize theme options at `static/css/theme.css`
+Customize theme at `static/css/theme.css`
 
 ## Generate assets
 
-Install browser for Puppeteer
+Generates icons, screenshots, favicon, and splashscreens.
+
+Prerequisite: Install browser for Puppeteer
 
 ```sh
 $ npx puppeteer browsers install firefox`
@@ -42,13 +44,13 @@ $ deno task generate
 
 ## Enable MailJet
 
-Set the `MAILJET_API_KEY` and `MAILJET_API_SECRET` environment variables. You can create MailJet keys [here](https://www.mailjet.com/).
+Set the `MAILJET_API_KEY` and `MAILJET_API_SECRET` environment variables. Set up a Mailjet account [here](https://www.mailjet.com/).
 
 ## Enable Stripe
 
-Include the `STRIPE_SECRET_KEY` environment variables. You can create Stripe keys [here](https://dashboard.stripe.com/).
+Include the `STRIPE_SECRET_KEY` environment variables. Create one [here](https://dashboard.stripe.com/).
 
-Initiate stripe using the `deno task stripe-init` task, then include the `STRIPE_PREMIUM_PLAN_PRICE_ID` environment variable.
+Initiate stripe using the `deno task stripe-init` task, then include the `STRIPE_PREMIUM_PLAN_PRICE_ID` environment variable from the output.
 
 Listen locally for webhook events
 
@@ -60,7 +62,7 @@ Then copy the webhook secret to `STRIPE_WEBHOOK_SECRET`
 
 ## Enable AI
 
-Include the `OAI_URL`, `OAI_API_KEY`, and `OAI_MODEL` environment variables. You can create OpenAI keys [here](https://platform.openai.com/account/api-keys). If none are provided, it defaults to using [Ollama](https://ollama.ai/) locally.
+Include the `OPENAI_API_BASE`, `OPENAI_API_KEY`, and `OPENAI_MODEL` environment variables. You can create OpenAI keys [here](https://platform.openai.com/account/api-keys).
 
 ## Enable Push Notifications
 
@@ -74,9 +76,4 @@ echo "import*as webPush from'npm:web-push';webPush.generateVAPIDKeys()" | deno
 
 Set the `ADMIN_USERNAME` and `ADMIN_PASSWORD` environment variables.
 
-Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.ts`
-
-## TODO
-
-- [ ] Fix type errors
-- [ ] Simplify the CSS
+Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.ts`.

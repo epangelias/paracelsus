@@ -2,7 +2,13 @@ import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 import InfoIcon from 'tabler-icons/alert-circle-filled';
 
-export function Alert({ message, type, id }: { message: string; type: 'error' | 'success'; id: number }) {
+interface AlertInfo {
+  message: string;
+  type: 'error' | 'success';
+  id?: number;
+}
+
+export function Alert({ message, type, id }: AlertInfo) {
   const hide = useSignal(false);
 
   useEffect(() => {
@@ -27,4 +33,24 @@ export function Alert({ message, type, id }: { message: string; type: 'error' | 
       <p id={`alert-${id}`}>{message}</p>
     </div>
   );
+}
+
+export function useAlert() {
+  const alertInfo = useSignal<AlertInfo | null>(null);
+
+  const AlertBox = () =>
+    alertInfo.value && <Alert message={alertInfo.value.message} type={alertInfo.value.type} id={Math.random()} />;
+
+  return {
+    AlertBox,
+    showError(message: string) {
+      alertInfo.value = { message: message, type: 'error' };
+    },
+    showSuccess(message: string) {
+      alertInfo.value = { message: message, type: 'success' };
+    },
+    hideAlert() {
+      alertInfo.value = null;
+    },
+  };
 }

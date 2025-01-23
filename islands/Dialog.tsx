@@ -12,7 +12,7 @@ export function Dialog(props: Props) {
       event.clientY >= rect.top &&
       event.clientY <= rect.bottom;
 
-    if (!isInDialog) dialog.close();
+    if (!isInDialog && dialog?.close) dialog.close();
   }
 
   return (

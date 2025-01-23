@@ -7,6 +7,8 @@ import { ChatData } from '@/app/types.ts';
 import { showOutOfTokensDialog } from '@/islands/OutOfTokensDialog.tsx';
 import { delay } from '@std/async/delay';
 import ArrowUp from 'tabler-icons/arrow-up';
+import { useAlert } from '@/islands/Alert.tsx';
+import { Loader } from '@/components/Loader.tsx';
 
 export default function ChatBox({ data }: { data: ChatData }) {
   const global = useGlobal();
@@ -14,6 +16,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
   const generating = useSignal(false);
   const messagesRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const { showError, AlertBox } = useAlert();
 
   const checkCanGenerate = () => global.user.value && (global.user.value.tokens! > 0 || global.user.value.isSubscribed);
 
@@ -71,7 +74,8 @@ export default function ChatBox({ data }: { data: ChatData }) {
         scrollToBottom();
       },
       onError() {
-        message.html = '<p class="error-message" role="alert" aria-live="assertive">Error generating response</p>';
+        showError('Error generating response');
+        message.html = '';
         generating.value = false;
       },
     });
@@ -89,6 +93,17 @@ export default function ChatBox({ data }: { data: ChatData }) {
     );
   }
 
+  function handleKeyPress(e: KeyboardEvent) {
+    if (!e.shiftKey && e.key == 'Enter') {
+      e.preventDefault();
+      const textarea = e.currentTarget as HTMLTextAreaElement;
+      (textarea.nextSibling as HTMLButtonElement).click();
+      setTimeout(() => {
+        textarea.select();
+      });
+    }
+  }
+
   return (
     <>
       <div class='chat-box'>
@@ -97,13 +112,23 @@ export default function ChatBox({ data }: { data: ChatData }) {
         </div>
 
         <form onSubmit={onSubmit}>
-          <textarea rows={1} autocomplete='off' autofocus required ref={inputRef} aria-label='Type a message'>
+          <textarea
+            rows={1}
+            autocomplete='off'
+            autofocus
+            required
+            ref={inputRef}
+            aria-label='Type a message'
+            onKeyPress={handleKeyPress}
+          >
           </textarea>
           <button disabled={generating.value}>
-            <ArrowUp class='icon' />
+            {generating.value ? <Loader class='icon' /> : <ArrowUp class='icon' />}
           </button>
         </form>
       </div>
+
+      <AlertBox />
     </>
   );
 }

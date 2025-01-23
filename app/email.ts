@@ -1,5 +1,5 @@
-import { generateEmailVerificationCode, generatePasswordResetCode } from "@/lib/user/user-data.ts";
-import { sendMail } from "@/lib/mail/mail.ts";
+import { generateEmailVerificationCode, generatePasswordResetCode } from '@/lib/user/user-data.ts';
+import { sendMail } from '@/lib/mail/mail.ts';
 import { site } from '@/app/site.ts';
 import { asset } from 'fresh/runtime';
 import { UserData } from '@/app/types.ts';
