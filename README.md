@@ -80,6 +80,4 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 
 - [ ] Go fix all error handling in ai streaming
 - [ ] Fix type errors
-- [ ] Use nextjs ai for use of other apis
-- [ ] Try the useSWR hook from next
 - [ ] Simplify the CSS

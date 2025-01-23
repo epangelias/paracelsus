@@ -6,6 +6,6 @@ export interface AIMessage {
 
 export interface OAIOptions {
   baseURL?: string;
-  apiKey: string;
+  apiKey?: string;
   model: string;
 }

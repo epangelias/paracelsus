@@ -6,10 +6,10 @@ import { LruCache } from 'jsr:@std/cache';
 
 const cache = new LruCache<string, OpenAI>(100);
 
-const defaultTestOptions = {
-  apiKey: Deno.env.get('OAI_API_KEY') || 'ollama',
-  baseURL: Deno.env.get('OAI_URL') || 'http://localhost:11434/v1',
-  model: Deno.env.get('OAI_MODEL') || 'llama3.2:1b',
+const defaultTestOptions: OAIOptions = {
+  model: Deno.env.get('OPENAI_MODEL') || 'llama3.2:1b',
+  baseURL: Deno.env.get('OPENAI_BASE_URL'),
+  apiKey: Deno.env.get('OPENAI_API_KEY'),
 };
 
 export async function generateChatCompletionStream(
@@ -32,10 +32,7 @@ export async function generateChatCompletion(
 
   const backend = cache.has(backendId) ? cache.get(backendId)! : cache.set(
     backendId,
-    new OpenAI({
-      apiKey: options.apiKey,
-      baseURL: options.baseURL,
-    }),
+    new OpenAI({ baseURL: options.baseURL, apiKey: options.apiKey }),
   ).get(backendId)!;
 
   return await backend.chat.completions.create({
