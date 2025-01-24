@@ -23,12 +23,11 @@ ${Color.green(options.name)}${options.description ? ': A deno fresh webapp gener
 
 ${options.usage ? Color.blue('Usage: ') + options.usage : ''}
 
-${
-    options.options
+${options.options
       ? Color.blue('Options:\n') +
-        options.options.map((opt) => `  ${opt.flag}\t${opt.usage || ''}`)
+      options.options.map((opt) => `  ${opt.flag}\t${opt.usage || ''}`)
       : ''
-  }
+    }
 `;
 
   console.log(helpMessage);
@@ -36,7 +35,7 @@ ${
 
 export async function $(...args: string[]) {
   const cmd = new Deno.Command(args[0], {
-    args: ['asdf'],
+    args: args.slice(1),
     stderr: 'piped',
     stdout: 'piped',
   });
