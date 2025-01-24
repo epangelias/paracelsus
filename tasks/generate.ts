@@ -9,6 +9,8 @@ import { app } from '@/main.ts';
 import { delay } from '@std/async/delay';
 import { Spinner } from 'jsr:@std/cli@1.0.9/unstable-spinner';
 
+const generatedIconPath = Path.join(import.meta.dirname!, '../static/img/icon.webp');
+
 const localURL = 'http://0.0.0.0:8000';
 
 const spinner = new Spinner({ color: 'green' });
@@ -25,11 +27,25 @@ try {
   await delay(1000);
 }
 
+async function convertSVGToImage() {
+  spinner.message = 'Converting Icon...';
+
+  const browser = await puppeteer.launch({ browser: "chrome", headless: true });
+  const page = await browser.newPage();
+  page.setViewport({ width: 1024, height: 1024 });
+  await page.goto(site.icon);
+  await page.screenshot({
+    path: generatedIconPath,
+    omitBackground: true
+  });
+  await browser.close();
+}
+
 async function takeScreenshot(filename: string, width: number, height: number) {
   spinner.message = 'Generating screenshot...';
 
   const path = Path.join(import.meta.dirname!, '../static/img/' + filename);
-  const browser = await puppeteer.launch({ browser: 'firefox', headless: true });
+  const browser = await puppeteer.launch({ browser: 'chrome', headless: true });
 
   try {
     const page = await browser.newPage();
@@ -78,8 +94,9 @@ async function prepareIconPath(iconPath: string) {
 }
 
 const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');
-const iconPath = await prepareIconPath(site.icon);
+const iconPath = generatedIconPath; //await prepareIconPath(site.icon);
 
+await convertSVGToImage();
 await takeScreenshot('screenshot-wide.jpg', 1280, 720);
 await takeScreenshot('screenshot-narrow.jpg', 750, 1280);
 await generateAssets(iconPath, outputDir);

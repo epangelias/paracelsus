@@ -77,3 +77,12 @@ echo "import*as webPush from'npm:web-push';webPush.generateVAPIDKeys()" | deno
 Set the `ADMIN_USERNAME` and `ADMIN_PASSWORD` environment variables.
 
 Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.ts`.
+
+## TODO
+
+- Fix icon
+  - Find that it does not use downloaded when its an image
+  - Fine that emoji rendered
+  - When serious should be from a path in the static
+- Generate sitemap
+- Maybe include markdown pages capability
