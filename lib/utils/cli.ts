@@ -19,7 +19,7 @@ export function helpCLI(options: {
   }[];
 }) {
   const helpMessage = `
-${Color.green(options.name)}${options.description ? ': A deno fresh webapp generator' : ''}
+${Color.green(options.name)}${options.description ? `: ${options.description}` : ''}
 
 ${options.usage ? Color.blue('Usage: ') + options.usage : ''}
 
