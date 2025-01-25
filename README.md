@@ -87,3 +87,4 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 - Generate sitemap
 - Maybe include markdown pages capability
 - Put alert box into global, global.alert()
+- Make the generateAICOmpletion options the 2nc variable instead of first
