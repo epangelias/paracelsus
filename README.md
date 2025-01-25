@@ -86,3 +86,4 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
   - When serious should be from a path in the static
 - Generate sitemap
 - Maybe include markdown pages capability
+- Put alert box into global, global.alert()
