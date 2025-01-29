@@ -12,6 +12,7 @@ import { FormButton } from '@/components/FormButton.tsx';
 
 const HAS_SIGN_UP_CODE = Deno.env.has('SIGN_UP_CODE');
 const SIGN_UP_CODE = Deno.env.get('SIGN_UP_CODE');
+const SIGN_UP_ONLY = Deno.env.get('SIGN_UP_ONLY') == 'true';
 
 const limiter = new RateLimiter();
 
@@ -23,7 +24,7 @@ export const handler = define.handlers({
 
     try {
       const correctCode = HAS_SIGN_UP_CODE && signupCode && signupCode == SIGN_UP_CODE;
-      if (signupCode && !correctCode) throw new Error('Invalid sign up code');
+      if ((signupCode || SIGN_UP_ONLY) && !correctCode) throw new Error('Invalid sign up code');
 
       const user = await createUser(name, email, password, !!correctCode);
 
