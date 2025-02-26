@@ -90,4 +90,4 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 - Make the generateAICOmpletion options the 2nc variable instead of first
 - Make createUser func have {} args
 - Make bottom of sign in "Dont have an account, sign up"
-- Auto catch all pages like in candela of homepage
+- Auto catch all pages like in candela of homepage (causes issue when logged in and not logged in)
