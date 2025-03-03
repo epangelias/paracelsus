@@ -80,6 +80,7 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 
 ## TODO
 
+- BUNDLE AND TARGET CSS FOR LADYBIRD
 - Fix icon
   - Find that it does not use downloaded when its an image
   - Fine that emoji rendered
