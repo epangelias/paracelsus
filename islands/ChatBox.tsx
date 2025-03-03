@@ -6,7 +6,7 @@ import { useGlobal } from '@/islands/Global.tsx';
 import { ChatData } from '@/app/types.ts';
 import { showOutOfTokensDialog } from '@/islands/OutOfTokensDialog.tsx';
 import { delay } from '@std/async/delay';
-import ArrowUp from 'tabler-icons/arrow-up';
+import ArrowUp from 'icons/tabler/arrow-up';
 import { useAlert } from '@/islands/Alert.tsx';
 import { Loader } from '@/components/Loader.tsx';
 

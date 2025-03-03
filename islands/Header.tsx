@@ -1,8 +1,8 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { site } from '@/app/site.ts';
 import { UserMenu } from '@/islands/UserMenu.tsx';
-import IconBolt from 'tabler-icons/bolt';
-import IconBoltOff from 'tabler-icons/bolt-off';
+import IconBolt from 'icons/tabler/bolt';
+import IconBoltOff from 'icons/tabler/bolt-off';
 
 export function Header() {
   const global = useGlobal();

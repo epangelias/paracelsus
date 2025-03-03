@@ -1,6 +1,6 @@
 import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
-import InfoIcon from 'tabler-icons/alert-circle-filled';
+import InfoIcon from 'icons/tabler/alert-circle-filled';
 
 interface AlertInfo {
   message: string;
