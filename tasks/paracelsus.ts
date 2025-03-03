@@ -5,6 +5,7 @@ import { parseArgs } from 'jsr:@std/cli@1.0.9/parse-args';
 import { Spinner } from 'jsr:@std/cli@1.0.9/unstable-spinner';
 import { exists } from 'jsr:@std/fs@1/exists';
 import { $, helpCLI, throwCLI } from '../lib/utils/cli.ts';
+import { site } from '@/app/site.ts';
 
 const spinner = new Spinner({ color: 'green' });
 const args = parseArgs(Deno.args);
@@ -37,21 +38,20 @@ if (!cloned.ok) throwCLI(`Failed to clone repository to "${projectPath}"`);
 
 Deno.chdir(projectPath);
 
-// Create site.ts
-const siteData = `import { Meth } from "@/lib/utils/meth.ts";\n
-export const site = {
-  name: "${projectName}",
-  icon: Meth.emojiToUrl('🔥'),
-  themeColor: "#eb9a52",
-  backgroundColor: "#222222",
+const siteData = {
+  ...site,
+  name: projectName,
+  icon: "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>",
   description: 'A new project made with Paracelsus.',
-  email: "you@example.com",
-  lang: "en-US"
-};`;
+  email: "example@example.com",
+};
+
+// Create site.ts
+const siteDataJSON = `export const site = ${JSON.stringify(siteData, null, 2)};`;
 
 spinner.message = `Getting ready...`;
 
-await Deno.writeTextFile('app/site.ts', siteData);
+await Deno.writeTextFile('app/site.ts', siteDataJSON);
 
 await move('.env.template', '.env');
 

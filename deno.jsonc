@@ -30,6 +30,7 @@
     "node-mailjet": "npm:node-mailjet@^6.0.6",
     "openai": "npm:openai@^4.76.3",
     "preact": "npm:preact@^10.24.3",
+    "preact-render-to-string": "npm:preact-render-to-string@^6.5.13",
     "stripe": "npm:stripe@^17.3.1",
     "web-push": "npm:web-push@^3.6.7",
     "tabler-icons/": "https://icons.church/tabler/"
