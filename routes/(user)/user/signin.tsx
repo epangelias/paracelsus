@@ -33,7 +33,9 @@ export default define.page<typeof handler>(() => (
         <Field name='password' type='password' label='Password' required />
 
         <FormButton class='wide'>Sign In</FormButton>
-        <a href='/user/signup' class='wide'>Sign Up</a>
+        <p style={{ fontSize: '0.9rem', textAlign: 'center' }}>
+          Don't have an account? <a href='/user/signup'>Sign Up</a>
+        </p>
         {isMailEnabled() && (
           <p style={{ fontSize: '0.8rem', textAlign: 'center' }}>
             <a href='/user/lost-password'>Lost your password?</a>

@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run -A
+#!/usr/bin/env -S deno run -A --env
 
 import Stripe from 'stripe';
 import { site } from '@/app/site.ts';

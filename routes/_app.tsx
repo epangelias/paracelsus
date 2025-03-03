@@ -33,7 +33,7 @@ export default define.page(({ Component, state }) => {
         <link rel='stylesheet' href={asset('/css/theme.css')} />
         <link rel='stylesheet' href={asset('/css/main.css')} />
         <link rel='stylesheet' href={asset('/css/components.css')} />
-        <link rel='icon' href={asset(site.icon)} />
+        <link rel='icon' href={asset('/img/icon.webp')} />
 
         <script type='module' src={asset('/js/init.js')}></script>
       </head>

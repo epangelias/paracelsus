@@ -33,7 +33,7 @@ Generates icons, screenshots, favicon, and splashscreens.
 Prerequisite: Install browser for Puppeteer
 
 ```sh
-$ npx puppeteer browsers install firefox`
+$ npx puppeteer browsers install chrome`
 ```
 
 Generate assets. Ensure running locally.
@@ -80,7 +80,6 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 
 ## TODO
 
-- BUNDLE AND TARGET CSS FOR LADYBIRD
 - Fix icon
   - Find that it does not use downloaded when its an image
   - Fine that emoji rendered
@@ -90,5 +89,4 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 - Put alert box into global, global.alert()
 - Make the generateAICOmpletion options the 2nc variable instead of first
 - Make createUser func have {} args
-- Make bottom of sign in "Dont have an account, sign up"
 - Auto catch all pages like in candela of homepage (causes issue when logged in and not logged in)

@@ -1,12 +1,12 @@
 {
   "tasks": {
     "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
-    "dev": "deno run -A --env --watch=static/,routes/ tasks/dev.ts",
-    "build": "deno run -A --env tasks/build.ts",
-    "start": "deno run -A --env main.ts",
+    "dev": "tasks/dev.ts",
+    "build": "tasks/build.ts",
+    "start": "main.ts",
     "update": "deno run -A --env -r jsr:@fresh/update .",
-    "generate": "deno run -A --env tasks/generate.ts",
-    "stripe-init": "deno run -A --env tasks/stripe-init.ts"
+    "generate": "tasks/generate.ts",
+    "stripe-init": "tasks/stripe-init.ts"
   },
   "lint": {
     "rules": {

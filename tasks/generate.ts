@@ -1,64 +1,84 @@
-#!/usr/bin/env -S deno run -A
+#!/usr/bin/env -S deno run -A --env
 
 import * as Path from 'jsr:@std/path@1';
 import { generateImages } from 'npm:pwa-asset-generator';
-import { site } from '@/app/site.ts';
 import puppeteer from 'npm:puppeteer';
 import { Builder } from 'fresh/dev';
-import { app } from '@/main.ts';
 import { delay } from '@std/async/delay';
 import { Spinner } from 'jsr:@std/cli@1.0.9/unstable-spinner';
+import { parseArgs } from 'jsr:@std/cli@1.0.9/parse-args';
+import { helpCLI } from '@/lib/utils/cli.ts';
+import { site } from '@/app/site.ts';
+import { app } from '@/main.ts';
+import sharp from 'npm:sharp';
+
+const args = parseArgs(Deno.args);
+const _iconPath = args._[0] as string;
+
+if (args.help || args.h || !_iconPath) {
+  helpCLI({
+    name: 'deno task generate',
+    usage: 'deno task generate <icon-path>',
+    options: [{ flag: '-h, --help', usage: 'Show this help message' },],
+  });
+  Deno.exit();
+}
 
 const generatedIconPath = Path.join(import.meta.dirname!, '../static/img/icon.webp');
-
 const localURL = 'http://0.0.0.0:8000';
-
 const spinner = new Spinner({ color: 'green' });
 
-spinner.start();
-spinner.message = 'Ensure app running locally...';
+async function init() {
+  await runApp();
 
-try {
-  await fetch(localURL);
-} catch (_e) {
-  console.warn('Running app locally...');
-  const builder = new Builder();
-  builder.listen(app);
-  await delay(1000);
+  spinner.start();
+  spinner.message = 'Ensure app running locally...';
+
+  const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');
+  const iconPath = await download(_iconPath);
+
+  await sharp(iconPath).webp().toFile(generatedIconPath);
+
+
+  const screenshotWidePath = Path.join(import.meta.dirname!, '../static/img/screenshot-wide.jpg');
+  const screenshotNarrowPath = Path.join(import.meta.dirname!, '../static/img/screenshot-narrow.jpg');
+
+  await takeScreenshot(localURL, screenshotWidePath, 1280, 720);
+  await takeScreenshot(localURL, screenshotNarrowPath, 750, 1280);
+  await generateAssets(iconPath, outputDir);
+
+  spinner.stop();
+  console.log('Assets generated!');
+  Deno.exit();
 }
 
-async function convertSVGToImage() {
-  spinner.message = 'Converting Icon...';
-
-  const browser = await puppeteer.launch({ browser: "chrome", headless: true });
-  const page = await browser.newPage();
-  page.setViewport({ width: 1024, height: 1024 });
-  await page.goto(site.icon);
-  await page.screenshot({
-    path: generatedIconPath,
-    omitBackground: true
-  });
-  await browser.close();
+async function runApp() {
+  try {
+    await fetch(localURL);
+  } catch (_e) {
+    console.warn('Running app locally...');
+    const builder = new Builder();
+    builder.listen(app);
+    await delay(1000);
+  }
 }
 
-async function takeScreenshot(filename: string, width: number, height: number) {
+async function takeScreenshot(url: string, path: string, width: number, height: number) {
   spinner.message = 'Generating screenshot...';
 
-  const path = Path.join(import.meta.dirname!, '../static/img/' + filename);
   const browser = await puppeteer.launch({ browser: 'chrome', headless: true });
 
-  try {
-    const page = await browser.newPage();
-    await page.setViewport({ width, height });
-    await page.goto(localURL, { waitUntil: 'networkidle0' });
-    await page.evaluate(() => {
-      document.body.style.zoom = '2';
-      document.body.style.fontSize = '1rem';
-    });
-    await page.screenshot({ path });
-  } catch (e) {
-    console.error(e);
-  }
+  const page = await browser.newPage();
+  await page.setViewport({ width, height });
+  await page.goto(url, { waitUntil: 'networkidle0' });
+  await page.evaluate(() => {
+    const html = document.querySelector('html') as HTMLElement;
+    if (!html) return;
+    html.style.zoom = "2";
+    html.style.fontSize = '1rem';
+  });
+
+  await page.screenshot({ path, omitBackground: true });
 
   await browser.close();
 }
@@ -86,23 +106,10 @@ async function URLtoPath(url: string) {
   return filePath;
 }
 
-async function prepareIconPath(iconPath: string) {
-  if (iconPath.startsWith('/') || iconPath.startsWith('file:')) {
-    return Path.join(import.meta.dirname!, '../static/', iconPath);
-  }
-  return await URLtoPath(iconPath);
+async function download(path: string) {
+  if (path.startsWith('http') || path.startsWith('https')) return await URLtoPath(path);
+  else if (path.startsWith('/') || path.startsWith('file:')) return path;
+  else return Path.join(Deno.cwd(), path);
 }
 
-const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');
-const iconPath = generatedIconPath; //await prepareIconPath(site.icon);
-
-await convertSVGToImage();
-await takeScreenshot('screenshot-wide.jpg', 1280, 720);
-await takeScreenshot('screenshot-narrow.jpg', 750, 1280);
-await generateAssets(iconPath, outputDir);
-
-spinner.stop();
-
-console.log('"Assets generated!');
-
-Deno.exit();
+await init();

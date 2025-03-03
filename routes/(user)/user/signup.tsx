@@ -62,7 +62,9 @@ export default define.page<typeof handler>(() => (
         )}
 
         <FormButton class='wide'>Sign Up</FormButton>
-        <a class='wide' href='/user/signin'>Sign In</a>
+        <p style={{ fontSize: '0.9rem', textAlign: 'center' }}>
+          Already have an account? <a href='/user/signin'>Sign In</a>
+        </p>
       </Form>
     </div>
   </Page>

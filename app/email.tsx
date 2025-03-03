@@ -10,7 +10,7 @@ import { EmailResetPassword } from '../components/EmailResetPassword.tsx';
 export async function sendEmailVerification(baseUrl: string, user: UserData) {
   const code = await generateEmailVerificationCode(user);
 
-  const logo = site.icon.startsWith('/') ? baseUrl + asset(site.icon) : site.icon;
+  const logo = baseUrl + asset('/img/icon.webp');
   const link = `${baseUrl}/user/verify-email?code=${code}`;
   console.log(link);
 
@@ -30,9 +30,8 @@ export async function sendPasswordVerification(baseUrl: string, user: UserData) 
   const code = await generatePasswordResetCode(user);
 
   const link = `${baseUrl}/user/reset-password?code=${code}`;
-  console.log(link);
 
-  const logo = site.icon.startsWith('/') ? baseUrl + asset(site.icon) : site.icon;
+  const logo = baseUrl + asset('/img/icon.webp');
 
   await sendMail({
     fromName: `${site.name}`,
