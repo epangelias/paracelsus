@@ -36,7 +36,7 @@ export async function sendNotificationToUser(user: UserData, title: string, mess
 
   for (const subscription of user.pushSubscriptions) {
     try {
-      const data = { body: message, icon: asset("/img/icon"), title };
+      const data = { body: message, icon: asset('/img/icon'), title };
       await webPush.sendNotification(subscription, JSON.stringify(data), { TTL: 60 });
       console.log('Sent!', { subscription, data });
     } catch (_e) {

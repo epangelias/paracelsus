@@ -19,7 +19,7 @@ if (args.help || args.h || !_iconPath) {
   helpCLI({
     name: 'deno task generate',
     usage: 'deno task generate <icon-path>',
-    options: [{ flag: '-h, --help', usage: 'Show this help message' },],
+    options: [{ flag: '-h, --help', usage: 'Show this help message' }],
   });
   Deno.exit();
 }
@@ -27,28 +27,21 @@ if (args.help || args.h || !_iconPath) {
 const generatedIconPath = Path.join(import.meta.dirname!, '../static/img/icon.webp');
 const localURL = 'http://0.0.0.0:8000';
 const spinner = new Spinner({ color: 'green' });
+const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');
+const iconPath = await download(_iconPath);
+const screenshotWidePath = Path.join(import.meta.dirname!, '../static/img/screenshot-wide.jpg');
+const screenshotNarrowPath = Path.join(import.meta.dirname!, '../static/img/screenshot-narrow.jpg');
 
 async function init() {
-  await runApp();
-
   spinner.start();
-  spinner.message = 'Ensure app running locally...';
 
-  const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');
-  const iconPath = await download(_iconPath);
-
+  await runApp();
   await sharp(iconPath).webp().toFile(generatedIconPath);
-
-
-  const screenshotWidePath = Path.join(import.meta.dirname!, '../static/img/screenshot-wide.jpg');
-  const screenshotNarrowPath = Path.join(import.meta.dirname!, '../static/img/screenshot-narrow.jpg');
-
   await takeScreenshot(localURL, screenshotWidePath, 1280, 720);
   await takeScreenshot(localURL, screenshotNarrowPath, 750, 1280);
   await generateAssets(iconPath, outputDir);
 
   spinner.stop();
-  console.log('Assets generated!');
   Deno.exit();
 }
 
@@ -74,7 +67,7 @@ async function takeScreenshot(url: string, path: string, width: number, height: 
   await page.evaluate(() => {
     const html = document.querySelector('html') as HTMLElement;
     if (!html) return;
-    html.style.zoom = "2";
+    html.style.zoom = '2';
     html.style.fontSize = '1rem';
   });
 

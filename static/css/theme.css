@@ -249,8 +249,10 @@ button:not(.link),
 
 /* Inputs */
 
-:is(input:not([type]),
-  input:is([type='text'],
+:is(
+  input:not([type]),
+  input:is(
+    [type='text'],
     [type='password'],
     [type='email'],
     [type='number'],
@@ -259,9 +261,11 @@ button:not(.link),
     [type='search'],
     [type='date'],
     [type='file'],
-    [type='color']),
+    [type='color']
+  ),
   select,
-  textarea) {
+  textarea
+) {
   max-width: 100%;
   padding: var(--spacing) var(--spacing-2);
   border: var(--border-width) solid var(--border-color);
@@ -640,8 +644,6 @@ form[data-loading='true'] {
     }
   }
 }
-
-
 
 /* Details */
 

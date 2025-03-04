@@ -39,7 +39,7 @@ $ npx puppeteer browsers install chrome`
 Generate assets. Ensure running locally.
 
 ```sh
-$ deno task generate
+$ deno task generate /path/to/icon.png
 ```
 
 ## Enable MailJet

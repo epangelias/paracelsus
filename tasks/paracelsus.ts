@@ -41,9 +41,10 @@ Deno.chdir(projectPath);
 const siteData = {
   ...site,
   name: projectName,
-  icon: "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>",
+  icon:
+    'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>',
   description: 'A new project made with Paracelsus.',
-  email: "example@example.com",
+  email: 'example@example.com',
 };
 
 // Create site.ts
