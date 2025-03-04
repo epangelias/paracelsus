@@ -1,6 +1,7 @@
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open('offline-cache').then((cache) => cache.addAll(['/offline'])),
+    // Can to /offline to disable homepage catching
+    caches.open('offline-cache').then((cache) => cache.addAll(['/'])),
   );
 });
 
@@ -9,7 +10,7 @@ self.addEventListener('fetch', (event) => {
   const isAPI = url.pathname.startsWith('/api');
   if (isAPI) return;
   event.respondWith(
-    fetch(event.request).catch((e) => isAPI ? e : caches.match('/offline')),
+    fetch(event.request).catch((e) => isAPI ? e : caches.match('/')),
   );
 });
 
