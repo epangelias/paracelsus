@@ -25,6 +25,7 @@
     "@std/assert": "jsr:@std/assert@^1.0.7",
     "@std/async": "jsr:@std/async@^1.0.9",
     "@std/http": "jsr:@std/http@^1.0.9",
+    "@std/yaml": "jsr:@std/yaml@^1.0.5",
     "fresh": "jsr:@fresh/core@^2.0.0-alpha.25",
     "marked": "npm:marked@^15.0.0",
     "node-mailjet": "npm:node-mailjet@^6.0.6",

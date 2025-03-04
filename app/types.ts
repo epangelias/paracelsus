@@ -38,6 +38,7 @@ export type GlobalData = {
 export interface State {
   user?: UserData;
   auth?: string;
+  title?: string;
 }
 
 export interface ChatData {
