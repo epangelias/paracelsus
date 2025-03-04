@@ -4,13 +4,19 @@ self.addEventListener('install', (event) => {
   );
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', async (event) => {
   const url = new URL(event.request.url);
   const isAPI = url.pathname.startsWith('/api');
   const isHomepage = url.pathname === '/';
-  event.respondWith(
-    fetch(event.request).catch((e) => isAPI ? e : caches.match(isHomepage ? '/' : '/offline')),
-  );
+
+  const response = fetch(event.request).catch((e) => isAPI ? e : caches.match(isHomepage ? '/' : '/offline'));
+
+  if (isHomepage && response.ok) {
+    const cache = await caches.open('offline-cache');
+    await cache.put('/', response.clone());
+  }
+
+  event.respondWith(response);
 });
 
 self.addEventListener('push', function (event) {
