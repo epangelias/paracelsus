@@ -1,6 +1,5 @@
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    // Can to /offline to disable homepage catching
     caches.open('offline-cache').then((cache) => cache.addAll(['/', '/offline'])),
   );
 });
