@@ -81,4 +81,3 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 ## TODO
 
 - Put alert box into global, global.alert(), for errors, messages, popups, etc
-- Auto catch all pages like in candela of homepage (causes issue when logged in and not logged in)
