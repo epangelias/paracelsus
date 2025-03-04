@@ -80,10 +80,5 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 
 ## TODO
 
-- Include markdown generated pages for use in blog or other things, could use it for pricing and welcome page
-- Generate sitemap
-- Maybe include markdown pages capability
-- Put alert box into global, global.alert()
-- Make the generateAICOmpletion options the 2nc variable instead of first
-- Make createUser func have {} args
+- Put alert box into global, global.alert(), for errors, messages, popups, etc
 - Auto catch all pages like in candela of homepage (causes issue when logged in and not logged in)

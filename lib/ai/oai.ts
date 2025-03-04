@@ -24,17 +24,17 @@ const defaultTestOptions: OAIOptions = {
 };
 
 export async function generateChatCompletionStream(
-  options: OAIOptions = defaultTestOptions,
   messages: AIMessage[],
+  options: OAIOptions = defaultTestOptions,
 ) {
-  return await generateChatCompletion(options, messages, true) as unknown as Stream<
+  return await generateChatCompletion(messages, options, true) as unknown as Stream<
     OpenAI.ChatCompletionChunk
   >;
 }
 
 export async function generateChatCompletion(
-  options: OAIOptions = defaultTestOptions,
   messages: AIMessage[],
+  options: OAIOptions = defaultTestOptions,
   stream = false,
 ) {
   messages = messages.map(({ role, content }) => ({ role, content }));

@@ -12,7 +12,7 @@ export default define.page(({ Component, state }) => {
   return (
     <html lang={site.lang} class='theme-light'>
       <head>
-        <title>{site.name}</title>
+        <title>{(state.title + ' – ' + site.name) || site.name}</title>
         <meta content={site.name} property='og:title'></meta>
         <meta content={site.description} name='description' />
         <meta content={site.description} property='og:description' />

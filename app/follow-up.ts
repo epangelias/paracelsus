@@ -15,7 +15,7 @@ async function generateFollowUpMessage(user: UserData) {
       `SYSTEM COMMAND: Follow up to ${user.name} in one sentence to start a conversation with them, you may ask them a question too.`,
   });
   console.log({ messages });
-  const res = await generateChatCompletion(undefined, messages);
+  const res = await generateChatCompletion(messages);
   const content = res.choices[0].message.content;
   if (!content) throw new Error('No content generated: ' + JSON.stringify(res));
   chatData.value.messages.push({ role: 'assistant', content });

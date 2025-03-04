@@ -26,7 +26,7 @@ export const handler = define.handlers({
       const correctCode = HAS_SIGN_UP_CODE && signupCode && signupCode == SIGN_UP_CODE;
       if ((signupCode || SIGN_UP_ONLY) && !correctCode) throw new Error('Invalid sign up code');
 
-      const user = await createUser(name, email, password, !!correctCode);
+      const user = await createUser({ name, email, password, isPremium: !!correctCode });
 
       try {
         await sendEmailVerification(ctx.url.origin, user);

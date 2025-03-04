@@ -30,7 +30,7 @@ export function StreamAI({ messages, options, onChunk, onEnd, onCancel }: Option
 
   return StreamSSR({
     async onChunk(send) {
-      stream = await generateChatCompletionStream(options, messages);
+      stream = await generateChatCompletionStream(messages, options);
       if (stream.controller instanceof AbortController == false) throw new Error('Invalid stream');
       await trigger(onChunk);
 

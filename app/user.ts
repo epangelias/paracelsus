@@ -18,14 +18,14 @@ export function stripUserData(user?: UserData) {
   } as Partial<UserData>;
 }
 
-export function createUser(name: string, email: string, password: string, isPremium: boolean) {
+export function createUser(options: { name: string, email: string, password: string, isPremium: boolean }) {
   return createUserData({
-    name,
-    email,
-    password,
+    name: options.name,
+    email: options.email,
+    password: options.password,
     tokens: 5,
-    isSubscribed: isPremium,
-    hasSubscribed: isPremium,
+    isSubscribed: options.isPremium,
+    hasSubscribed: options.isPremium,
     isEmailVerified: false,
     hasVerifiedEmail: false,
     pushSubscriptions: [],
