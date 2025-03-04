@@ -5,4 +5,5 @@ export const site = {
   description: 'Talk to Paracelsus, the AI-powered mystical alchemist.',
   email: 'vaza@vaza.app',
   lang: 'en',
+  baseURL: 'https://paracelsus.vaza.app',
 };

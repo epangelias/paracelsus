@@ -80,10 +80,7 @@ Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.
 
 ## TODO
 
-- Fix icon
-  - Find that it does not use downloaded when its an image
-  - Fine that emoji rendered
-  - When serious should be from a path in the static
+- Include markdown generated pages for use in blog or other things, could use it for pricing and welcome page
 - Generate sitemap
 - Maybe include markdown pages capability
 - Put alert box into global, global.alert()
