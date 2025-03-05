@@ -11,6 +11,8 @@ self.addEventListener('fetch', async (event) => {
 
   const response = fetch(event.request).catch((e) => isAPI ? e : caches.match(isHomepage ? '/' : '/offline'));
 
+  console.log('fetch', url.pathname);
+
   if (isHomepage && response.ok) {
     console.log('updating cache');
     const cache = await caches.open('offline-cache');
