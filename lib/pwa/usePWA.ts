@@ -45,26 +45,38 @@ export async function loadServiceWorker() {
     return null;
   }
 
+  // let registration = await navigator.serviceWorker.getRegistration();
+
+  // const workerURL = asset('/worker.js');
+  // const scriptURL = registration?.active?.scriptURL!;
+  // const _oldWorkerURL = scriptURL ? new URL(scriptURL) : undefined;
+  // // Remove domain so can compare urls
+  // // Need to fix so that the notifications re-register when the worker changes
+  // const oldWorkerURL = _oldWorkerURL?.pathname! + _oldWorkerURL?.search;
+
+  // console.log({ oldWorkerURL, workerURL });
+  // if (!registration || oldWorkerURL != workerURL) {
+  //   console.log({ oldWorkerURL, workerURL });
+  //   console.log('Unloading and loading service worker');
+  //   if (registration) {
+  //     const subscription = await registration.pushManager.getSubscription();
+  //     if (subscription) subscription.unsubscribe();
+  //     const unregistered = await registration.unregister();
+  //     if (!unregistered) throw new Error('Failed to unregister service worker');
+  //     else console.log('Service worker unregistered');
+  //   }
+  //   registration = await navigator.serviceWorker.register(workerURL, { scope: '/' });
+  //   return null;
+  // }
+  // return registration;
+
   let registration = await navigator.serviceWorker.getRegistration();
 
-  const workerURL = asset('/worker.js');
-  const scriptURL = registration?.active?.scriptURL!;
-  const _oldWorkerURL = scriptURL ? new URL(scriptURL) : undefined;
-  // Remove domain so can compare urls
-  // Need to fix so that the notifications re-register when the worker changes
-  const oldWorkerURL = _oldWorkerURL?.pathname! + _oldWorkerURL?.search;
+  registration?.update();
 
-  console.log({ oldWorkerURL, workerURL });
-  if (!registration || oldWorkerURL != workerURL) {
-    console.log({ oldWorkerURL, workerURL });
-    console.log('Unloading and loading service worker');
-    if (registration) {
-      const subscription = await registration.pushManager.getSubscription();
-      if (subscription) subscription.unsubscribe();
-      const unregistered = await registration.unregister();
-      if (!unregistered) throw new Error('Failed to unregister service worker');
-      else console.log('Service worker unregistered');
-    }
+  const workerURL = '/worker.js';
+
+  if (!registration) {
     registration = await navigator.serviceWorker.register(workerURL, { scope: '/' });
     return null;
   }

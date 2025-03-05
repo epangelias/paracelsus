@@ -34,3 +34,16 @@ self.addEventListener('notificationclick', function (event) {
   event.notification.close();
   event.waitUntil(clients.openWindow(self.origin));
 });
+
+self.addEventListener('message', async (event) => {
+  const data = event.data;
+
+  if (data.type === 'CATCH') {
+    const response = fetch('/').catch((e) => e);
+
+    if (response.ok) {
+      const cache = await caches.open('offline-cache');
+      await cache.put('/', response);
+    } else console.error('Failed to update homepage catch');
+  }
+});
