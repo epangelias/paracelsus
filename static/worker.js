@@ -13,6 +13,7 @@ self.addEventListener('fetch', (event) => {
         if (!acceptsHTML) throw e;
         const cachedResponse = await caches.match(event.request);
         if (cachedResponse) return cachedResponse;
+        else if (new URL(event.request.url).pathname === '/') return caches.match('/');
         else return caches.match('/offline');
       }),
   );
