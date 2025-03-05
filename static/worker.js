@@ -4,31 +4,31 @@ self.addEventListener('install', (event) => {
   );
 });
 
-self.addEventListener('fetch', async (event) => {
-  const url = new URL(event.request.url);
-  const isAPI = url.pathname.startsWith('/api');
-  const isHomepage = url.pathname === '/';
-
-  const response = fetch(event.request).catch((e) => isAPI ? e : caches.match(isHomepage ? '/' : '/offline'));
-
-  console.log('fetch', url.pathname);
-
-  if (isHomepage && response.ok) {
-    console.log('updating cache');
-    const cache = await caches.open('offline-cache');
-    await cache.put('/', response.clone());
-  }
-
-  event.respondWith(response);
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.open('offline-cache').then((cache) => cache.delete('/').then(() => cache.add('/'))),
+  );
 });
 
-self.addEventListener('push', function (event) {
+self.addEventListener('fetch', (event) => {
+  const isAPI = new URL(event.request.url).pathname.startsWith('/api');
+
+  event.respondWith(
+    fetch(event.request)
+      .catch(async (e) => {
+        if (isAPI) throw e;
+        const cachedResponse = await caches.match(event.request);
+        if (cachedResponse) return cachedResponse;
+        else return caches.match('/offline');
+      }),
+  );
+});
+
+self.addEventListener('push', (event) => {
   const text = event.data.text();
   const data = !text.startsWith('{') ? { title: text } : event.data.json();
   console.log('Received push', data);
-  event.waitUntil(
-    self.registration.showNotification(data.title, data),
-  );
+  event.waitUntil(self.registration.showNotification(data.title, data));
 });
 
 self.addEventListener('notificationclick', function (event) {
