@@ -12,12 +12,12 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  const isAPI = new URL(event.request.url).pathname.startsWith('/api');
+  const acceptsHTML = event.request.headers.get('Accept')?.includes('text/html');
 
   event.respondWith(
     fetch(event.request)
       .catch(async (e) => {
-        if (isAPI) throw e;
+        if (!acceptsHTML) throw e;
         const cachedResponse = await caches.match(event.request);
         if (cachedResponse) return cachedResponse;
         else return caches.match('/offline');

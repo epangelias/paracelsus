@@ -91,7 +91,7 @@ export function usePWA() {
 
   useEffect(() => {
     globalThis.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
+      // e.preventDefault();
 
       const deferredPrompt = e as Event & { prompt: () => void; userChoice: Promise<void> };
 
