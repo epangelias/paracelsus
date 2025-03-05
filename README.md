@@ -77,8 +77,3 @@ echo "import*as webPush from'npm:web-push';webPush.generateVAPIDKeys()" | deno
 Set the `ADMIN_USERNAME` and `ADMIN_PASSWORD` environment variables.
 
 Access the admin portal `/admin` and customize the actions at `lib/admin-plugin.ts`.
-
-## TODO
-
-- Fix the auto homepage catching
-- Put alert box into global, global.alert(), for errors, messages, popups, etc

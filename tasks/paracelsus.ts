@@ -58,6 +58,7 @@ await move('.env.template', '.env');
 
 await Deno.remove('tasks/paracelsus.ts');
 await Deno.remove('README.md');
+await Deno.remove('TODO.md');
 await Deno.remove('.git', { recursive: true });
 await Deno.remove('.github', { recursive: true });
 

@@ -36,7 +36,7 @@ export function Global({ children, user, mailEnabled, stripeEnabled, pushEnabled
   useEffect(unregisterPushWhenLoggedOut, [
     global.pwa.pushSubscription.value,
     global.user.value,
-    global.pwa.worker.value,
+    // global.pwa.worker.value, // FIXME: Causes sign up page to blank
   ]);
 
   return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
