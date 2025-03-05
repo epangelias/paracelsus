@@ -4,13 +4,6 @@ self.addEventListener('install', (event) => {
   );
 });
 
-self.addEventListener('activate', (event) => {
-  console.log('Service Worker activated');
-  event.waitUntil(
-    caches.open('offline-cache').then((cache) => cache.delete('/').then(() => cache.add('/'))),
-  );
-});
-
 self.addEventListener('fetch', (event) => {
   const acceptsHTML = event.request.headers.get('Accept')?.includes('text/html');
 
@@ -38,12 +31,12 @@ self.addEventListener('notificationclick', function (event) {
 self.addEventListener('message', async (event) => {
   const data = event.data;
 
-  if (data.type === 'CATCH') {
-    const response = fetch('/').catch((e) => e);
-
-    if (response.ok) {
-      const cache = await caches.open('offline-cache');
-      await cache.put('/', response);
-    } else console.error('Failed to update homepage catch');
+  if (data.type === 'cache') {
+    event.waitUntil(
+      caches.open('offline-cache').then((cache) => cache.delete('/').then(() => cache.add('/'))),
+    );
+  }
+  else (data.type === 'ping'){
+    console.log('pong');
   }
 });
