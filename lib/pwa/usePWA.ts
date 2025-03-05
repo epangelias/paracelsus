@@ -74,12 +74,7 @@ export async function loadServiceWorker() {
 
   registration?.update();
 
-  const workerURL = '/worker.js';
-
-  if (!registration) {
-    registration = await navigator.serviceWorker.register(workerURL, { scope: '/' });
-    return null;
-  }
+  if (!registration) registration = await navigator.serviceWorker.register('/worker.js', { scope: '/' });
 
   return registration;
 }
