@@ -35,8 +35,7 @@ self.addEventListener('message', async (event) => {
     event.waitUntil(
       caches.open('offline-cache').then((cache) => cache.delete('/').then(() => cache.add('/'))),
     );
-  }
-  else (data.type === 'ping'){
+  } else if (data.type === 'ping') {
     console.log('pong');
   }
 });
