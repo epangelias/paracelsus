@@ -54,6 +54,7 @@ export async function loadServiceWorker() {
   // Need to fix so that the notifications re-register when the worker changes
   const oldWorkerURL = _oldWorkerURL?.pathname! + _oldWorkerURL?.search;
 
+  console.log({ oldWorkerURL, workerURL });
   if (!registration || oldWorkerURL != workerURL) {
     console.log({ oldWorkerURL, workerURL });
     console.log('Unloading and loading service worker');
