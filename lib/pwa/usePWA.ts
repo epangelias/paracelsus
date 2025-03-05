@@ -52,6 +52,7 @@ export async function loadServiceWorker() {
   if (!registration) registration = await navigator.serviceWorker.register('/worker.js', { scope: '/' });
 
   navigator.serviceWorker.controller?.postMessage({ type: 'ping' });
+  navigator.serviceWorker.controller?.postMessage({ type: 'cache' });
 
   return registration;
 }
