@@ -33,7 +33,7 @@ Generates icons, screenshots, favicon, and splashscreens.
 Prerequisite: Install browser for Puppeteer
 
 ```sh
-npx puppeteer browsers install chrome`
+npx puppeteer browsers install chrome
 ```
 
 Generate assets. Ensure running locally.
@@ -69,7 +69,7 @@ Include the `OPENAI_API_BASE`, `OPENAI_API_KEY`, and `OPENAI_MODEL` environment 
 Set the `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY` environment variables. Generate them with
 
 ```sh
-echo "import*as webPush from'npm:web-push';webPush.generateVAPIDKeys()" | deno
+echo "import*as w from'npm:web-push';w.generateVAPIDKeys()" | deno
 ```
 
 ## Enable Administration

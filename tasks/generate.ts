@@ -3,14 +3,13 @@
 import * as Path from 'jsr:@std/path@1';
 import { generateImages } from 'npm:pwa-asset-generator';
 import puppeteer from 'npm:puppeteer';
-import { Builder } from 'fresh/dev';
 import { delay } from '@std/async/delay';
 import { Spinner } from 'jsr:@std/cli@1.0.9/unstable-spinner';
 import { parseArgs } from 'jsr:@std/cli@1.0.9/parse-args';
-import { helpCLI } from '@/lib/utils/cli.ts';
+import { $, helpCLI } from '@/lib/utils/cli.ts';
 import { site } from '@/app/site.ts';
-import { app } from '@/main.ts';
 import sharp from 'npm:sharp';
+import path from 'node:path';
 
 const args = parseArgs(Deno.args);
 const _iconPath = args._[0] as string;
@@ -49,9 +48,10 @@ async function runApp() {
   try {
     await fetch(localURL);
   } catch (_e) {
-    console.warn('Running app locally...');
-    const builder = new Builder();
-    builder.listen(app);
+    spinner.message = 'Building app...';
+    await $(path.join(import.meta.dirname!, './build.ts'));
+    spinner.message = 'Running app...';
+    $(path.join(import.meta.dirname!, '../main.ts'));
     await delay(1000);
   }
 }
