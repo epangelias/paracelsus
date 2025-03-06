@@ -34,8 +34,9 @@ const screenshotNarrowPath = Path.join(import.meta.dirname!, '../static/img/scre
 async function init() {
   spinner.start();
 
+  if (iconPath != generatedIconPath) await sharp(iconPath).webp().toFile(generatedIconPath);
+
   await runApp();
-  await sharp(iconPath).webp().toFile(generatedIconPath);
   await takeScreenshot(localURL, screenshotWidePath, 1280, 720);
   await takeScreenshot(localURL, screenshotNarrowPath, 750, 1280);
   await generateAssets(iconPath, outputDir);
