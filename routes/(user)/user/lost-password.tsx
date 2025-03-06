@@ -10,6 +10,7 @@ import { isMailEnabled } from '@/lib/mail/mail.ts';
 
 export const handler = define.handlers({
   POST: async (ctx) => {
+    ctx.state.title = 'Lost Password';
     if (!isMailEnabled()) throw new HttpError(STATUS_CODE.NotFound);
     const { email } = Meth.formDataToObject(await ctx.req.formData());
     const userId = await getUserIdByEmail(email);
@@ -22,7 +23,7 @@ export const handler = define.handlers({
 });
 
 export default define.page<typeof handler>(({ data }) => (
-  <Page hideBanner={true} hideHeader={true}>
+  <Page hideBanner hideHeader>
     <h1>Lost your password?</h1>
     <p>
       We'll send you an email with instructions on how to reset your password.

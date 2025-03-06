@@ -2,9 +2,15 @@ import { define } from '@/lib/utils/utils.ts';
 import { Page } from '@/components/Page.tsx';
 import IconCheckCircle from 'icons/tabler/circle-check-filled';
 import { site } from '@/app/site.ts';
+import { page } from 'fresh';
+
+export const handler = define.handlers((ctx) => {
+  ctx.state.title = 'Pricing';
+  return page();
+});
 
 export default define.page((ctx) => (
-  <Page hideBanner={true}>
+  <Page hideBanner>
     <h1>Pricing</h1>
 
     <div class='pricings'>

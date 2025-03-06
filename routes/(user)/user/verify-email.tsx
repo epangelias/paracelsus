@@ -7,6 +7,7 @@ import { isMailEnabled } from '@/lib/mail/mail.ts';
 
 export const handler = define.handlers({
   GET: async (ctx) => {
+    ctx.state.title = 'Verify Email';
     if (!isMailEnabled()) throw new HttpError(STATUS_CODE.NotFound);
     const code = ctx.url.searchParams.get('code') as string;
     if (!code) throw new HttpError(STATUS_CODE.BadRequest, 'Missing verification code');

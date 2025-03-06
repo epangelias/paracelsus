@@ -13,6 +13,7 @@ const limiter = new RateLimiter();
 
 export const handler = define.handlers({
   POST: async (ctx) => {
+    ctx.state.title = 'Sign In';
     limiter.request();
 
     const { email, password } = Meth.formDataToObject(await ctx.req.formData());
@@ -25,7 +26,7 @@ export const handler = define.handlers({
 });
 
 export default define.page<typeof handler>(() => (
-  <Page hideHeader={true} hideBanner={true}>
+  <Page hideHeader hideBanner>
     <div>
       <h1>Sign In</h1>
       <Form method='POST'>

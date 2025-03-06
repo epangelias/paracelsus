@@ -14,6 +14,7 @@ import { isMailEnabled } from '@/lib/mail/mail.ts';
 
 export const handler = define.handlers({
   GET: (ctx) => {
+    ctx.state.title = 'Reset Password';
     if (!isMailEnabled()) throw new HttpError(STATUS_CODE.NotFound);
     const code = ctx.url.searchParams.get('code');
     if (!code) throw new HttpError(STATUS_CODE.Unauthorized);

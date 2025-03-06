@@ -25,6 +25,7 @@ export const handler = define.handlers((ctx) => {
       return new Response(message, { statusText: STATUS_TEXT[status as StatusCode], status });
     }
     if (status == STATUS_CODE.Unauthorized) return ctx.redirect('/user/signin');
+    ctx.state.title = message;
     return page({ status, statusText: message });
   }
 });

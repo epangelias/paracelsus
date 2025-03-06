@@ -9,6 +9,7 @@ import { sendEmailVerification } from '@/app/email.tsx';
 
 export const handler = define.handlers({
   GET: (ctx) => {
+    ctx.state.title = 'User Settings';
     const user = ctx.state.user;
     if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
     return page();

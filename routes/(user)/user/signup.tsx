@@ -1,5 +1,5 @@
 import { define } from '@/lib/utils/utils.ts';
-import { HttpError } from 'fresh';
+import { HttpError, page } from 'fresh';
 import { authorizeUser, setAuthCookie } from '@/lib/user/user-data.ts';
 import { Meth } from '@/lib/utils/meth.ts';
 import { Page } from '@/components/Page.tsx';
@@ -17,6 +17,10 @@ const SIGN_UP_ONLY = Deno.env.get('SIGN_UP_ONLY') == 'true';
 const limiter = new RateLimiter();
 
 export const handler = define.handlers({
+  GET: (ctx) => {
+    ctx.state.title = 'Sign Up';
+    return page();
+  },
   POST: async (ctx) => {
     limiter.request();
 
@@ -46,7 +50,7 @@ export const handler = define.handlers({
 });
 
 export default define.page<typeof handler>(() => (
-  <Page hideHeader={true} hideBanner={true}>
+  <Page hideHeader hideBanner>
     <div>
       <h1>Sign Up</h1>
       <Form method='POST'>
