@@ -6,11 +6,11 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('fetch', (event) => {
   const acceptsHTML = event.request.headers.get('Accept')?.includes('text/html');
+  if (!acceptsHTML) return;
 
   event.respondWith(
     fetch(event.request)
-      .catch(async (e) => {
-        if (!acceptsHTML) return e;
+      .catch(async (_e) => {
         const cachedResponse = await caches.match(event.request);
         if (cachedResponse) return cachedResponse;
         else if (new URL(event.request.url).pathname === '/') return caches.match('/');
