@@ -1,7 +1,7 @@
 #!/usr/bin/env -S deno run -A --env
 
 import * as Path from 'jsr:@std/path@1';
-import { generateImages } from 'npm:pwa-asset-generator';
+import { generateImages } from 'npm:pwa-asset-generator@6.4.0';
 import puppeteer from 'npm:puppeteer';
 import { delay } from '@std/async/delay';
 import { Spinner } from 'jsr:@std/cli@1.0.9/unstable-spinner';
@@ -85,6 +85,10 @@ async function generateAssets(inputIcon: string, outputDir: string) {
     padding: '20%',
     pathOverride: '/img/gen',
   });
+
+  console.log("DONE");
+
+  spinner.message = 'Generating assets...DONE';
 
   const iconsJSON = new URL('../static/img/gen/icons.json', import.meta.url);
   await Deno.writeTextFile(iconsJSON, JSON.stringify(result.manifestJsonContent, null, 2));
