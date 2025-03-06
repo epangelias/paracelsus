@@ -10,7 +10,7 @@ async function getSitemap() {
     sitemapCache = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url><loc>${site.baseURL}</loc></url>
-<url><loc>${site.baseURL}/user/pricing</loc></url>
+<url><loc>${site.baseURL}/pricing</loc></url>
 ${dirs.map((dir) => `<url><loc>${site.baseURL}/${dir.name.replace(/\.md$/, '')}</loc></url>`).join('\n')}
 </urlset>`;
   }

@@ -23,7 +23,7 @@ export function createBannerData(global: GlobalData): BannerData[] {
       canClose: true,
       content: () => (
         <>
-          <a href='/user/pricing'>Subscribe</a> for unlimited tokens
+          <a href='/pricing'>Subscribe</a> for unlimited tokens
         </>
       ),
     },

@@ -15,7 +15,7 @@ export function OutOfTokensDialog() {
         )
         : global.stripeEnabled && (
           <p>
-            Subscribe for unlimited tokens. <a href='/user/pricing'>Subscribe</a>
+            Subscribe for unlimited tokens. <a href='/pricing'>Subscribe</a>
           </p>
         )}
     </Dialog>
