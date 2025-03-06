@@ -10,7 +10,7 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .catch(async (e) => {
-        if (!acceptsHTML) throw e;
+        if (!acceptsHTML) return e;
         const cachedResponse = await caches.match(event.request);
         if (cachedResponse) return cachedResponse;
         else if (new URL(event.request.url).pathname === '/') return caches.match('/');
@@ -29,14 +29,15 @@ self.addEventListener('notificationclick', function (event) {
   event.waitUntil(clients.openWindow(self.origin));
 });
 
-self.addEventListener('message', async (event) => {
+async function setHomepageCache() {
+  console.log('setting cache');
+  const cache = await caches.open('offline-cache');
+  return fetch('/').then((res) => cache.put('/', res));
+}
+
+self.addEventListener('message', (event) => {
   const data = event.data;
 
-  if (data.type === 'cache') {
-    event.waitUntil(
-      caches.open('offline-cache').then((cache) => cache.delete('/').then(() => cache.add('/'))),
-    );
-  } else if (data.type === 'ping') {
-    console.log('pong');
-  }
+  if (data.type === 'cache') event.waitUntil(setHomepageCache());
+  else if (data.type === 'ping') console.log('pong');
 });

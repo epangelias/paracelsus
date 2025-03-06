@@ -22,7 +22,7 @@ export const handler = define.handlers({
 });
 
 export default define.page<typeof handler>(({ data }) => (
-  <Page>
+  <Page hideBanner={true} hideHeader={true}>
     <h1>Lost your password?</h1>
     <p>
       We'll send you an email with instructions on how to reset your password.
