@@ -18,7 +18,7 @@ export function stripUserData(user?: UserData) {
   } as Partial<UserData>;
 }
 
-export function createUser(options: { name: string, email: string, password: string, isPremium: boolean }) {
+export function createUser(options: { name: string; email: string; password: string; isPremium: boolean }) {
   return createUserData({
     name: options.name,
     email: options.email,
