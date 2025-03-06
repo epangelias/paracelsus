@@ -14,7 +14,6 @@ export async function getPage(slug: string): Promise<PageData | null> {
     const [_, metaText, ...content] = text.split('---');
     if (!metaText) throw new HttpError(500);
     const meta = YAML.parse(metaText) as PageData;
-    console.log(meta);
     const html = await renderMarkdown(content.join('---'));
 
     return { ...meta, html } as PageData;

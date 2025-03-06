@@ -1,4 +1,4 @@
-import * as ammonia from 'https://deno.land/x/ammonia@0.3.1/mod.ts';
+import * as ammonia from 'ammonia';
 import { marked } from 'marked';
 
 let waiting: void | true = true;

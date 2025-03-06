@@ -24,8 +24,9 @@ export function Global({ children, user, mailEnabled, stripeEnabled, pushEnabled
     pushEnabled,
   };
 
-  // Synchronize user data with server
-  if (user) useEffect(() => syncSSE('/api/userdata', { data: global.user }), []);
+  useEffect(() => {
+    if (user) syncSSE('/api/userdata', { data: global.user });
+  }, []);
 
   function unregisterPushWhenLoggedOut() {
     if (global.pwa.worker.value && global.pwa.pushSubscription.value && !global.user.value) {

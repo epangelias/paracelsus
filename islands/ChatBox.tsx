@@ -20,13 +20,13 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
   const checkCanGenerate = () => global.user.value && (global.user.value.tokens! > 0 || global.user.value.isSubscribed);
 
-  if (!global.user.value) return <></>;
-
   useEffect(() => syncSSE('/api/chatdata', { data: chatData }), []);
 
   useEffect(() => {
     scrollToBottom(50);
   }, [chatData.value]);
+
+  if (!global.user.value) return null;
 
   function addMessage(message: AIMessage) {
     chatData.value.messages.push(message);
@@ -51,7 +51,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
 
     try {
       global.pwa.requestSubscription();
-    } catch (e) {}
+    } catch (_e) { /**/ }
 
     if (!checkCanGenerate()) return showOutOfTokensDialog();
     if (!inputRef.current) return;
@@ -131,7 +131,7 @@ export default function ChatBox({ data }: { data: ChatData }) {
             onKeyPress={handleKeyPress}
           >
           </textarea>
-          <button disabled={generating.value}>
+          <button type='button' disabled={generating.value}>
             {generating.value ? <Loader class='icon' /> : <ArrowUp class='icon' />}
           </button>
         </form>

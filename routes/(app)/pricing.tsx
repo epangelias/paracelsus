@@ -56,7 +56,7 @@ export default define.page((ctx) => (
           </p>
         </div>
         {ctx.state.user?.isSubscribed
-          ? <button disabled>Subscribed</button>
+          ? <button type='button' disabled>Subscribed</button>
           : <a href='/user/subscribe' class='button' aria-disabled>Subscribe</a>}
       </div>
     </div>

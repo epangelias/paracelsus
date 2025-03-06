@@ -33,7 +33,8 @@
     "preact-render-to-string": "npm:preact-render-to-string@^6.5.13",
     "stripe": "npm:stripe@^17.3.1",
     "web-push": "npm:web-push@^3.6.7",
-    "icons/": "https://icons.church/"
+    "icons/": "https://icons.church/",
+    "ammonia": "https://deno.land/x/ammonia@0.3.1/mod.ts"
   },
   "compilerOptions": {
     "lib": [

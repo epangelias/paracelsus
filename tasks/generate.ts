@@ -40,7 +40,7 @@ async function init() {
   await runApp();
   await takeScreenshot(localURL, screenshotWidePath, 1280, 720);
   await takeScreenshot(localURL, screenshotNarrowPath, 750, 1280);
-  // await generateAssets(iconPath, outputDir);
+  await generateAssets(iconPath, outputDir);
   await generateICO();
 
   spinner.stop();
@@ -88,7 +88,7 @@ async function generateAssets(inputIcon: string, outputDir: string) {
     padding: '10%',
     pathOverride: '/img/gen',
     log: false,
-    "scrape": false,
+    scrape: false,
   });
 
   const iconsJSON = new URL('../static/img/gen/icons.json', import.meta.url);

@@ -18,7 +18,7 @@ export function Dialog(props: Props) {
   return (
     <dialog onClick={onClick} id={props.id} class={props.class}>
       <form method='dialog'>
-        <button class='close'></button>
+        <button class='close' type='button'></button>
       </form>
       {props.children}
     </dialog>

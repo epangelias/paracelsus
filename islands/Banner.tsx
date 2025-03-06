@@ -38,7 +38,7 @@ export function createBannerData(global: GlobalData): BannerData[] {
       condition: () => global.pwa.installPWA.value && !global.pwa.isPWA.value && !isIOSSafari(),
       canClose: true,
       content: () => (
-        <button class='link' onClick={global.pwa.installPWA.value}>
+        <button type='button' class='link' onClick={global.pwa.installPWA.value}>
           Install this app to your device
         </button>
       ),
@@ -78,7 +78,7 @@ export function Banners() {
     ready.value,
   ]);
 
-  if (!banner.value || !IS_BROWSER) return <></>;
+  if (!banner.value || !IS_BROWSER) return null;
 
   return <Banner banner={banner.value} />;
 }
@@ -86,9 +86,9 @@ export function Banners() {
 function Banner(
   { banner }: { banner: BannerData },
 ) {
-  if (!banner || !IS_BROWSER) return <></>;
-
   const hideBanner = useSignal(true);
+
+  if (!banner || !IS_BROWSER) return null;
 
   hideBanner.value = localStorage.getItem('hideBanner-' + banner.name) === 'true';
 
@@ -106,6 +106,7 @@ function Banner(
   return (
     <>
       <button
+        type='button'
         class='banner-closed-button'
         onClick={onOpen}
         data-hide={!hideBanner.value}
@@ -115,7 +116,7 @@ function Banner(
       </button>
       <div class='banner' role='status' aria-live='polite' data-hide={hideBanner.value}>
         {banner.content()}
-        {banner.canClose && <button onClick={onClose} aria-label='Close' class='close'></button>}
+        {banner.canClose && <button type='button' onClick={onClose} aria-label='Close' class='close'></button>}
       </div>
     </>
   );

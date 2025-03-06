@@ -21,7 +21,7 @@ export function UserMenu() {
     <>
       {global.user.value
         ? (
-          <button class='trigger link' popovertarget='user-menu-dropdown'>
+          <button type='button' class='trigger link' popovertarget='user-menu-dropdown'>
             {isOpen.value ? '▾' : '▸'} {name}
           </button>
         )
