@@ -10,6 +10,7 @@ import { $, helpCLI } from '@/lib/utils/cli.ts';
 import { site } from '@/app/site.ts';
 import sharp from 'npm:sharp';
 import path from 'node:path';
+import pngToICO from 'npm:png-to-ico';
 
 const args = parseArgs(Deno.args);
 const _iconPath = args._[0] as string;
@@ -39,7 +40,8 @@ async function init() {
   await runApp();
   await takeScreenshot(localURL, screenshotWidePath, 1280, 720);
   await takeScreenshot(localURL, screenshotNarrowPath, 750, 1280);
-  await generateAssets(iconPath, outputDir);
+  // await generateAssets(iconPath, outputDir);
+  await generateICO();
 
   spinner.stop();
   Deno.exit();
@@ -83,16 +85,22 @@ async function generateAssets(inputIcon: string, outputDir: string) {
   const result = await generateImages(inputIcon, outputDir, {
     background: site.backgroundColor,
     favicon: true,
-    padding: '20%',
+    padding: '10%',
     pathOverride: '/img/gen',
+    log: false,
+    "scrape": false,
   });
-
-  console.log("DONE");
-
-  spinner.message = 'Generating assets...DONE';
 
   const iconsJSON = new URL('../static/img/gen/icons.json', import.meta.url);
   await Deno.writeTextFile(iconsJSON, JSON.stringify(result.manifestJsonContent, null, 2));
+}
+
+async function generateICO() {
+  spinner.message = 'Generating ICO file...';
+  const icoPath = Path.join(import.meta.dirname!, '../static/favicon.ico');
+  const image = await sharp(iconPath).resize(196, 196).toBuffer();
+  const icoResult = await pngToICO(image);
+  await Deno.writeFile(icoPath, new Uint8Array(icoResult));
 }
 
 async function URLtoPath(url: string) {
