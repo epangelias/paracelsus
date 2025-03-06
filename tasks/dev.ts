@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run -A --env --watch=static/,routes/
+#!/usr/bin/env -S deno run -A --env --watch=static/,routes/,pages,.env
 
 import { Builder } from 'fresh/dev';
 import { app } from '@/main.ts';
