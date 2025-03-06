@@ -5,7 +5,7 @@ export default define.page(() => (
   <Page hideBanner={true} hideHeader={true}>
     <h1>Your Offline!</h1>
     <p>
-      <a href='/'>Reload</a>
+      <a href='/'>Back</a>
     </p>
   </Page>
 ));
