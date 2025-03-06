@@ -4,20 +4,20 @@
 
 Install paracelsus command
 
-```bash
+```sh
 deno install -Agrf https://raw.githubusercontent.com/epangelias/paracelsus/refs/heads/main/tasks/paracelsus.ts
 ```
 
 Create a new project with
 
 ```sh
-$ paracelsus my-project
+paracelsus my-project
 ```
 
 Start the development server
 
-```bash
-$ deno task dev
+```sh
+deno task dev
 ```
 
 ## Customization
@@ -33,13 +33,13 @@ Generates icons, screenshots, favicon, and splashscreens.
 Prerequisite: Install browser for Puppeteer
 
 ```sh
-$ npx puppeteer browsers install chrome`
+npx puppeteer browsers install chrome`
 ```
 
 Generate assets. Ensure running locally.
 
 ```sh
-$ deno task generate /path/to/icon.png
+deno task generate /path/to/icon.png
 ```
 
 ## Enable MailJet
@@ -55,7 +55,7 @@ Initiate stripe using the `deno task stripe-init` task, then include the `STRIPE
 Listen locally for webhook events
 
 ```sh
-$ stripe listen --forward-to localhost:8000/api/stripe-webhooks --events=customer.subscription.created,customer.subscription.deleted
+stripe listen --forward-to localhost:8000/api/stripe-webhooks --events=customer.subscription.created,customer.subscription.deleted
 ```
 
 Then copy the webhook secret to `STRIPE_WEBHOOK_SECRET`
