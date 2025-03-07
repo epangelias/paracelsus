@@ -83,7 +83,8 @@ async function generateAssets(inputIcon: string, outputDir: string) {
   spinner.message = 'Generating assets...';
 
   const result = await generateImages(inputIcon, outputDir, {
-    background: site.backgroundColor,
+    // background: site.backgroundColor,
+    background: 'linear-gradient(0deg, rgba(18,22,25,1) 0%, rgba(48,48,48,1) 100%)',
     favicon: true,
     padding: '10%',
     pathOverride: '/img/gen',
