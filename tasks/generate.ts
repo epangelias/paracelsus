@@ -29,8 +29,8 @@ const localURL = 'http://0.0.0.0:8000';
 const spinner = new Spinner({ color: 'green' });
 const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');
 const iconPath = await download(_iconPath);
-const screenshotWidePath = Path.join(import.meta.dirname!, '../static/img/screenshot-wide.jpg');
-const screenshotNarrowPath = Path.join(import.meta.dirname!, '../static/img/screenshot-narrow.jpg');
+const screenshotWidePath = Path.join(import.meta.dirname!, '../static/img/gen/screenshot-wide.jpg');
+const screenshotNarrowPath = Path.join(import.meta.dirname!, '../static/img/gen/screenshot-narrow.jpg');
 
 async function init() {
   spinner.start();

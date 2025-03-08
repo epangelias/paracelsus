@@ -20,8 +20,8 @@ const manifest = {
   orientation: 'any',
   icons,
   screenshots: [
-    { src: asset('/img/screenshot-wide.jpg'), form_factor: 'wide', sizes: '1280x720' },
-    { src: asset('/img/screenshot-narrow.jpg'), form_factor: 'narrow', sizes: '750x1280' },
+    { src: asset('/img/gen/screenshot-wide.jpg'), form_factor: 'wide', sizes: '1280x720' },
+    { src: asset('/img/gen/screenshot-narrow.jpg'), form_factor: 'narrow', sizes: '750x1280' },
   ],
 };
 
