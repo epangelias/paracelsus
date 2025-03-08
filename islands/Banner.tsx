@@ -6,10 +6,12 @@ import { BannerData, GlobalData } from '@/app/types.ts';
 import { isIOSSafari } from '@/lib/pwa/usePWA.ts';
 
 export function createBannerData(global: GlobalData): BannerData[] {
+  const outOfTokens = global.user.value?.tokens! <= 0 && !global.user.value?.isSubscribed;
+
   return [
     {
       name: 'verify-email',
-      condition: () => !global.user.value?.hasVerifiedEmail && global.outOfTokens.value && global.mailEnabled,
+      condition: () => !global.user.value?.hasVerifiedEmail && outOfTokens && global.mailEnabled,
       canClose: false,
       content: () => (
         <>
@@ -19,7 +21,7 @@ export function createBannerData(global: GlobalData): BannerData[] {
     },
     {
       name: 'subscribe',
-      condition: () => global.user.value?.hasVerifiedEmail && global.outOfTokens.value && global.stripeEnabled,
+      condition: () => global.user.value?.hasVerifiedEmail && outOfTokens && global.stripeEnabled,
       canClose: true,
       content: () => (
         <>
@@ -71,7 +73,6 @@ export function Banners() {
   }, [
     global.pwa.installPWA.value,
     global.pwa.isPWA.value,
-    global.outOfTokens.value,
     global.pwa.pushSubscription.value,
     global.pwa.worker.value,
     global.user.value,

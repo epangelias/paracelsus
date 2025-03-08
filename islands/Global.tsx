@@ -1,8 +1,8 @@
 import { useContext, useEffect } from 'preact/hooks';
 import { createContext } from 'preact';
 import { ComponentChildren } from 'preact';
-import { GlobalData, UserData } from '@/app/types.ts';
-import { useComputed, useSignal } from '@preact/signals';
+import { GlobalData } from '@/app/types.ts';
+import { useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/stream/stream-client.ts';
 import { usePWA } from '@/lib/pwa/usePWA.ts';
 import { passGlobalData } from '@/lib/passGlobalData.ts';
@@ -15,7 +15,6 @@ interface Props {
 export function Global({ children, data: { user, mailEnabled, stripeEnabled, pushEnabled } }: Props) {
   const global: GlobalData = {
     user: useSignal(user),
-    outOfTokens: useComputed(() => global.user.value?.tokens! <= 0 && !global.user.value?.isSubscribed),
     pwa: usePWA(),
     mailEnabled,
     stripeEnabled,
@@ -32,12 +31,13 @@ export function Global({ children, data: { user, mailEnabled, stripeEnabled, pus
     }
   }
 
-  useEffect(unregisterPushWhenLoggedOut, [
-    global.pwa.pushSubscription.value,
-    global.user.value,
-    // I think need to change this whole deal so that pwa has access to user and can do this there after loading worker
-    // global.pwa.worker.value, // FIXME: Causes sign up page to blank
-  ]);
+  // THis hook seems to break the page and make it black each time updated for some reason
+  // useEffect(unregisterPushWhenLoggedOut, [
+  //   global.pwa.pushSubscription.value,
+  //   global.user.value,
+  //   // I think need to change this whole deal so that pwa has access to user and can do this there after loading worker
+  //   // global.pwa.worker.value, // FIXME: Causes sign up page to blank
+  // ]);
 
   return <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>;
 }
