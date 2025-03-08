@@ -5,16 +5,14 @@ import { GlobalData, UserData } from '@/app/types.ts';
 import { useComputed, useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/stream/stream-client.ts';
 import { usePWA } from '@/lib/pwa/usePWA.ts';
+import { passGlobalData } from '@/lib/passGlobalData.ts';
 
 interface Props {
   children: ComponentChildren;
-  user: Partial<UserData> | null;
-  mailEnabled: boolean;
-  stripeEnabled: boolean;
-  pushEnabled: boolean;
+  data: ReturnType<typeof passGlobalData>;
 }
 
-export function Global({ children, user, mailEnabled, stripeEnabled, pushEnabled }: Props) {
+export function Global({ children, data: { user, mailEnabled, stripeEnabled, pushEnabled } }: Props) {
   const global: GlobalData = {
     user: useSignal(user),
     outOfTokens: useComputed(() => global.user.value?.tokens! <= 0 && !global.user.value?.isSubscribed),
@@ -37,6 +35,7 @@ export function Global({ children, user, mailEnabled, stripeEnabled, pushEnabled
   useEffect(unregisterPushWhenLoggedOut, [
     global.pwa.pushSubscription.value,
     global.user.value,
+    // I think need to change this whole deal so that pwa has access to user and can do this there after loading worker
     // global.pwa.worker.value, // FIXME: Causes sign up page to blank
   ]);
 

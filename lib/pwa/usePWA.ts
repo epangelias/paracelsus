@@ -89,6 +89,7 @@ export function usePWA() {
 
     isPWA.value = detectIsPWA();
 
+
     (async () => {
       worker.value = await loadServiceWorker();
       pushSubscription.value = await getSubscription(worker.value);

@@ -2,12 +2,9 @@ import { site } from '@/app/site.ts';
 import { define } from '@/lib/utils/utils.ts';
 import { asset } from 'fresh/runtime';
 import { Global } from '@/islands/Global.tsx';
-import { stripUserData } from '@/app/user.ts';
 import { PWATags } from '@/lib/pwa/PWATags.tsx';
-import { isMailEnabled } from '@/lib/mail/mail.ts';
-import { isStripeEnabled } from '@/lib/stripe/stripe.ts';
-import { isPushEnabled } from '@/lib/pwa/push.ts';
 import { CSSVar } from '@/components/CSSVar.tsx';
+import { passGlobalData } from '@/lib/passGlobalData.ts';
 
 export default define.page(({ Component, state }) => {
   return (
@@ -21,12 +18,18 @@ export default define.page(({ Component, state }) => {
         <meta property='og:type' content='website' />
         <meta charset='utf-8' />
         <meta name='color-scheme' content='light dark' />
-        <meta
+        {
+          /* <meta
           name='viewport'
           content='width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover'
+        /> */
+        }
+        <meta
+          name='viewport'
+          content='initial-scale=1,maximum-scale=1'
         />
 
-        <link rel='stylesheet' href={asset('/css//theme/theme.css')} />
+        <link rel='stylesheet' href={asset('/css/theme/theme.css')} />
         <link rel='stylesheet' href={asset('/css/main.css')} />
         <link rel='stylesheet' href={asset('/css/dialog.css')} />
         <link rel='stylesheet' href={asset('/css/components.css')} />
@@ -38,12 +41,7 @@ export default define.page(({ Component, state }) => {
         <CSSVar primary={site.themeColor} on-primary='#000' />
       </head>
       <body>
-        <Global
-          user={stripUserData(state.user)}
-          mailEnabled={isMailEnabled()}
-          stripeEnabled={isStripeEnabled()}
-          pushEnabled={isPushEnabled()}
-        >
+        <Global data={passGlobalData(state)}>
           <Component />
         </Global>
       </body>
