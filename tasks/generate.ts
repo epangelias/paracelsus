@@ -99,7 +99,7 @@ async function generateAssets(inputIcon: string, outputDir: string) {
 async function generateICO() {
   spinner.message = 'Generating ICO file...';
   const icoPath = Path.join(import.meta.dirname!, '../static/favicon.ico');
-  const image = await sharp(iconPath).resize(196, 196).toBuffer();
+  const image = await sharp(iconPath).png().resize(196, 196).toBuffer();
   const icoResult = await pngToICO(image);
   await Deno.writeFile(icoPath, new Uint8Array(icoResult));
 }
