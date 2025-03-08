@@ -8,9 +8,8 @@ export const handler = define.handlers((ctx) => {
   const acceptsHTML = /(text\/html|text\/\*|\*\/\*)/.test(ctx.req.headers.get('accept') ?? '*/*');
 
   try {
-    const e = ctx.error;
-    if (e instanceof HttpError) throw e;
-    console.error(e);
+    if (ctx.error instanceof HttpError) throw ctx.error;
+    console.error(ctx.error);
     throw new HttpError(STATUS_CODE.InternalServerError);
   } catch (e) {
     const { status, message } = e as HttpError;
@@ -19,14 +18,14 @@ export const handler = define.handlers((ctx) => {
     }
     if (status == STATUS_CODE.Unauthorized) return ctx.redirect('/user/signin');
     ctx.state.title = message;
-    return page({ status, statusText: message });
+    return page(message);
   }
 });
 
 export default define.page((ctx) => {
   return (
     <Page>
-      <h1>{(ctx.data as unknown as { statusText: string }).statusText}</h1>
+      <h1>{ctx.data as string}</h1>
       <p>
         <a href='/'>Go Back</a>
       </p>
