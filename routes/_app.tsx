@@ -29,9 +29,10 @@ export default define.page(({ Component, state }) => {
 
         <PWATags />
 
-        <style dangerouslySetInnerHTML={{ __html: `:root{--primary: ${site.themeColor}` }}></style>
-        <link rel='stylesheet' href={asset('/css/theme.css')} />
+        <style dangerouslySetInnerHTML={{ __html: `:root{--primary: ${site.themeColor};--on-primary: #000;` }}></style>
+        <link rel='stylesheet' href={asset('/css//theme/theme.css')} />
         <link rel='stylesheet' href={asset('/css/main.css')} />
+        <link rel='stylesheet' href={asset('/css/dialog.css')} />
         <link rel='stylesheet' href={asset('/css/components.css')} />
         <link rel='icon' href={asset('/favicon.ico')} />
 

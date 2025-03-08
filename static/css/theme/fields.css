@@ -1,0 +1,156 @@
+/* Fields */
+
+label {
+    display: block;
+    margin-bottom: var(--spacing-05);
+    color: var(--fg3);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Checkbox and radio */
+
+label:has(input[type='radio'], input[type='checkbox']) {
+    display: block;
+    margin: var(--spacing) 0;
+
+    input {
+        margin: 0.1rem;
+        margin-right: var(--spacing-05);
+        font-size: 2rem;
+        scale: 1.4;
+    }
+}
+
+/* divider */
+
+hr {
+    border: none;
+    margin: var(--spacing-2) 0;
+    background-color: var(--bg3);
+    border-radius: var(--radius);
+    height: 2px;
+}
+
+/* Buttons */
+
+button:not(.link),
+.button {
+    --color: var(--accent);
+    background-color: var(--color);
+    border-radius: var(--radius);
+    border: none;
+    padding: var(--spacing) var(--spacing-2);
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    color: var(--on-accent);
+    box-shadow: var(--field-shadow);
+    text-decoration: none;
+    text-align: center;
+    transition: background-color var(--transition), box-shadow var(--transition);
+    user-select: none;
+    -webkit-user-select: none;
+
+    &:hover:not(:disabled) {
+        background-color: color-mix(in srgb, var(--color), var(--on-accent) 15%);
+        box-shadow: none;
+    }
+
+    &:active:not(:disabled) {
+        background-color: color-mix(in srgb, var(--color), var(--on-accent) 15%);
+        scale: 1.05;
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: default;
+        box-shadow: none;
+    }
+
+    &:focus-visible {
+        outline-offset: 2px;
+        box-shadow: none;
+    }
+
+    &:has(.icon) {
+        padding: var(--spacing);
+        border-radius: 100%;
+        aspect-ratio: 1;
+    }
+}
+
+/* Inputs */
+
+:is(input:not([type]),
+    input:is([type='text'],
+        [type='password'],
+        [type='email'],
+        [type='number'],
+        [type='url'],
+        [type='tel'],
+        [type='search'],
+        [type='date'],
+        [type='file'],
+        [type='color']),
+    select,
+    textarea) {
+    max-width: 100%;
+    padding: var(--spacing) var(--spacing-2);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--radius);
+    background-color: var(--bg2);
+    font: inherit;
+    box-shadow: var(--field-shadow);
+    resize: none;
+    color: var(--fg2);
+    transition: background-color var(--transition);
+
+    &:focus {
+        color: var(--fg1);
+        border-color: transparent;
+        box-shadow: none;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+    }
+
+    &:is(select) {
+        font-weight: bold;
+        color: var(--fg2);
+        cursor: pointer;
+    }
+
+    &:is(textarea) {
+        field-sizing: content;
+    }
+}
+
+/* Links */
+
+a:not(.button),
+button.link {
+    --color: var(--accent);
+    color: var(--color);
+    text-decoration: none;
+    border: none;
+    font: inherit;
+    background: none;
+    font-weight: 600;
+    border-radius: var(--radius-05);
+    cursor: pointer;
+    transition: color var(--transition);
+    user-select: none;
+    -webkit-user-select: none;
+
+    &:hover {
+        /* text-decoration: underline; */
+        color: color-mix(in srgb, var(--color), var(--fg1) 30%);
+    }
+
+    &:active {
+        scale: 1.05;
+        color: color-mix(in srgb, var(--color), currentColor 20%);
+    }
+}
