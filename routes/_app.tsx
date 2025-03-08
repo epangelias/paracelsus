@@ -18,15 +18,9 @@ export default define.page(({ Component, state }) => {
         <meta property='og:type' content='website' />
         <meta charset='utf-8' />
         <meta name='color-scheme' content='light dark' />
-        {
-          /* <meta
-          name='viewport'
-          content='width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover'
-        /> */
-        }
         <meta
           name='viewport'
-          content='initial-scale=1,maximum-scale=1'
+          content='width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no'
         />
 
         <link rel='stylesheet' href={asset('/css/theme/theme.css')} />
