@@ -37,12 +37,13 @@ async function init() {
 
   if (iconPath != generatedIconPath) await sharp(iconPath).webp().toFile(generatedIconPath);
 
-  await runApp();
+  const ps = await runApp();
   await takeScreenshot(localURL, screenshotWidePath, 1280, 720);
   await takeScreenshot(localURL, screenshotNarrowPath, 750, 1280);
   await generateAssets(iconPath, outputDir);
   await generateICO();
 
+  ps?.kill();
   spinner.stop();
   Deno.exit();
 }
@@ -54,9 +55,13 @@ async function runApp() {
     spinner.message = 'Building app...';
     await $(path.join(import.meta.dirname!, './build.ts'));
     spinner.message = 'Running app...';
-    $(path.join(import.meta.dirname!, '../main.ts'));
+
+    const cmd = new Deno.Command(path.join(import.meta.dirname!, '../main.ts'), { stdout: "piped", stderr: 'piped' });
+    const ps = cmd.spawn();
     await delay(1000);
+    return ps;
   }
+  return null;
 }
 
 async function takeScreenshot(url: string, path: string, width: number, height: number) {
