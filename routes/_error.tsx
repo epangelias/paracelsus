@@ -9,6 +9,7 @@ export const handler = define.handlers((ctx) => {
 
   try {
     if (ctx.error instanceof HttpError) throw ctx.error;
+    if (ctx.error instanceof Deno.errors.NotFound) throw new HttpError(STATUS_CODE.NotFound);
     console.error(ctx.error);
     throw new HttpError(STATUS_CODE.InternalServerError);
   } catch (e) {

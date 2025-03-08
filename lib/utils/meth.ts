@@ -20,16 +20,6 @@ export const Meth = {
 
     return true;
   },
-
-  isEmoji(text: string) {
-    return /\p{Emoji}/u.test(text);
-  },
-
-  emojiToUrl(icon: string) {
-    return Meth.isEmoji(icon)
-      ? `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${icon}</text></svg>`
-      : icon;
-  },
   limitText(text?: string, length: number = 20) {
     if (!text) return '';
     if (text.length > length) return text.slice(0, length - 3) + '...';
