@@ -7,8 +7,8 @@ export function Page(
 ) {
   return (
     <div class='container'>
-      {!props.hideHeader && <Header />}
       {!props.hideBanner && <Banners />}
+      {!props.hideHeader && <Header />}
       <div class='scrollable'>
         <main class={props.fullWidth ? '' : 'centered'}>{props.children}</main>
       </div>
