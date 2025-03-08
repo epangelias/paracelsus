@@ -4,24 +4,17 @@ import { HttpError, page } from 'fresh';
 import { Page } from '@/components/Page.tsx';
 
 export const handler = define.handlers((ctx) => {
-  const isAPI = !!ctx.url.pathname.match(/^\/api\//) || ctx.req.headers.get('accept') === 'text/plain';
+  const isAPI = !!ctx.url.pathname.match(/^\/api\//);
+  const acceptsHTML = /(text\/html|text\/\*|\*\/\*)/.test(ctx.req.headers.get('accept') ?? '*/*');
 
   try {
     const e = ctx.error;
     if (e instanceof HttpError) throw e;
-    else if (typeof e === 'string') {
-      console.error(e);
-      throw new HttpError(STATUS_CODE.InternalServerError);
-    } else if (e instanceof Error) {
-      console.error(e);
-      throw new HttpError(STATUS_CODE.InternalServerError);
-    } else {
-      console.error(e);
-      throw new HttpError(STATUS_CODE.NotFound);
-    }
+    console.error(e);
+    throw new HttpError(STATUS_CODE.InternalServerError);
   } catch (e) {
     const { status, message } = e as HttpError;
-    if (isAPI) {
+    if (isAPI || !acceptsHTML) {
       return new Response(message, { statusText: STATUS_TEXT[status as StatusCode], status });
     }
     if (status == STATUS_CODE.Unauthorized) return ctx.redirect('/user/signin');
