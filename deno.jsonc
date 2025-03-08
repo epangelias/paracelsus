@@ -62,7 +62,8 @@
     "lineWidth": 120,
     "semiColons": true,
     "singleQuote": true,
-    "proseWrap": "preserve"
+    "proseWrap": "preserve",
+    "indentWidth": 2
   },
   "nodeModulesDir": "none"
 }
