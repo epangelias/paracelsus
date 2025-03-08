@@ -7,6 +7,7 @@ import { PWATags } from '@/lib/pwa/PWATags.tsx';
 import { isMailEnabled } from '@/lib/mail/mail.ts';
 import { isStripeEnabled } from '@/lib/stripe/stripe.ts';
 import { isPushEnabled } from '@/lib/pwa/push.ts';
+import { CSSVar } from '@/components/CSSVar.tsx';
 
 export default define.page(({ Component, state }) => {
   return (
@@ -19,17 +20,12 @@ export default define.page(({ Component, state }) => {
         <meta content={asset('/img/screenshot-wide.jpg')} property='og:image' />
         <meta property='og:type' content='website' />
         <meta charset='utf-8' />
+        <meta name='color-scheme' content='light dark' />
         <meta
           name='viewport'
           content='width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover'
         />
 
-        {/* Modify this to change the theme */}
-        <meta name='color-scheme' content='light dark' />
-
-        <PWATags />
-
-        <style dangerouslySetInnerHTML={{ __html: `:root{--primary: ${site.themeColor};--on-primary: #000;` }}></style>
         <link rel='stylesheet' href={asset('/css//theme/theme.css')} />
         <link rel='stylesheet' href={asset('/css/main.css')} />
         <link rel='stylesheet' href={asset('/css/dialog.css')} />
@@ -37,6 +33,9 @@ export default define.page(({ Component, state }) => {
         <link rel='icon' href={asset('/favicon.ico')} />
 
         <script type='module' src={asset('/js/init.js')}></script>
+
+        <PWATags />
+        <CSSVar primary={site.themeColor} on-primary='#000' />
       </head>
       <body>
         <Global
