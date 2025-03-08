@@ -56,7 +56,7 @@ async function runApp() {
     await $(path.join(import.meta.dirname!, './build.ts'));
     spinner.message = 'Running app...';
 
-    const cmd = new Deno.Command(path.join(import.meta.dirname!, '../main.ts'), { stdout: "piped", stderr: 'piped' });
+    const cmd = new Deno.Command(path.join(import.meta.dirname!, '../main.ts'), { stdout: 'piped', stderr: 'piped' });
     const ps = cmd.spawn();
     await delay(1000);
     return ps;

@@ -6,92 +6,100 @@ h3,
 h4,
 h5,
 h6 {
-    color: var(--fg1);
-    margin-top: var(--spacing-2);
-    margin-bottom: var(--spacing);
-    text-wrap: balance;
-    overflow-wrap: break-word;
+  color: var(--fg1);
+  margin-top: var(--spacing-2);
+  margin-bottom: var(--spacing);
+  text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 /* Paragraphs */
 
 p {
-    margin: var(--spacing) 0;
-    font: inherit;
-    overflow-wrap: break-word;
-    text-wrap: pretty;
+  margin: var(--spacing) 0;
+  font: inherit;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
 }
 
 /* Tables */
 
 table {
-    border-collapse: collapse;
-    width: 100%;
-    background-color: var(--bg2);
-    margin: 1em 0;
-    border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: var(--bg2);
+  margin: 1em 0;
+  border-spacing: 0;
 
-    th,
-    td {
-        border: 2px solid var(--fg3);
-        padding: var(--spacing);
-    }
+  th,
+  td {
+    border: 2px solid var(--fg3);
+    padding: var(--spacing);
+  }
 
-    th {
-        background-color: var(--primary);
-        color: var(--on-primary);
-        border-color: var(--fg1);
-        font-weight: bold;
-    }
+  th {
+    background-color: var(--primary);
+    color: var(--on-primary);
+    border-color: var(--fg1);
+    font-weight: bold;
+  }
 
-    td {
-        background-color: var(--bg1);
-        color: var(--fg2);
-    }
+  td {
+    background-color: var(--bg1);
+    color: var(--fg2);
+  }
 }
-
 
 /* Images */
 
 img {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 /* Blockquote */
 
 blockquote {
-    padding-left: var(--spacing);
-    margin: var(--spacing-2);
-    font-style: italic;
-    color: var(--fg3);
-    position: relative;
-    border-left: 5px solid var(--primary);
+  padding-left: var(--spacing);
+  margin: var(--spacing-2);
+  font-style: italic;
+  color: var(--fg3);
+  position: relative;
+  border-left: 5px solid var(--primary);
 }
-
 
 /* Code */
 
 code,
 pre {
-    font-family: 'Fira Code', 'JetBrains Mono', 'Source Code Pro', 'Hack', 'Ubuntu Mono', 'DejaVu Sans Mono', 'Monoid', 'Inconsolata', 'Courier New', monospace;
-    font-size: 12px;
-    white-space: pre-wrap;
-    overflow-x: auto;
-    background-color: var(--bg2);
-    border-radius: var(--radius);
+  font-family:
+    'Fira Code',
+    'JetBrains Mono',
+    'Source Code Pro',
+    'Hack',
+    'Ubuntu Mono',
+    'DejaVu Sans Mono',
+    'Monoid',
+    'Inconsolata',
+    'Courier New',
+    monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  background-color: var(--bg2);
+  border-radius: var(--radius);
 }
 
 code {
-    padding: var(--spacing-2) var(--spacing);
-    vertical-align: middle;
+  padding: var(--spacing-2) var(--spacing);
+  vertical-align: middle;
 }
 
 pre {
-    padding: var(--spacing);
+  padding: var(--spacing);
 
-    code {
-        background-color: transparent;
-        padding: 0;
-        overflow: hidden;
-    }
+  code {
+    background-color: transparent;
+    padding: 0;
+    overflow: hidden;
+  }
 }

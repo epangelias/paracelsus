@@ -1,16 +1,16 @@
 /* Dialogs */
 
 dialog {
-    border: var(--border-width) solid var(--border-color);
-    border-radius: var(--radius-2);
-    padding: var(--spacing-2);
-    background-color: var(--bg2);
-    box-shadow: var(--field-shadow);
-    max-width: 400px;
-    width: 90%;
-    margin: auto;
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--radius-2);
+  padding: var(--spacing-2);
+  background-color: var(--bg2);
+  box-shadow: var(--field-shadow);
+  max-width: 400px;
+  width: 90%;
+  margin: auto;
 
-    &::backdrop {
-        background-color: rgba(0, 0, 0, 0.5);
-    }
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 }

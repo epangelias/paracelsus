@@ -9,6 +9,6 @@ export function passGlobalData(state: State) {
     user: stripUserData(state.user),
     mailEnabled: isMailEnabled(),
     stripeEnabled: isStripeEnabled(),
-    pushEnabled: isPushEnabled()
+    pushEnabled: isPushEnabled(),
   };
 }

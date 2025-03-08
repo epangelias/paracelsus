@@ -24,11 +24,12 @@ ${Color.green(options.name)}${options.description ? `: ${options.description}` :
 
 ${options.usage ? Color.blue('Usage: ') + options.usage : ''}
 
-${options.options
+${
+    options.options
       ? Color.blue('Options:\n') +
-      options.options.map((opt) => `  ${opt.flag}\t${opt.usage || ''}`)
+        options.options.map((opt) => `  ${opt.flag}\t${opt.usage || ''}`)
       : ''
-    }
+  }
 `;
 
   console.log(helpMessage);

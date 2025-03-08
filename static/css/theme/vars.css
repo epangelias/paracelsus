@@ -1,55 +1,55 @@
 :root {
-    --dark1: #000;
-    --dark2: #222;
-    --dark3: #333;
-    --dark4: #555;
-    --light1: #fff;
-    --light2: #ddd;
-    --light3: #aaa;
-    --light4: #777;
+  --dark1: #000;
+  --dark2: #222;
+  --dark3: #333;
+  --dark4: #555;
+  --light1: #fff;
+  --light2: #ddd;
+  --light3: #aaa;
+  --light4: #777;
 
-    --radius: 4px;
-    --spacing: 8px;
-    --border-width: 1px;
-    --border-color: var(--bg3);
-    --transition: 0.15s ease-in;
-    --field-shadow: 0 1px 5px #0002;
+  --radius: 4px;
+  --spacing: 8px;
+  --border-width: 1px;
+  --border-color: var(--bg3);
+  --transition: 0.15s ease-in;
+  --field-shadow: 0 1px 5px #0002;
 
-    --radius-05: calc(var(--radius) * 0.5);
-    --radius-2: calc(var(--radius) * 2);
-    --spacing-05: calc(var(--spacing) * 0.5);
-    --spacing-2: calc(var(--spacing) * 2);
-    --red: color-mix(in srgb, red, var(--fg1) 25%);
+  --radius-05: calc(var(--radius) * 0.5);
+  --radius-2: calc(var(--radius) * 2);
+  --spacing-05: calc(var(--spacing) * 0.5);
+  --spacing-2: calc(var(--spacing) * 2);
+  --red: color-mix(in srgb, red, var(--fg1) 25%);
 }
 
 .theme-light {
-    --accent: #146ee4;
-    --on-accent: var(--light1);
+  --accent: #146ee4;
+  --on-accent: var(--light1);
 
-    --bg1: var(--light1);
-    --bg2: var(--light1);
-    --bg3: var(--light2);
-    --bg4: var(--light3);
+  --bg1: var(--light1);
+  --bg2: var(--light1);
+  --bg3: var(--light2);
+  --bg4: var(--light3);
 
-    --fg1: var(--dark1);
-    --fg2: var(--dark2);
-    --fg3: var(--dark3);
-    --fg4: var(--dark4);
+  --fg1: var(--dark1);
+  --fg2: var(--dark2);
+  --fg3: var(--dark3);
+  --fg4: var(--dark4);
 }
 
 .theme-dark {
-    --accent: #7eb1f4;
-    --on-accent: var(--dark1);
+  --accent: #7eb1f4;
+  --on-accent: var(--dark1);
 
-    --bg1: var(--dark1);
-    --bg2: var(--dark2);
-    --bg3: var(--dark3);
-    --bg4: var(--dark4);
+  --bg1: var(--dark1);
+  --bg2: var(--dark2);
+  --bg3: var(--dark3);
+  --bg4: var(--dark4);
 
-    --fg1: var(--light1);
-    --fg2: var(--light2);
-    --fg3: var(--light3);
-    --fg4: var(--light4);
+  --fg1: var(--light1);
+  --fg2: var(--light2);
+  --fg3: var(--light3);
+  --fg4: var(--light4);
 
-    --field-shadow: none;
+  --field-shadow: none;
 }

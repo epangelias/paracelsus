@@ -1,49 +1,49 @@
 /* Page Transitions */
 
 @view-transition {
-    navigation: auto;
+  navigation: auto;
 }
 
 main {
-    view-transition-name: page;
+  view-transition-name: page;
 }
 
 ::view-transition-group(page) {
-    animation-duration: 1s;
+  animation-duration: 1s;
 }
 
 ::view-transition-old(page) {
-    animation: 0.5s ease-in both move-out;
+  animation: 0.5s ease-in both move-out;
 }
 
 ::view-transition-new(page) {
-    animation: 0.5s ease-in both move-in;
+  animation: 0.5s ease-in both move-in;
 }
 
 @keyframes move-out {
-    from {
-        opacity: 1;
-    }
+  from {
+    opacity: 1;
+  }
 
-    50% {
-        opacity: 0;
-    }
+  50% {
+    opacity: 0;
+  }
 
-    to {
-        opacity: 0;
-    }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes move-in {
-    from {
-        opacity: 0;
-    }
+  from {
+    opacity: 0;
+  }
 
-    50% {
-        opacity: 0;
-    }
+  50% {
+    opacity: 0;
+  }
 
-    to {
-        opacity: 1;
-    }
+  to {
+    opacity: 1;
+  }
 }
