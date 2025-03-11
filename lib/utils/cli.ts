@@ -1,7 +1,7 @@
 import * as Color from 'jsr:@std/fmt/colors';
 import * as Path from 'jsr:@std/path@1';
 
-function errorCLI(message: string) {
+export function errorCLI(message: string) {
   console.error(`${Color.red(Color.bold('error'))}: ${message}`);
 }
 
@@ -26,7 +26,7 @@ ${options.usage ? Color.blue('Usage: ') + options.usage : ''}
 
 ${options.options
       ? Color.blue('Options:\n') +
-      options.options.map((opt) => `  ${opt.flag}\t${opt.usage || ''}`)
+      options.options.map((opt) => `  ${opt.flag}\t${opt.usage || ''}`).join('\n')
       : ''
     }
 `;

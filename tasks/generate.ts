@@ -11,14 +11,18 @@ import sharp from 'npm:sharp';
 import path from 'node:path';
 import pngToICO from 'npm:png-to-ico';
 
-const args = parseArgs(Deno.args);
-const _iconPath = args._[0] as string;
+const args = parseArgs<{ help: boolean, icon: string }>(Deno.args);
 
-if (args.help || args.h || !_iconPath) {
+const _iconPath = args.icon;
+
+if (args.help) {
   helpCLI({
     name: 'deno task generate',
-    usage: 'deno task generate <icon-path>',
-    options: [{ flag: '-h, --help', usage: 'Show this help message' }],
+    usage: 'deno task generate --icon <icon-path>',
+    options: [
+      { flag: '--help', usage: 'Show this help message' },
+      { flag: '--icon', usage: 'Set the icon from a path or URL' }
+    ],
   });
   Deno.exit();
 }
@@ -27,9 +31,9 @@ const generatedIconPath = Path.join(import.meta.dirname!, '../static/img/icon.we
 const localURL = 'http://0.0.0.0:8000';
 const spinner = new Spinner({ color: 'green' });
 const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');
-const iconPath = await downloadIfURL(_iconPath);
 const screenshotWidePath = Path.join(import.meta.dirname!, '../static/img/gen/screenshot-wide.jpg');
 const screenshotNarrowPath = Path.join(import.meta.dirname!, '../static/img/gen/screenshot-narrow.jpg');
+const iconPath = _iconPath === undefined ? Path.join(import.meta.dirname!, '../static/img/icon.webp') : await downloadIfURL(_iconPath);
 
 async function init() {
   spinner.start();
@@ -37,13 +41,14 @@ async function init() {
   if (iconPath != generatedIconPath) await sharp(iconPath).webp().toFile(generatedIconPath);
 
   const ps = await runApp();
+
   await screenshot(screenshotWidePath, 1280, 720);
   await screenshot(screenshotNarrowPath, 750, 1280);
   await generateAssets(iconPath, outputDir);
   await generateICO();
 
-  ps?.kill();
   spinner.stop();
+  ps?.kill();
   Deno.exit();
 }
 
