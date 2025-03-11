@@ -15,8 +15,8 @@ export const handler = define.handlers(async (ctx) => {
   return page(pageData);
 });
 
-export default define.page<typeof handler>(({ data }) => (
+export default define.page<typeof handler>(({ data: { html: __html } }) => (
   <Page>
-    <div dangerouslySetInnerHTML={{ __html: data.html }}></div>
+    <div dangerouslySetInnerHTML={{ __html }}></div>
   </Page>
 ));
