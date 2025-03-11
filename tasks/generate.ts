@@ -6,8 +6,7 @@ import puppeteer from 'npm:puppeteer';
 import { delay } from '@std/async/delay';
 import { Spinner } from 'jsr:@std/cli@1.0.9/unstable-spinner';
 import { parseArgs } from 'jsr:@std/cli@1.0.9/parse-args';
-import { $, helpCLI } from '@/lib/utils/cli.ts';
-import { site } from '@/app/site.ts';
+import { $, download as downloadIfURL, helpCLI } from '@/lib/utils/cli.ts';
 import sharp from 'npm:sharp';
 import path from 'node:path';
 import pngToICO from 'npm:png-to-ico';
@@ -28,7 +27,7 @@ const generatedIconPath = Path.join(import.meta.dirname!, '../static/img/icon.we
 const localURL = 'http://0.0.0.0:8000';
 const spinner = new Spinner({ color: 'green' });
 const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');
-const iconPath = await download(_iconPath);
+const iconPath = await downloadIfURL(_iconPath);
 const screenshotWidePath = Path.join(import.meta.dirname!, '../static/img/gen/screenshot-wide.jpg');
 const screenshotNarrowPath = Path.join(import.meta.dirname!, '../static/img/gen/screenshot-narrow.jpg');
 
@@ -38,8 +37,8 @@ async function init() {
   if (iconPath != generatedIconPath) await sharp(iconPath).webp().toFile(generatedIconPath);
 
   const ps = await runApp();
-  await takeScreenshot(localURL, screenshotWidePath, 1280, 720);
-  await takeScreenshot(localURL, screenshotNarrowPath, 750, 1280);
+  await screenshot(screenshotWidePath, 1280, 720);
+  await screenshot(screenshotNarrowPath, 750, 1280);
   await generateAssets(iconPath, outputDir);
   await generateICO();
 
@@ -64,14 +63,14 @@ async function runApp() {
   return null;
 }
 
-async function takeScreenshot(url: string, path: string, width: number, height: number) {
+async function screenshot(path: string, width: number, height: number) {
   spinner.message = 'Generating screenshot...';
 
   const browser = await puppeteer.launch({ browser: 'chrome', headless: true });
 
   const page = await browser.newPage();
   await page.setViewport({ width, height });
-  await page.goto(url, { waitUntil: 'networkidle0' });
+  await page.goto(localURL, { waitUntil: 'networkidle0' });
   await page.evaluate(() => {
     const html = document.querySelector('html') as HTMLElement;
     if (!html) return;
@@ -107,21 +106,6 @@ async function generateICO() {
   const image = await sharp(iconPath).png().resize(196, 196).toBuffer();
   const icoResult = await pngToICO(image);
   await Deno.writeFile(icoPath, new Uint8Array(icoResult));
-}
-
-async function URLtoPath(url: string) {
-  const res = await fetch(url);
-  const contentType = res.headers.get('content-type')?.split('/')[1].split('+')[0];
-  const filePath = Path.join(import.meta.dirname!, `../static/img/gen/icon.${contentType}`);
-  const imageData = new Uint8Array(await res.arrayBuffer());
-  await Deno.writeFile(filePath, imageData);
-  return filePath;
-}
-
-async function download(path: string) {
-  if (path.startsWith('http') || path.startsWith('https')) return await URLtoPath(path);
-  else if (path.startsWith('/') || path.startsWith('file:')) return path;
-  else return Path.join(Deno.cwd(), path);
 }
 
 await init();

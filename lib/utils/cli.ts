@@ -1,5 +1,5 @@
 import * as Color from 'jsr:@std/fmt/colors';
-import { cwd } from 'node:process';
+import * as Path from 'jsr:@std/path@1';
 
 function errorCLI(message: string) {
   console.error(`${Color.red(Color.bold('error'))}: ${message}`);
@@ -24,12 +24,11 @@ ${Color.green(options.name)}${options.description ? `: ${options.description}` :
 
 ${options.usage ? Color.blue('Usage: ') + options.usage : ''}
 
-${
-    options.options
+${options.options
       ? Color.blue('Options:\n') +
-        options.options.map((opt) => `  ${opt.flag}\t${opt.usage || ''}`)
+      options.options.map((opt) => `  ${opt.flag}\t${opt.usage || ''}`)
       : ''
-  }
+    }
 `;
 
   console.log(helpMessage);
@@ -52,4 +51,21 @@ export async function $(...args: string[]) {
     const result = new TextDecoder().decode(output.stdout);
     return { result, ok: true };
   }
+}
+
+
+export async function URLtoPath(url: string) {
+  const res = await fetch(url);
+  const contentType = res.headers.get('content-type')?.split('/')[1].split('+')[0];
+  const filePath = Path.join(import.meta.dirname!, `../static/img/gen/icon.${contentType}`);
+  const imageData = new Uint8Array(await res.arrayBuffer());
+  await Deno.writeFile(filePath, imageData);
+  return filePath;
+}
+
+export async function download(_path: string | URL) {
+  const path = _path.toString();
+  if (path.startsWith('http') || path.startsWith('https')) return await URLtoPath(path);
+  else if (path.startsWith('/') || path.startsWith('file:')) return path;
+  else return Path.join(Deno.cwd(), path);
 }
