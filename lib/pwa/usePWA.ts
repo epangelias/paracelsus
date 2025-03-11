@@ -1,8 +1,9 @@
-import { Meth } from '@/lib/utils/meth.ts';
+
 import { fetchOrError } from '@/lib/utils/fetch.ts';
 import { IS_BROWSER } from 'fresh/runtime';
 import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
+import { urlBase64ToUint8Array } from '@/lib/utils/meth.ts';
 
 export async function requestPushSubscription(worker?: ServiceWorkerRegistration | null) {
   console.log('Requesting subscription...');
@@ -16,7 +17,7 @@ export async function requestPushSubscription(worker?: ServiceWorkerRegistration
 
   const vapidPublicKey = await fetchOrError('/api/vapid-public-key') as string;
   console.log('Loaded VAPID key: ', vapidPublicKey);
-  const convertedVapidKey = Meth.urlBase64ToUint8Array(vapidPublicKey);
+  const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
 
   const subscription = await worker.pushManager.subscribe({
     userVisibleOnly: true,

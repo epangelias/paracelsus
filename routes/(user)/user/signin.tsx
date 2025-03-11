@@ -1,13 +1,14 @@
 import { define } from '@/lib/utils/utils.ts';
 import { HttpError } from 'fresh';
 import { authorizeUser, setAuthCookie } from '@/lib/user/user-data.ts';
-import { Meth } from '@/lib/utils/meth.ts';
+
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/utils/rate-limiter.ts';
 import { isMailEnabled } from '@/lib/mail/mail.ts';
 import { Field } from '@/components/Field.tsx';
 import { Form } from '@/islands/Form.tsx';
 import { FormButton } from '@/components/FormButton.tsx';
+import { formDataToObject } from '@/lib/utils/meth.ts';
 
 const limiter = new RateLimiter();
 
@@ -16,7 +17,7 @@ export const handler = define.handlers({
     ctx.state.title = 'Sign In';
     limiter.request();
 
-    const { email, password } = Meth.formDataToObject(await ctx.req.formData());
+    const { email, password } = formDataToObject(await ctx.req.formData());
 
     const authCode = await authorizeUser(email, password);
     if (authCode) return setAuthCookie(ctx, authCode);

@@ -1,13 +1,13 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal } from '@preact/signals';
 import { useEffect, useRef } from 'preact/hooks';
-import { Meth } from '@/lib/utils/meth.ts';
+import { limitText } from '@/lib/utils/meth.ts';
 
 export function UserMenu() {
   const global = useGlobal();
   const popover = useRef<HTMLDivElement>(null);
   const isOpen = useSignal(false);
-  const name = Meth.limitText(global.user.value?.name?.split(' ')[0], 15);
+  const name = limitText(global.user.value?.name?.split(' ')[0], 15);
 
   const checkPopoverState = () => {
     isOpen.value = !!popover.current?.matches(':popover-open');

@@ -3,9 +3,10 @@ import { HttpError, page } from 'fresh';
 import { setUserData } from '@/lib/user/user-data.ts';
 import { UserUI } from '@/islands/UserUI.tsx';
 import { STATUS_CODE } from '@std/http/status';
-import { Meth } from '@/lib/utils/meth.ts';
+
 import { Page } from '@/components/Page.tsx';
 import { sendEmailVerification } from '@/app/email.tsx';
+import { formDataToObject, getErrorMessage } from '@/lib/utils/meth.ts';
 
 export const handler = define.handlers({
   GET: (ctx) => {
@@ -18,7 +19,7 @@ export const handler = define.handlers({
     try {
       const user = ctx.state.user;
       if (!user) throw new HttpError(STATUS_CODE.Unauthorized);
-      const { email, name } = Meth.formDataToObject(await ctx.req.formData());
+      const { email, name } = formDataToObject(await ctx.req.formData());
       const newUser = await setUserData(user.id, (u) => {
         u.name = name;
         u.email = email;
@@ -27,7 +28,7 @@ export const handler = define.handlers({
       if (newUser.email != user.email) await sendEmailVerification(ctx.url.origin, user);
       return new Response('Saved!');
     } catch (e) {
-      throw new HttpError(400, Meth.getErrorMessage(e));
+      throw new HttpError(400, getErrorMessage(e));
     }
   },
 });

@@ -9,8 +9,9 @@ import {
   setUserData,
 } from '@/lib/user/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
-import { Meth } from '@/lib/utils/meth.ts';
+
 import { isMailEnabled } from '@/lib/mail/mail.ts';
+import { formDataToObject, getErrorMessage } from '@/lib/utils/meth.ts';
 
 export const handler = define.handlers({
   GET: (ctx) => {
@@ -24,7 +25,7 @@ export const handler = define.handlers({
     if (!isMailEnabled()) throw new HttpError(STATUS_CODE.NotFound);
     try {
       const code = ctx.url.searchParams.get('code');
-      const { password } = Meth.formDataToObject(await ctx.req.formData());
+      const { password } = formDataToObject(await ctx.req.formData());
       if (!code || !password) throw new HttpError(STATUS_CODE.BadRequest, 'Missing code or password');
       const user = await getUserByPasswordResetCode(code);
       if (!user) throw new HttpError(STATUS_CODE.NotFound, 'Invalid reset code');
@@ -37,7 +38,7 @@ export const handler = define.handlers({
       await removePasswordResetCode(code);
       return ctx.redirect('/user/signin');
     } catch (e) {
-      return page({ error: Meth.getErrorMessage(e) });
+      return page({ error: getErrorMessage(e) });
     }
   },
 });

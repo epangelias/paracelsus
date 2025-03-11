@@ -1,7 +1,7 @@
 import { define } from '@/lib/utils/utils.ts';
 import { HttpError, page } from 'fresh';
 import { authorizeUser, setAuthCookie } from '@/lib/user/user-data.ts';
-import { Meth } from '@/lib/utils/meth.ts';
+
 import { Page } from '@/components/Page.tsx';
 import { RateLimiter } from '@/lib/utils/rate-limiter.ts';
 import { sendEmailVerification } from '@/app/email.tsx';
@@ -9,6 +9,7 @@ import { createUser } from '@/app/user.ts';
 import { Field } from '@/components/Field.tsx';
 import { Form } from '@/islands/Form.tsx';
 import { FormButton } from '@/components/FormButton.tsx';
+import { formDataToObject, getErrorMessage } from '@/lib/utils/meth.ts';
 
 const HAS_SIGN_UP_CODE = Deno.env.has('SIGN_UP_CODE');
 const SIGN_UP_CODE = Deno.env.get('SIGN_UP_CODE');
@@ -24,7 +25,7 @@ export const handler = define.handlers({
   POST: async (ctx) => {
     limiter.request();
 
-    const { name, email, password, signupCode } = Meth.formDataToObject(await ctx.req.formData());
+    const { name, email, password, signupCode } = formDataToObject(await ctx.req.formData());
 
     try {
       const correctCode = HAS_SIGN_UP_CODE && signupCode && signupCode == SIGN_UP_CODE;
@@ -44,7 +45,7 @@ export const handler = define.handlers({
 
       throw new Error('Error authorizing user');
     } catch (e) {
-      throw new HttpError(400, Meth.getErrorMessage(e));
+      throw new HttpError(400, getErrorMessage(e));
     }
   },
 });
