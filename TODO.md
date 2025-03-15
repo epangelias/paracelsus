@@ -4,3 +4,4 @@
 - Put banners on bottom
 - Make tasks/generate work on windows
 - Make homepage only load from the catch, and only load catch when on homepage
+- Make header menu wide on mobile

@@ -2,7 +2,6 @@ import { define } from '@/lib/utils/utils.ts';
 import { Page } from '@/components/Page.tsx';
 import { Field } from '@/components/Field.tsx';
 import { HttpError, page } from 'fresh';
-
 import { getUserById, getUserIdByEmail } from '@/lib/user/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { sendPasswordVerification } from '@/app/email.tsx';

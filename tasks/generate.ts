@@ -28,7 +28,7 @@ if (args.help) {
 }
 
 const generatedIconPath = Path.join(import.meta.dirname!, '../static/img/icon.webp');
-const localURL = 'http://0.0.0.0:8000';
+const localURL = 'http://localhost:8000';
 const spinner = new Spinner({ color: 'green' });
 const outputDir = Path.join(import.meta.dirname!, '../static/img/gen');
 const screenshotWidePath = Path.join(import.meta.dirname!, '../static/img/gen/screenshot-wide.jpg');

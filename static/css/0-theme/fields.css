@@ -45,7 +45,7 @@ button:not(.link),
   font: inherit;
   font-weight: bold;
   color: var(--on-accent);
-  box-shadow: var(--field-shadow);
+  box-shadow: var(--shadow);
   text-decoration: none;
   text-align: center;
   transition: background-color var(--transition), box-shadow var(--transition);
@@ -101,7 +101,7 @@ button:not(.link),
   border-radius: var(--radius);
   background-color: var(--bg2);
   font: inherit;
-  box-shadow: var(--field-shadow);
+  box-shadow: var(--shadow);
   resize: none;
   color: var(--fg2);
   transition: background-color var(--transition);

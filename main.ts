@@ -10,6 +10,7 @@ import { userPlugin } from '@/lib/user/user-plugin.tsx';
 import { adminPlugin } from '@/lib/user/admin-plugin.ts';
 import { manifestPlugin } from '@/lib/pwa/manifest-plugin.ts';
 import { isProductionMode, setProductionMode } from '@/lib/utils/utils.ts';
+import { compileCSS } from '@/lib/css.ts';
 
 export const app = new App<State>();
 
@@ -30,4 +31,8 @@ await fsRoutes(app, {
   loadRoute: (path) => import(`./routes/${path}`),
 });
 
-if (isProductionMode()) await app.listen();
+if (isProductionMode()) {
+  await app.listen();
+} else {
+  await compileCSS();
+}

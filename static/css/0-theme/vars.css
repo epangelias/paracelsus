@@ -13,7 +13,7 @@
   --border-width: 1px;
   --border-color: var(--bg3);
   --transition: 0.15s ease-in;
-  --field-shadow: 0 1px 5px #0002;
+  --shadow: 0 1px 5px #0002;
 
   --radius-05: calc(var(--radius) * 0.5);
   --radius-2: calc(var(--radius) * 2);
@@ -51,5 +51,5 @@
   --fg3: var(--light3);
   --fg4: var(--light4);
 
-  --field-shadow: none;
+  --shadow: none;
 }

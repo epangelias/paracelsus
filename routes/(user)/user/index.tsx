@@ -7,6 +7,7 @@ import { STATUS_CODE } from '@std/http/status';
 import { Page } from '@/components/Page.tsx';
 import { sendEmailVerification } from '@/app/email.tsx';
 import { formDataToObject, getErrorMessage } from '@/lib/utils/meth.ts';
+import { delay } from '@std/async/delay';
 
 export const handler = define.handlers({
   GET: (ctx) => {
@@ -26,6 +27,9 @@ export const handler = define.handlers({
       });
 
       if (newUser.email != user.email) await sendEmailVerification(ctx.url.origin, user);
+
+      await delay(1000); // TESTING
+
       return new Response('Saved!');
     } catch (e) {
       throw new HttpError(400, getErrorMessage(e));
