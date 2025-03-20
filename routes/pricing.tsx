@@ -32,7 +32,7 @@ export default define.page((ctx) => (
         </div>
         {ctx.state.user?.isSubscribed
           ? <a href='/user/subscription' class='button'>Unsubscribe</a>
-          : <a href={ctx.state.user ? '/' : '/user/signup'} class='button'>Get Started</a>}
+          : <a href={ctx.state.user ? '/' : '/signin'} class='button'>Get Started</a>}
       </div>
 
       <div class='pricing premium'>

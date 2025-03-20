@@ -25,19 +25,21 @@ export function UserMenu() {
             {isOpen.value ? '▾' : '▸'} {name}
           </button>
         )
-        : <a href='/user/signin'>Sign In</a>}
+        : <a href='/signin'>Sign In</a>}
       {global.user.value && (
         <div popover ref={popover} class='dropdown' id='user-menu-dropdown'>
           <ul>
-            <li>
-              <a href='/user'>Settings</a>
-            </li>
-            <li>
-              {!global.user.value?.isSubscribed && global.stripeEnabled && <a href='/user/pricing'>Subscribe</a>}
-            </li>
-            <li>
-              <a href='/user/signout'>Sign Out</a>
-            </li>
+            {!global.user.value?.isSubscribed && global.stripeEnabled && (
+              <li>
+                <a href='/user/pricing'>Subscribe</a>
+              </li>
+            )}
+            {global.oauthEnabled &&
+              (
+                <li>
+                  <a href='/oauth/signout?success_url=/'>Sign Out</a>
+                </li>
+              )}
           </ul>
         </div>
       )}

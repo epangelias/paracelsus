@@ -13,16 +13,12 @@ export interface BannerData {
 export interface UserData {
   id: string;
   created: number;
-  email: string;
-  passwordHash: string;
-  salt: string;
+  email?: string | null;
   name: string;
   stripeCustomerId?: string;
   isSubscribed: boolean;
   hasSubscribed: boolean;
   tokens: number;
-  isEmailVerified: boolean;
-  hasVerifiedEmail: boolean;
   pushSubscriptions: PushSubscription[];
 }
 
@@ -32,6 +28,7 @@ export type GlobalData = {
   mailEnabled: boolean;
   stripeEnabled: boolean;
   pushEnabled: boolean;
+  oauthEnabled: boolean;
 };
 
 export interface State {

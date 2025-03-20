@@ -3,6 +3,7 @@ import { stripUserData } from '@/app/user.ts';
 import { isMailEnabled } from '@/lib/mail/mail.ts';
 import { isPushEnabled } from '@/lib/pwa/push.ts';
 import { isStripeEnabled } from '@/lib/stripe/stripe.ts';
+import { isOauthEnabled } from '@/lib/oauth.ts';
 
 export function passGlobalData(state: State) {
   return {
@@ -10,5 +11,6 @@ export function passGlobalData(state: State) {
     mailEnabled: isMailEnabled(),
     stripeEnabled: isStripeEnabled(),
     pushEnabled: isPushEnabled(),
+    authEnabled: isOauthEnabled(),
   };
 }

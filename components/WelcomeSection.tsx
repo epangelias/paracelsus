@@ -8,7 +8,7 @@ export function WelcomeSection() {
       <h1>Welcome to {site.name}!</h1>
       <p>{site.description}</p>
       <br />
-      <a href='/user/signup' class='button'>Get Started</a>
+      <a href='/signin' class='button'>Get Started</a>
     </div>
   );
 }

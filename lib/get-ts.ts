@@ -1,6 +1,3 @@
-
-
-
 export async function GetTS(slug: string) {
   if (!slug.endsWith('.js')) return null;
   const path = new URL('../static/' + slug.replace(/\.js$/, '.ts'), import.meta.url);
@@ -12,7 +9,7 @@ export async function GetTS(slug: string) {
         'Content-Type': 'application/javascript',
       },
     });
-  } catch (e) {
+  } catch (_e) {
     return null;
   }
 }

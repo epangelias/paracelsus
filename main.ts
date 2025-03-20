@@ -11,6 +11,7 @@ import { adminPlugin } from '@/lib/user/admin-plugin.ts';
 import { manifestPlugin } from '@/lib/pwa/manifest-plugin.ts';
 import { isProductionMode, setProductionMode } from '@/lib/utils/utils.ts';
 import { compileCSS } from '@/lib/css.ts';
+import { OauthPlugin } from '@/lib/oauth.ts';
 
 export const app = new App<State>();
 
@@ -22,6 +23,7 @@ pushPlugin(app);
 userPlugin(app);
 manifestPlugin(app);
 adminPlugin(app);
+OauthPlugin(app);
 
 app.use(staticFiles());
 

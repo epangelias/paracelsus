@@ -3,31 +3,29 @@
 import { UserData } from '@/app/types.ts';
 import { createUserData, deleteUserData } from '@/lib/user/user-data.ts';
 import { db } from '@/lib/utils/utils.ts';
+import { generateCode } from '@/lib/utils/crypto.ts';
 
 export function stripUserData(user?: UserData) {
   if (!user) return null;
   // This is the user data sent to the client
   return {
     name: user.name,
+    email: user.email,
     tokens: user.tokens,
     isSubscribed: user.isSubscribed,
     hasSubscribed: user.hasSubscribed,
-    isEmailVerified: user.isEmailVerified,
-    email: user.email,
-    hasVerifiedEmail: user.hasVerifiedEmail,
   } as Partial<UserData>;
 }
 
-export function createUser(options: { name: string; email: string; password: string; isPremium: boolean }) {
+export function createUser(options: { id: string, name: string; email: string; isPremium: boolean }) {
   return createUserData({
+    id: options.id,
+    created: Date.now(),
     name: options.name,
     email: options.email,
-    password: options.password,
     tokens: 5,
     isSubscribed: options.isPremium,
     hasSubscribed: options.isPremium,
-    isEmailVerified: false,
-    hasVerifiedEmail: false,
     pushSubscriptions: [],
   });
 }
