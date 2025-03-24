@@ -28,7 +28,7 @@ export type GlobalData = {
   mailEnabled: boolean;
   stripeEnabled: boolean;
   pushEnabled: boolean;
-  oauthEnabled: boolean;
+  authEnabled: boolean;
 };
 
 export interface State {

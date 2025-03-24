@@ -29,12 +29,20 @@ export function UserMenu() {
       {global.user.value && (
         <div popover ref={popover} class='dropdown' id='user-menu-dropdown'>
           <ul>
-            {!global.user.value?.isSubscribed && global.stripeEnabled && (
-              <li>
-                <a href='/user/pricing'>Subscribe</a>
-              </li>
+            {global.stripeEnabled && (
+              global.user.value?.isSubscribed
+                ? (
+                  <li>
+                    <a href='/user/subscription'>Manage Subscription</a>
+                  </li>
+                )
+                : (
+                  <li>
+                    <a href='/user/pricing'>Subscribe</a>
+                  </li>
+                )
             )}
-            {global.oauthEnabled &&
+            {global.authEnabled &&
               (
                 <li>
                   <a href='/oauth/signout?success_url=/'>Sign Out</a>

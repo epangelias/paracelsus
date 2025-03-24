@@ -23,11 +23,10 @@ export function userPlugin(app: App<State>) {
 
     // Skip static assets
     if (!ctx.req.url.includes('?__frsh_c=') && !ctx.req.url.includes('/_fresh')) {
-      const auth = getCookies(ctx.req.headers)['oauth-session'];
+      const auth = getCookies(ctx.req.headers)['site-session'];
       ctx.state.auth = auth;
       if (auth) {
         const user = await getUserByAuth(auth);
-        console.log({ user });
         if (user) ctx.state.user = user;
       }
     }

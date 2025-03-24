@@ -12,14 +12,14 @@ interface Props {
   data: ReturnType<typeof passGlobalData>;
 }
 
-export function Global({ children, data: { user, mailEnabled, stripeEnabled, pushEnabled, oauthEnabled } }: Props) {
+export function Global({ children, data: { user, mailEnabled, stripeEnabled, pushEnabled, authEnabled } }: Props) {
   const global: GlobalData = {
     user: useSignal(user),
     pwa: usePWA(),
     mailEnabled,
     stripeEnabled,
     pushEnabled,
-    oauthEnabled,
+    authEnabled,
   };
 
   useEffect(() => {
