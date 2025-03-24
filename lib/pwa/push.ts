@@ -3,8 +3,8 @@ import * as webPush from 'web-push';
 import { site } from '@/app/site.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { setUserData } from '@/lib/user/user-data.ts';
-import { State, UserData } from '@/app/types.ts';
 import { asset } from 'fresh/runtime';
+import { State } from '../utils.ts';
 
 // import * as webPushTypes from 'npm:@types/web-push';
 // const webPush = _webPush as typeof webPushTypes;

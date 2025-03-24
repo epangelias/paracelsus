@@ -1,9 +1,9 @@
 
-import { fetchOrError } from '@/lib/utils/fetch.ts';
+import { fetchOrError } from '../fetch.ts';
 import { IS_BROWSER } from 'fresh/runtime';
 import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
-import { urlBase64ToUint8Array } from '@/lib/utils/meth.ts';
+import { urlBase64ToUint8Array } from '../meth.ts';
 
 export async function requestPushSubscription(worker?: ServiceWorkerRegistration | null) {
   console.log('Requesting subscription...');

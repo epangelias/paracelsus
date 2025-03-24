@@ -3,7 +3,7 @@ import { ChatCompletionChunk } from 'https://deno.land/x/openai@v4.28.0/resource
 import { Stream } from 'https://deno.land/x/openai@v4.28.0/streaming.ts';
 import { AIMessage, OAIOptions } from '../oai.ts';
 import { generateChatCompletionStream } from '../oai.ts';
-import { renderMarkdown } from '@/lib/utils/md.ts';
+import { renderMarkdown } from '../md.ts';
 
 interface Options {
   messages: AIMessage[];

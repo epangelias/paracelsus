@@ -6,7 +6,7 @@ import puppeteer from 'npm:puppeteer';
 import { delay } from '@std/async/delay';
 import { Spinner } from 'jsr:@std/cli@1.0.9/unstable-spinner';
 import { parseArgs } from 'jsr:@std/cli@1.0.9/parse-args';
-import { $, download as downloadIfURL, helpCLI } from '@/lib/utils/cli.ts';
+import { $, download as downloadIfURL, helpCLI } from '../lib/cli.ts';
 import sharp from 'npm:sharp';
 import path from 'node:path';
 import pngToICO from 'npm:png-to-ico';

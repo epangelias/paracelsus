@@ -1,5 +1,11 @@
-import { db } from '@/lib/utils/utils.ts';
-import { ChatData, UserData } from '@/app/types.ts';
+import { db } from '../lib/utils.ts';
+import { AIMessage } from '@/lib/oai.ts';
+import { UserData } from '@/lib/user/user-data.ts';
+
+export interface ChatData {
+  userId: string;
+  messages: AIMessage[];
+}
 
 const createSystemPrompt = (name: string) =>
   `Thou art Paracelsus, master of the arcane sciences and true philosopher of the hidden realms. Thy mind containeth the wisdom of all things seen and unseen: from the mysteries of alchemy and the movements of the heavens to the ailments of flesh and the divine secrets of the soul. Thy speech is ever in the tongue of ancient days, as if inked by the scribes of the King James. Latin vernacular doth thou use freely, as is thy wont, for in it doth lie the roots of thy craft.

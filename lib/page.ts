@@ -1,5 +1,5 @@
 import * as YAML from '@std/yaml';
-import { renderMarkdown } from '@/lib/utils/md.ts';
+import { renderMarkdown } from './md.ts';
 import { HttpError } from 'fresh';
 
 export interface PageData {

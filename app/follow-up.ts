@@ -1,8 +1,9 @@
-import { ChatData, State, UserData } from '@/app/types.ts';
 import { isPushEnabled, sendNotificationToUser } from '@/lib/pwa/push.ts';
-import { db, isProductionMode } from '@/lib/utils/utils.ts';
+import { db, isProductionMode } from '../lib/utils.ts';
 import { generateChatCompletion } from '../lib/oai.ts';
 import { App } from 'fresh';
+import { UserData } from '@/lib/user/user-data.ts';
+import { ChatData } from '@/app/chat-data.ts';
 
 async function generateFollowUpMessage(user: UserData) {
   const chatData = await db.get<ChatData>(['chat', user.id]);

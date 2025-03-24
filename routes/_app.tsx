@@ -1,10 +1,10 @@
 import { site } from '@/app/site.ts';
-import { define } from '@/lib/utils/utils.ts';
+import { define } from '../lib/utils.ts';
 import { asset } from 'fresh/runtime';
 import { Global } from '@/islands/Global.tsx';
 import { PWATags } from '@/lib/pwa/PWATags.tsx';
-import { CSSVar } from '@/components/CSSVar.tsx';
-import { passGlobalData } from '@/lib/passGlobalData.ts';
+import { CSSVar } from '../lib/components/CSSVar.tsx';
+import { createGlobalData } from '../lib/global-data.ts';
 
 export default define.page(({ Component, state }) => {
   return (
@@ -32,7 +32,7 @@ export default define.page(({ Component, state }) => {
         <CSSVar primary={site.themeColor} on-primary='#000' />
       </head>
       <body>
-        <Global data={passGlobalData(state)}>
+        <Global data={createGlobalData(state)}>
           <Component />
         </Global>
       </body>

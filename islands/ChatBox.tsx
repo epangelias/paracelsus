@@ -3,12 +3,12 @@ import { sendSSE, syncSSE, watchSSE } from '@/lib/stream/stream-client.ts';
 import { AIMessage } from '../lib/oai.ts';
 import { useEffect, useRef } from 'preact/hooks';
 import { useGlobal } from '@/islands/Global.tsx';
-import { ChatData } from '@/app/types.ts';
 import { showOutOfTokensDialog } from '@/islands/OutOfTokensDialog.tsx';
 import { delay } from '@std/async/delay';
 import ArrowUp from 'icons/tabler/arrow-up';
 import { useAlert } from '@/islands/Alert.tsx';
-import { Loader } from '@/components/Loader.tsx';
+import { Loader } from '../lib/components/Loader.tsx';
+import { ChatData } from '@/app/chat-data.ts';
 
 export default function ChatBox({ data }: { data: ChatData }) {
   const global = useGlobal();

@@ -1,7 +1,7 @@
 import { Page } from '@/components/Page.tsx';
-import { define } from '@/lib/utils/utils.ts';
+import { define } from '../lib/utils.ts';
 import { HttpError, page } from 'fresh';
-import { getPage } from '@/lib/utils/page.ts';
+import { getPage } from '../lib/page.ts';
 import { GetTS } from '@/lib/get-ts.ts';
 
 export const handler = define.handlers(async (ctx) => {

@@ -1,5 +1,11 @@
 import { createDefine } from 'fresh';
-import { State } from '@/app/types.ts';
+import { UserData } from '@/lib/user/user-data.ts';
+
+export interface State {
+  user?: UserData;
+  auth?: string;
+  title?: string;
+}
 
 export const define = createDefine<State>();
 export const db = await Deno.openKv();

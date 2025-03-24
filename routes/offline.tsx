@@ -1,5 +1,5 @@
 import { Page } from '@/components/Page.tsx';
-import { define } from '@/lib/utils/utils.ts';
+import { define } from '../lib/utils.ts';
 import { page } from 'fresh';
 
 export const handler = define.handlers((ctx) => {

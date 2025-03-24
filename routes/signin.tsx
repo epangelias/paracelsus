@@ -1,4 +1,4 @@
-import { define } from '@/lib/utils/utils.ts';
+import { define } from '../lib/utils.ts';
 import { Page } from '@/components/Page.tsx';
 import IconGithub from 'icons/tabler/brand-github';
 import { page } from 'fresh';

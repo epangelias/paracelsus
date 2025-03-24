@@ -4,12 +4,12 @@
 import { App, fsRoutes, staticFiles } from 'fresh';
 import { pushPlugin } from '@/lib/pwa/push.ts';
 import { autoSendFollowUps } from '@/app/follow-up.ts';
-import { State } from '@/app/types.ts';
+import { State } from './lib/utils.ts';
 import { stripePlugin } from '@/lib/stripe/stripe-plugin.ts';
 import { userPlugin } from '@/lib/user/user-plugin.tsx';
 import { adminPlugin } from '@/lib/user/admin-plugin.ts';
 import { manifestPlugin } from '@/lib/pwa/manifest-plugin.ts';
-import { isProductionMode, setProductionMode } from '@/lib/utils/utils.ts';
+import { isProductionMode, setProductionMode } from './lib/utils.ts';
 import { compileCSS } from '@/lib/css.ts';
 import { OauthPlugin } from '@/lib/oauth.ts';
 

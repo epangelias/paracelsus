@@ -1,9 +1,9 @@
-import { define } from '@/lib/utils/utils.ts';
+import { define } from '../../lib/utils.ts';
 import { StreamSSR } from '@/lib/stream/stream-sse.ts';
-import { db } from '@/lib/utils/utils.ts';
+import { db } from '../../lib/utils.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
-import { ChatData } from '@/app/types.ts';
+import { ChatData } from '@/app/chat-data.ts';
 
 export const handler = define.handlers(async (ctx) => {
   if (!ctx.state.user) throw new HttpError(STATUS_CODE.Unauthorized);

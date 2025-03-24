@@ -1,5 +1,5 @@
 import { App } from 'fresh';
-import { State } from '@/app/types.ts';
+import { State } from '../utils.ts';
 import { site } from '@/app/site.ts';
 import icons from '@/static/img/gen/icons.json' with { type: 'json' };
 import { asset } from 'fresh/runtime';

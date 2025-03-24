@@ -1,5 +1,4 @@
 import Mailjet from 'node-mailjet';
-import { RateLimiter } from '@/lib/utils/rate-limiter.ts';
 
 export interface MailOptions {
   fromName: string;
@@ -10,8 +9,6 @@ export interface MailOptions {
   text: string;
   html: string;
 }
-
-const limiter = new RateLimiter({ maxRequests: 2, interval: 60 }); // 2 per minute
 
 let mailjet: Mailjet.Client;
 
@@ -33,8 +30,6 @@ export async function sendMail(options: MailOptions) {
       apiSecret: Deno.env.get('MJ_APIKEY_PRIVATE'),
     });
   }
-
-  limiter.request();
 
   await mailjet.post('send', { 'version': 'v3.1' }).request({
     Messages: [

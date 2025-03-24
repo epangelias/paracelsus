@@ -1,5 +1,5 @@
 import { App, HttpError } from 'fresh';
-import { State } from '@/app/types.ts';
+import { State } from '../utils.ts';
 import { getStripePremiumPlanPriceId, GetStripeWebhookEvent, isStripeEnabled, stripe } from '@/lib/stripe/stripe.ts';
 import { getUserByStripeCustomer, setUserData } from '@/lib/user/user-data.ts';
 import { STATUS_CODE } from '@std/http/status';

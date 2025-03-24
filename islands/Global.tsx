@@ -1,15 +1,25 @@
 import { useContext, useEffect } from 'preact/hooks';
 import { createContext } from 'preact';
 import { ComponentChildren } from 'preact';
-import { GlobalData } from '@/app/types.ts';
 import { useSignal } from '@preact/signals';
 import { syncSSE } from '@/lib/stream/stream-client.ts';
 import { usePWA } from '@/lib/pwa/usePWA.ts';
-import { passGlobalData } from '@/lib/passGlobalData.ts';
+import { createGlobalData } from '../lib/global-data.ts';
+import { Signal } from '@preact/signals';
+import { UserData } from '@/lib/user/user-data.ts';
+
+export type GlobalData = {
+  user: Signal<Partial<UserData> | null>;
+  pwa: ReturnType<typeof usePWA>;
+  mailEnabled: boolean;
+  stripeEnabled: boolean;
+  pushEnabled: boolean;
+  authEnabled: boolean;
+};
 
 interface Props {
   children: ComponentChildren;
-  data: ReturnType<typeof passGlobalData>;
+  data: ReturnType<typeof createGlobalData>;
 }
 
 export function Global({ children, data: { user, mailEnabled, stripeEnabled, pushEnabled, authEnabled } }: Props) {

@@ -1,5 +1,5 @@
 import { App } from 'fresh';
-import { State } from '@/app/types.ts';
+import { State } from './utils.ts';
 
 import { createGitHubOAuthConfig, createHelpers } from "jsr:@deno/kv-oauth";
 import { createUser, getUserById, setUserAuth } from '@/lib/user/user-data.ts';

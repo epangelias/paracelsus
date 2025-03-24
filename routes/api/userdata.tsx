@@ -1,10 +1,10 @@
-import { define } from '@/lib/utils/utils.ts';
+import { define } from '../../lib/utils.ts';
 import { StreamSSR } from '@/lib/stream/stream-sse.ts';
-import { db } from '@/lib/utils/utils.ts';
+import { db } from '../../lib/utils.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 import { UserData } from '@/lib/user/user-data.ts';
-import { stripUserData } from '@/lib/passGlobalData.ts';
+import { stripUserData } from '@/lib/global-data.ts';
 
 export const handler = define.handlers((ctx) => {
   if (!ctx.state.user || !ctx.state.auth) throw new HttpError(STATUS_CODE.Unauthorized);

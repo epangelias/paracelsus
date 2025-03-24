@@ -1,4 +1,4 @@
-import { db } from '@/lib/utils/utils.ts';
+import { db } from '../utils.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe/stripe.ts';
 
 export interface UserData {

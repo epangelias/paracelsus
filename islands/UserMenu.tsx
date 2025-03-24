@@ -1,7 +1,7 @@
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal } from '@preact/signals';
 import { useEffect, useRef } from 'preact/hooks';
-import { limitText } from '@/lib/utils/meth.ts';
+import { limitText } from '../lib/meth.ts';
 
 export function UserMenu() {
   const global = useGlobal();

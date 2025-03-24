@@ -1,6 +1,6 @@
 import { Signal } from '@preact/signals';
-import { fetchOrError } from '@/lib/utils/fetch.ts';
-import { objectEquals } from '@/lib/utils/meth.ts';
+import { fetchOrError } from '../fetch.ts';
+import { objectEquals } from '../meth.ts';
 
 
 export function syncSSE<T>(endpoint: string, { data, onError }: { data: Signal<T>; onError?: () => void }) {

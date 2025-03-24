@@ -1,6 +1,6 @@
-import { State } from '@/app/types.ts';
+import { State } from '../utils.ts';
 import { App } from 'fresh';
-import { define } from '@/lib/utils/utils.ts';
+import { define } from '../utils.ts';
 import { getUserByAuth } from '@/lib/user/user-data.ts';
 import { getCookies } from '@std/http';
 import { isOauthEnabled } from '@/lib/oauth.ts';

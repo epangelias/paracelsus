@@ -1,4 +1,4 @@
-import { define } from '@/lib/utils/utils.ts';
+import { define } from '../lib/utils.ts';
 import { Page } from '@/components/Page.tsx';
 import IconCheckCircle from 'icons/tabler/circle-check-filled';
 import { site } from '@/app/site.ts';

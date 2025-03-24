@@ -1,11 +1,11 @@
 import { App, FreshContext, HttpError } from 'fresh';
-import { State } from '@/app/types.ts';
+import { State } from '../utils.ts';
 import { STATUS_CODE } from '@std/http/status';
 import { sendFollowUp } from '@/app/follow-up.ts';
 import { isPushEnabled } from '@/lib/pwa/push.ts';
 
-import { db } from '@/lib/utils/utils.ts';
-import { getErrorMessage } from '@/lib/utils/meth.ts';
+import { db } from '../utils.ts';
+import { getErrorMessage } from '../meth.ts';
 
 const actions = [
   {

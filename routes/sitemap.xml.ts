@@ -1,4 +1,4 @@
-import { define } from '@/lib/utils/utils.ts';
+import { define } from '../lib/utils.ts';
 import { site } from '@/app/site.ts';
 
 let sitemapCache: string = '';
