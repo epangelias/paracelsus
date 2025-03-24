@@ -13,7 +13,7 @@ export function Header() {
       <header>
         <div class='left'>
           <a href='/' class='logo' aria-label='Go to home page'>
-            <img src={asset('/img/icon.webp')} width={48} height={48} alt='' />
+            <img src={asset('/img/icon.webp')} width={48} alt='' />
           </a>
         </div>
         <div class='right'>
