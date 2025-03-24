@@ -6,3 +6,4 @@
 - Make homepage only load from the catch, and only load catch when on homepage
 - Make header menu wide on mobile
 - Remove the optional enabled features?
+- Bilingual support?
