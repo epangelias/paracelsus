@@ -1,4 +1,4 @@
-import { UserData } from '@/app/types.ts';
+import { UserData } from '@/lib/user/user-data.ts';
 import { site } from '@/app/site.ts';
 
 export const EmailResetPassword = ({ user, link, logo }: { user: UserData; link: string; logo: string }) => (

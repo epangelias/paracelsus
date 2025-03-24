@@ -2,8 +2,16 @@ import { IS_BROWSER } from 'fresh/runtime';
 import { useGlobal } from '@/islands/Global.tsx';
 import { useSignal } from '@preact/signals';
 import { useEffect } from 'preact/hooks';
-import { BannerData, GlobalData } from '@/app/types.ts';
+import { GlobalData } from '@/app/types.ts';
 import { isIOSSafari } from '@/lib/pwa/usePWA.ts';
+import { ComponentChildren } from 'preact';
+
+interface BannerData {
+  name: string;
+  condition: () => boolean | undefined;
+  canClose: boolean;
+  content: () => ComponentChildren;
+}
 
 export function createBannerData(global: GlobalData): BannerData[] {
   const outOfTokens = global.user.value?.tokens! <= 0 && !global.user.value?.isSubscribed;

@@ -2,8 +2,7 @@ import { App } from 'fresh';
 import { State } from '@/app/types.ts';
 
 import { createGitHubOAuthConfig, createHelpers } from "jsr:@deno/kv-oauth";
-import { getUserById, setUserAuth } from '@/lib/user/user-data.ts';
-import { createUser } from '@/app/user.ts';
+import { createUser, getUserById, setUserAuth } from '@/lib/user/user-data.ts';
 import { HttpError } from 'fresh';
 import { STATUS_CODE } from '@std/http/status';
 

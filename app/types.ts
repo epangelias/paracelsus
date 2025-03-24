@@ -1,26 +1,7 @@
-import { ComponentChildren } from 'preact';
 import { usePWA } from '@/lib/pwa/usePWA.ts';
 import { Signal } from '@preact/signals';
-import { AIMessage } from '@/lib/ai/oai.ts';
-
-export interface BannerData {
-  name: string;
-  condition: () => boolean | undefined;
-  canClose: boolean;
-  content: () => ComponentChildren;
-}
-
-export interface UserData {
-  id: string;
-  created: number;
-  email?: string | null;
-  name: string;
-  stripeCustomerId?: string;
-  isSubscribed: boolean;
-  hasSubscribed: boolean;
-  tokens: number;
-  pushSubscriptions: PushSubscription[];
-}
+import { AIMessage } from '../lib/oai.ts';
+import { UserData } from '@/lib/user/user-data.ts';
 
 export type GlobalData = {
   user: Signal<Partial<UserData> | null>;

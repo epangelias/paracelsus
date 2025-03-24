@@ -1,5 +1,5 @@
 import { define } from '@/lib/utils/utils.ts';
-import { AIMessage } from '@/lib/ai/oai.ts';
+import { AIMessage } from '../../lib/oai.ts';
 import { StreamAI } from '@/lib/stream/stream-ai.ts';
 import { setUserData } from '@/lib/user/user-data.ts';
 import { HttpError } from 'fresh';

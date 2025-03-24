@@ -1,9 +1,19 @@
-import { State } from '@/app/types.ts';
-import { stripUserData } from '@/app/user.ts';
-import { isMailEnabled } from '@/lib/mail/mail.ts';
+import { State, UserData } from '@/app/types.ts';
+import { isMailEnabled } from './mail.ts';
 import { isPushEnabled } from '@/lib/pwa/push.ts';
 import { isStripeEnabled } from '@/lib/stripe/stripe.ts';
 import { isOauthEnabled } from '@/lib/oauth.ts';
+
+export function stripUserData(user?: UserData) {
+  if (!user) return null;
+  return {
+    name: user.name,
+    email: user.email,
+    tokens: user.tokens,
+    isSubscribed: user.isSubscribed,
+    hasSubscribed: user.hasSubscribed,
+  } as Partial<UserData>;
+}
 
 export function passGlobalData(state: State) {
   return {

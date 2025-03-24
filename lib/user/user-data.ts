@@ -1,6 +1,17 @@
 import { db } from '@/lib/utils/utils.ts';
 import { isStripeEnabled, stripe } from '@/lib/stripe/stripe.ts';
-import { UserData } from '@/app/types.ts';
+
+export interface UserData {
+  id: string;
+  created: number;
+  email?: string | null;
+  name: string;
+  stripeCustomerId?: string;
+  isSubscribed: boolean;
+  hasSubscribed: boolean;
+  tokens: number;
+  pushSubscriptions: PushSubscription[];
+}
 
 export async function getUserByAuth(auth: string) {
   if (!auth) return null;
@@ -85,7 +96,21 @@ export async function deleteUserData(id: string | null) {
 
   const atomic = db.atomic()
     .delete(['users', id])
-    .delete(['usersByStripeCustomer', user.stripeCustomerId || '']);
+    .delete(['usersByStripeCustomer', user.stripeCustomerId || ''])
+    .delete(['chat', id]);
 
   await atomic.commit();
+}
+
+export function createUser(options: { id: string, name: string; email: string; isPremium: boolean }) {
+  return createUserData({
+    id: options.id,
+    created: Date.now(),
+    name: options.name,
+    email: options.email,
+    tokens: 5,
+    isSubscribed: options.isPremium,
+    hasSubscribed: options.isPremium,
+    pushSubscriptions: [],
+  });
 }
