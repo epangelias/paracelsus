@@ -15,8 +15,8 @@ export const handler = define.handlers(async (ctx) => {
   return page(pageData);
 });
 
-export default define.page<typeof handler>(({ data: { html: __html } }) => (
-  <Page>
-    <div dangerouslySetInnerHTML={{ __html }}></div>
+export default define.page<typeof handler>(({ data }) => (
+  <Page hideBanner={data.hideBanner} hideHeader={data.hideHeader}>
+    <div dangerouslySetInnerHTML={{ __html: data.html }}></div>
   </Page>
 ));

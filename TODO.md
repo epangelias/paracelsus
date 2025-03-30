@@ -7,3 +7,13 @@
 - Make header menu wide on mobile
 - Remove the optional enabled features?
 - Bilingual support?
+
+## Components
+
+- CSS
+- Account system
+- Service workers & notifications
+- The tasks, stripe and asset gen and project init
+- SSR
+- AI Streaming
+-

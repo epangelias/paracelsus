@@ -71,7 +71,7 @@ async function runApp() {
 async function screenshot(path: string, width: number, height: number) {
   spinner.message = 'Generating screenshot...';
 
-  const browser = await puppeteer.launch({ browser: 'chrome', headless: true });
+  const browser = await puppeteer.launch({ browser: 'chrome', headless: false });
 
   const page = await browser.newPage();
   await page.setViewport({ width, height });
