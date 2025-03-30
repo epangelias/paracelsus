@@ -2,15 +2,10 @@ import { Page } from '@/components/Page.tsx';
 import { define } from '../lib/utils.ts';
 import { HttpError, page } from 'fresh';
 import { getPage } from '../lib/page.ts';
-import { GetTS } from '@/lib/get-ts.ts';
 
 export const handler = define.handlers(async (ctx) => {
   const pageData = await getPage(ctx.params.page);
-  if (!pageData) {
-    const TS = await GetTS(ctx.params.page);
-    if (!TS) throw new HttpError(404);
-    return TS;
-  }
+  if (!pageData) throw new HttpError(404);
   ctx.state.title = pageData.title;
   return page(pageData);
 });
