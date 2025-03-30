@@ -23,7 +23,16 @@ export default define.page(({ Component, state }) => {
           content='width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no'
         />
 
-        <link rel='stylesheet' href={asset('/css/css.css')} />
+        <link rel='stylesheet' href={asset('/css/theme/base.css')} />
+        <link rel='stylesheet' href={asset('/css/theme/elements.css')} />
+        <link rel='stylesheet' href={asset('/css/theme/fields.css')} />
+        <link rel='stylesheet' href={asset('/css/theme/page-transitions.css')} />
+        <link rel='stylesheet' href={asset('/css/theme/vars.css')} />
+
+        <link rel='stylesheet' href={asset('/css/app/main.css')} />
+        <link rel='stylesheet' href={asset('/css/app/components.css')} />
+        <link rel='stylesheet' href={asset('/css/app/dialog.css')} />
+
         <link rel='icon' href={asset('/favicon.ico')} />
 
         <script type='module' src={asset('/src/init.js')}></script>

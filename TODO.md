@@ -16,4 +16,4 @@
 - The tasks, stripe and asset gen and project init
 - SSR
 - AI Streaming
--
+- CSS thing does not work, we want to not have compilation
